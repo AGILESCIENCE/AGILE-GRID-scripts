@@ -1,0 +1,43 @@
+ 
+
+galactic;circle( 119.65 , 10.6  , 0.63)   #text={ AGL J0006+7311  -> 5.1}
+galactic;circle( 135.88 , 1.13  , 0.64)   #text={ AGL J0242+6111  -> 5.3}
+galactic;circle( 184.56 , -5.63 , 0.09)   #text={ AGL J0535+2205  ->47.2}
+galactic;circle( 250.44 , -31.2 , 0.5 )   #text={ AGL J0538-4424  -> 5.9}
+galactic;circle( 189.04 , 3.07  , 0.27)   #text={ AGL J0617+2236  -> 9.9}
+galactic;circle( 195.14 , 4.36  , 0.05)   #text={ AGL J0634+1748  ->63  }
+galactic;circle( 170.73 , 20.11 , 0.55)   #text={ AGL J0657+4554  -> 5.8}
+galactic;circle( 184.12 , 19.1  , 0.85)   #text={ AGL J0714+3340  -> 4.2}
+galactic;circle( 143.89 , 28.06 , 0.37)   #text={ AGL J0722+7125  ->10.9}
+galactic;circle( 263.52 , -2.79 , 0.09)   #text={ AGL J0835-4509  ->41.7}
+galactic;circle( 284.39 , -0.98 , 0.36)   #text={ AGL J1022-5822  ->10.1}
+galactic;circle( 287.34 , -0.59 , 0.68)   #text={ AGL J1043-5931  -> 5.2}
+galactic;circle( 286.15 ,  6.49 , 0.3 )   #text={ AGL J1058-5239  -> 8.7}
+galactic;circle( 180.48 , 65.16 , 0.66)   #text={ AGL J1104+3754  -> 4.7}
+galactic;circle( 290.83 , -0.63 , 0.57)   #text={ AGL J1108-6103  -> 6.1}
+galactic;circle( 196.09 , 83.42 , 0.74)   #text={ AGL J1222+2851  -> 4.7}
+galactic;circle( 290.04 , 64.02 , 0.71)   #text={ AGL J1228+0142  -> 4.7}
+galactic;circle( 294.74 , 66.77 , 1.23)   #text={ AGL J1238+0406  -> 4.7}
+galactic;circle( 305.27 , 57.02 , 0.32)   #text={ AGL J1256-0549  ->10.2}
+galactic;circle( 312.3  , -0.43 , 0.44)   #text={ AGL J1412-6149  -> 6.3}
+galactic;circle( 313.47 ,  0.13 , 0.31)   #text={ AGL J1419-6055  -> 7.5}
+galactic;circle( 319.52 , -0.52 , 0.48)   #text={ AGL J1506-5859  -> 6.9}
+galactic;circle( 350.97 , 40.31 , 0.33)   #text={ AGL J1511-0908  ->11.2}
+galactic;circle( 334.09 , -0.25 , 0.58)   #text={ AGL J1624-4946  -> 5.7}
+galactic;circle( 337.75 , -0.15 , 0.53)   #text={ AGL J1639-4702  -> 6.4}
+galactic;circle( 343.07 , -2.64 , 0.2 )   #text={ AGL J1709-4428  ->13.8}
+galactic;circle( 355.85 , -0.24 , 0.59)   #text={ AGL J1736-3235  -> 5.1}
+galactic;circle( 358.89 , -0.78 , 0.68)   #text={ AGL J1746-3017  -> 4.4}
+galactic;circle( 7.19   , -0.36 , 0.49)   #text={ AGL J1803-2255  -> 7.6}
+galactic;circle( 17.23  , -0.65 , 0.8 )   #text={ AGL J1824-1414  -> 6.4}
+galactic;circle( 88.84  , 24.99 , 0.17)   #text={ AGL J1836+5923  ->15.6}
+galactic;circle( 97.59  , 25.35 , 0.43)   #text={ AGL J1846+6714  -> 7  }
+galactic;circle( 35.02  , -0.54 , 0.34)   #text={ AGL J1857+0136  ->10.2}
+galactic;circle( 40.38  , -0.87 , 0.49)   #text={ AGL J1908+0613  -> 7.2}
+galactic;circle( 75.28  , 0.07  , 0.19)   #text={ AGL J2021+3652  ->14.2}
+galactic;circle( 78.37  , 2.04  , 0.12)   #text={ AGL J2022+4032  ->23.4}
+galactic;circle( 37.05  , -24.55, 0.53)   #text={ AGL J2026-0732  -> 6.9}
+galactic;circle( 79.91  , 0.74  , 0.41)   #text={ AGL J2032+4102  -> 6.8}
+galactic;circle( 106.82 , 2.76  , 0.29)   #text={ AGL J2231+6109  -> 8.4}
+galactic;circle( 86.09  , -38.3 , 0.17)   #text={ AGL J2254+1602  ->23  }
+

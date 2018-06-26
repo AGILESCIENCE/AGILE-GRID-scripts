@@ -1,0 +1,207 @@
+global color=green font="helvetica 9 normal" select=1 highlite=1 edit=1 move=1 delete=1 include=1 fixed=0 source
+galactic
+ellipse(119.690,10.471,0.054,0.054,0) #color=cyan width=1 text={0FGL J0007.4+7303 (F,PSR,LAT PSR J0007+7303)}
+ellipse(101.274,-66.485,0.252,0.252,0) #color=cyan width=1 text={0FGL J0017.4-0503 (T,bzq,CGRaBS J0017-0512)}
+ellipse(305.786,-44.941,0.163,0.163,0) #color=cyan width=1 text={0FGL J0025.1-7202 (F,glb,NGC 104)}
+ellipse(113.111,-57.622,0.138,0.138,0) #color=cyan width=1 text={0FGL J0030.3+0450 (F,PSR,PSR J0030+0451)}
+ellipse(94.215,-81.220,0.147,0.147,0) #color=cyan width=1 text={0FGL J0033.6-1921 (F,bzb,BZB J0033-1921)}
+ellipse(121.081,-2.965,0.144,0.144,0) #color=cyan width=1 text={0FGL J0036.7+5951 (F,bzb,BZB J0035+5950)}
+ellipse(122.209,-72.341,0.130,0.130,0) #color=cyan width=1 text={0FGL J0050.5-0928 (T,bzb,CGRaBS J0050-0929)}
+ellipse(122.751,-69.666,0.127,0.127,0) #color=cyan width=1 text={0FGL J0051.1-0647 (T,bzq,CGRaBS J0051-0650)}
+ellipse(126.716,-54.963,0.110,0.110,0) #color=cyan width=1 text={0FGL J0100.2+0750 (F,bzu,CRATES J0100+0745)}
+ellipse(129.148,-39.832,0.134,0.134,0) #color=cyan width=1 text={0FGL J0112.1+2247 (F,bzb,CGRaBS J0112+2244)}
+ellipse(172.990,-81.728,0.164,0.164,0) #color=cyan width=1 text={0FGL J0118.7-2139 (T,bzq,CGRaBS J0118-2141)}
+ellipse(213.951,-83.529,0.140,0.140,0) #color=cyan width=1 text={0FGL J0120.5-2703 (F,bzb,CGRaBS J0120-2701)}
+ellipse(132.446,-22.969,0.087,0.087,0) #color=cyan width=1 text={0FGL J0136.6+3903 (F,bzb,BZB J0136+3905)}
+ellipse(130.818,-14.317,0.120,0.120,0) #color=cyan width=1 text={0FGL J0137.1+4751 (T,bzq,CGRaBS J0136+4751)}
+ellipse(137.248,-34.231,0.209,0.209,0) #color=cyan width=1 text={0FGL J0144.5+2709 (F,bzb,CRATES J0144+2705)}
+ellipse(217.694,-78.067,0.243,0.243,0) #color=cyan width=1 text={0FGL J0145.1-2728 (T,bzq,CGRaBS J0145-2733)}
+ellipse(186.072,-70.274,0.163,0.163,0) #color=cyan width=1 text={0FGL J0204.8-1704 (F,bzq,CGRaBS J0204-1701)}
+ellipse(276.083,-61.776,0.070,0.070,0) #color=cyan width=1 text={0FGL J0210.8-5100 (T,bzq,CGRaBS J0210-5101)}
+ellipse(162.139,-54.389,0.106,0.106,0) #color=cyan width=1 text={0FGL J0217.8+0146 (T,bzq,CGRaBS J0217+0144)}
+ellipse(142.504,-23.325,0.225,0.225,0) #color=cyan width=1 text={0FGL J0220.9+3607 (F,bzu,CGRaBS J0221+3556)}
+ellipse(140.132,-16.763,0.054,0.054,0) #color=cyan width=1 text={0FGL J0222.6+4302 (T,bzb,BZB J0222+4302)}
+ellipse(243.801,-67.189,0.138,0.138,0) #color=cyan width=1 text={0FGL J0229.5-3640 (T,bzq,BZQ J0229-3643)}
+ellipse(149.522,-28.368,0.193,0.193,0) #color=cyan width=1 text={0FGL J0238.4+2855 (F,bzq,CGRaBS J0237+2848)}
+ellipse(156.775,-39.112,0.052,0.052,0) #color=cyan width=1 text={0FGL J0238.6+1636 (T,bzb,CGRaBS J0238+1636)}
+ellipse(135.661,1.075,0.069,0.069,0) #color=cyan width=1 text={0FGL J0240.3+6113 (T,HXB,LS I+61 303)}
+ellipse(262.019,-60.098,0.192,0.192,0) #color=cyan width=1 text={0FGL J0245.6-4656 (F,bzu,CRATES J0246-4651)}
+ellipse(214.764,-60.119,0.174,0.174,0) #color=cyan width=1 text={0FGL J0303.7-2410 (F,bzb,CRATES J0303-2407)}
+ellipse(150.601,-13.230,0.086,0.086,0) #color=cyan width=1 text={0FGL J0320.0+4131 (T,rdg,CGRaBS J0319+4130)}
+ellipse(244.711,-54.088,0.152,0.152,0) #color=cyan width=1 text={0FGL J0334.1-4006 (F,bzb,CGRaBS J0334-4008)}
+ellipse(214.385,-49.035,0.157,0.157,0) #color=cyan width=1 text={0FGL J0349.8-2102 (F,bzq,CGRaBS J0349-2102)}
+ellipse(162.712,-16.056,0.147,0.147,0) #color=cyan width=1 text={0FGL J0357.5+3205 (F,PSR,LAT PSR J0357+32)}
+ellipse(241.360,-47.751,0.142,0.142,0) #color=cyan width=1 text={0FGL J0407.6-3829 (T,bzu,CRATES J0406-3826)}
+ellipse(263.001,-44.716,0.206,0.206,0) #color=cyan width=1 text={0FGL J0412.9-5341 (F,bzu,CRATES J0413-5332)}
+ellipse(195.131,-33.092,0.143,0.143,0) #color=cyan width=1 text={0FGL J0423.1-0112 (F,bzq,CGRaBS J0423-0120)}
+ellipse(240.689,-43.597,0.080,0.080,0) #color=cyan width=1 text={0FGL J0428.7-3755 (F,bzb,CGRaBS J0428-3756)}
+ellipse(248.780,-39.859,0.082,0.082,0) #color=cyan width=1 text={0FGL J0449.7-4348 (F,bzb,CRATES J0449-4350)}
+ellipse(223.739,-34.880,0.065,0.065,0) #color=cyan width=1 text={0FGL J0457.1-2325 (T,bzq,CGRaBS J0457-2324)}
+ellipse(143.772,15.905,0.058,0.058,0) #color=cyan width=1 text={0FGL J0507.9+6739 (F,bzb,BZB J0507+6737)}
+ellipse(271.376,-34.834,0.181,0.181,0) #color=cyan width=1 text={0FGL J0516.2-6200 (F,bzu,CGRaBS J0516-6207)}
+ellipse(191.385,-10.992,0.133,0.133,0) #color=cyan width=1 text={0FGL J0531.0+1331 (T,bzq,CGRaBS J0530+1331)}
+ellipse(184.562,-5.764,0.046,0.046,0) #color=cyan width=1 text={0FGL J0534.6+2201 (F,PSR,PSR J0534+2200)}
+ellipse(279.281,-31.713,0.325,0.325,0) #color=cyan width=1 text={0FGL J0538.4-6856 (F,,LMC)}
+ellipse(250.058,-31.075,0.073,0.073,0) #color=cyan width=1 text={0FGL J0538.8-4403 (T,bzb,CRATES J0538-4405)}
+ellipse(210.468,-9.274,0.175,0.175,0) #color=cyan width=1 text={0FGL J0613.9-0202 (F,PSR,PSR J0613-0200)}
+ellipse(240.513,-21.801,0.083,0.083,0) #color=cyan width=1 text={0FGL J0614.3-3330 (F,,)}
+ellipse(189.079,3.066,0.063,0.063,0) #color=cyan width=1 text={0FGL J0617.4+2234 (F, x,)}
+ellipse(201.302,0.507,0.151,0.151,0) #color=cyan width=1 text={0FGL J0631.8+1034 (F,PSR,PSR J0631+1036)}
+ellipse(205.041,-0.957,0.106,0.106,0) #color=cyan width=1 text={0FGL J0633.5+0634 (F,PSR,LAT PSR J0633+06)}
+ellipse(195.155,4.285,0.043,0.043,0) #color=cyan width=1 text={0FGL J0634.0+1745 (F,PSR,PSR J0633+1746)}
+ellipse(204.010,2.290,0.121,0.121,0) #color=cyan width=1 text={0FGL J0643.2+0858 (T,,)}
+ellipse(171.228,19.369,0.075,0.075,0) #color=cyan width=1 text={0FGL J0654.3+4513 (T,bzq,CGRaBS J0654+4514)}
+ellipse(165.676,21.107,0.083,0.083,0) #color=cyan width=1 text={0FGL J0654.3+5042 (T,bzu,CGRaBS J0654+5042)}
+ellipse(276.778,-23.809,0.182,0.182,0) #color=cyan width=1 text={0FGL J0700.0-6611 (F,bzu,CRATES J0700-6610)}
+ellipse(166.688,23.900,0.146,0.146,0) #color=cyan width=1 text={0FGL J0712.9+5034 (T,bzb,CGRaBS J0712+5033)}
+ellipse(197.685,13.648,0.128,0.128,0) #color=cyan width=1 text={0FGL J0714.2+1934 (T,bzq,CLASS J0713+1935)}
+ellipse(185.139,19.855,0.141,0.141,0) #color=cyan width=1 text={0FGL J0719.4+3302 (T,bzq,CRATES J0719+3307)}
+ellipse(143.976,28.029,0.080,0.080,0) #color=cyan width=1 text={0FGL J0722.0+7120 (T,bzb,CGRaBS J0721+7120)}
+ellipse(227.799,3.154,0.082,0.082,0) #color=cyan width=1 text={0FGL J0730.4-1142 (T,bzq,BZQ J0730-1141)}
+ellipse(201.933,18.081,0.137,0.137,0) #color=cyan width=1 text={0FGL J0738.2+1738 (F,bzb,CGRaBS J0738+1742)}
+ellipse(178.244,33.409,0.083,0.083,0) #color=cyan width=1 text={0FGL J0818.3+4222 (F,bzb,CGRaBS J0818+4222)}
+ellipse(161.981,35.142,0.214,0.214,0) #color=cyan width=1 text={0FGL J0824.9+5551 (T,bzq,CGRaBS J0824+5552)}
+ellipse(243.964,8.941,0.144,0.144,0) #color=cyan width=1 text={0FGL J0826.0-2228 (F,bzb,BZB J0826-2230)}
+ellipse(263.560,-2.767,0.042,0.042,0) #color=cyan width=1 text={0FGL J0835.4-4510 (F,PSR,PSR J0835-4510)}
+ellipse(206.810,35.974,0.178,0.178,0) #color=cyan width=1 text={0FGL J0855.4+2009 (F,bzb,CGRaBS J0854+2006)}
+ellipse(228.640,31.262,0.273,0.273,0) #color=cyan width=1 text={0FGL J0909.7+0145 (F,bzb,CGRaBS J0909+0200)}
+ellipse(271.569,-1.856,0.161,0.161,0) #color=cyan width=1 text={0FGL J0910.2-5044 (T,,)}
+ellipse(175.809,44.876,0.128,0.128,0) #color=cyan width=1 text={0FGL J0921.2+4437 (F,bzq,CGRaBS J0920+4441)}
+ellipse(236.530,38.549,0.287,0.287,0) #color=cyan width=1 text={0FGL J0948.3+0019 (T,bzq,CGRaBS J0948+0022)}
+ellipse(158.605,47.939,0.092,0.092,0) #color=cyan width=1 text={0FGL J0957.6+5522 (F,bzq,CRATES J0957+5522)}
+ellipse(207.897,54.406,0.175,0.175,0) #color=cyan width=1 text={0FGL J1012.9+2435 (T,bzq,CRATES J1012+2439)}
+ellipse(165.473,52.727,0.062,0.062,0) #color=cyan width=1 text={0FGL J1015.2+4927 (F,bzb,CGRaBS J1015+4926)}
+ellipse(236.457,47.036,0.104,0.104,0) #color=cyan width=1 text={0FGL J1015.9+0515 (T,bzq,CRATES J1016+0513)}
+ellipse(284.298,-1.765,0.114,0.114,0) #color=cyan width=1 text={0FGL J1018.2-5858 (F, x,)}
+ellipse(284.346,-0.453,0.106,0.106,0) #color=cyan width=1 text={0FGL J1024.0-5754 (F,,)}
+ellipse(285.074,-0.459,0.079,0.079,0) #color=cyan width=1 text={0FGL J1028.6-5817 (F,PSR,PSR J1028-5819)}
+ellipse(147.765,49.122,0.209,0.209,0) #color=cyan width=1 text={0FGL J1034.0+6051 (F,bzq,CGRaBS J1033+6051)}
+ellipse(287.637,-0.548,0.123,0.123,0) #color=cyan width=1 text={0FGL J1045.6-5937 (F,,)}
+ellipse(287.385,0.508,0.138,0.138,0) #color=cyan width=1 text={0FGL J1047.6-5834 (F,PSR,PSR J1048-5832)}
+ellipse(160.309,58.263,0.124,0.124,0) #color=cyan width=1 text={0FGL J1053.7+4926 (F,bzb,BZB J1053+4929)}
+ellipse(216.968,63.049,0.179,0.179,0) #color=cyan width=1 text={0FGL J1054.5+2212 (F,bzb,CLASS J1054+2210)}
+ellipse(251.220,52.709,0.194,0.194,0) #color=cyan width=1 text={0FGL J1057.8+0138 (F,bzq,CGRaBS J1058+0133)}
+ellipse(285.995,6.673,0.073,0.073,0) #color=cyan width=1 text={0FGL J1058.1-5225 (F,PSR,PSR J1057-5226)}
+ellipse(149.521,54.442,0.083,0.083,0) #color=cyan width=1 text={0FGL J1058.9+5629 (F,bzb,CGRaBS J1058+5628)}
+ellipse(298.047,-18.212,0.285,0.285,0) #color=cyan width=1 text={0FGL J1100.2-8000 (T,bzb,CGRaBS J1058-8003)}
+ellipse(179.868,65.056,0.055,0.055,0) #color=cyan width=1 text={0FGL J1104.5+3811 (F,bzb,CGRaBS J1104+3812)}
+ellipse(290.516,-0.604,0.251,0.251,0) #color=cyan width=1 text={0FGL J1106.4-6055 (F, x,)}
+ellipse(291.661,-0.384,0.214,0.214,0) #color=cyan width=1 text={0FGL J1115.8-6108 (F,,)}
+ellipse(293.519,-3.024,0.125,0.125,0) #color=cyan width=1 text={0FGL J1123.0-6416 (T,,)}
+ellipse(275.133,43.694,0.246,0.246,0) #color=cyan width=1 text={0FGL J1129.8-1443 (F,bzq,CRATES J1130-1449)}
+ellipse(289.170,22.988,0.185,0.185,0) #color=cyan width=1 text={0FGL J1146.7-3808 (F,bzq,CGRaBS J1147-3812)}
+ellipse(199.605,78.307,0.192,0.192,0) #color=cyan width=1 text={0FGL J1159.2+2912 (F,bzq,CGRaBS J1159+2914)}
+ellipse(188.826,82.097,0.099,0.099,0) #color=cyan width=1 text={0FGL J1218.0+3006 (T,bzb,CGRaBS J1217+3007)}
+ellipse(201.593,83.336,0.101,0.101,0) #color=cyan width=1 text={0FGL J1221.7+2814 (T,bzb,CGRaBS J1221+2813)}
+ellipse(289.975,64.355,0.083,0.083,0) #color=cyan width=1 text={0FGL J1229.1+0202 (T,bzq,CGRaBS J1229+0203)}
+ellipse(295.643,48.410,0.087,0.087,0) #color=cyan width=1 text={0FGL J1231.5-1410 (F,,)}
+ellipse(301.571,37.125,0.168,0.168,0) #color=cyan width=1 text={0FGL J1246.6-2544 (F,bzq,CGRaBS J1246-2547)}
+ellipse(123.617,58.934,0.122,0.122,0) #color=cyan width=1 text={0FGL J1248.7+5811 (F,bzb,PG 1246+586)}
+ellipse(122.230,64.125,0.154,0.154,0) #color=cyan width=1 text={0FGL J1253.4+5300 (F,bzb,CRATES J1253+5301)}
+ellipse(305.081,57.052,0.079,0.079,0) #color=cyan width=1 text={0FGL J1256.1-0547 (T,bzq,CGRaBS J1256-0547)}
+ellipse(85.458,83.331,0.103,0.103,0) #color=cyan width=1 text={0FGL J1310.6+3220 (T,bzq,CGRaBS J1310+3220)}
+ellipse(307.754,28.361,0.204,0.204,0) #color=cyan width=1 text={0FGL J1311.9-3419 (F,,)}
+ellipse(309.501,19.376,0.304,0.304,0) #color=cyan width=1 text={0FGL J1325.4-4303 (F,rdg,BZU J1325-4301)}
+ellipse(308.277,9.460,0.191,0.191,0) #color=cyan width=1 text={0FGL J1326.6-5302 (F,,)}
+ellipse(308.174,6.411,0.142,0.142,0) #color=cyan width=1 text={0FGL J1328.8-5604 (T,,)}
+ellipse(321.247,56.320,0.278,0.278,0) #color=cyan width=1 text={0FGL J1331.7-0506 (T,bzq,CGRaBS J1332-0509)}
+ellipse(107.300,64.865,0.219,0.219,0) #color=cyan width=1 text={0FGL J1333.3+5058 (F,bzq,CLASS J1333+5057)}
+ellipse(327.221,49.113,0.163,0.163,0) #color=cyan width=1 text={0FGL J1355.0-1044 (T,bzq,CRATES J1354-1041)}
+ellipse(312.346,-0.695,0.096,0.096,0) #color=cyan width=1 text={0FGL J1413.1-6203 (F,,)}
+ellipse(313.338,0.113,0.074,0.074,0) #color=cyan width=1 text={0FGL J1418.8-6058 (F,PSR,LAT PSR J1418-60)}
+ellipse(29.472,68.166,0.073,0.073,0) #color=cyan width=1 text={0FGL J1427.1+2347 (F,bzb,CRATES J1427+2347)}
+ellipse(315.288,1.173,0.119,0.119,0) #color=cyan width=1 text={0FGL J1430.5-5918 (F,,)}
+ellipse(329.936,20.530,0.076,0.076,0) #color=cyan width=1 text={0FGL J1457.6-3538 (T,bzq,CGRaBS J1457-3539)}
+ellipse(317.863,-1.833,0.119,0.119,0) #color=cyan width=1 text={0FGL J1459.4-6056 (F,PSR,LAT PSR J1459-60)}
+ellipse(11.409,54.577,0.054,0.054,0) #color=cyan width=1 text={0FGL J1504.4+1030 (T,bzq,CGRaBS J1504+1029)}
+ellipse(320.003,-0.596,0.121,0.121,0) #color=cyan width=1 text={0FGL J1509.5-5848 (F,PSR,PSR J1509-5850)}
+ellipse(354.099,42.948,0.252,0.252,0) #color=cyan width=1 text={0FGL J1511.2-0536 (F,bzq,PKS 1508-05)}
+ellipse(351.282,40.153,0.087,0.087,0) #color=cyan width=1 text={0FGL J1512.7-0905 (T,bzq,PKS 1510-08)}
+ellipse(325.254,6.807,0.120,0.120,0) #color=cyan width=1 text={0FGL J1514.3-4946 (F,,)}
+ellipse(340.725,27.521,0.101,0.101,0) #color=cyan width=1 text={0FGL J1517.9-2423 (F,bzb,CGRaBS J1517-2422)}
+ellipse(50.143,57.014,0.087,0.087,0) #color=cyan width=1 text={0FGL J1522.2+3143 (T,bzq,CGRaBS J1522+3144)}
+ellipse(328.261,4.764,0.128,0.128,0) #color=cyan width=1 text={0FGL J1536.7-4947 (F,,)}
+ellipse(95.383,45.370,0.160,0.160,0) #color=cyan width=1 text={0FGL J1543.1+6130 (F,bzb,CRATES J1542+6129)}
+ellipse(23.746,45.225,0.105,0.105,0) #color=cyan width=1 text={0FGL J1553.4+1255 (T,bzq,CRATES J1553+1256)}
+ellipse(21.911,43.941,0.054,0.054,0) #color=cyan width=1 text={0FGL J1555.8+1110 (F,bzb,CGRaBS J1555+1111)}
+ellipse(332.170,2.541,0.078,0.078,0) #color=cyan width=1 text={0FGL J1604.0-4904 (F,,)}
+ellipse(332.354,-0.010,0.233,0.233,0) #color=cyan width=1 text={0FGL J1615.6-5049 (F, x,)}
+ellipse(333.874,-0.009,0.179,0.179,0) #color=cyan width=1 text={0FGL J1622.4-4945 (F,,)}
+ellipse(352.164,16.308,0.150,0.150,0) #color=cyan width=1 text={0FGL J1625.8-2527 (F,bzq,CGRaBS J1625-2527)}
+ellipse(353.005,16.995,0.257,0.257,0) #color=cyan width=1 text={0FGL J1625.9-2423 (F,bzu,CRATES J1627-2426)}
+ellipse(336.839,-0.025,0.080,0.080,0) #color=cyan width=1 text={0FGL J1634.9-4737 (F,,)}
+ellipse(61.118,42.333,0.116,0.116,0) #color=cyan width=1 text={0FGL J1635.2+3809 (T,bzq,CGRaBS J1635+3808)}
+ellipse(63.239,41.239,0.159,0.159,0) #color=cyan width=1 text={0FGL J1641.4+3939 (T,bzq,CLASS J1641+3935)}
+ellipse(339.469,-0.712,0.176,0.176,0) #color=cyan width=1 text={0FGL J1648.1-4606 (F, x,)}
+ellipse(16.549,24.962,0.158,0.158,0) #color=cyan width=1 text={0FGL J1653.4-0200 (F,,)}
+ellipse(63.612,38.841,0.068,0.068,0) #color=cyan width=1 text={0FGL J1653.9+3946 (F,bzb,CGRaBS J1653+3945)}
+ellipse(343.106,-2.679,0.048,0.048,0) #color=cyan width=1 text={0FGL J1709.7-4428 (F,PSR,PSR J1709-4429)}
+ellipse(348.525,0.103,0.133,0.133,0) #color=cyan width=1 text={0FGL J1714.7-3827 (F, x,)}
+ellipse(39.553,28.080,0.076,0.076,0) #color=cyan width=1 text={0FGL J1719.3+1746 (T,bzb,CGRaBS J1719+1745)}
+ellipse(356.287,0.920,0.087,0.087,0) #color=cyan width=1 text={0FGL J1732.8-3135 (F,PSR,LAT PSR J1732-31)}
+ellipse(357.959,-0.189,0.197,0.197,0) #color=cyan width=1 text={0FGL J1741.4-3046 (F,,)}
+ellipse(6.437,4.859,0.140,0.140,0) #color=cyan width=1 text={0FGL J1742.1-2054 (F,PSR,LAT PSR J1742-20)}
+ellipse(359.988,-0.111,0.068,0.068,0) #color=cyan width=1 text={0FGL J1746.0-2900 (T,,)}
+ellipse(34.867,17.614,0.095,0.095,0) #color=cyan width=1 text={0FGL J1751.5+0935 (T,bzb,CGRaBS J1751+0939)}
+ellipse(6.540,-0.312,0.107,0.107,0) #color=cyan width=1 text={0FGL J1801.6-2327 (F, x,)}
+ellipse(110.026,28.990,0.132,0.132,0) #color=cyan width=1 text={0FGL J1802.2+7827 (F,bzb,CGRaBS J1800+7828)}
+ellipse(352.453,-8.410,0.069,0.069,0) #color=cyan width=1 text={0FGL J1802.6-3939 (T,bzu,BZU J1802-3940)}
+ellipse(8.536,-0.165,0.186,0.186,0) #color=cyan width=1 text={0FGL J1805.3-2138 (F,,)}
+ellipse(7.381,-1.938,0.061,0.061,0) #color=cyan width=1 text={0FGL J1809.5-2331 (F,PSR,LAT PSR J1809-2332)}
+ellipse(17.238,2.384,0.092,0.092,0) #color=cyan width=1 text={0FGL J1813.5-1248 (T,,)}
+ellipse(13.048,-0.094,0.191,0.191,0) #color=cyan width=1 text={0FGL J1814.3-1739 (F, x,)}
+ellipse(16.435,-0.216,0.173,0.173,0) #color=cyan width=1 text={0FGL J1821.4-1444 (F,,)}
+ellipse(18.539,-0.344,0.075,0.075,0) #color=cyan width=1 text={0FGL J1825.9-1256 (F,PSR,LAT PSR J1826-1256)}
+ellipse(16.886,-1.323,0.109,0.109,0) #color=cyan width=1 text={0FGL J1826.3-1451 (F,hxb,LS 5039)}
+ellipse(36.158,7.543,0.097,0.097,0) #color=cyan width=1 text={0FGL J1830.3+0617 (T,,)}
+ellipse(12.109,-5.693,0.117,0.117,0) #color=cyan width=1 text={0FGL J1833.4-2106 (F,bzq,BZQ J1833-2103)}
+ellipse(23.269,-0.220,0.100,0.100,0) #color=cyan width=1 text={0FGL J1834.4-0841 (F, x,)}
+ellipse(24.557,-0.025,0.217,0.217,0) #color=cyan width=1 text={0FGL J1836.1-0727 (F,,)}
+ellipse(88.855,24.996,0.053,0.053,0) #color=cyan width=1 text={0FGL J1836.2+5924 (F,PSR,LAT PSR J1836+5925)}
+ellipse(26.343,0.078,0.119,0.119,0) #color=cyan width=1 text={0FGL J1839.0-0549 (F,,)}
+ellipse(28.907,-0.017,0.148,0.148,0) #color=cyan width=1 text={0FGL J1844.1-0335 (F,,)}
+ellipse(62.065,14.838,0.178,0.178,0) #color=cyan width=1 text={0FGL J1847.8+3223 (T,bzq,CGRaBS J1848+3219)}
+ellipse(31.153,-0.123,0.160,0.160,0) #color=cyan width=1 text={0FGL J1848.6-0138 (F,,)}
+ellipse(97.503,25.027,0.090,0.090,0) #color=cyan width=1 text={0FGL J1849.4+6706 (T,bzq,CGRaBS J1849+6705)}
+ellipse(34.722,-0.347,0.078,0.078,0) #color=cyan width=1 text={0FGL J1855.9+0126 (F, x,)}
+ellipse(37.424,-0.110,0.290,0.290,0) #color=cyan width=1 text={0FGL J1900.0+0356 (F,,)}
+ellipse(40.140,-0.821,0.077,0.077,0) #color=cyan width=1 text={0FGL J1907.5+0602 (F,PSR,LAT PSR J1907+06)}
+ellipse(43.246,-0.176,0.068,0.068,0) #color=cyan width=1 text={0FGL J1911.0+0905 (F, x,)}
+ellipse(16.818,-13.266,0.129,0.129,0) #color=cyan width=1 text={0FGL J1911.2-2011 (T,bzq,CGRaBS J1911-2006)}
+ellipse(49.134,-0.397,0.080,0.080,0) #color=cyan width=1 text={0FGL J1923.0+1411 (F, x,)}
+ellipse(17.205,-16.199,0.130,0.130,0) #color=cyan width=1 text={0FGL J1923.3-2101 (T,bzq,CGRaBS J1923-2104)}
+ellipse(68.750,2.733,0.089,0.089,0) #color=cyan width=1 text={0FGL J1953.2+3249 (F,PSR,PSR J1952+3252)}
+ellipse(65.300,0.375,0.110,0.110,0) #color=cyan width=1 text={0FGL J1954.4+2838 (F, x,)}
+ellipse(65.850,-0.232,0.113,0.113,0) #color=cyan width=1 text={0FGL J1958.1+2848 (F,PSR,LAT PSR J1958+28)}
+ellipse(97.974,17.630,0.077,0.077,0) #color=cyan width=1 text={0FGL J2000.2+6506 (F,bzb,CGRaBS J1959+6508)}
+ellipse(79.047,7.124,0.069,0.069,0) #color=cyan width=1 text={0FGL J2001.0+4352 (F,,)}
+ellipse(350.361,-32.607,0.132,0.132,0) #color=cyan width=1 text={0FGL J2009.4-4850 (F,bzb,CGRaBS J2009-4849)}
+ellipse(48.596,-15.991,0.123,0.123,0) #color=cyan width=1 text={0FGL J2017.2+0602 (F,bzu,CLASS J2017+0603)}
+ellipse(75.182,0.131,0.060,0.060,0) #color=cyan width=1 text={0FGL J2020.8+3649 (F,PSR,PSR J2021+3651)}
+ellipse(78.230,2.070,0.053,0.053,0) #color=cyan width=1 text={0FGL J2021.5+4026 (F,PSR,LAT PSR J2021+4026)}
+ellipse(36.883,-24.389,0.077,0.077,0) #color=cyan width=1 text={0FGL J2025.6-0736 (T,bzq,CRATES J2025-0735)}
+ellipse(73.296,-2.849,0.118,0.118,0) #color=cyan width=1 text={0FGL J2027.5+3334 (F,,)}
+ellipse(80.161,0.978,0.085,0.085,0) #color=cyan width=1 text={0FGL J2032.2+4122 (F,PSR,LAT PSR J2032+41)}
+ellipse(70.660,-12.475,0.130,0.130,0) #color=cyan width=1 text={0FGL J2055.5+2540 (F,,)}
+ellipse(352.586,-40.358,0.239,0.239,0) #color=cyan width=1 text={0FGL J2056.1-4715 (F,bzq,CGRaBS J2056-4714)}
+ellipse(88.261,-1.351,0.171,0.171,0) #color=cyan width=1 text={0FGL J2110.8+4608 (F,,)}
+ellipse(10.924,-45.441,0.143,0.143,0) #color=cyan width=1 text={0FGL J2124.7-3358 (F,PSR,PSR J2124-3358)}
+ellipse(358.237,-48.332,0.096,0.096,0) #color=cyan width=1 text={0FGL J2139.4-4238 (F,bzb,CRATES J2139-4235)}
+ellipse(72.016,-26.051,0.215,0.215,0) #color=cyan width=1 text={0FGL J2143.2+1741 (F,bzq,CGRaBS J2143+1743)}
+ellipse(65.805,-32.236,0.137,0.137,0) #color=cyan width=1 text={0FGL J2147.1+0931 (T,bzq,CGRaBS J2147+0929)}
+ellipse(84.747,-18.258,0.343,0.343,0) #color=cyan width=1 text={0FGL J2157.5+3125 (F,bzq,CGRaBS J2157+3127)}
+ellipse(17.711,-52.236,0.064,0.064,0) #color=cyan width=1 text={0FGL J2158.8-3014 (T,bzb,CGRaBS J2158-3013)}
+ellipse(92.569,-10.398,0.160,0.160,0) #color=cyan width=1 text={0FGL J2202.4+4217 (F,bzb,BZB J2202+4216)}
+ellipse(75.716,-29.529,0.186,0.186,0) #color=cyan width=1 text={0FGL J2203.2+1731 (T,bzq,CGRaBS J2203+1725)}
+ellipse(339.949,-49.832,0.223,0.223,0) #color=cyan width=1 text={0FGL J2207.0-5347 (T,bzq,CGRaBS J2207-5346)}
+ellipse(86.913,-21.658,0.152,0.152,0) #color=cyan width=1 text={0FGL J2214.8+3002 (F,,)}
+ellipse(106.644,2.956,0.076,0.076,0) #color=cyan width=1 text={0FGL J2229.0+6114 (F,PSR,PSR J2229+6114)}
+ellipse(55.326,-51.701,0.185,0.185,0) #color=cyan width=1 text={0FGL J2229.8-0829 (F,bzq,CGRaBS J2229-0832)}
+ellipse(77.372,-38.592,0.183,0.183,0) #color=cyan width=1 text={0FGL J2232.4+1141 (F,bzq,BZQ J2232+1143)}
+ellipse(337.395,-54.907,0.151,0.151,0) #color=cyan width=1 text={0FGL J2241.7-5239 (F,,)}
+ellipse(86.125,-38.187,0.051,0.051,0) #color=cyan width=1 text={0FGL J2254.0+1609 (T,bzq,CGRaBS J2253+1608)}
+ellipse(103.437,-14.004,0.155,0.155,0) #color=cyan width=1 text={0FGL J2302.9+4443 (F,,)}
+ellipse(105.532,-19.952,0.118,0.118,0) #color=cyan width=1 text={0FGL J2325.3+3959 (T,bzb,CRATES J2325+3957)}
+ellipse(91.159,-47.821,0.218,0.218,0) #color=cyan width=1 text={0FGL J2327.3+0947 (T,bzq,CGRaBS J2327+0940)}
+ellipse(81.487,-62.474,0.188,0.188,0) #color=cyan width=1 text={0FGL J2339.8-0530 (F,,)}
+ellipse(65.677,-71.092,0.239,0.239,0) #color=cyan width=1 text={0FGL J2345.5-1559 (T,bzq,CGRaBS J2345-1555)}

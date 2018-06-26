@@ -1,0 +1,83 @@
+Procedure for the extended sources template generation in order to run a multi5ext analysis.
+
+### 0. Load the environment ###
+
+The agile BUILD23 and ftools are required.
+
+Example: load environment on agile cluster gtbc4.giano.iasfbo
+    module load agile-B23
+    module load heasoft-6.17
+    heainit
+
+### 1. Generate a circle representing the extended source we want to analyze ###
+
+Command:
+
+    AG_circle5 <inputmap> <circlemap> <l> <b> <radius>
+
+The circle generated will be centered on the galactic coordinates <l>,<b> with the specified <radius>. The values will be 1.0 within the circle, otherwise 0.0. The map <inputmap> provided will be used to get the map size and other metadata informations from the FITS header. The output map name is <circlemap>.
+
+Example: Generate a circle over cocoon
+
+    AG_circle5 FM3.119_ASDCe_I0025_B01.int.gz cocoon.gz 79.600721 1.396268 3.0
+
+
+### 2. Convolve the circle with the PSF ###
+
+Command:
+
+    convolve_template.sh <map> <spectral_index>
+
+The input <map> can be a circle map generated or any other map to be convolved, this tool is generic. By default the scripts generates 5 conv.sky maps using the given <spectral_index> and the following energy ranges:
+
+convemin = 00100 00400 01000 03000 10000
+convemax = 00400 01000 03000 10000 50000
+
+To change the energy range or the spectral_index run the script changing the range vectors convemin, convemax and convindex:
+
+    convemin="<emin_values>" convemax="<emax_values>" convindex="<spectral_indexes>" convolve_template.sh <circlemap> <spectral_index>
+
+Note: The length of the three vectors convemin, convemax and convindex should be the same.
+Note: The convemin, convemax strings should be of five characters, in order to match agile file naming convention, like "00100 10000" and not "100 10000".
+
+The script generate temporary maps like <map>.converted.sky, <map>.rebinned.sky, <map>.pad.sky.
+
+Example: Convolution of the cocoon circle map with the default energy range
+
+    convolve_template.sh cocoon.gz 2.1
+
+Example 2: Convolution of the cocoon circle map changing energy ranges and spectral index
+
+    convemin="00030 00400" convemax="00400 50000" convindex="2.1 1.9" convolve_template.sh cocoon.gz 0
+
+### 3. Generate the template maps usable by the analisys tools ###
+
+Command:
+
+    add_template.sh <map> <explist>
+
+The input <map> has to be the same map used above in the convolution step. The *<map>.conv.sky maps generated during convolution with used to generate the template maps. The file <explist> is a text file with a list of exposure maps, each line contains "<exp_map_name> <spectral_index>". A <exp_map_name>.template.gz template will be generated for each exposure map in the list accordingly to its range. If an exposure map use a large range multiple convolved maps <map>.conv.sky will be used and summed to match the exposure map energy range. The generated templates are normalized (the sum of the map values is 1.0).
+
+Note: If you have defined different energy ranges during the convolution, you must set the same convemin and convemax range vectors. To set them use the same syntax used during the convolution.
+Note: In order to run the multi5ext analysis the number of exposure maps has to be the same defined in the file.maplist4.
+
+Example: Generate a full-range template (range 100-50000) given a single full-range exposure map
+
+    add_template.sh cocoon.gz explist
+
+The file explist contains the single line "FM3.119_ASDCe_I0025_B01.exp.gz 2.1".
+
+The different energy bins will be merged by the script, a single FM3.119_ASDCe_I0025_B01.exp.gz.template.gz template is generated.
+
+Example 2: Generate five templates with the default energy ranges
+
+    add_template.sh cocoon.gz explist
+
+The file explist file this time contains the lines:
+    EMIN00100_EMAX00400_FM3.119_ASDCe_I0025_B01.exp.gz 2.1
+    EMIN00400_EMAX01000_FM3.119_ASDCe_I0025_B01.exp.gz 2.1
+    EMIN01000_EMAX03000_FM3.119_ASDCe_I0025_B01.exp.gz 2.1
+    EMIN03000_EMAX10000_FM3.119_ASDCe_I0025_B01.exp.gz 2.1
+    EMIN10000_EMAX50000_FM3.119_ASDCe_I0025_B01.exp.gz 2.1
+
+Five templates will be generated, one for each exposure map.

@@ -1,0 +1,48 @@
+Procedure to filter points that are inside a polygon.
+
+### 0. Load the environment ###
+
+The numpy, astropy and argparse python modules are required. The latter one is already available with python 2.7.x.
+
+Example: load environment on agile cluster gtbc4.giano.iasfbo
+    module load python2.7-sci
+
+### 1. The polygon file ###
+
+A polygon/contour file has to be defined as a series of vertices in radec coordinates or galactic coordinates in counter-clockwise order. The last vertex and the first vertex of the list are connected, do redefine the first vertex two times or remove the duplicate vertex if present.
+
+Example: A "square.con" polygon
+
+0.0 0.0
+0.0 1.0
+1.0 1.0
+1.0 0.0
+
+### 2. Filter points inside a polygon ###
+
+Command:
+
+    polygonfilter.py [-h] [-g] [-l L] [-b B] polygon points output
+
+    positional arguments:
+      polygon           An input file containing the polygon as a list of vertices
+                        (default radec, see -g)
+      points            An input file containing a list of points to test
+                        (galactic coords only)
+      output            An output file containing only the points inside the
+                        polygon
+
+    optional arguments:
+      -h, --help        show this help message and exit
+      -g, -galactic     The input contour unit is galactic coordinates
+      -l L, -lcolumn L  l column number inside the list of points file (default 0)
+      -b B, -bcolumn B  b column number inside the list of points file (default 1)
+
+Example: Filter two points inside the square contour
+
+Considering the square.con file defined before as radec coordinates and the following points.txt file:
+    "0.5 0.5"
+    "-1 0.5"
+    "0.0 1.1"
+
+    $AGILE/scripts/polygonfilter/polygonfilter.py square.con points.txt points_filtered.txt

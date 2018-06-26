@@ -1,0 +1,654 @@
+galactic;ellipse(358.304,-0.588711,0.142737,0.099956, 10.7736) # color=green text={2AGL0001} dash=1
+galactic;ellipse(359.747,-0.312007,0.131158,0.104687, -23.2546) # color=green text={2AGL0000} dash=1
+galactic;ellipse(356.384,0.720638,0.154682,0.198349, 36.7918) # color=green text={2AGL0006} dash=1
+galactic;ellipse(0.294255,0.213426,0.149983,0.233619, -31.1492) # color=green text={2AGL0005} dash=1
+galactic;ellipse(359.339,1.33659,0.426096,0.229314, -5.06182) # color=green text={2AGL0003} dash=1
+galactic;ellipse(0.898586,-0.547666,0.238636,0.207603, 13.439) # color=green text={2AGL0002} dash=1
+galactic;ellipse(356.266,-0.546428,0.232024,0.315793, 12.7346) # color=green text={2AGL0007} dash=1
+galactic;ellipse(1.31378,0.380328,1800",1800",0.0) # color=green text={2AGL0004} dash=1
+galactic;ellipse(3.86286,1.47606,0.19807,0.281967, -3.36662) # color=green text={2AGL0008} dash=1
+galactic;ellipse(2.90428,-0.39738,1800",1800",0.0) # color=green text={2AGL0009} dash=1
+galactic;ellipse(357.746,0.760263,1800",1800",0.0) # color=green text={2AGL0011} dash=1
+galactic;ellipse(359.866,-1.15542,1800",1800",0.0) # color=green text={2AGL0010} dash=1
+galactic;ellipse(18.6556,-0.307548,0.147498,0.262062, -7.59987) # color=green text={2AGL0024} dash=1
+galactic;ellipse(7.4122,-1.95135,0.123318,0.0944348, -40.2097) # color=green text={2AGL0014} dash=1
+galactic;ellipse(17.2344,2.40425,1800",1800",0.0) # color=green text={2AGL0022} dash=1
+galactic;ellipse(17.1781,-1.72275,0.145725,0.210564, -31.3295) # color=green text={2AGL0020} dash=1
+galactic;ellipse(6.3008,-0.0995543,1800",1800",0.0) # color=green text={2AGL0012} dash=1
+galactic;ellipse(11.3508,0.124819,0.429486,0.24412, -84.1162) # color=green text={2AGL0016} dash=1
+galactic;ellipse(16.2355,-0.574648,0.158155,0.171076, 2.5957) # color=green text={2AGL0019} dash=1
+galactic;ellipse(8.57955,0.0710493,0.205208,0.17096, -22.1704) # color=green text={2AGL0015} dash=1
+galactic;ellipse(17.7301,0.242932,1800",1800",0.0) # color=green text={2AGL0021} dash=1
+galactic;ellipse(7.32,0.110907,0.368409,0.552941, -27.3754) # color=green text={2AGL0013} dash=1
+galactic;ellipse(13.1885,0.273853,1800",1800",0.0) # color=green text={2AGL0018} dash=1
+galactic;ellipse(12.1922,-5.66219,0.189176,0.224736, -15.3972) # color=green text={2AGL0017} dash=1
+galactic;ellipse(19.6264,-1.95514,0.289728,1.07563, -41.1429) # color=green text={2AGLRUN11} dash=1
+galactic;ellipse(21.1135,1.66716,1.78424,0.50331, 27.7882) # color=green text={2AGL0026} dash=1
+galactic;ellipse(34.6594,-0.409365,0.123665,0.173513, -8.37958) # color=green text={2AGL0034} dash=1
+galactic;ellipse(26.2212,0.103133,0.16359,0.186545, 25.2209) # color=green text={2AGL0029} dash=1
+galactic;ellipse(40.2965,-1.1064,0.161959,0.138911, 32.9525) # color=green text={2AGL0038} dash=1
+galactic;ellipse(27.1382,0.182805,0.270023,0.222339, -4.51109) # color=green text={2AGL0030} dash=1
+galactic;ellipse(21.0109,-0.657963,0.421626,0.266748, -29.945) # color=green text={2AGL0025} dash=1
+galactic;ellipse(33.8753,-1.13091,0.246837,0.30956, -38.463) # color=green text={2AGL0033} dash=1
+galactic;ellipse(38.0321,-0.0109799,0.351377,0.306902, -40.9648) # color=green text={2AGL0036} dash=1
+galactic;ellipse(35.7762,-0.543724,0.409727,0.304559, -65.5299) # color=green text={2AGL0035} dash=1
+galactic;ellipse(40.8177,0.27499,0.630084,0.504185, -17.4841) # color=green text={2AGL0039} dash=1
+galactic;ellipse(24.6589,-1.53548,0.885883,0.482779, 12.4311) # color=green text={2AGL0028} dash=1
+galactic;ellipse(30.789,0.0428768,0.357372,0.264199, 29.9552) # color=green text={2AGL0032} dash=1
+galactic;ellipse(24.7948,1.12057,0.574052,0.487184, 54.9443) # color=green text={2AGL0029C} dash=1
+galactic;ellipse(43.3316,-0.0819103,0.239798,0.451168, 17.5897) # color=green text={2AGL0040} dash=1
+galactic;ellipse(32.551,1.11786,0.469712,0.346663, -0.503653) # color=green text={2AGL0032B} dash=1
+galactic;ellipse(28.8333,1.16066,1800",1800",0.0) # color=green text={2AGL0030B} dash=1
+galactic;ellipse(22.3094,-5.39355,0.277293,0.432757, -10.1168) # color=green text={2AGL0027} dash=1
+galactic;ellipse(38.9183,2.09744,0.949138,0.434802, 35.0857) # color=green text={2AGL0037} dash=1
+galactic;ellipse(28.4859,-6.86759,0.392855,1.24852, -36.0646) # color=green text={2AGL0031} dash=1
+galactic;ellipse(36.5968,1.50305,0.401214,0.571818, -17.7482) # color=green text={2AGL0036C} dash=1
+galactic;ellipse(19.8075,-5.75184,1800",1800",0.0) # color=green text={2AGL0023} dash=1
+galactic;ellipse(65.8651,-0.160905,0.203344,0.250786, -28.0266) # color=green text={2AGL0047} dash=1
+galactic;ellipse(50.6478,1.77335,1800",1800",0.0) # color=green text={2AGL0042} dash=1
+galactic;ellipse(78.2584,2.10821,0.062709,0.0620323, 90.0) # color=green text={2AGL0055} dash=1
+galactic;ellipse(75.2504,0.174702,0.0842149,0.0915273, 2.57212) # color=green text={2AGL0052} dash=1
+galactic;ellipse(80.081,1.22591,0.168676,0.198781, -19.1576) # color=green text={2AGL0059} dash=1
+galactic;ellipse(78.033,2.74404,0.226624,0.208826, 30.4814) # color=green text={2AGL0054} dash=1
+galactic;ellipse(74.6044,0.79967,0.305582,0.239532, -17.9709) # color=green text={2AGL0051} dash=1
+galactic;ellipse(79.905,0.592001,0.285384,0.237601, -13.0419) # color=green text={2AGL0058} dash=1
+galactic;ellipse(68.773,2.86054,0.184512,0.146097, -10.4651) # color=green text={2AGL0049} dash=1
+galactic;ellipse(73.2934,-2.47157,0.223802,0.390565, -17.3419) # color=green text={2AGL0050} dash=1
+galactic;ellipse(81.9956,3.08027,0.380289,0.292473, -37.7978) # color=green text={2AGL0060} dash=1
+galactic;ellipse(76.1478,1.30179,1800",1800",0.0) # color=green text={2AGL0053} dash=1
+galactic;ellipse(82.4032,1.18531,0.497687,0.292822, -56.2146) # color=green text={2AGL0061} dash=1
+galactic;ellipse(78.3562,1.1816,1800",1800",0.0) # color=green text={2AGL0056} dash=1
+galactic;ellipse(83.274,7.29067,0.700812,0.625152, 49.2465) # color=green text={2AGL006A} dash=1
+galactic;ellipse(79.6782,-0.53777,1.12431,0.580769, 47.7119) # color=green text={2AGL0057} dash=1
+galactic;ellipse(65.131,1.40355,0.512395,0.338232, -46.658) # color=green text={2AGL0046} dash=1
+galactic;ellipse(106.784,2.92374,0.144415,0.202478, -40.4976) # color=green text={2AGL0070} dash=1
+galactic;ellipse(89.0129,4.62289,0.569948,0.20906, 4.19276) # color=green text={2AGL0064} dash=1
+galactic;ellipse(92.4453,-10.0345,0.23121,0.574886, 38.4998) # color=green text={2AGL0249} dash=1
+galactic;ellipse(106.015,3.36878,0.357209,0.242162, 18.8559) # color=green text={2AGL0068} dash=1
+galactic;ellipse(110.327,5.84845,0.385767,0.243255, -37.5061) # color=green text={2AGL0072} dash=1
+galactic;ellipse(108.036,5.97062,1800",1800",0.0) # color=green text={2AGL0071} dash=1
+galactic;ellipse(87.1292,3.31872,0.955789,0.750157, -67.3966) # color=green text={2AGL0063} dash=1
+galactic;ellipse(102.513,0.624435,0.307144,0.844352, -11.6893) # color=green text={2AGL0065} dash=1
+galactic;ellipse(106.544,0.47961,0.5466,0.406374, -30.1092) # color=green text={2AGL0069} dash=1
+galactic;ellipse(103.228,5.06373,0.374488,0.521802, 37.1867) # color=green text={2AGL0066} dash=1
+galactic;ellipse(135.519,1.162,0.0979748,0.0936021, 11.538) # color=green text={2AGL0080} dash=1
+galactic;ellipse(119.671,10.5045,0.092106,0.0769729, 2.37086) # color=green text={2AGL0073} dash=1
+galactic;ellipse(133.299,1.17669,0.542441,0.35485, -31.6798) # color=green text={2AGL0078} dash=1
+galactic;ellipse(126.439,-3.78774,0.503557,0.304666, -26.0354) # color=green text={2AGL0075} dash=1
+galactic;ellipse(116.02,7.53251,0.504917,0.319637, -39.1029) # color=green text={2AGLA001} dash=1
+galactic;ellipse(150.522,-13.2371,0.290284,0.362883, -33.1335) # color=green text={2AGL0094} dash=1
+galactic;ellipse(136.662,0.722451,0.390855,0.284995, 17.2329) # color=green text={2AGL0081} dash=1
+galactic;ellipse(134.701,9.49573,1800",1800",0.0) # color=green text={2AGL0079} dash=1
+galactic;ellipse(146.445,-1.61834,0.479839,0.652132, -23.525) # color=green text={2AGL0091} dash=1
+galactic;ellipse(145.815,8.2835,0.349664,0.252904, -7.2774) # color=green text={2AGL0090} dash=1
+galactic;ellipse(138.88,5.18453,0.465054,0.336029, 36.2201) # color=green text={2AGL0082} dash=1
+galactic;ellipse(153.692,9.69465,2.47778,1.44451, -30.9784) # color=green text={2AGL0097} dash=1
+galactic;ellipse(177.769,-0.480473,0.442357,0.393756, -5.97871) # color=green text={2AGL0106} dash=1
+galactic;ellipse(171.12,0.376607,0.629216,1.10753, -21.5899) # color=green text={2AGL0101} dash=1
+galactic;ellipse(174.808,8.0591,1800",1800",0.0) # color=green text={2AGL0104} dash=1
+galactic;ellipse(172.427,2.59763,1800",1800",0.0) # color=green text={2AGL0102} dash=1
+galactic;ellipse(173.837,-2.8959,0.469319,0.700345, 38.5522) # color=green text={2AGL0103} dash=1
+galactic;ellipse(168.856,-1.81199,0.979771,0.430922, -23.5054) # color=green text={2AGL0100} dash=1
+galactic;ellipse(162.332,8.45123,1800",1800",0.0) # color=green text={2AGL0099} dash=1
+galactic;ellipse(195.084,4.26854,0.0414625,0.0383563, -27.4328) # color=green text={2AGL0119} dash=1
+galactic;ellipse(184.522,-5.81996,0.0731184,0.0643195, -9.08513) # color=green text={2AGL0116} dash=1
+galactic;ellipse(188.922,3.0286,0.148255,0.154322, -15.6032) # color=green text={2AGL0117} dash=1
+galactic;ellipse(183.156,-4.06113,1800",1800",0.0) # color=green text={2AGL0114} dash=1
+galactic;ellipse(180.377,-2.44132,0.349164,0.60257, -30.1402) # color=green text={2AGL0112} dash=1
+galactic;ellipse(182.441,-0.0426913,1800",1800",0.0) # color=green text={2AGL0111} dash=1
+galactic;ellipse(180.486,4.66802,0.703306,0.328466, -47.0469) # color=green text={2AGL0113} dash=1
+galactic;ellipse(178.735,6.66451,1800",1800",0.0) # color=green text={2AGL0107} dash=1
+galactic;ellipse(179.051,-5.59509,1.18102,1.03265, -46.7218) # color=green text={2AGL0108} dash=1
+galactic;ellipse(180.317,8.60258,1800",1800",0.0) # color=green text={2AGL0109} dash=1
+galactic;ellipse(205.25,-0.768751,0.519231,0.303789, -36.5478) # color=green text={2AGL0120} dash=1
+galactic;ellipse(207.507,-2.13789,1800",1800",0.0) # color=green text={2AGL0122} dash=1
+galactic;ellipse(202.559,0.84426,1.13771,0.671854, 3.16195) # color=green text={2AGL0121} dash=1
+galactic;ellipse(213.389,-0.795577,0.415689,0.478318, 38.1087) # color=green text={2AGL0123} dash=1
+galactic;ellipse(206.502,-9.70967,1800",1800",0.0) # color=green text={2AGLAA1} dash=1
+galactic;ellipse(227.611,3.12684,0.324714,0.396587, -45.124) # color=green text={2AGL0124} dash=1
+galactic;ellipse(234.276,-0.582476,0.653236,0.400492, -33.4526) # color=green text={2AGL0126} dash=1
+galactic;ellipse(229.29,-2.48023,1.12189,0.454786, 29.7123) # color=green text={2AGL0D1} dash=1
+galactic;ellipse(263.584,-2.83731,0.0202698,0.0206566, -13.0031) # color=green text={2AGL0137} dash=1
+galactic;ellipse(254.423,-6.27481,1800",1800",0.0) # color=green text={2AGL0132} dash=1
+galactic;ellipse(255.638,13.6589,0.945855,1.33929, -17.3869) # color=green text={2AGL0135} dash=1
+galactic;ellipse(268.025,-9.69098,1800",1800",0.0) # color=green text={2AGL0141} dash=1
+galactic;ellipse(284.149,-1.81642,0.24816,0.179468, -14.6945) # color=green text={2AGL0148} dash=1
+galactic;ellipse(284.046,-0.60577,0.221886,0.181247, 18.4615) # color=green text={2AGL0147} dash=1
+galactic;ellipse(286.147,6.65207,0.128875,0.118613, -31.314) # color=green text={2AGL0150} dash=1
+galactic;ellipse(285.37,-0.715748,0.168729,0.224732, -45.8003) # color=green text={2AGL0149} dash=1
+galactic;ellipse(291.232,-0.462341,0.321509,0.18308, 10.5362) # color=green text={2AGL0156} dash=1
+galactic;ellipse(287.455,0.337928,0.223278,0.192159, 39.9118) # color=green text={2AGL0152} dash=1
+galactic;ellipse(287.651,-0.802792,0.314826,0.399505, 25.9487) # color=green text={2AGL0153} dash=1
+galactic;ellipse(286.527,1.32254,0.373539,0.260546, 45.7423) # color=green text={2AGL0151} dash=1
+galactic;ellipse(290.512,-1.85457,0.62931,0.369607, -70.0487) # color=green text={2AGL0155} dash=1
+galactic;ellipse(292.954,-2.28676,1800",1800",0.0) # color=green text={2AGL0157} dash=1
+galactic;ellipse(292.505,-0.799939,0.358901,0.51764, -0.210621) # color=green text={2AGL0159} dash=1
+galactic;ellipse(289.161,-2.89569,0.699904,0.313717, 27.6172) # color=green text={2AGL0154} dash=1
+galactic;ellipse(268.331,-6.56538,0.474665,0.748868, 40.633) # color=green text={2AGL0142} dash=1
+galactic;ellipse(313.163,0.0273584,0.131221,0.110021, -0.787518) # color=green text={2AGL0173} dash=1
+galactic;ellipse(311.871,-0.127432,0.440967,0.286851, 11.1205) # color=green text={2AGL0172} dash=1
+galactic;ellipse(297.521,-0.419191,0.505149,0.268317, -16.8995) # color=green text={2AGL0161} dash=1
+galactic;ellipse(315.87,1.19162,0.831263,0.466748, -22.0166) # color=green text={2AGL0174} dash=1
+galactic;ellipse(311.579,2.27219,0.581,0.277301, 19.9407) # color=green text={2AGL0171} dash=1
+galactic;ellipse(304.882,-1.41716,1800",1800",0.0) # color=green text={2AGL0167} dash=1
+galactic;ellipse(300.925,2.48986,0.336076,0.701578, 21.0639) # color=green text={2AGL0164} dash=1
+galactic;ellipse(299.474,-9.19915,0.798346,0.255851, 0.0571298) # color=green text={2AGL0162} dash=1
+galactic;ellipse(337.207,0.0477445,0.358469,0.273796, 34.5542) # color=green text={2AGL0183} dash=1
+galactic;ellipse(320.075,-0.692458,1800",1800",0.0) # color=green text={2AGL0176} dash=1
+galactic;ellipse(339.357,-2.31924,0.320435,0.743837, 8.7718) # color=green text={2AGL0186} dash=1
+galactic;ellipse(317.752,-1.74324,0.264234,0.219129, 32.9467) # color=green text={2AGL0175} dash=1
+galactic;ellipse(332.254,-9.43286,1800",1800",0.0) # color=green text={2AGL0178} dash=1
+galactic;ellipse(343.119,-2.68207,0.056611,0.0515481, -46.7289) # color=green text={2AGL0187} dash=1
+galactic;ellipse(353.148,0.535516,0.259245,0.179396, -8.98449) # color=green text={2AGL0192} dash=1
+galactic;ellipse(354.161,-0.815004,1800",1800",0.0) # color=green text={2AGL0193} dash=1
+galactic;ellipse(348.525,-1.07876,0.271188,0.283521, 42.9526) # color=green text={2AGL0188} dash=1
+galactic;ellipse(334.01,0.450473,0.303099,0.363098, 0.787742) # color=green text={2AGL0179} dash=1
+galactic;ellipse(336.022,0.0215005,0.52199,0.348459, 34.0771) # color=green text={2AGL0180} dash=1
+galactic;ellipse(348.36,0.243305,1800",1800",0.0) # color=green text={2AGL0189} dash=1
+galactic;ellipse(352.506,-8.34753,0.174559,0.24686, 38.1644) # color=green text={2AGL0236} dash=1
+galactic;ellipse(353.218,2.24387,0.460543,0.339755, 13.5475) # color=green text={2AGL0191} dash=1
+galactic;ellipse(338.078,0.986965,0.208745,0.224376, -9.6499) # color=green text={2AGL0184} dash=1
+galactic;ellipse(350.384,0.431369,0.388127,0.282013, -22.4382) # color=green text={2AGL0190} dash=1
+galactic;ellipse(336.034,-3.57504,0.388903,0.246297, -31.1978) # color=green text={2AGL0181} dash=1
+galactic;ellipse(338.044,2.80702,0.260381,0.373943, -23.448) # color=green text={2AGL0182} dash=1
+galactic;ellipse(351.41,40.0815,0.101609,0.0914356, -12.0421) # color=green text={12639_00} dash=1
+galactic;ellipse(17.4115,55.0131,1800",1800",0.0) # color=green text={10919_02} dash=1
+galactic;ellipse(29.4773,44.3993,0.573572,0.518962, 11.9228) # color=green text={10049_08} dash=1
+galactic;ellipse(18.1132,45.502,0.248874,0.39093, 32.1678) # color=green text={10789_03} dash=1
+galactic;ellipse(11.8817,40.3157,0.664988,1.42736, -21.5598) # color=green text={11290_06} dash=1
+galactic;ellipse(22.7443,35.8447,0.347936,0.437681, 70.6736) # color=green text={10316_07} dash=1
+galactic;ellipse(115.069,32.1803,0.661005,1.26059, -2.40896) # color=green text={10148_01} dash=1
+galactic;ellipse(100.004,35.7464,1800",1800",0.0) # color=green text={11455_04} dash=1
+galactic;ellipse(94.6432,43.3537,1800",1800",0.0) # color=green text={11867_05} dash=1
+galactic;ellipse(117.303,36.3259,1800",1800",0.0) # color=green text={10121_02} dash=1
+galactic;ellipse(99.2945,33.3377,1.52109,0.517798, -11.6678) # color=green text={11623_13} dash=1
+galactic;ellipse(299.356,50.3387,0.347185,0.513686, -15.4164) # color=green text={11657_03} dash=1
+galactic;ellipse(307.641,28.6065,0.541726,0.289376, 33.1708) # color=green text={10911_00} dash=1
+galactic;ellipse(311.083,48.4815,0.719407,0.473565, 29.9651) # color=green text={10795_14} dash=1
+galactic;ellipse(297.527,37.7212,1800",1800",0.0) # color=green text={10090_03} dash=1
+galactic;ellipse(290.189,34.5249,1800",1800",0.0) # color=green text={10504_01} dash=1
+galactic;ellipse(305.385,45.5382,0.4204,0.885989, -18.0393) # color=green text={11185_11} dash=1
+galactic;ellipse(302.049,37.5884,1800",1800",0.0) # color=green text={11459_06} dash=1
+galactic;ellipse(305.395,40.5485,1800",1800",0.0) # color=green text={11175_02} dash=1
+galactic;ellipse(87.4399,41.9718,0.264858,0.566811, -5.83171) # color=green text={12405_10} dash=1
+galactic;ellipse(17.5289,9.27234,1800",1800",0.0) # color=green text={10600_04} dash=1
+galactic;ellipse(22.7466,14.1455,0.519767,1.34619, -13.1255) # color=green text={10193_06} dash=1
+galactic;ellipse(17.7203,13.9275,0.475154,1.18134, 23.203) # color=green text={10509_02} dash=1
+galactic;ellipse(8.74076,15.889,1.00119,0.455031, 51.5207) # color=green text={11576_03} dash=1
+galactic;ellipse(13.9424,15.0609,1.17094,0.593089, 75.4943) # color=green text={10941_10} dash=1
+galactic;ellipse(11.6829,54.3638,1800",1800",0.0) # color=green text={12002_00} dash=1
+galactic;ellipse(17.4596,57.5702,0.424071,0.393608, 35.9323) # color=green text={11184_01} dash=1
+galactic;ellipse(23.3919,52.9876,0.564328,0.464979, -36.6188) # color=green text={10491_05} dash=1
+galactic;ellipse(7.99028,63.26,0.353152,1.04604, -17.7502) # color=green text={12072_02} dash=1
+galactic;ellipse(17.5471,18.5975,0.305741,0.342259, -19.7499) # color=green text={10672_01} dash=1
+galactic;ellipse(35.3706,7.61989,1800",1800",0.0) # color=green text={11096_00} dash=1
+galactic;ellipse(25.9992,14.093,0.663634,0.565045, -38.7329) # color=green text={12117_04} dash=1
+galactic;ellipse(26.6548,31.2458,0.377106,0.441926, 37.137) # color=green text={12048_02} dash=1
+galactic;ellipse(20.5188,18.3909,1.06878,0.651739, -10.9373) # color=green text={12577_01} dash=1
+galactic;ellipse(44.806,26.7834,1800",1800",0.0) # color=green text={10257_05} dash=1
+galactic;ellipse(25.3308,23.02,1800",1800",0.0) # color=green text={12185_06} dash=1
+galactic;ellipse(24.7292,45.7306,0.373711,0.513651, -36.6699) # color=green text={10335_04} dash=1
+galactic;ellipse(28.6116,52.7922,1800",1800",0.0) # color=green text={11719_11} dash=1
+galactic;ellipse(22.8069,49.105,0.411412,0.330215, 47.0728) # color=green text={10533_09} dash=1
+galactic;ellipse(34.052,46.4484,0.509377,1.10795, 4.48191) # color=green text={11304_02} dash=1
+galactic;ellipse(35.472,40.8993,1800",1800",0.0) # color=green text={11176_13} dash=1
+galactic;ellipse(34.0876,39.435,1800",1800",0.0) # color=green text={11289_03} dash=1
+galactic;ellipse(39.764,29.0721,0.515507,1.24998, -25.302) # color=green text={10692_08} dash=1
+galactic;ellipse(50.6615,57.2772,0.490454,0.373311, -14.4343) # color=green text={10955_00} dash=1
+galactic;ellipse(54.4762,57.0912,1800",1800",0.0) # color=green text={10734_07} dash=1
+galactic;ellipse(29.9659,51.657,1800",1800",0.0) # color=green text={12315_09} dash=1
+galactic;ellipse(50.9536,50.9348,1800",1800",0.0) # color=green text={10886_04} dash=1
+galactic;ellipse(65.8947,50.169,1800",1800",0.0) # color=green text={10036_05} dash=1
+galactic;ellipse(50.7528,76.8728,1800",1800",0.0) # color=green text={11175_00} dash=1
+galactic;ellipse(51.6883,28.1933,0.518544,0.352284, 7.28119) # color=green text={11826_01} dash=1
+galactic;ellipse(51.3031,20.3839,1800",1800",0.0) # color=green text={11865_05} dash=1
+galactic;ellipse(55.3995,23.088,0.573276,0.388296, -37.1886) # color=green text={11417_00} dash=1
+galactic;ellipse(44.9818,16.5731,0.444687,0.568663, 9.85125) # color=green text={12438_06} dash=1
+galactic;ellipse(58.2434,12.996,1800",1800",0.0) # color=green text={11048_10} dash=1
+galactic;ellipse(43.034,43.8026,0.515098,0.401828, -9.9092) # color=green text={10522_06} dash=1
+galactic;ellipse(67.3105,56.0452,1800",1800",0.0) # color=green text={10104_03} dash=1
+galactic;ellipse(76.4481,54.1202,1800",1800",0.0) # color=green text={10703_13} dash=1
+galactic;ellipse(88.8508,24.9992,0.0617355,0.0803355, 42.9586) # color=green text={10338_00} dash=1
+galactic;ellipse(78.913,31.7492,1.58029,0.518843, 9.89593) # color=green text={11260_01} dash=1
+galactic;ellipse(84.0305,10.9017,0.583204,0.816865, -44.2632) # color=green text={10765_02} dash=1
+galactic;ellipse(52.2145,31.6443,1800",1800",0.0) # color=green text={11608_04} dash=1
+galactic;ellipse(55.4295,50.326,0.840509,0.415772, 34.0232) # color=green text={11368_13} dash=1
+galactic;ellipse(63.2134,37.3292,2.01316,0.736696, -51.0429) # color=green text={10612_10} dash=1
+galactic;ellipse(73.5861,36.2722,0.773512,0.397615, -40.2292) # color=green text={10011_09} dash=1
+galactic;ellipse(74.3554,52.1685,1800",1800",0.0) # color=green text={10809_02} dash=1
+galactic;ellipse(60.9269,57.0049,0.21488,0.960045, -77.3614) # color=green text={11678_04} dash=1
+galactic;ellipse(77.1345,49.3473,1800",1800",0.0) # color=green text={11168_12} dash=1
+galactic;ellipse(62.508,43.3509,0.824584,1.73869, -90.0) # color=green text={10628_11} dash=1
+galactic;ellipse(91.1884,53.6886,0.310117,1.42449, -90.0) # color=green text={10372_08} dash=1
+galactic;ellipse(72.927,42.7624,0.384269,0.547567, -36.1266) # color=green text={11444_11} dash=1
+galactic;ellipse(70.419,50.458,1800",1800",0.0) # color=green text={10345_01} dash=1
+galactic;ellipse(80.7073,52.4859,1800",1800",0.0) # color=green text={10809_01} dash=1
+galactic;ellipse(61.6715,41.8931,1800",1800",0.0) # color=green text={10893_04} dash=1
+galactic;ellipse(63.194,48.5857,1800",1800",0.0) # color=green text={12167_07} dash=1
+galactic;ellipse(88.0477,44.9817,0.509278,0.584685, 49.7344) # color=green text={10309_02} dash=1
+galactic;ellipse(64.678,40.8667,0.26238,1.02373, -64.0286) # color=green text={10618_00} dash=1
+galactic;ellipse(63.7995,31.238,1.03308,0.25623, 33.094) # color=green text={10592_02} dash=1
+galactic;ellipse(97.4937,25.086,0.130648,0.18858, -19.8799) # color=green text={11708_01} dash=1
+galactic;ellipse(110.073,29.3946,0.6067,0.716382, 38.1383) # color=green text={10488_05} dash=1
+galactic;ellipse(99.3476,8.8003,0.528134,0.406027, -37.6303) # color=green text={11504_09} dash=1
+galactic;ellipse(105.337,20.4129,1800",1800",0.0) # color=green text={10895_07} dash=1
+galactic;ellipse(98.1801,18.2186,0.585501,0.55377, -13.0218) # color=green text={11693_04} dash=1
+galactic;ellipse(100.498,33.8453,1800",1800",0.0) # color=green text={11438_06} dash=1
+galactic;ellipse(92.2675,11.6325,0.466803,0.827078, -53.4451) # color=green text={12258_12} dash=1
+galactic;ellipse(96.0091,64.1285,0.0313179,1.27221, 5.85851) # color=green text={11882_08} dash=1
+galactic;ellipse(92.6284,53.5334,0.77518,0.326566, 18.0305) # color=green text={12127_00} dash=1
+galactic;ellipse(109.567,59.8952,0.359249,0.593027, 3.7344) # color=green text={11073_03} dash=1
+galactic;ellipse(98.9368,41.5381,1800",1800",0.0) # color=green text={11525_08} dash=1
+galactic;ellipse(87.6297,59.542,0.972831,0.450816, -40.0388) # color=green text={10272_02} dash=1
+galactic;ellipse(133.27,67.8751,0.339836,0.285918, 88.6448) # color=green text={10473_00} dash=1
+galactic;ellipse(134.009,63.1443,0.527925,0.563577, -11.8929) # color=green text={10280_03} dash=1
+galactic;ellipse(133.983,57.1382,1800",1800",0.0) # color=green text={10083_06} dash=1
+galactic;ellipse(108.438,65.2447,0.426097,0.897241, 14.1914) # color=green text={11142_02} dash=1
+galactic;ellipse(113.027,61.6925,1800",1800",0.0) # color=green text={11284_02} dash=1
+galactic;ellipse(101.299,64.7684,1800",1800",0.0) # color=green text={11861_04} dash=1
+galactic;ellipse(119.653,63.986,0.958801,1.09716, -34.919) # color=green text={10944_09} dash=1
+galactic;ellipse(119.342,56.1051,0.373986,0.340774, -29.5337) # color=green text={10872_08} dash=1
+galactic;ellipse(123.916,31.8462,0.399667,0.108831, -46.4605) # color=green text={11376_01} dash=1
+galactic;ellipse(128.579,9.70064,0.56709,0.775078, -0.092353) # color=green text={10762_09} dash=1
+galactic;ellipse(131.466,12.2514,1800",1800",0.0) # color=green text={10455_02} dash=1
+galactic;ellipse(128.265,24.7929,0.60092,1.05545, 11.7404) # color=green text={10903_10} dash=1
+galactic;ellipse(119.691,19.9353,1800",1800",0.0) # color=green text={11754_07} dash=1
+galactic;ellipse(125.805,17.6087,1800",1800",0.0) # color=green text={11116_08} dash=1
+galactic;ellipse(126.097,21.2091,1800",1800",0.0) # color=green text={11065_04} dash=1
+galactic;ellipse(122.442,17.2166,1800",1800",0.0) # color=green text={11463_06} dash=1
+galactic;ellipse(122.268,61.734,0.734099,0.524839, 33.9367) # color=green text={12040_03} dash=1
+galactic;ellipse(147.365,58.0804,0.500165,0.753256, -39.4151) # color=green text={10629_01} dash=1
+galactic;ellipse(143.896,65.1093,1.2494,0.764751, -38.182) # color=green text={10972_06} dash=1
+galactic;ellipse(146.289,55.6271,1.10751,0.741658, -43.3428) # color=green text={10573_05} dash=1
+galactic;ellipse(150.962,51.9912,1800",1800",0.0) # color=green text={10281_04} dash=1
+galactic;ellipse(143.852,28.0414,0.177762,0.145282, -22.6592) # color=green text={11601_00} dash=1
+galactic;ellipse(132.546,15.203,0.271911,0.349245, 43.3136) # color=green text={10319_03} dash=1
+galactic;ellipse(147.554,12.8869,1800",1800",0.0) # color=green text={11164_06} dash=1
+galactic;ellipse(136.189,11.5022,0.489582,0.961306, 41.4017) # color=green text={12388_08} dash=1
+galactic;ellipse(147.316,35.1594,0.397972,0.647962, -28.2625) # color=green text={11223_01} dash=1
+galactic;ellipse(133.435,32.5022,1800",1800",0.0) # color=green text={12426_14} dash=1
+galactic;ellipse(179.875,64.931,0.396064,0.312925, -71.7371) # color=green text={10643_00} dash=1
+galactic;ellipse(166.161,52.3384,1800",1800",0.0) # color=green text={11232_02} dash=1
+galactic;ellipse(147.822,46.7053,0.689394,0.455063, 20.1996) # color=green text={12503_06} dash=1
+galactic;ellipse(169.331,59.4981,1800",1800",0.0) # color=green text={11072_10} dash=1
+galactic;ellipse(160.108,47.5343,1800",1800",0.0) # color=green text={11683_09} dash=1
+galactic;ellipse(169.948,48.9794,1800",1800",0.0) # color=green text={10938_08} dash=1
+galactic;ellipse(170.868,19.3271,1800",1800",0.0) # color=green text={11119_00} dash=1
+galactic;ellipse(184.307,18.6162,0.284801,0.234183, -44.2744) # color=green text={10005_01} dash=1
+galactic;ellipse(176.704,31.9385,1.21056,0.597143, -24.3551) # color=green text={10645_05} dash=1
+galactic;ellipse(174.26,11.042,1800",1800",0.0) # color=green text={10711_10} dash=1
+galactic;ellipse(172.283,23.1858,1800",1800",0.0) # color=green text={10956_06} dash=1
+galactic;ellipse(197.143,23.2754,1800",1800",0.0) # color=green text={10735_04} dash=1
+galactic;ellipse(180.588,11.6053,0.411619,1.23907, 21.816) # color=green text={12389_02} dash=1
+galactic;ellipse(176.145,44.7049,0.541769,0.713832, -26.6255) # color=green text={10401_07} dash=1
+galactic;ellipse(174.646,36.6738,0.69808,0.482667, -2.8641) # color=green text={12597_03} dash=1
+galactic;ellipse(207.442,34.8607,1800",1800",0.0) # color=green text={10029_04} dash=1
+galactic;ellipse(204.35,57.17,0.526949,0.772297, 40.1456) # color=green text={10787_04} dash=1
+galactic;ellipse(185.175,49.1932,0.549727,0.430017, -19.1636) # color=green text={10034_04} dash=1
+galactic;ellipse(196.139,57.5125,0.578144,0.478012, 19.1198) # color=green text={11242_05} dash=1
+galactic;ellipse(177.681,48.6027,0.3096,1.11666, 31.1189) # color=green text={10362_12} dash=1
+galactic;ellipse(173.724,54.2223,1800",1800",0.0) # color=green text={10728_11} dash=1
+galactic;ellipse(195.424,70.8061,0.746911,1.01385, 60.2758) # color=green text={11649_02} dash=1
+galactic;ellipse(162.985,66.3023,1.08346,0.54934, -14.4456) # color=green text={12634_09} dash=1
+galactic;ellipse(211.105,9.17861,0.368348,0.769103, -20.0551) # color=green text={11620_00} dash=1
+galactic;ellipse(210.194,27.4954,0.789209,1.22155, 36.188) # color=green text={11712_04} dash=1
+galactic;ellipse(209.701,19.2527,0.575295,0.480611, 16.9015) # color=green text={11752_03} dash=1
+galactic;ellipse(214.026,6.5901,1.15809,1.04515, -58.91) # color=green text={11211_06} dash=1
+galactic;ellipse(212.879,31.2191,1800",1800",0.0) # color=green text={11433_05} dash=1
+galactic;ellipse(215.861,29.2178,0.649235,0.511052, 13.4602) # color=green text={11139_02} dash=1
+galactic;ellipse(198.617,51.4884,0.538909,0.472278, 11.9052) # color=green text={10801_05} dash=1
+galactic;ellipse(216.779,42.0206,1800",1800",0.0) # color=green text={11062_04} dash=1
+galactic;ellipse(241.817,53.3514,0.694385,0.405481, 5.25164) # color=green text={10242_00} dash=1
+galactic;ellipse(223.7,43.4799,0.484403,0.883218, -17.9144) # color=green text={10522_01} dash=1
+galactic;ellipse(215.074,42.2119,1800",1800",0.0) # color=green text={12104_12} dash=1
+galactic;ellipse(221.416,16.4213,1800",1800",0.0) # color=green text={12635_04} dash=1
+galactic;ellipse(230.244,8.57947,1800",1800",0.0) # color=green text={12003_05} dash=1
+galactic;ellipse(225.915,12.5204,1800",1800",0.0) # color=green text={12390_03} dash=1
+galactic;ellipse(231.414,11.663,1800",1800",0.0) # color=green text={11848_02} dash=1
+galactic;ellipse(236.62,50.6671,0.715915,0.340967, -70.1988) # color=green text={11312_01} dash=1
+galactic;ellipse(243.107,37.3875,1800",1800",0.0) # color=green text={10719_02} dash=1
+galactic;ellipse(227.954,30.118,1.12816,0.712483, -9.65455) # color=green text={12199_01} dash=1
+galactic;ellipse(235.413,27.5584,1800",1800",0.0) # color=green text={11381_06} dash=1
+galactic;ellipse(236.54,47.0193,0.639074,0.90976, 4.03693) # color=green text={12537_05} dash=1
+galactic;ellipse(252.499,7.13063,1800",1800",0.0) # color=green text={12000_00} dash=1
+galactic;ellipse(260.643,13.7177,1800",1800",0.0) # color=green text={11108_04} dash=1
+galactic;ellipse(257.94,9.23114,0.289413,0.257648, 24.5195) # color=green text={11389_02} dash=1
+galactic;ellipse(259.707,52.7447,0.618283,0.898705, 19.3768) # color=green text={11257_10} dash=1
+galactic;ellipse(249.705,52.8976,0.58603,0.672008, 38.6667) # color=green text={11994_08} dash=1
+galactic;ellipse(248.772,41.2432,0.652848,1.55282, 29.0427) # color=green text={10285_04} dash=1
+galactic;ellipse(256.459,44.501,1800",1800",0.0) # color=green text={11531_09} dash=1
+galactic;ellipse(268.641,33.6098,1800",1800",0.0) # color=green text={10403_01} dash=1
+galactic;ellipse(260.966,37.5742,1800",1800",0.0) # color=green text={11111_06} dash=1
+galactic;ellipse(267.048,29.7373,1800",1800",0.0) # color=green text={10494_03} dash=1
+galactic;ellipse(297.519,50.4023,2.81984,1.18021, -29.3002) # color=green text={10435_04} dash=1
+galactic;ellipse(279.59,48.6534,1800",1800",0.0) # color=green text={11481_05} dash=1
+galactic;ellipse(272.668,52.1819,0.558209,1.07237, -11.4106) # color=green text={10393_07} dash=1
+galactic;ellipse(275.748,39.9006,0.395898,0.354112, -20.4405) # color=green text={10040_00} dash=1
+galactic;ellipse(261.507,43.0864,0.442383,0.723636, 38.0994) # color=green text={11064_04} dash=1
+galactic;ellipse(287.832,49.8888,1800",1800",0.0) # color=green text={10853_06} dash=1
+galactic;ellipse(304.787,49.3759,3.95036,2.95753, -58.4405) # color=green text={10108_07} dash=1
+galactic;ellipse(268.697,35.9476,1800",1800",0.0) # color=green text={12393_08} dash=1
+galactic;ellipse(276.712,34.4661,1800",1800",0.0) # color=green text={11738_10} dash=1
+galactic;ellipse(287.583,32.904,1800",1800",0.0) # color=green text={10710_09} dash=1
+galactic;ellipse(279.095,41.9211,0.570953,0.328474, -30.0397) # color=green text={10009_13} dash=1
+galactic;ellipse(308.374,55.0112,0.447138,0.580152, 16.0843) # color=green text={10046_04} dash=1
+galactic;ellipse(270.36,46.889,1800",1800",0.0) # color=green text={12237_13} dash=1
+galactic;ellipse(287.109,39.8435,0.404216,0.228949, 15.1828) # color=green text={10778_11} dash=1
+galactic;ellipse(304.578,56.8734,1800",1800",0.0) # color=green text={10210_00} dash=1
+galactic;ellipse(289.425,64.1636,0.665262,0.475452, -43.5941) # color=green text={11463_01} dash=1
+galactic;ellipse(281.339,70.2021,1800",1800",0.0) # color=green text={11761_04} dash=1
+galactic;ellipse(290.785,53.56,0.39598,0.502183, 36.836) # color=green text={11442_02} dash=1
+galactic;ellipse(308.369,9.19363,1800",1800",0.0) # color=green text={10761_03} dash=1
+galactic;ellipse(309.893,16.4044,0.478382,0.673984, -19.7444) # color=green text={10668_04} dash=1
+galactic;ellipse(307.785,6.17218,0.489137,0.83253, 28.0479) # color=green text={2AGL0168} dash=1
+galactic;ellipse(305.915,18.7117,2.08634,0.350894, 90.0) # color=green text={11116_06} dash=1
+galactic;ellipse(299.169,18.7579,1800",1800",0.0) # color=green text={11807_05} dash=1
+galactic;ellipse(318.169,47.8726,1800",1800",0.0) # color=green text={10298_05} dash=1
+galactic;ellipse(317.822,53.9233,1800",1800",0.0) # color=green text={11119_02} dash=1
+galactic;ellipse(312.068,52.876,0.504675,0.95428, 16.7788) # color=green text={10751_12} dash=1
+galactic;ellipse(331.864,49.085,0.381972,0.75467, -44.5184) # color=green text={10156_10} dash=1
+galactic;ellipse(324.001,44.7436,0.639297,2.03663, 38.9777) # color=green text={10027_10} dash=1
+galactic;ellipse(310.025,41.1833,0.477565,0.559498, -19.1693) # color=green text={10780_07} dash=1
+galactic;ellipse(319.186,41.0724,0.372153,0.634769, 24.261) # color=green text={10130_08} dash=1
+galactic;ellipse(235.138,84.6978,1800",1800",0.0) # color=green text={11939_00} dash=1
+galactic;ellipse(319.524,16.0012,0.991434,0.497101, -32.3145) # color=green text={12069_04} dash=1
+galactic;ellipse(337.462,22.9058,0.377289,0.32334, -28.2311) # color=green text={10249_00} dash=1
+galactic;ellipse(325.361,12.8351,0.559692,0.335115, -34.3963) # color=green text={11396_01} dash=1
+galactic;ellipse(330.325,20.5045,0.514789,0.925852, -8.35161) # color=green text={10837_02} dash=1
+galactic;ellipse(338.88,21.1917,0.448649,0.513906, -20.4271) # color=green text={10133_03} dash=1
+galactic;ellipse(333.265,6.70243,1800",1800",0.0) # color=green text={10544_07} dash=1
+galactic;ellipse(336.041,40.5303,1800",1800",0.0) # color=green text={10516_00} dash=1
+galactic;ellipse(326.697,48.6344,1800",1800",0.0) # color=green text={11307_07} dash=1
+galactic;ellipse(323.897,44.8824,1800",1800",0.0) # color=green text={11532_04} dash=1
+galactic;ellipse(341.675,38.5876,0.595216,0.339312, 7.15127) # color=green text={10125_12} dash=1
+galactic;ellipse(329.795,40.0036,1800",1800",0.0) # color=green text={11001_06} dash=1
+galactic;ellipse(308.896,71.7618,0.975947,0.817834, 42.139) # color=green text={12289_12} dash=1
+galactic;ellipse(336.603,62.8799,0.831763,0.501416, -39.7342) # color=green text={11402_01} dash=1
+galactic;ellipse(301.968,64.8031,0.474632,0.417927, 34.586) # color=green text={10890_05} dash=1
+galactic;ellipse(330.269,57.1335,0.585403,0.619317, -30.792) # color=green text={10426_11} dash=1
+galactic;ellipse(329.573,66.0807,1800",1800",0.0) # color=green text={11696_06} dash=1
+galactic;ellipse(335.138,51.6402,0.564597,0.862981, -33.141) # color=green text={10693_09} dash=1
+galactic;ellipse(349.512,49.3917,1800",1800",0.0) # color=green text={10995_10} dash=1
+galactic;ellipse(347.465,59.5686,1800",1800",0.0) # color=green text={11188_06} dash=1
+galactic;ellipse(352.185,42.6674,1800",1800",0.0) # color=green text={10705_08} dash=1
+galactic;ellipse(358.723,44.6761,1800",1800",0.0) # color=green text={10266_04} dash=1
+galactic;ellipse(337.855,40.5462,1800",1800",0.0) # color=green text={11945_02} dash=1
+galactic;ellipse(357.359,-51.1492,0.441849,0.492963, -10.804) # color=green text={12253_02} dash=1
+galactic;ellipse(348.064,12.8398,0.370364,0.633026, -7.50559) # color=green text={2AGL0211} dash=1
+galactic;ellipse(356.905,18.4864,0.325475,0.442745, -34.1919) # color=green text={12603_05} dash=1
+galactic;ellipse(340.642,6.07754,2.35886,0.697647, 49.1465) # color=green text={12251_14} dash=1
+galactic;ellipse(341.18,27.1307,0.261828,0.284355, -34.0097) # color=green text={12092_05} dash=1
+galactic;ellipse(355.186,14.1144,1800",1800",0.0) # color=green text={10610_12} dash=1
+galactic;ellipse(357.428,27.0009,1800",1800",0.0) # color=green text={10483_13} dash=1
+galactic;ellipse(17.4935,-13.311,1800",1800",0.0) # color=green text={10633_01} dash=1
+galactic;ellipse(17.1739,-15.8168,0.510947,0.688653, 11.9723) # color=green text={10681_04} dash=1
+galactic;ellipse(360.105,-22.7265,0.946521,0.700262, -19.8533) # color=green text={12436_07} dash=1
+galactic;ellipse(3.69431,-24.636,1800",1800",0.0) # color=green text={12118_02} dash=1
+galactic;ellipse(358.667,-25.6808,0.794826,0.601134, 9.66848) # color=green text={12501_03} dash=1
+galactic;ellipse(5.86899,-32.0759,1.08276,0.536898, -30.2225) # color=green text={11838_05} dash=1
+galactic;ellipse(3.41168,-70.9818,0.726638,3.55049, 0.23278) # color=green text={11726_04} dash=1
+galactic;ellipse(17.7728,-51.9257,0.394989,0.77161, -17.9656) # color=green text={10873_01} dash=1
+galactic;ellipse(358.743,-46.8973,1800",1800",0.0) # color=green text={12493_11} dash=1
+galactic;ellipse(331.648,40.0856,0.552145,0.409216, 37.775) # color=green text={12604_03} dash=1
+galactic;ellipse(354.89,43.6067,1800",1800",0.0) # color=green text={10840_06} dash=1
+galactic;ellipse(338.999,35.4711,1.30527,0.312451, 29.8335) # color=green text={10230_05} dash=1
+galactic;ellipse(344.396,31.0678,0.670443,0.376259, 33.0122) # color=green text={11731_04} dash=1
+galactic;ellipse(8.73515,-63.9126,1800",1800",0.0) # color=green text={12028_02} dash=1
+galactic;ellipse(355.067,-61.4368,1800",1800",0.0) # color=green text={12583_07} dash=1
+galactic;ellipse(36.8978,-24.8481,0.223859,0.177235, -18.5976) # color=green text={10994_00} dash=1
+galactic;ellipse(37.2285,-5.44533,1800",1800",0.0) # color=green text={10920_01} dash=1
+galactic;ellipse(27.2099,-6.58902,1800",1800",0.0) # color=green text={12102_11} dash=1
+galactic;ellipse(38.1804,-23.3483,1800",1800",0.0) # color=green text={10829_05} dash=1
+galactic;ellipse(30.9744,-6.54619,1800",1800",0.0) # color=green text={11666_08} dash=1
+galactic;ellipse(37.6627,-11.8124,1800",1800",0.0) # color=green text={10908_03} dash=1
+galactic;ellipse(38.9268,-18.7236,0.615932,1.16717, -65.8337) # color=green text={10728_04} dash=1
+galactic;ellipse(27.7034,-23.1358,1800",1800",0.0) # color=green text={11964_06} dash=1
+galactic;ellipse(32.5934,-41.2256,1800",1800",0.0) # color=green text={11411_07} dash=1
+galactic;ellipse(46.0477,-42.3332,1800",1800",0.0) # color=green text={10324_10} dash=1
+galactic;ellipse(23.2469,-33.4881,1800",1800",0.0) # color=green text={12289_03} dash=1
+galactic;ellipse(49.0408,-36.502,1800",1800",0.0) # color=green text={10105_08} dash=1
+galactic;ellipse(50.625,-66.7447,1.97979,0.114673, -4.75169) # color=green text={11095_09} dash=1
+galactic;ellipse(64.8851,-52.8663,0.576188,0.444875, -33.4748) # color=green text={10096_08} dash=1
+galactic;ellipse(40.7639,-45.6177,1800",1800",0.0) # color=green text={10720_01} dash=1
+galactic;ellipse(33.3002,-47.2704,1800",1800",0.0) # color=green text={11340_12} dash=1
+galactic;ellipse(50.9095,-70.999,0.581582,0.34297, -14.6559) # color=green text={10358_00} dash=1
+galactic;ellipse(14.1113,-78.6336,0.810744,0.577644, 33.2478) # color=green text={11560_06} dash=1
+galactic;ellipse(130.546,-81.691,0.399561,0.638141, -43.5045) # color=green text={10397_03} dash=1
+galactic;ellipse(5.46166,-73.5572,1800",1800",0.0) # color=green text={12406_13} dash=1
+galactic;ellipse(61.5798,-65.2154,1.25615,0.832508, 42.5177) # color=green text={10544_03} dash=1
+galactic;ellipse(66.7688,-22.277,0.373065,0.45101, -17.5013) # color=green text={10277_00} dash=1
+galactic;ellipse(38.9082,-42.9352,0.391836,1.03064, 34.7353) # color=green text={10835_05} dash=1
+galactic;ellipse(58.2207,-47.6346,0.362244,2.52128, -27.2484) # color=green text={11054_14} dash=1
+galactic;ellipse(43.7477,-45.4064,1800",1800",0.0) # color=green text={12265_12} dash=1
+galactic;ellipse(79.9151,-62.4243,1800",1800",0.0) # color=green text={10680_07} dash=1
+galactic;ellipse(61.5445,-64.4483,1800",1800",0.0) # color=green text={11644_09} dash=1
+galactic;ellipse(67.187,-58.9692,1800",1800",0.0) # color=green text={10152_01} dash=1
+galactic;ellipse(74.016,-60.5192,0.762987,0.437917, -0.253098) # color=green text={11016_04} dash=1
+galactic;ellipse(65.1595,-60.8991,1800",1800",0.0) # color=green text={10268_07} dash=1
+galactic;ellipse(78.2717,-56.7339,0.684444,0.40888, -43.2455) # color=green text={10746_12} dash=1
+galactic;ellipse(70.3314,-12.5146,0.433849,0.380343, -3.38882) # color=green text={12240_00} dash=1
+galactic;ellipse(71.9329,-26.2586,1800",1800",0.0) # color=green text={12011_02} dash=1
+galactic;ellipse(73.9022,-7.56488,0.324512,0.796347, 34.6069) # color=green text={11887_06} dash=1
+galactic;ellipse(78.9812,-24.7056,1.0755,0.703982, 20.6033) # color=green text={11284_10} dash=1
+galactic;ellipse(70.921,-31.0379,1800",1800",0.0) # color=green text={12053_09} dash=1
+galactic;ellipse(89.0922,-9.4631,1800",1800",0.0) # color=green text={10261_03} dash=1
+galactic;ellipse(75.7741,-29.6166,0.343068,0.291699, 29.6841) # color=green text={11620_01} dash=1
+galactic;ellipse(94.7999,-46.947,0.359427,0.508396, 6.94595) # color=green text={10174_11} dash=1
+galactic;ellipse(86.9112,-42.5765,0.347314,0.828634, -40.6897) # color=green text={10672_10} dash=1
+galactic;ellipse(85.7112,-49.119,0.627947,0.932463, -7.80941) # color=green text={10767_11} dash=1
+galactic;ellipse(66.1165,-32.0015,0.741224,0.477189, -79.9093) # color=green text={10437_02} dash=1
+galactic;ellipse(111.002,-22.8073,0.450616,1.23919, -27.6197) # color=green text={10319_02} dash=1
+galactic;ellipse(103.341,-14.3411,0.943169,0.650705, -22.5497) # color=green text={11072_05} dash=1
+galactic;ellipse(104.076,-31.1948,1.57747,1.13524, -44.9913) # color=green text={11039_06} dash=1
+galactic;ellipse(85.4509,-18.443,1.1258,0.535254, 29.8292) # color=green text={10570_04} dash=1
+galactic;ellipse(102.819,-19.3794,1800",1800",0.0) # color=green text={11177_08} dash=1
+galactic;ellipse(100.009,-23.7481,0.324662,0.824285, -18.2875) # color=green text={11459_04} dash=1
+galactic;ellipse(91.853,-48.6904,0.510301,0.754615, 24.8479) # color=green text={12010_07} dash=1
+galactic;ellipse(109.536,-43.7074,0.280814,0.82895, -32.6039) # color=green text={10670_05} dash=1
+galactic;ellipse(93.7468,-51.9232,1.12299,0.673607, 33.3465) # color=green text={10351_07} dash=1
+galactic;ellipse(100.841,-37.9048,0.285929,0.821381, -33.55) # color=green text={11359_09} dash=1
+galactic;ellipse(103.762,-46.2616,0.470196,0.654841, -25.3943) # color=green text={11110_14} dash=1
+galactic;ellipse(113.816,-57.731,0.613109,0.338161, -11.6565) # color=green text={10774_00} dash=1
+galactic;ellipse(126.092,-63.6373,1800",1800",0.0) # color=green text={10305_05} dash=1
+galactic;ellipse(99.7627,-61.7763,0.512145,0.480691, 5.11255) # color=green text={11569_13} dash=1
+galactic;ellipse(89.7422,-56.3613,0.448635,0.534059, -56.0547) # color=green text={12268_07} dash=1
+galactic;ellipse(85.8103,-59.4569,1800",1800",0.0) # color=green text={12613_11} dash=1
+galactic;ellipse(130.405,-14.2485,0.210311,0.18694, 44.1984) # color=green text={10631_00} dash=1
+galactic;ellipse(128.03,-7.01703,0.395068,0.507596, 37.0436) # color=green text={10861_01} dash=1
+galactic;ellipse(129.018,-22.6902,1800",1800",0.0) # color=green text={10775_04} dash=1
+galactic;ellipse(127.599,-29.8005,1800",1800",0.0) # color=green text={10928_02} dash=1
+galactic;ellipse(128.604,-45.3572,0.840607,0.470416, 46.4398) # color=green text={10942_05} dash=1
+galactic;ellipse(134.492,-48.0094,1800",1800",0.0) # color=green text={10504_10} dash=1
+galactic;ellipse(123.455,-51.7163,1800",1800",0.0) # color=green text={11332_11} dash=1
+galactic;ellipse(119.361,-42.524,0.745649,0.555268, 16.7039) # color=green text={11695_07} dash=1
+galactic;ellipse(128.653,-39.5469,1800",1800",0.0) # color=green text={10897_03} dash=1
+galactic;ellipse(130.277,-66.1951,0.959017,0.44028, 18.561) # color=green text={10517_07} dash=1
+galactic;ellipse(151.058,-57.7108,0.469725,1.0008, 3.07787) # color=green text={10409_06} dash=1
+galactic;ellipse(142.478,-59.8872,1800",1800",0.0) # color=green text={10881_03} dash=1
+galactic;ellipse(136.948,-78.6035,0.819601,0.570675, 46.5029) # color=green text={10756_00} dash=1
+galactic;ellipse(156.049,-77.7158,0.429381,0.574488, -75.2951) # color=green text={10836_02} dash=1
+galactic;ellipse(151.582,-74.3018,0.106725,2.07149, -2.1592) # color=green text={10221_09} dash=1
+galactic;ellipse(118.885,-70.049,0.718926,1.49388, 46.6044) # color=green text={11056_08} dash=1
+galactic;ellipse(155.223,-66.9261,0.676406,1.29079, -0.239726) # color=green text={10486_13} dash=1
+galactic;ellipse(137.402,-71.5121,1800",1800",0.0) # color=green text={11249_14} dash=1
+galactic;ellipse(140.23,-16.6628,0.335564,0.253298, -0.539578) # color=green text={10009_03} dash=1
+galactic;ellipse(149.008,-27.5374,1800",1800",0.0) # color=green text={11046_03} dash=1
+galactic;ellipse(148.82,-32.7377,0.550606,0.846135, 46.6458) # color=green text={10979_07} dash=1
+galactic;ellipse(191.246,-63.34,0.641041,0.500478, -61.6085) # color=green text={10004_02} dash=1
+galactic;ellipse(175.329,-60.1849,0.706319,1.22704, 48.3851) # color=green text={10428_11} dash=1
+galactic;ellipse(138.015,-62.8622,0.369212,0.318879, 2.9933) # color=green text={12278_13} dash=1
+galactic;ellipse(162.045,-54.6057,1.25886,0.371128, -5.41091) # color=green text={11028_00} dash=1
+galactic;ellipse(162.06,-15.2776,1.17779,0.468246, 40.5586) # color=green text={12033_06} dash=1
+galactic;ellipse(176.579,-26.1602,0.628285,0.733623, -20.8726) # color=green text={10504_05} dash=1
+galactic;ellipse(162.743,-27.0499,1.74747,0.470054, 9.01442) # color=green text={12009_01} dash=1
+galactic;ellipse(161.603,-10.7206,0.369832,1.60433, -33.2305) # color=green text={12197_00} dash=1
+galactic;ellipse(162.28,-7.18533,1800",1800",0.0) # color=green text={12049_02} dash=1
+galactic;ellipse(157.429,-39.3936,0.457238,0.309104, -22.023) # color=green text={12277_00} dash=1
+galactic;ellipse(158.365,-35.785,0.37692,0.538645, -43.6309) # color=green text={12285_03} dash=1
+galactic;ellipse(158.591,-30.3571,1800",1800",0.0) # color=green text={12251_04} dash=1
+galactic;ellipse(149.128,-40.4291,1800",1800",0.0) # color=green text={12638_07} dash=1
+galactic;ellipse(152.847,-36.0636,0.473257,0.850069, 31.6175) # color=green text={12589_09} dash=1
+galactic;ellipse(167.926,-45.0108,0.914838,1.27942, 3.8286) # color=green text={11402_12} dash=1
+galactic;ellipse(170.903,-42.5616,1800",1800",0.0) # color=green text={11118_08} dash=1
+galactic;ellipse(167.194,-30.746,1800",1800",0.0) # color=green text={11490_10} dash=1
+galactic;ellipse(154.392,-43.1078,1800",1800",0.0) # color=green text={12399_14} dash=1
+galactic;ellipse(155.222,-37.8126,1800",1800",0.0) # color=green text={12450_01} dash=1
+galactic;ellipse(164.401,-30.9721,1800",1800",0.0) # color=green text={11774_04} dash=1
+galactic;ellipse(191.313,-10.6791,0.268861,0.328057, -12.6481) # color=green text={2AGL0118} dash=1
+galactic;ellipse(183.518,-8.45965,1.01292,0.502219, -32.1147) # color=green text={2AGL0115} dash=1
+galactic;ellipse(185.911,-6.98302,0.289956,0.467015, -34.8174) # color=green text={11942_03} dash=1
+galactic;ellipse(194.198,-33.2202,0.540336,1.07574, -33.4042) # color=green text={11034_02} dash=1
+galactic;ellipse(197.834,-13.303,0.757909,0.553307, 15.8867) # color=green text={10581_06} dash=1
+galactic;ellipse(195.052,-21.0318,1800",1800",0.0) # color=green text={10889_10} dash=1
+galactic;ellipse(186.662,-22.162,1800",1800",0.0) # color=green text={11803_07} dash=1
+galactic;ellipse(182.157,-24.9827,1800",1800",0.0) # color=green text={12215_08} dash=1
+galactic;ellipse(184.075,-45.5501,1800",1800",0.0) # color=green text={10232_06} dash=1
+galactic;ellipse(197.109,-28.579,1800",1800",0.0) # color=green text={10709_05} dash=1
+galactic;ellipse(186.825,-50.0409,0.436452,0.861582, 20.3167) # color=green text={10044_01} dash=1
+galactic;ellipse(192.013,-38.0547,1800",1800",0.0) # color=green text={11243_03} dash=1
+galactic;ellipse(207.81,-30.6377,1800",1800",0.0) # color=green text={11895_00} dash=1
+galactic;ellipse(216.983,-14.8057,1.26961,0.574194, -20.5627) # color=green text={11014_01} dash=1
+galactic;ellipse(203.752,-33.7495,0.585238,0.453041, 34.1396) # color=green text={10256_05} dash=1
+galactic;ellipse(177.727,-40.3828,0.99842,0.7864, -39.6468) # color=green text={12406_10} dash=1
+galactic;ellipse(201.192,-59.5106,1800",1800",0.0) # color=green text={10938_01} dash=1
+galactic;ellipse(199.982,-47.543,1.64336,0.304052, -9.0181) # color=green text={10716_09} dash=1
+galactic;ellipse(194.504,-51.3789,0.542759,0.689281, 0.645489) # color=green text={11357_07} dash=1
+galactic;ellipse(185.185,-53.2305,1800",1800",0.0) # color=green text={11973_06} dash=1
+galactic;ellipse(205.095,-53.6489,0.924165,1.96901, -20.1889) # color=green text={10621_08} dash=1
+galactic;ellipse(185.781,-62.6383,1800",1800",0.0) # color=green text={12183_08} dash=1
+galactic;ellipse(223.72,-34.6951,0.321517,0.343494, 75.468) # color=green text={10432_00} dash=1
+galactic;ellipse(204.837,-42.9357,0.620266,0.491899, 34.8215) # color=green text={10280_02} dash=1
+galactic;ellipse(221.926,-49.2645,0.640059,0.852046, 11.3165) # color=green text={10658_03} dash=1
+galactic;ellipse(220.64,-40.0573,1800",1800",0.0) # color=green text={10731_09} dash=1
+galactic;ellipse(211.122,-44.0614,0.611402,1.13749, 19.7027) # color=green text={11520_10} dash=1
+galactic;ellipse(202.175,-39.0378,1.0243,0.331406, 0.175493) # color=green text={10376_08} dash=1
+galactic;ellipse(199.145,-45.1655,1800",1800",0.0) # color=green text={12395_12} dash=1
+galactic;ellipse(291.776,-87.5658,1800",1800",0.0) # color=green text={11040_05} dash=1
+galactic;ellipse(181.144,-70.2018,0.400313,0.475643, -90.0) # color=green text={10010_03} dash=1
+galactic;ellipse(191.969,-70.0787,0.984035,2.19091, -37.1713) # color=green text={10114_09} dash=1
+galactic;ellipse(194.84,-66.1843,0.281258,0.400117, 27.3643) # color=green text={11697_09} dash=1
+galactic;ellipse(171.043,-77.9271,0.561749,0.726455, -24.1704) # color=green text={10925_08} dash=1
+galactic;ellipse(142.496,-79.7165,1800",1800",0.0) # color=green text={12383_00} dash=1
+galactic;ellipse(238.901,-7.93792,0.51612,0.910021, -13.4233) # color=green text={2AGL0128} dash=1
+galactic;ellipse(249.915,-31.1573,0.31207,0.261913, -42.5043) # color=green text={10220_01} dash=1
+galactic;ellipse(241.085,-32.6504,1800",1800",0.0) # color=green text={10855_03} dash=1
+galactic;ellipse(228.649,-34.9881,0.671192,0.520914, -13.1337) # color=green text={12038_06} dash=1
+galactic;ellipse(252.721,-39.5614,1.10639,0.382534, 25.4953) # color=green text={10099_08} dash=1
+galactic;ellipse(252.678,-48.9958,0.341017,0.554537, -30.8453) # color=green text={10186_04} dash=1
+galactic;ellipse(252.292,-53.6935,1800",1800",0.0) # color=green text={11527_04} dash=1
+galactic;ellipse(238.853,-48.0265,1800",1800",0.0) # color=green text={12454_03} dash=1
+galactic;ellipse(269.345,-54.3694,1800",1800",0.0) # color=green text={10417_07} dash=1
+galactic;ellipse(266.802,-45.1703,1800",1800",0.0) # color=green text={10389_05} dash=1
+galactic;ellipse(247.857,-15.4567,1800",1800",0.0) # color=green text={12411_02} dash=1
+galactic;ellipse(240.801,-43.7504,0.342715,0.378944, 24.029) # color=green text={10182_00} dash=1
+galactic;ellipse(260.236,-54.4993,0.493721,0.347248, -3.07339) # color=green text={10540_00} dash=1
+galactic;ellipse(250.409,-45.0371,1800",1800",0.0) # color=green text={11714_09} dash=1
+galactic;ellipse(255.025,-52.1268,0.411104,0.826202, 5.6166) # color=green text={11562_05} dash=1
+galactic;ellipse(244.292,-38.6287,1800",1800",0.0) # color=green text={10627_10} dash=1
+galactic;ellipse(260.719,-48.689,0.919262,1.10045, -17.833) # color=green text={10847_13} dash=1
+galactic;ellipse(268.396,-49.7751,0.603783,1.16291, -11.2132) # color=green text={10657_07} dash=1
+galactic;ellipse(271.405,-33.9429,0.76907,1.61377, 6.57665) # color=green text={10145_09} dash=1
+galactic;ellipse(288.298,-7.3268,1800",1800",0.0) # color=green text={10542_01} dash=1
+galactic;ellipse(283.418,-6.90268,1800",1800",0.0) # color=green text={11087_02} dash=1
+galactic;ellipse(280.916,-8.83174,0.992495,0.732077, 35.4082) # color=green text={11374_08} dash=1
+galactic;ellipse(278.635,-30.9434,1.56446,0.613801, 37.5719) # color=green text={11560_03} dash=1
+galactic;ellipse(277.083,-14.2008,1800",1800",0.0) # color=green text={11819_04} dash=1
+galactic;ellipse(288.71,-24.0261,0.309938,0.344359, -42.1738) # color=green text={10559_00} dash=1
+galactic;ellipse(277.786,-24.9951,1.06895,1.29932, -45.7003) # color=green text={11688_05} dash=1
+galactic;ellipse(263.988,-44.5711,1.04114,0.669744, 13.9373) # color=green text={12570_05} dash=1
+galactic;ellipse(270.829,-34.6228,1800",1800",0.0) # color=green text={12287_03} dash=1
+galactic;ellipse(263.438,-51.918,0.482389,0.334587, 0.969106) # color=green text={10841_01} dash=1
+galactic;ellipse(294.137,-65.8233,1800",1800",0.0) # color=green text={10869_13} dash=1
+galactic;ellipse(282.98,-59.212,0.967316,0.636221, 34.7693) # color=green text={11458_12} dash=1
+galactic;ellipse(293.592,-60.325,1800",1800",0.0) # color=green text={10824_07} dash=1
+galactic;ellipse(276.945,-55.8266,0.616839,0.379458, 9.3515) # color=green text={11860_04} dash=1
+galactic;ellipse(276.323,-51.1448,0.325922,0.83546, 27.2714) # color=green text={11923_10} dash=1
+galactic;ellipse(273.963,-45.832,0.419482,0.686508, 27.0041) # color=green text={10231_14} dash=1
+galactic;ellipse(298.483,-61.9562,1800",1800",0.0) # color=green text={11013_04} dash=1
+galactic;ellipse(277.412,-60.8578,1800",1800",0.0) # color=green text={11739_08} dash=1
+galactic;ellipse(286.206,-54.1173,0.440549,0.611666, 20.7321) # color=green text={10979_00} dash=1
+galactic;ellipse(297.276,-16.4408,0.432898,1.04272, 7.86836) # color=green text={12030_09} dash=1
+galactic;ellipse(297.725,-18.4533,0.495106,0.733428, 37.7305) # color=green text={10007_06} dash=1
+galactic;ellipse(293.804,-27.918,1800",1800",0.0) # color=green text={12256_12} dash=1
+galactic;ellipse(296.923,-53.771,0.539936,0.506089, -67.0693) # color=green text={10518_05} dash=1
+galactic;ellipse(293.575,-44.1906,0.329082,0.317684, 39.5868) # color=green text={10366_01} dash=1
+galactic;ellipse(318.004,-49.6704,1800",1800",0.0) # color=green text={10309_09} dash=1
+galactic;ellipse(332.762,-61.258,0.976551,0.412593, -11.0683) # color=green text={10355_07} dash=1
+galactic;ellipse(315.292,-60.2381,0.489629,0.345535, -14.3844) # color=green text={10173_01} dash=1
+galactic;ellipse(302.753,-59.1856,0.428935,0.479377, -17.9603) # color=green text={10314_01} dash=1
+galactic;ellipse(308.377,-57.1245,0.43642,0.63972, -41.8201) # color=green text={10087_06} dash=1
+galactic;ellipse(293.976,-55.9722,1800",1800",0.0) # color=green text={12509_11} dash=1
+galactic;ellipse(328.234,-12.5959,0.550875,0.430744, 31.5162) # color=green text={2AGL0177} dash=1
+galactic;ellipse(312.922,-19.6856,1.05273,0.314941, 90.0) # color=green text={10418_06} dash=1
+galactic;ellipse(314.608,-27.5493,1800",1800",0.0) # color=green text={12387_07} dash=1
+galactic;ellipse(329.372,-17.9564,0.36666,0.646552, -1.8567) # color=green text={11007_06} dash=1
+galactic;ellipse(319.244,-54.9438,1800",1800",0.0) # color=green text={11061_09} dash=1
+galactic;ellipse(328.516,-48.8498,0.721158,0.449928, -40.2684) # color=green text={11163_05} dash=1
+galactic;ellipse(335.574,-46.8853,0.433741,0.677716, 32.104) # color=green text={10610_06} dash=1
+galactic;ellipse(341.827,-48.8697,1800",1800",0.0) # color=green text={10226_08} dash=1
+galactic;ellipse(321.441,-43.6543,0.486331,0.377159, -2.50287) # color=green text={10035_04} dash=1
+galactic;ellipse(318.151,-45.9011,0.508264,0.683975, 32.9891) # color=green text={11963_10} dash=1
+galactic;ellipse(320.321,-41.1454,1800",1800",0.0) # color=green text={10097_08} dash=1
+galactic;ellipse(333.8,-71.4485,0.954399,0.460618, 19.5249) # color=green text={11515_07} dash=1
+galactic;ellipse(339.897,-63.7337,0.387345,0.749531, 2.47918) # color=green text={11182_00} dash=1
+galactic;ellipse(3.08395,-68.8343,1800",1800",0.0) # color=green text={12070_05} dash=1
+galactic;ellipse(346.55,-67.4737,0.565425,1.1271, -16.1875) # color=green text={10947_01} dash=1
+galactic;ellipse(332.356,-64.0421,1800",1800",0.0) # color=green text={10446_02} dash=1
+galactic;ellipse(349.031,-66.0588,0.936467,0.633909, -18.211) # color=green text={12573_01} dash=1
+galactic;ellipse(309.263,-59.9863,1800",1800",0.0) # color=green text={12632_14} dash=1
+galactic;ellipse(355.499,-55.237,1800",1800",0.0) # color=green text={10261_12} dash=1
+galactic;ellipse(322.045,-62.2444,0.596583,0.379624, 15.5432) # color=green text={10043_06} dash=1
+galactic;ellipse(345.238,-54.38,0.633631,1.19034, -19.7516) # color=green text={11294_11} dash=1
+galactic;ellipse(342.518,-3.76747,0.454611,0.412304, -15.2763) # color=green text={11998_07} dash=1
+galactic;ellipse(343.136,-30.0015,1.17892,0.496355, -71.5639) # color=green text={11842_08} dash=1
+galactic;ellipse(355.141,-24.7132,1800",1800",0.0) # color=green text={10663_02} dash=1
+galactic;ellipse(345.758,-20.8201,0.655514,2.2296, 45.7072) # color=green text={11749_09} dash=1
+galactic;ellipse(342.251,-17.4249,1800",1800",0.0) # color=green text={12028_05} dash=1
+galactic;ellipse(352.592,-40.5663,0.344574,0.431775, -1.42772) # color=green text={12639_0A} dash=1
+galactic;ellipse(358.872,-48.5846,1.03046,0.489662, 35.4253) # color=green text={10336_07} dash=1
+galactic;ellipse(314.304,-35.1493,1800",1800",0.0) # color=green text={10384_01} dash=1
+galactic;ellipse(317.677,-30.7426,0.628724,1.53179, 23.4318) # color=green text={12151_00} dash=1
+galactic;ellipse(308.692,-31.5088,1800",1800",0.0) # color=green text={10812_01} dash=1
+galactic;ellipse(316.623,-36.9098,2.00837,0.19321, -1.4024) # color=green text={10291_06} dash=1
+galactic;ellipse(316.128,-28.8358,1800",1800",0.0) # color=green text={10223_00} dash=1
+galactic;ellipse(312.585,-30.13,1800",1800",0.0) # color=green text={10446_05} dash=1
+galactic;ellipse(313.849,-23.2736,1800",1800",0.0) # color=green text={12506_05} dash=1
+galactic;ellipse(303.937,-36.4579,1800",1800",0.0) # color=green text={11363_03} dash=1
+galactic;ellipse(304.76,-19.7941,0.550238,0.783804, 25.2112) # color=green text={11120_03} dash=1
+galactic;ellipse(311.001,-32.6185,1800",1800",0.0) # color=green text={10638_12} dash=1
+galactic;ellipse(308.2,-18.8711,1800",1800",0.0) # color=green text={10837_08} dash=1
+galactic;ellipse(352.398,16.4312,1800",1800",0.0) # color=green text={10997_08} dash=1
+galactic;ellipse(357.252,14.287,0.348425,0.601844, 16.776) # color=green text={12596_11} dash=1
+galactic;ellipse(354.023,16.3473,1800",1800",0.0) # color=green text={10833_10} dash=1
+galactic;ellipse(357.335,20.0397,0.755954,0.510592, -36.7189) # color=green text={10420_11} dash=1
+galactic;ellipse(77.5161,-38.6489,1800",1800",0.0) # color=green text={11416_02} dash=1
+galactic;ellipse(80.6572,-40.6493,1.19111,0.581887, 44.2957) # color=green text={11181_12} dash=1
+galactic;ellipse(91.8486,-34.7753,1800",1800",0.0) # color=green text={10214_09} dash=1
+galactic;ellipse(86.2289,-38.1311,1800",1800",0.0) # color=green text={10700_02} dash=1
+galactic;ellipse(84.4919,-37.7204,1800",1800",0.0) # color=green text={12632_08} dash=1
+galactic;ellipse(141.007,-41.644,0.389156,0.670336, -19.5412) # color=green text={10065_06} dash=1
+galactic;ellipse(136.583,-44.7242,0.488421,0.193439, 16.5254) # color=green text={10365_01} dash=1
+galactic;ellipse(142.064,-7.96072,0.844722,0.38557, 45.6381) # color=green text={2AGL0085} dash=1
+galactic;ellipse(140.592,-7.69189,0.326021,0.29154, -12.3339) # color=green text={11995_09} dash=1
+galactic;ellipse(157.19,-9.73967,14.338,6.62609, 11.9327) # color=green text={2AGL0087} dash=1
+galactic;ellipse(330.949,-56.6578,1800",1800",0.0) # color=green text={11772_04} dash=1
+galactic;ellipse(332.336,-52.1229,1800",1800",0.0) # color=green text={10929_13} dash=1
+galactic;ellipse(51.8674,-58.8502,1800",1800",0.0) # color=green text={10883_06} dash=1
+galactic;ellipse(53.0388,-55.2418,0.281389,0.477863, 3.58708) # color=green text={10263_00} dash=1
+galactic;ellipse(37.8365,-60.0817,1800",1800",0.0) # color=green text={11797_10} dash=1
+galactic;ellipse(44.3487,-63.413,1.29318,0.700022, -45.3612) # color=green text={11380_12} dash=1
+galactic;ellipse(59.1245,-56.9776,1800",1800",0.0) # color=green text={11033_09} dash=1
+galactic;ellipse(47.4698,-48.819,1800",1800",0.0) # color=green text={10312_04} dash=1
+galactic;ellipse(56.1826,-52.8106,0.385491,0.685951, 8.86197) # color=green text={11329_05} dash=1
+galactic;ellipse(50.0835,-51.8379,1800",1800",0.0) # color=green text={10953_13} dash=1
+galactic;ellipse(54.6128,-51.075,1800",1800",0.0) # color=green text={10626_00} dash=1
+galactic;ellipse(41.3881,-51.0553,0.243165,0.336219, 39.738) # color=green text={11590_05} dash=1
+galactic;ellipse(65.2007,-68.958,1800",1800",0.0) # color=green text={10534_00} dash=1
+galactic;ellipse(65.0581,-75.2124,1800",1800",0.0) # color=green text={10732_10} dash=1
+galactic;ellipse(96.8094,-78.6679,0.630742,0.369395, 44.1733) # color=green text={12071_10} dash=1
+galactic;ellipse(88.4999,-70.3848,0.764813,0.314248, 31.9287) # color=green text={10025_04} dash=1
+galactic;ellipse(71.9837,-72.7967,0.517493,0.425387, -70.3721) # color=green text={10475_02} dash=1
+galactic;ellipse(82.3651,-74.2652,0.467761,0.613128, -23.6083) # color=green text={12158_03} dash=1
+galactic;ellipse(102.307,-70.8347,1.40266,0.534878, 90.0) # color=green text={11686_04} dash=1
+galactic;ellipse(119.12,-75.0572,1800",1800",0.0) # color=green text={11102_10} dash=1
+galactic;ellipse(76.8449,-68.0453,1800",1800",0.0) # color=green text={11208_10} dash=1
