@@ -37,6 +37,7 @@ class MultiOutput6
 			@erglogul = 0
 			@erglog_error = 0
 			@sensitivity = 0.0;
+			@fluxband = "";
 			@integratortype = 0.0;
 			@expratioEval = 0;
 			@expratio_minthr = 0;
@@ -149,6 +150,10 @@ class MultiOutput6
 					@erglog_error = lll[12]
 					@erglogul = lll[13]
 					@sensitivity = lll[14]
+					
+					if lll.size == 16
+						@fluxband = lll[15]
+					end
 				end
 				if index2.to_i == indexstart + 7
 					@sicalc = lll[0]
@@ -380,6 +385,10 @@ class MultiOutput6
 	
 	def expratioEval
 		@expratioEval
+	end
+	
+	def fluxband
+		@fluxband
 	end
 		
 	def expratio_minthr

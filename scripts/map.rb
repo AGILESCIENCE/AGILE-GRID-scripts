@@ -44,7 +44,7 @@
 #22) bpointing: optional, default -1
 #23) maplistgen: filename of a file with  mapspec.fovradmin >> mapspec.fovradmax >> mapspec.emin >> mapspec.emax >> mapspec.index
 ### EXPOSURE
-#23) (SEL) useEDPmatrixforEXP: use the EDP matrix to generate expmap, default 0. WARNING: 1 does not work
+#23) (SEL) useEDPmatrixforEXP: use the EDP matrix to generate expmap, default 0.
 #24) expstep: step size of exp map gen, it depends by binsize (e.g. 0.3->3, 0.25->4, 0.1->10)
 #25) spectralindex: spectral index of exp map, default 2.1
 #26) timestep: LOG file step size, default 160
