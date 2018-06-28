@@ -13,13 +13,13 @@ Example: load environment on agile cluster gtbc4.giano.iasfbo
 
 Command:
 
-    AG_circle5 <inputmap> <circlemap> <l> <b> <radius>
+    AG_circle <inputmap> <circlemap> <l> <b> <radius>
 
 The circle generated will be centered on the galactic coordinates <l>,<b> with the specified <radius>. The values will be 1.0 within the circle, otherwise 0.0. The map <inputmap> provided will be used to get the map size and other metadata informations from the FITS header. The output map name is <circlemap>.
 
 Example: Generate a circle over cocoon
 
-    AG_circle5 FM3.119_ASDCe_I0025_B01.int.gz cocoon.gz 79.600721 1.396268 3.0
+    AG_circle FM3.119_ASDCe_I0025_B01.int.gz cocoon.gz 79.600721 1.396268 3.0
 
 
 ### 2. Convolve the circle with the PSF ###

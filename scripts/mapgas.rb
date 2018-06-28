@@ -45,11 +45,11 @@ skymapL = datautils.skymatrixL;
 puts "Sky map H: " + skymapH.to_s;
 puts "Sky map L: " + skymapL.to_s;
 
-cmd = "cp " + PATH + "share/AG_gasmapgen5.par . "
+cmd = "cp " + PATH + "share/AG_gasmapgen.par . "
 datautils.execute("", cmd);
-cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_gasmapgen5 " + exp.to_s + " " + gas.to_s + " " + skymapL.to_s + " " + skymapH.to_s;
+cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_gasmapgen " + exp.to_s + " " + gas.to_s + " " + skymapL.to_s + " " + skymapH.to_s;
 datautils.execute("", cmd);
-cmd = "rm AG_gasmapgen5.par"
+cmd = "rm AG_gasmapgen.par"
 datautils.execute("", cmd);
 		
 				

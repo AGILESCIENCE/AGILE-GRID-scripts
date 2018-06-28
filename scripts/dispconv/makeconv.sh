@@ -87,7 +87,7 @@ for skymap in $@; do
     [ -f $outf ] && echo "Removing existing ${outf}.." &&  rm $outf
 
     echo "Convolving $outf .."
-    AG_diff_conv5 diffusefile=$skymap sarfile=$sarfile psdfile=$psdfile edpfile=$edpfile outfile=$outf
+    AG_diff_conv diffusefile=$skymap sarfile=$sarfile psdfile=$psdfile edpfile=$edpfile outfile=$outf
 
     [ -z $(grep $outf $in) ] && echo "Adding ${outf} to ${in}.." && echo "$(readlink -m $outf)" >> $in
 done

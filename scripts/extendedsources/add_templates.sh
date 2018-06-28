@@ -71,5 +71,5 @@ for i in ${!expfiles[*]} ; do
     fappend temp_${dispfile}+0 norm_${dispfile}
     rm temp_${dispfile}
     # was outfile=\!
-    AG_gasmapgen5 expfile=${expfiles[i]} outfile=${templatebase}.template.gz diffusefile=$AGILE/scripts/extendedsources/diffuse_null.fits hiresdiffusefile=norm_${dispfile} > ${templatebase}.template.out 2>&1
+    AG_gasmapgen expfile=${expfiles[i]} outfile=${templatebase}.template.gz diffusefile=$AGILE/scripts/extendedsources/diffuse_null.fits hiresdiffusefile=norm_${dispfile} > ${templatebase}.template.out 2>&1
 done

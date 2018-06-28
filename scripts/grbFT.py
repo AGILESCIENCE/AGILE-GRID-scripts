@@ -281,13 +281,13 @@ if __name__ == '__main__':
     t2 = max(time_tt, time_tt + t2s, time_tt + t2b)
     tf1 = tempfile.NamedTemporaryFile()
     log_file = tf1.name
-    select_log_cmd = "$AGILE/bin/AG_select5 " + log_file + " " + log_index + " None " + str(t1) + " " + str(t2)
+    select_log_cmd = "$AGILE/bin/AG_select " + log_file + " " + log_index + " None " + str(t1) + " " + str(t2)
     print ("select log command: " + select_log_cmd)
     os.system(select_log_cmd)
 
     tf2 = tempfile.NamedTemporaryFile()
     evt_file = tf2.name
-    select_evt_cmd = "$AGILE/bin/AG_select5 " + evt_file + " " + evt_index + " None " + str(t1) + " " + str(t2)
+    select_evt_cmd = "$AGILE/bin/AG_select " + evt_file + " " + evt_index + " None " + str(t1) + " " + str(t2)
     print ("select evt command: " + select_evt_cmd)
     os.system(select_evt_cmd)
 

@@ -361,13 +361,13 @@ while time.to_f < tstop.to_f
 
 				# generate maps
 				if File.exists?(cts2) == false
-					cmd = "cp " + PATH + "share/AG_ctsmapgen5.par . "
+					cmd = "cp " + PATH + "share/AG_ctsmapgen.par . "
 					datautils.execute(prefix, cmd);
 				
-					cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_ctsmapgen5 " + cts2.to_s  + " " + indexfilter.to_s + " " + parameters.timelist.to_s  + "  " + parameters.mapsize.to_s + " " + parameters.binsize.to_s + " "  + l.to_s + " " + b.to_s + " " + lonpole.to_s + " " + " " + parameters.albedorad.to_s + " " + parameters.phasecode.to_s + " " + parameters.filtercode.to_s + " "  + parameters.proj.to_s + " "+ t0.to_s + " " + t1.to_s + " " + emin.to_s + " " + emax.to_s + " " + fovmin.to_s + " " + fovmax.to_s;
+					cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_ctsmapgen " + cts2.to_s  + " " + indexfilter.to_s + " " + parameters.timelist.to_s  + "  " + parameters.mapsize.to_s + " " + parameters.binsize.to_s + " "  + l.to_s + " " + b.to_s + " " + lonpole.to_s + " " + " " + parameters.albedorad.to_s + " " + parameters.phasecode.to_s + " " + parameters.filtercode.to_s + " "  + parameters.proj.to_s + " "+ t0.to_s + " " + t1.to_s + " " + emin.to_s + " " + emax.to_s + " " + fovmin.to_s + " " + fovmax.to_s;
 					datautils.execute(prefix, cmd);
 					createdmap = true
-					cmd = "rm ./AG_ctsmapgen5.par"
+					cmd = "rm ./AG_ctsmapgen.par"
 					#datautils.execute(prefix, cmd);
 				end
 				sarmatrixfull = PATHMODEL + sarmatrix
@@ -378,39 +378,39 @@ while time.to_f < tstop.to_f
 				if File.exists?(exp2) == false
 			
 					if createdexpmap == false
-						cmd = "cp " + PATH + "share/AG_expmapgen5.par . "
+						cmd = "cp " + PATH + "share/AG_expmapgen.par . "
 						datautils.execute(prefix, cmd);
 				
 						#campionamento ogni 0.1 sec del file di LOG
 						#maplist = mapstream >> mapspec.fovradmin >> mapspec.fovradmax >> mapspec.emin >> mapspec.emax >> mapspec.index;
-						cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_expmapgen5 " + exp2.to_s + " " + indexlog.to_s  +  " " + sarmatrixfull.to_s +  " " + edpmatrixfull.to_s + " " + parameters.maplistgen.to_s + " " + " " + parameters.timelist.to_s + " " + parameters.mapsize.to_s + " " + parameters.binsize.to_s  + " " + l.to_s + " " + b.to_s + " " + lonpole.to_s + " " + parameters.albedorad.to_s + " 0.5 360.0 5.0 " + parameters.phasecode.to_s + " " +  parameters.proj.to_s + " " + parameters.expstep.to_s + " " + parameters.timestep.to_s +  " " + parameters.spectralindex.to_s + " " + t0.to_s + " " + t1.to_s + " " + emin.to_s + " " + emax.to_s  + " " + fovmin.to_s + " " + fovmax.to_s;
+						cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_expmapgen " + exp2.to_s + " " + indexlog.to_s  +  " " + sarmatrixfull.to_s +  " " + edpmatrixfull.to_s + " " + parameters.maplistgen.to_s + " " + " " + parameters.timelist.to_s + " " + parameters.mapsize.to_s + " " + parameters.binsize.to_s  + " " + l.to_s + " " + b.to_s + " " + lonpole.to_s + " " + parameters.albedorad.to_s + " 0.5 360.0 5.0 " + parameters.phasecode.to_s + " " +  parameters.proj.to_s + " " + parameters.expstep.to_s + " " + parameters.timestep.to_s +  " " + parameters.spectralindex.to_s + " " + t0.to_s + " " + t1.to_s + " " + emin.to_s + " " + emax.to_s  + " " + fovmin.to_s + " " + fovmax.to_s;
 						datautils.execute(prefix, cmd);
 						createdmap = true
 						if parameters.maplistgen != "None" 
 							createdexpmap = true
 						end
 					
-						cmd = "rm ./AG_expmapgen5.par"
+						cmd = "rm ./AG_expmapgen.par"
 						#datautils.execute(prefix, cmd);
 					end
 				end
 		
 				if File.exists?(gas2) == false
-					cmd = "cp " + PATH + "share/AG_gasmapgen5.par . "
+					cmd = "cp " + PATH + "share/AG_gasmapgen.par . "
 					datautils.execute(prefix, cmd);
-					cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_gasmapgen5 " + exp2.to_s + " " + gas2.to_s + " " + skymapL.to_s + " " + skymapH.to_s;
+					cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_gasmapgen " + exp2.to_s + " " + gas2.to_s + " " + skymapL.to_s + " " + skymapH.to_s;
 					datautils.execute(prefix, cmd);
 					createdmap = true
-					cmd = "rm ./AG_gasmapgen5.par"
+					cmd = "rm ./AG_gasmapgen.par"
 					#datautils.execute(prefix, cmd);
 				end
 		
 				if File.exists?(int2) == false
-					cmd = "cp " + PATH + "share/AG_intmapgen5.par . "
+					cmd = "cp " + PATH + "share/AG_intmapgen.par . "
 					datautils.execute(prefix, cmd);
-					cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_intmapgen5 " + exp2.to_s + " " + int2.to_s + " " + cts2.to_s;
+					cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_intmapgen " + exp2.to_s + " " + int2.to_s + " " + cts2.to_s;
 					datautils.execute(prefix, cmd);
-					cmd = "rm ./AG_intmapgen5.par"
+					cmd = "rm ./AG_intmapgen.par"
 					#datautils.execute(prefix, cmd);
 				end
 				
@@ -431,9 +431,9 @@ while time.to_f < tstop.to_f
 				if parameters.useEDPmatrixforEXP.to_i == 1
 					edpmatrixfull =  PATHMODEL + edpmatrix
 				end
-				cmd = "cp " + PATH + "share/AG_ap5.par . "
+				cmd = "cp " + PATH + "share/AG_ap.par . "
 				datautils.execute(prefix, cmd);
-				cmd = "export PFILES=.:$PFILES; "+PATH+"bin/AG_ap5 "+listfile+" "+indexlog.to_s+" "+indexfilter.to_s+" "+sarmatrixfull.to_s+" "+edpmatrixfull.to_s+" "+
+				cmd = "export PFILES=.:$PFILES; "+PATH+"bin/AG_ap "+listfile+" "+indexlog.to_s+" "+indexfilter.to_s+" "+sarmatrixfull.to_s+" "+edpmatrixfull.to_s+" "+
 					  parameters.timelist.to_s+" "+parameters.ranal+" "+l.to_s+" "+b.to_s+" "+lonpole.to_s+" "+" "+parameters.albedorad.to_s+" 0.5 360.0 5.0 "+
 					  parameters.phasecode.to_s+" "+parameters.timestep.to_s+" "+parameters.spectralindex.to_s+" "+t0.to_s+" "+t1.to_s+" "+emin.to_s+" "+emax.to_s+" "+
 					  fovmin.to_s+" "+fovmax.to_s+" "+parameters.filtercode.to_s+" "+parameters.timeslot.to_s

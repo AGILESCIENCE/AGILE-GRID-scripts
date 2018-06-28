@@ -202,9 +202,9 @@ psdmatrix = datautils.psdmatrix
 if scanlist == "none"
 	scanlist = outfile.to_s + ".scanlist";
 	
-	cmd = "cp " + PATH + "share/AG_iterativeGenSrcList5.par . "
+	cmd = "cp " + PATH + "share/AG_iterativeGenSrcList.par . "
 	datautils.execute("", cmd);
-	cmd = "export PFILES=.:$PFILES; " + PATH + "/bin/AG_iterativeGenSrcList5 " + cts.to_s + " " + lcenter.to_s + " " + bcenter.to_s + " " + rextract.to_s + " " + binstep.to_s + " 2.1 " + fixflagscan.to_s + " 0.0 " + scanlist.to_s + " " + scanlistdistthr.to_s;
+	cmd = "export PFILES=.:$PFILES; " + PATH + "/bin/AG_iterativeGenSrcList " + cts.to_s + " " + lcenter.to_s + " " + bcenter.to_s + " " + rextract.to_s + " " + binstep.to_s + " 2.1 " + fixflagscan.to_s + " 0.0 " + scanlist.to_s + " " + scanlistdistthr.to_s;
 	puts cmd
 	system(cmd)
 end
@@ -235,9 +235,9 @@ end
 
 matrixconf = datautils.getResponseMatrixString(filter);
 
-	cmd = "cp " + PATH + "share/AG_multiterative5.par . "
+	cmd = "cp " + PATH + "share/AG_multiterative.par . "
 	datautils.execute("", cmd);
-	cmd = "export PFILES=.:$PFILES; " + PATH + "/bin/AG_multiterative5 " + maplist.to_s + matrixconf.to_s + " " + scanlist.to_s + " " + scanitmax.to_s + " " + scantsthr.to_s + " " + scandistthr.to_s + " " + fixdistthr.to_s + " " + minsourcesqrts.to_s + " " + ranal.to_s + " " + galmode.to_s + " " + isomode.to_s +  " " + startlistmulti.to_s + " " + outfile.to_s + " " + ulcl.to_s + " " + loccl.to_s + " " + fixflagscan.to_s + " " + fixflagstep2.to_s;
+	cmd = "export PFILES=.:$PFILES; " + PATH + "/bin/AG_multiterative " + maplist.to_s + matrixconf.to_s + " " + scanlist.to_s + " " + scanitmax.to_s + " " + scantsthr.to_s + " " + scandistthr.to_s + " " + fixdistthr.to_s + " " + minsourcesqrts.to_s + " " + ranal.to_s + " " + galmode.to_s + " " + isomode.to_s +  " " + startlistmulti.to_s + " " + outfile.to_s + " " + ulcl.to_s + " " + loccl.to_s + " " + fixflagscan.to_s + " " + fixflagstep2.to_s;
 puts cmd
 system(cmd)
 
