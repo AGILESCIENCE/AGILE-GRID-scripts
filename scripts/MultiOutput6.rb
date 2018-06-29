@@ -981,7 +981,7 @@ end
 			f1 = File.new(resname + ".resfullsel", "w")
 			freg = File.new(resname + ".reg", "w")
 			File.open(multilist).each_line do | line |
-				multioutput = MultiOutput.new()
+				multioutput = MultiOutput6.new()
 				name = line.split(" ")[6];
 				multioutput.readDataSingleSource2(resname, name)
 				f.write(multioutput.multiOutputLineFull3(flag) + "\n");
@@ -1003,13 +1003,13 @@ end
 			fhtmlsel = File.new(dir + "/" + resname + ".sel.html", "w")
 			fob = File.new(dir + "/" + resname + ".ob", "w")
 			flc = File.new(dir + "/" + resname + ".lc", "w")
-			multioutput = MultiOutput.new()
+			multioutput = MultiOutput6.new()
 			fhtml.write(multioutput.multiOutputLineFull3HTMLheader(flag))
 			fhtmlsel.write(multioutput.multiOutputLineFull3HTMLheader(flag))
 			#puts Dir[dir + "/*.source"]
 			Dir[dir + "/*.source"].sort.each do | name |
 				#puts name
-				multioutput = MultiOutput.new()
+				multioutput = MultiOutput6.new()
 				multioutput.readDataSingleSource(name)
 				#puts name
 				f.write(multioutput.multiOutputLineFull4(flag) + "\n"); #3 old, 4 new
