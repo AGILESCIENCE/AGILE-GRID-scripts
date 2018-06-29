@@ -260,9 +260,9 @@ end
 lastoutfile = ""
 outfile2 = baseoutfile2
 
-cmd = "cp " + PATH + "share/AG_multi5.par . "
+cmd = "cp " + PATH + "share/AG_multi.par . "
 datautils.execute(outfile2, cmd);
-cmd = "cp " + PATH + "share/AG_multi5ext.par . "
+cmd = "cp " + PATH + "share/AG_multiext.par . "
 datautils.execute(outfile2, cmd);
 
 for i in 1..stepi
@@ -287,10 +287,10 @@ for i in 1..stepi
 		alikeutils.rewriteMultiInputWithSingleSourceToAnalyze(listsource, newlistsource, p.fixisogalstep0, "1");
 		
 		if p.listsourceextended == "" 
-			cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multi5 " + inputfilemaps22.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource.to_s + " " + outfile22.to_s + " " + ulcl.to_s + " " + loccl.to_s + " " + p.galmode2.to_s + " " + p.galmode2fit.to_s + " " + p.isomode2.to_s + " " + p.isomode2fit.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype;
+			cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multi " + inputfilemaps22.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource.to_s + " " + outfile22.to_s + " " + ulcl.to_s + " " + loccl.to_s + " " + p.galmode2.to_s + " " + p.galmode2fit.to_s + " " + p.isomode2.to_s + " " + p.isomode2fit.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype;
 			datautils.execute(outfile2, cmd)	
 		else
-			cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multi5ext " + inputfilemaps22.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource.to_s + " " + p.listsourceextended + " " + outfile22.to_s + " " + ulcl.to_s + " " + loccl.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype;
+			cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multiext " + inputfilemaps22.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource.to_s + " " + p.listsourceextended + " " + outfile22.to_s + " " + ulcl.to_s + " " + loccl.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype;
 			datautils.execute(outfile2, cmd)
 		end
 		
@@ -369,12 +369,12 @@ for i in 1..stepi
 	
 	if p.listsourceextended == ""
 	
-		cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multi5 " + inputfilemaps.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource.to_s + "  " + newoutfile + " " + ulcl.to_s + " " + loccl.to_s + " " + p.galmode2.to_s + " " + p.galmode2fit.to_s + " " + p.isomode2.to_s + " " + p.isomode2fit.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype;
+		cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multi " + inputfilemaps.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource.to_s + "  " + newoutfile + " " + ulcl.to_s + " " + loccl.to_s + " " + p.galmode2.to_s + " " + p.galmode2fit.to_s + " " + p.isomode2.to_s + " " + p.isomode2fit.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype;
 		datautils.execute(outfile2, cmd)
 	
 	else
 		
-		cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multi5ext " + inputfilemaps.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource.to_s + " " + p.listsourceextended.to_s + " " + newoutfile + " " + ulcl.to_s + " " + loccl.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype;
+		cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multiext " + inputfilemaps.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource.to_s + " " + p.listsourceextended.to_s + " " + newoutfile + " " + ulcl.to_s + " " + loccl.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype;
 		datautils.execute(outfile2, cmd)
 		
 	end
@@ -403,12 +403,12 @@ for i in 1..stepi
 			
 			if p.listsourceextended == ""
 	
-				cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multi5 " + inputfilemaps.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource2.to_s + "  " + newoutfile + " " + ulcl.to_s + " " + loccl.to_s + " " + p.galmode2.to_s + " " + p.galmode2fit.to_s + " " + p.isomode2.to_s + " " + p.isomode2fit.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype.to_s;
+				cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multi " + inputfilemaps.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource2.to_s + "  " + newoutfile + " " + ulcl.to_s + " " + loccl.to_s + " " + p.galmode2.to_s + " " + p.galmode2fit.to_s + " " + p.isomode2.to_s + " " + p.isomode2fit.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype.to_s;
 				datautils.execute(outfile2, cmd)
 				
 			else
 		
-				cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multi5ext " + inputfilemaps.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource2.to_s + " " + p.listsourceextended.to_s + " " + newoutfile + " " + ulcl.to_s + " " + loccl.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype.to_s;;
+				cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multiext " + inputfilemaps.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource2.to_s + " " + p.listsourceextended.to_s + " " + newoutfile + " " + ulcl.to_s + " " + loccl.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype.to_s;;
 				datautils.execute(outfile2, cmd)
 		
 			end
@@ -532,7 +532,7 @@ for i in 1..stepi
 
 end
 
-cmd = "rm ./AG_multi5.par"
+cmd = "rm ./AG_multi.par"
 #datautils.execute(outfile2, cmd);
 
 exit(0)

@@ -147,12 +147,12 @@ echo "emax = ${user_emaxv[*]}"
 
 for i in ${!eminv[*]} ; do
     naming="${eminv[i]}_${emaxv[i]}.${sky}.S${filter}_${matrix}.disp.conv.sky.gz"
-    AG_add_diff5 diffusefilelist=$in edpfile=${edpfile} sarfile=${sarfile} outfile=\!$naming emin=${eminv[i]} emax=${emaxv[i]}
+    AG_add_diff diffusefilelist=$in edpfile=${edpfile} sarfile=${sarfile} outfile=\!$naming emin=${eminv[i]} emax=${emaxv[i]}
 done
 
 for i in ${!user_eminv[*]} ; do
     naming="${user_eminv[i]}_${user_emaxv[i]}.${sky}.S${filter}_${matrix}.disp.conv.sky.gz"
-    AG_add_diff5 diffusefilelist=$in edpfile=${edpfile} sarfile=${sarfile} outfile=\!$naming emin=${user_eminv[i]} emax=${user_emaxv[i]}
+    AG_add_diff diffusefilelist=$in edpfile=${edpfile} sarfile=${sarfile} outfile=\!$naming emin=${user_eminv[i]} emax=${user_emaxv[i]}
 done
 
 echo "Done."

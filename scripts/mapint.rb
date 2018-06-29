@@ -35,7 +35,7 @@ parameters.processInput(3, ARGV, filter)
 exp = prefix.to_s + ".exp.gz"
 cts = prefix.to_s + ".cts.gz"
 
-cmd = PATH + "bin/AG_intmapgen5 " + exp.to_s + " " + int.to_s + " " + cts.to_s;
+cmd = PATH + "bin/AG_intmapgen " + exp.to_s + " " + int.to_s + " " + cts.to_s;
 datautils.execute(prefix, cmd);
 
 		

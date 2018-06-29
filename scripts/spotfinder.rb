@@ -60,11 +60,11 @@ end
 	ranal = 10;
 	rextract = mapsize.to_i / 2.0 - ranal.to_i;
 	
-	cmd = PATH + "bin/AG_spotfinder5 " + mapci.to_s + " " + binsize.to_s + " " + smooth.to_s + " " + numberofsource2.to_s + " " + listsource.to_s + " " + algspotfiner.to_s + " " + radiousremove.to_s + " 1 " + makebinshift.to_s + " " + rextract.to_s + " " + exp.to_s + " " + minExposure.to_s;
+	cmd = PATH + "bin/AG_spotfinder " + mapci.to_s + " " + binsize.to_s + " " + smooth.to_s + " " + numberofsource2.to_s + " " + listsource.to_s + " " + algspotfiner.to_s + " " + radiousremove.to_s + " 1 " + makebinshift.to_s + " " + rextract.to_s + " " + exp.to_s + " " + minExposure.to_s;
 	puts cmd; system(cmd);
-	cmd = PATH + "bin/AG_spotfinder5 " + mapci.to_s + " " + binsize.to_s + " " + smooth.to_s + " " + numberofsource.to_s + " " + listsource.to_s + " " + algspotfiner.to_s + " " + radiousremove.to_s + " 2 " + makebinshift.to_s + " " + rextract.to_s + " " + exp.to_s + " " + minExposure.to_s;
+	cmd = PATH + "bin/AG_spotfinder " + mapci.to_s + " " + binsize.to_s + " " + smooth.to_s + " " + numberofsource.to_s + " " + listsource.to_s + " " + algspotfiner.to_s + " " + radiousremove.to_s + " 2 " + makebinshift.to_s + " " + rextract.to_s + " " + exp.to_s + " " + minExposure.to_s;
 	puts cmd; system(cmd);
-	cmd = PATH + "bin/AG_spotfinder5 " + mapci.to_s + " " + binsize.to_s + " " + smooth.to_s + " " + numberofsource2.to_s + " " + listsource.to_s + " " + algspotfiner.to_s + " " + radiousremove.to_s + " 3 " + makebinshift.to_s + " " + rextract.to_s + " " + exp.to_s + " " + minExposure.to_s;
+	cmd = PATH + "bin/AG_spotfinder " + mapci.to_s + " " + binsize.to_s + " " + smooth.to_s + " " + numberofsource2.to_s + " " + listsource.to_s + " " + algspotfiner.to_s + " " + radiousremove.to_s + " 3 " + makebinshift.to_s + " " + rextract.to_s + " " + exp.to_s + " " + minExposure.to_s;
 	
 	puts cmd; system(cmd);
 
