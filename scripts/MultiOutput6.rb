@@ -82,32 +82,36 @@ class MultiOutput6
 				lll = line.split(" ")
 				
 				if index2.to_i == indexstart + 1
-					@label =lll[0];
-					@fix =lll[1];
-					@si_start = lll[2];
-					@ulconflevel = lll[3];
-					@srcconflevel = lll[4];
-					@startL = lll[5];
-					@startB = lll[6];
-					@startFlux = lll[7];
-					@lmin = lll[9];
-					@lmax = lll[11];
-					@bmin = lll[14];
-					@bmax = lll[16];
-					@typefun = lll[18];
-					@par2_start = lll[19];
-					@par3_start = lll[20];
-					@galmode2 = lll[21];
-					@galmode2fit = lll[22];
-					@isomode2 = lll[23];
-					@isomode2fit = lll[24];
-					@edpcor = lll[25];
-					@fluxcor = lll[26];
-					@integratortype = lll[27];
-					@expratioEval = lll[28];
-					@expratio_minthr = lll[29];
-					@expratio_maxthr = lll[30];
-					@expratio_size = lll[31];
+					begin
+						@label =lll[0];
+						@fix =lll[1];
+						@si_start = lll[2];
+						@ulconflevel = lll[3];
+						@srcconflevel = lll[4];
+						@startL = lll[5];
+						@startB = lll[6];
+						@startFlux = lll[7];
+						@lmin = lll[9];
+						@lmax = lll[11];
+						@bmin = lll[14];
+						@bmax = lll[16];
+						@typefun = lll[18];
+						@par2_start = lll[19];
+						@par3_start = lll[20];
+						@galmode2 = lll[21];
+						@galmode2fit = lll[22];
+						@isomode2 = lll[23];
+						@isomode2fit = lll[24];
+						@edpcor = lll[25];
+						@fluxcor = lll[26];
+						@integratortype = lll[27];
+						@expratioEval = lll[28];
+						@expratio_minthr = lll[29];
+						@expratio_maxthr = lll[30];
+						@expratio_size = lll[31];
+					rescue
+					
+					end
 				end
 				if index2.to_i == indexstart + 2
 					@sqrtTS =lll[0];
