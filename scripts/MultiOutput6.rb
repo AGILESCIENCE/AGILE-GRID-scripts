@@ -973,5 +973,108 @@ class MultiOutput6List
 		@sources
 	end
 	
+end
+	
+	class MultiOutputList
+		def readSources(resname, multilist, flag)
+			f = File.new(resname + ".resfull", "w")
+			f1 = File.new(resname + ".resfullsel", "w")
+			freg = File.new(resname + ".reg", "w")
+			File.open(multilist).each_line do | line |
+				multioutput = MultiOutput.new()
+				name = line.split(" ")[6];
+				multioutput.readDataSingleSource2(resname, name)
+				f.write(multioutput.multiOutputLineFull3(flag) + "\n");
+				if multioutput.fix.to_i >= 1
+					f1.write(multioutput.multiOutputLineFull3(flag) + "\n");
+				end
+				freg.write(multioutput.regline(4));
+			end
+			f.close();
+			f1.close();
+			freg.close();
+		end
+		
+		def readSourcesInDir(dir, resname, flag, thrsqrtts)
+			f = File.new(dir + "/" + resname + ".resfull", "w")
+			f1 = File.new(dir + "/" + resname + ".resfullsel", "w")
+			freg = File.new(dir + "/" + resname + ".reg", "w")
+			fhtml = File.new(dir + "/" + resname + ".html", "w")
+			fhtmlsel = File.new(dir + "/" + resname + ".sel.html", "w")
+			fob = File.new(dir + "/" + resname + ".ob", "w")
+			flc = File.new(dir + "/" + resname + ".lc", "w")
+			multioutput = MultiOutput.new()
+			fhtml.write(multioutput.multiOutputLineFull3HTMLheader(flag))
+			fhtmlsel.write(multioutput.multiOutputLineFull3HTMLheader(flag))
+			#puts Dir[dir + "/*.source"]
+			Dir[dir + "/*.source"].sort.each do | name |
+				#puts name
+				multioutput = MultiOutput.new()
+				multioutput.readDataSingleSource(name)
+				#puts name
+				f.write(multioutput.multiOutputLineFull4(flag) + "\n"); #3 old, 4 new
+				if multioutput.fix.to_i >= 1 and multioutput.sqrtTS.to_f > thrsqrtts.to_f
+					f1.write(multioutput.multiOutputLineFull4(flag) + "\n"); #3 old, 4 new
+				end
+				
+				#puts multioutput.multiOutputLineFull3(flag)
+				freg.write(multioutput.regline(thrsqrtts.to_f));
+				fhtml.write(multioutput.multiOutputLineFull3HTML(name, flag))
+				if multioutput.sqrtTS.to_f > 4.0
+					fhtmlsel.write(multioutput.multiOutputLineFull3HTML(name, flag))
+				end
+				
+				#write on and lc file
+				runname = name.split("_MLE")[0]
+				rn = runname.split("/")
+				runname = rn[rn.size - 1]
+				distpoint = " -1 -1 "
+				distpointcalc = -1
+				if multioutput.timestop_tt.to_f < 182692800
+					File.open(ENV["AGILE"] + "/scripts/AGILEOBPOINT.list").each_line do | linetime |
+						ll = linetime.split(" ")
+						if multioutput.timestop_tt.to_f >= ll[5].to_f and multioutput.timestop_tt.to_f <= ll[6].to_f
+							distpoint = ll[1].to_s + " " + ll[2].to_s + " "
+							du = DataUtils.new
+							distpointcalc = du.distance(multioutput.l_peak, multioutput.b_peak, ll[1].to_f, ll[2].to_f)
+							break
+						end
+					end
+				end
+				#TODO: aggiungere qui la necessità di determinare lpointing e bpointing da un file di input
+				fob.write(multioutput.timestart_tt.to_s + " " + multioutput.timestop_tt.to_s + " " + runname + " " + multioutput.galcoeff.to_s + " " + multioutput.isocoeff.to_s + " " + distpoint.to_s + " \n");
+				
+				#write lc file
+				flux = 0
+				fluxerror = "0"
+				fluxtype = "0"
+				if multioutput.sqrtTS.to_f < 3
+					flux = multioutput.flux_ul
+					fluxerror = "0"
+					fluxtype = "0"
+					else
+					flux = multioutput.flux
+					fluxerror = multioutput.flux_error
+					fluxtype = "1"
+				end
+				mjdsize = multioutput.timestop_mjd.to_f - multioutput.timestart_mjd.to_f
+				mjdcenter = multioutput.timestart_mjd.to_f + mjdsize.to_f / 2.0
+				#calculate distance between lpointing, bpointing to l, b. NOW is -1
+				flc.write(format("%.2E",flux.to_s) + " " + format("%.2E", fluxerror.to_s)  + " " + fluxtype.to_s  + " " + format("%.7f", mjdcenter.to_s)  + " " + format("%.4f",mjdsize.to_s) + " " + format("%.2f", distpointcalc.to_s) + " " + runname + " " +  format("%.2f", multioutput.sqrtTS.to_s) + " " + format("%.2E", multioutput.exposure.to_s) + " " + multioutput.galcoeff.chomp.to_s + " " + multioutput.isocoeff.chomp.to_s + " " + format("%.7f", multioutput.timestart_mjd.to_s) + " " + format("%.7f", multioutput.timestop_mjd.to_s) + " " + format("%.2f", multioutput.timestart_tt.to_s) + " " + format("%.2f", multioutput.timestop_tt.to_s) + " " + format("%.3f", multioutput.dist.to_s) + " ( " + multioutput.fullellipseline  + " ) " + multioutput.fix + "\n");
+			end
+			f.close();
+			f1.close();
+			freg.close();
+			fhtml.close();
+			fhtmlsel.close();
+			fob.close();
+			flc.close();
+		end
+		
+		def sources
+			@sources
+		end
+		
+	
 	
 end
