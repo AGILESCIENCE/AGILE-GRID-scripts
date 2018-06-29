@@ -1,9 +1,9 @@
 #! /usr/bin/ruby
 #script compatible with BUILD20
 #0) filter DIR (es: FT3ab_2_I0007, FM3.119_2c, F4_2c_I0010)
-#1) output file name prefix
+#1) output file name
 #2) exp map
-#3) skytype: 0 standard hires diffuse maps, 1 gc_allsky maps, 2 lowres
+#3) skytype: 0 SKY000-1 + SKY000-5, 1 gc_allsky maps + SKY000-5, 2 SKY000-5, 3 SKY001 (old galcenter, binsize 0.1, full sky), 4 SKY002 (new galcenter, binsize 0.1, full sky)
 #optional
 #emin
 #emax

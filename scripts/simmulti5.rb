@@ -1,5 +1,4 @@
 #! /usr/bin/ruby
-#script for BUILD24
 #0) filter/archive/calibMatrix (FM3.119_ASDCe_I0023)
 #1) maplist sim
 #2) list of sources (in .multi format) for simulation
