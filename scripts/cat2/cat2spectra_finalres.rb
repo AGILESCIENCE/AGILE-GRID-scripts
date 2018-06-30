@@ -22,8 +22,8 @@
 # R1-G10 2AGL0161 localhost cat2 0 pl FINALgif 3 -1 -1 -1
 # DEFAULT R1-G10 2AGL0161 localhost cat2 0 pl FINAL [1-3] -1 0.7 1
 
-def formatline(emin, emax, offaxis)
-	line = format("EMIN%05d_EMAX%05d_FM3.119_ASDCe_H0025_B01.cts.gz EMIN%05d_EMAX%05d_FM3.119_ASDCe_H0025_B01.exp.gz EMIN%05d_EMAX%05d_FM3.119_ASDCe_H0025_B01.gas.gz %d -1 -1\n", emin, emax, emin, emax, emin, emax, offaxis)
+def formatline2(emin, emax, offaxis)
+	line = format("EMIN%05d_EMAX%05d_FM3.119_ASDCe_H0025_B01.cts.gz EMIN%05d_EMAX%05d_FM3.119_ASDCe_H0025_B01.exp.gz EMIN%05d_EMAX%05d_FM3.119_ASDCe_H0025_B01.gas.gz %d -1 -1\n", emin, emax, emin, emax, emin, emax, offaxis) 
 	puts line
 	return line
 end
