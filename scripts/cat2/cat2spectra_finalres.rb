@@ -22,11 +22,7 @@
 # R1-G10 2AGL0161 localhost cat2 0 pl FINALgif 3 -1 -1 -1
 # DEFAULT R1-G10 2AGL0161 localhost cat2 0 pl FINAL [1-3] -1 0.7 1
 
-def formatline2(emin, emax, offaxis)
-	line = format("EMIN%05d_EMAX%05d_FM3.119_ASDCe_H0025_B01.cts.gz EMIN%05d_EMAX%05d_FM3.119_ASDCe_H0025_B01.exp.gz EMIN%05d_EMAX%05d_FM3.119_ASDCe_H0025_B01.gas.gz %d -1 -1\n", emin, emax, emin, emax, emin, emax, offaxis)
-	puts line
-	return line
-end
+
 
 def formatlinefov5(f1, emin, emax)
 	line = format("EMIN%05d_EMAX%05d_%02d_FM3.119_ASDCe_H0025_B01.cts.gz EMIN%05d_EMAX%05d_%02d_FM3.119_ASDCe_H0025_B01.exp.gz EMIN%05d_EMAX%05d_%02d_FM3.119_ASDCe_H0025_B01.gas.gz %d -1 -1\n", emin, emax, 1, emin, emax, 1, emin, emax, 1, 5)
@@ -181,14 +177,14 @@ f1 = File.new(maplist4name, "w")
 gcf = ""
 if irf == "H0025"
 	if fovarchive == false
-		formatline2(f1, 100, 300)
-		formatline2(f1, 300, 1000)
+		f1.write("EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
+		f1.write("EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
 		if energyrange.split("-")[1].to_i > 1000
-			formatline2(f1, 1000, 3000)
-			formatline2(f1, 3000, 10000)
+			f1.write("EMIN01000_EMAX03000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN01000_EMAX03000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN01000_EMAX03000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
+			f1.write("EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
 			gcf = fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
 			if energyrange.split("-")[1].to_i == 50000
-				formatline2(f1, 10000, 50000)
+				f1.write("EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
 				gcf = fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
 			end
 		else
