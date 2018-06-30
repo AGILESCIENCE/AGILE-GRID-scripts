@@ -491,22 +491,36 @@ for i in 1..stepi
 		
 		iline = 0
 		while iline < lines.size
-		
+			galcoeffout = ""
+			isocoeffout = ""
+			
 			line = lines[iline]
 			lname = prefixscan + "_" + line.split(" ")[0].split(".cts.gz")[0]
 			puts "Processing ... " + line + " in file " + lname + "_s"
 			fml = File.new(lname + "_s.maplist4", "w")
 			for iii in 0...nfovbins
 				fml.write(lines[iline + iii])
+				if galcoeffout != ""
+					galcoeffout += ","
+				end
+				galcoeffout += mouthe.galcoeff.split(",")[iline + iii]
+				if isocoeffout != ""
+					isocoeffout += ","
+				end
+				isocoeffout += mouthe.isocoeff.split(",")[iline + iii]
 			end
 			fml.close()
-			
+			puts "isocoeffout: "
+			puts isocoeffout
 			iline = iline + nfovbins
-		
+			
+			#build galcoeff and isocoeff
+			
 			
 			#lname = prefixscan + "_" + line.split(" ")[0].split(".cts.gz")[0]
 			
-			cmd = $0 + " " +  filter + " " + lname + "_s.maplist4 " + newoutfile2 + ".multi " + lname + " galcoeff=" + mouthe.galcoeff.split(",")[indexmapl] + " isocoeff=" + mouthe.isocoeff.split(",")[indexmapl] + " fluxcorrection=" + p.fluxcorrection.to_s + " edpcorrection=" + p.edpcorrection.to_s + " emin_sources=" + emin_sin.to_s + " emax_sources=" + emax_sin.to_s
+			#cmd = $0 + " " +  filter + " " + lname + "_s.maplist4 " + newoutfile2 + ".multi " + lname + " galcoeff=" + mouthe.galcoeff.split(",")[indexmapl] + " isocoeff=" + mouthe.isocoeff.split(",")[indexmapl] + " fluxcorrection=" + p.fluxcorrection.to_s + " edpcorrection=" + p.edpcorrection.to_s + " emin_sources=" + emin_sin.to_s + " emax_sources=" + emax_sin.to_s
+			cmd = $0 + " " +  filter + " " + lname + "_s.maplist4 " + newoutfile2 + ".multi " + lname + " galcoeff=" + galcoeffout + " isocoeff=" + isocoeffout + " fluxcorrection=" + p.fluxcorrection.to_s + " edpcorrection=" + p.edpcorrection.to_s + " emin_sources=" + emin_sin.to_s + " emax_sources=" + emax_sin.to_s
 			puts cmd
 			system cmd
 			
