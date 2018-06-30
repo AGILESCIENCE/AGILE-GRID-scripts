@@ -4,7 +4,7 @@
 #2) energyrange where to perform optimisation parameters: 00100-10000 00100-50000 00100-01000
 #3) analysisname, e.g. EDP1-EB01-FB01
 #4) IRF name, e.g. H0025
-#5) integrator type: 1..8
+#5) integrator type: 1..8 
 #6) selection from cat multi: minradius around cat sourcename
 #7) prefix (to be added to analysis name) e.g. FINAL
 #8) add fix flag: 1 (only flux free) or 3 (flux and position free)
@@ -23,7 +23,7 @@
 # DEFAULT R1-G10 2AGL0161 localhost cat2 0 pl FINAL [1-3] -1 0.7 1
 
 def formatline2(emin, emax, offaxis)
-	line = format("EMIN%05d_EMAX%05d_FM3.119_ASDCe_H0025_B01.cts.gz EMIN%05d_EMAX%05d_FM3.119_ASDCe_H0025_B01.exp.gz EMIN%05d_EMAX%05d_FM3.119_ASDCe_H0025_B01.gas.gz %d -1 -1\n", emin, emax, emin, emax, emin, emax, offaxis) 
+	line = format("EMIN%05d_EMAX%05d_FM3.119_ASDCe_H0025_B01.cts.gz EMIN%05d_EMAX%05d_FM3.119_ASDCe_H0025_B01.exp.gz EMIN%05d_EMAX%05d_FM3.119_ASDCe_H0025_B01.gas.gz %d -1 -1\n", emin, emax, emin, emax, emin, emax, offaxis)
 	puts line
 	return line
 end
