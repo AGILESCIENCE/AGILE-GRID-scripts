@@ -8,9 +8,9 @@
 #6) selection from cat multi: minradius around cat sourcename
 #7) prefix (to be added to analysis name) e.g. FINAL
 #8) add fix flag: 1 (only flux free) or 3 (flux and position free)
-#9) fix spectral index (optional, set the value if >=0 or do not fix if < 0, e.g. -1)
-#10) fix galactic coeff (optional, set the value if >=0 or keep free if < 0, e.g. -1)
-#11) fix galiso step2 (optional, fix value if >=0 or keep free if < 0, e.g. -1)
+#9) fix spectral index (optional, set the value if >=0 or do not fix if < 0, e.g. -1). Default -1 -> do not fix
+#10) fix galactic coeff (optional, set the value if >=0 or keep free if < 0, e.g. -1). Default 0.7 -> fix 0.7 for |b| > 10 and determine galcoeff for |b| < 10. If -1 keep galcoeff free
+#11) fix galiso step2, i.e. galmode2 and isomode2 (optional, fix value if >=0 or keep free if < 0, e.g. -1) -> Default 1, put galmode=3 and isomode=3
 #12) selection from cat multi: mincatflux (optional or e.g 25e-08)
 
 #Get all sources for ff=1
@@ -20,6 +20,33 @@
 # R1-G10 2AGL0161 localhost cat2 0 pl FINAL 3
 # R1-G10 2AGL0161 localhost cat2 0 pl FINALgcf 3 -1 -1
 # R1-G10 2AGL0161 localhost cat2 0 pl FINALgif 3 -1 -1 -1
+# DEFAULT R1-G10 2AGL0161 localhost cat2 0 pl FINAL [1-3] -1 0.7 1
+
+def formatline(emin, emax, offaxis)
+	line = format("EMIN%05d_EMAX%05d_FM3.119_ASDCe_H0025_B01.cts.gz EMIN%05d_EMAX%05d_FM3.119_ASDCe_H0025_B01.exp.gz EMIN%05d_EMAX%05d_FM3.119_ASDCe_H0025_B01.gas.gz %d -1 -1\n", emin, emax, emin, emax, emin, emax, offaxis)
+	puts line
+	return line
+end
+
+def formatlinefov5(f1, emin, emax)
+	line = format("EMIN%05d_EMAX%05d_%02d_FM3.119_ASDCe_H0025_B01.cts.gz EMIN%05d_EMAX%05d_%02d_FM3.119_ASDCe_H0025_B01.exp.gz EMIN%05d_EMAX%05d_%02d_FM3.119_ASDCe_H0025_B01.gas.gz %d -1 -1\n", emin, emax, 1, emin, emax, 1, emin, emax, 1, 5)
+	f1.write(line)
+	line = format("EMIN%05d_EMAX%05d_%02d_FM3.119_ASDCe_H0025_B01.cts.gz EMIN%05d_EMAX%05d_%02d_FM3.119_ASDCe_H0025_B01.exp.gz EMIN%05d_EMAX%05d_%02d_FM3.119_ASDCe_H0025_B01.gas.gz %d -1 -1\n", emin, emax, 2, emin, emax, 2, emin, emax, 2, 15)
+	f1.write(line)
+	line = format("EMIN%05d_EMAX%05d_%02d_FM3.119_ASDCe_H0025_B01.cts.gz EMIN%05d_EMAX%05d_%02d_FM3.119_ASDCe_H0025_B01.exp.gz EMIN%05d_EMAX%05d_%02d_FM3.119_ASDCe_H0025_B01.gas.gz %d -1 -1\n", emin, emax, 3, emin, emax, 3, emin, emax, 3, 25)
+	f1.write(line)
+	line = format("EMIN%05d_EMAX%05d_%02d_FM3.119_ASDCe_H0025_B01.cts.gz EMIN%05d_EMAX%05d_%02d_FM3.119_ASDCe_H0025_B01.exp.gz EMIN%05d_EMAX%05d_%02d_FM3.119_ASDCe_H0025_B01.gas.gz %d -1 -1\n", emin, emax, 4, emin, emax, 4, emin, emax, 4, 35)
+	f1.write(line)
+	line = format("EMIN%05d_EMAX%05d_%02d_FM3.119_ASDCe_H0025_B01.cts.gz EMIN%05d_EMAX%05d_%02d_FM3.119_ASDCe_H0025_B01.exp.gz EMIN%05d_EMAX%05d_%02d_FM3.119_ASDCe_H0025_B01.gas.gz %d -1 -1\n", emin, emax, 5, emin, emax, 5, emin, emax, 5, 45)
+	f1.write(line)
+end
+
+
+
+if ARGV[0].to_s == "help" || ARGV[0].to_s == "h" || ARGV[0] == nil
+	system("head -24 " + $0 );
+	exit;
+end
 
 sourcename = ARGV[0]
 spectratype = ARGV[1] #pl plec plsec lp
@@ -125,6 +152,15 @@ end
 # MAPLIST
 ##############################
 
+#determina the type of archive
+fovarchive = false
+fovarchivenum = 1
+if Dir["EMIN00100_EMAX00300_??_FM3*.exp.gz"].size.to_i > 0
+	fovarchive = true
+	fovarchivenum = Dir["EMIN00100_EMAX00300_??_FM3*.exp.gz"].size
+end
+
+#build maplist
 suffix = "R" + inttype.to_s  + "_C" + format("%02d", minradius.to_f*10) + "-" + ARGV[1] + "-" + ARGV[2] + "-" + ARGV[3] + "-" + ARGV[4]
 
 if fixflag.to_i == 1
@@ -140,21 +176,43 @@ maplist4namefull = fan + "_FM3.119_ASDCe_"+irf+"_B01_"+energyrange+".full.maplis
 
 maplist4namehe = fan + "_FM3.119_ASDCe_"+irf+"_B01_"+energyrange+".he.maplist4"
 
+puts "# prepare " + maplist4name + " " + fovarchive.to_s
 f1 = File.new(maplist4name, "w")
 gcf = ""
 if irf == "H0025"
-	f1.write("EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
-	f1.write("EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
-	if energyrange.split("-")[1].to_i > 1000
-		f1.write("EMIN01000_EMAX03000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN01000_EMAX03000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN01000_EMAX03000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
-		f1.write("EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
-		gcf = fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
-		if energyrange.split("-")[1].to_i == 50000
-			f1.write("EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
-			gcf = fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+	if fovarchive == false
+		formatline2(f1, 100, 300, 25)
+		formatline2(f1, 300, 1000, 25)
+		if energyrange.split("-")[1].to_i > 1000
+			formatline2(f1, 1000, 3000, 25)
+			formatline2(f1, 3000, 10000, 25)
+			gcf = fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+			if energyrange.split("-")[1].to_i == 50000
+				formatline2(f1, 10000, 50000, 25)
+				gcf = fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+			end
+		else
+			gcf = fixgalcoeff.to_s + "," + fixgalcoeff.to_s
 		end
 	else
-		gcf = fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		formatlinefov5(f1, 100, 300)
+		gcf = fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		formatlinefov5(f1, 300, 1000)
+		gcf += ","
+		gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		if energyrange.split("-")[1].to_i > 1000
+			formatlinefov5(f1, 1000, 3000)
+			gcf += ","
+			gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+			formatlinefov5(f1, 3000, 10000)
+			gcf += ","
+			gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+			if energyrange.split("-")[1].to_i == 50000
+				formatlinefov5(f1, 10000, 50000)
+				gcf += ","
+				gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+			end
+		end
 	end
 end
 f1.close()
@@ -162,26 +220,63 @@ f1.close()
 f2 = File.new(maplist4namefull, "w")
 gcffull = ""
 if irf == "H0025"
-	f2.write("EMIN00030_EMAX00050_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00030_EMAX00050_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00030_EMAX00050_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
-	f2.write("EMIN00050_EMAX00100_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00050_EMAX00100_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00050_EMAX00100_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
-	f2.write("EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
-	f2.write("EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
-	f2.write("EMIN01000_EMAX03000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN01000_EMAX03000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN01000_EMAX03000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
-	f2.write("EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
-	f2.write("EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
-	gcffull = fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+	if fovarchive == false
+		f2.write("EMIN00030_EMAX00050_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00030_EMAX00050_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00030_EMAX00050_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
+		f2.write("EMIN00050_EMAX00100_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00050_EMAX00100_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00050_EMAX00100_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
+		f2.write("EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
+		f2.write("EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
+		f2.write("EMIN01000_EMAX03000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN01000_EMAX03000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN01000_EMAX03000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
+		f2.write("EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
+		f2.write("EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
+		gcffull = fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+	else
+		formatlinefov5(f2, 50, 100)
+		gcf = fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		formatlinefov5(f2, 100, 300)
+		gcf += ","
+		gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		formatlinefov5(f2, 300, 1000)
+		gcf += ","
+		gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		formatlinefov5(f2, 1000, 3000)
+		gcf += ","
+		gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		formatlinefov5(f2, 3000, 10000)
+		gcf += ","
+		gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		formatlinefov5(f2, 10000, 50000)
+		gcf += ","
+		gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+	end
 end
 f2.close()
 
 f3 = File.new(maplist4namehe, "w")
 gcfhe = ""
 if irf == "H0025"
-	f3.write("EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
-	f3.write("EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
-	f3.write("EMIN01000_EMAX03000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN01000_EMAX03000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN01000_EMAX03000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
-	f3.write("EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
-	f3.write("EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
-	gcfhe = fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+	if fovarchive == false
+		f3.write("EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
+		f3.write("EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
+		f3.write("EMIN01000_EMAX03000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN01000_EMAX03000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN01000_EMAX03000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
+		f3.write("EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
+		f3.write("EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
+		gcfhe = fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+	else
+		formatlinefov5(f3, 100, 300)
+		gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		formatlinefov5(f3, 300, 1000)
+		gcf += ","
+		gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		formatlinefov5(f3, 1000, 3000)
+		gcf += ","
+		gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		formatlinefov5(f3, 3000, 10000)
+		gcf += ","
+		gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		formatlinefov5(f3, 10000, 50000)
+		gcf += ","
+		gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+	end
 end
 f3.close()
 
@@ -213,7 +308,7 @@ else
 end
 
 system("rm INT_"+fan+"*")
-cmd = "multi6.rb FM3.119_ASDC2_"+irf+" " + maplist4name +" none INT_"+fan+" addcat=\""+ catline +"\" catminradius=" + minradius.to_s + " catminflux="+minf.to_s+" fluxcorrection=1 emin_sources=100 emax_sources=50000 edpcorrection=0.75 minimizertype=Minuit minimizeralg=Migrad minimizerdefstrategy=2 scanmaplist=" + sourcename + "," + fan + " fluxcorrection=1 " + cmdadd.to_s + " integratortype=" + inttype.to_s + " galcoeff=" + galcoeff.to_s
+cmd = "multi6.rb FM3.119_ASDC2_"+irf+" " + maplist4name +" none INT_"+fan+" addcat=\""+ catline +"\" catminradius=" + minradius.to_s + " catminflux="+minf.to_s+" fluxcorrection=1 emin_sources=100 emax_sources=50000 edpcorrection=0.75 minimizertype=Minuit minimizeralg=Migrad minimizerdefstrategy=2 scanmaplist=" + sourcename + "," + fan + "," + fovarchivenum.to_s + " fluxcorrection=1 " + cmdadd.to_s + " integratortype=" + inttype.to_s + " galcoeff=" + galcoeff.to_s
 #galmode2=3 isomode2=3
 puts cmd
 system cmd
@@ -238,7 +333,7 @@ puts "####################################################"
 suffix = "R" + inttype.to_s  + "_C" + format("%02d", minradius.to_f*10) + "-" + ARGV[1] + "-00030-50000-" + ARGV[3] + "-" + ARGV[4]
 fan1 = prefix + "_FF1_" + suffix
 
-cmd = "multi6.rb FM3.119_ASDC2_"+irf+" " + maplist4namefull +" " + newlistsource2 + " INT_"+fan1+" fluxcorrection=1 emin_sources=100 emax_sources=50000 edpcorrection=0.75 scanmaplist=" + sourcename + "," + fan1 + " minimizertype=Minuit minimizeralg=Migrad minimizerdefstrategy=2 fluxcorrection=1 " + cmdadd.to_s + " galmode2fit=0 isomode2fit=0 integratortype=" + inttype.to_s + " galcoeff=" + galcoefffull.to_s
+cmd = "multi6.rb FM3.119_ASDC2_"+irf+" " + maplist4namefull +" " + newlistsource2 + " INT_"+fan1+" fluxcorrection=1 emin_sources=100 emax_sources=50000 edpcorrection=0.75 scanmaplist=" + sourcename + "," + fan1 + "," + fovarchivenum.to_s + " minimizertype=Minuit minimizeralg=Migrad minimizerdefstrategy=2 fluxcorrection=1 " + cmdadd.to_s + " galmode2fit=0 isomode2fit=0 integratortype=" + inttype.to_s + " galcoeff=" + galcoefffull.to_s
 puts cmd
 system cmd
 
@@ -250,7 +345,7 @@ puts "####################################################"
 suffix = "R" + inttype.to_s  + "_C" + format("%02d", minradius.to_f*10) + "-" + ARGV[1] + "-00100-50000-" + ARGV[3] + "-" + ARGV[4]
 fan1 = prefix + "_FF1_" + suffix
 
-cmd = "multi6.rb FM3.119_ASDC2_"+irf+" " + maplist4namehe +" " + newlistsource2 + " INT_"+fan1+" fluxcorrection=1 emin_sources=100 emax_sources=50000 edpcorrection=0.75 scanmaplist=" + sourcename + "," + fan1 + " minimizertype=Minuit minimizeralg=Migrad minimizerdefstrategy=2 fluxcorrection=1 " + cmdadd.to_s + " galmode2fit=0 isomode2fit=0 integratortype=" + inttype.to_s + " galcoeff=" + galcoeffhe.to_s
+cmd = "multi6.rb FM3.119_ASDC2_"+irf+" " + maplist4namehe +" " + newlistsource2 + " INT_"+fan1+" fluxcorrection=1 emin_sources=100 emax_sources=50000 edpcorrection=0.75 scanmaplist=" + sourcename + "," + fan1 + "," + fovarchivenum.to_s + " minimizertype=Minuit minimizeralg=Migrad minimizerdefstrategy=2 fluxcorrection=1 " + cmdadd.to_s + " galmode2fit=0 isomode2fit=0 integratortype=" + inttype.to_s + " galcoeff=" + galcoeffhe.to_s
 puts cmd
 system cmd
 

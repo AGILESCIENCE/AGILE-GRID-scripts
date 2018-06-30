@@ -40,7 +40,7 @@
 #xx) integratortype (1 gauss 2 gaussht 3 gausslefevre 4 gausslefevreht)
 #30) edpcorrection, default 0 (no), 1 yes. EDP cleaning correction NOT IMPLEMENTED YET
 #31) fluxcorrection, defaul 0 (no), 1 yes. Flux calculation correction for spectral shape
-#32) scanmaplist - default 0. Calculate one TS for each map of the maplist4 provided as input -> specify the name of the source and the prefix e.g. VELA,pl . Warning: it works only for energy bins or theta bin, and not for theta bin AND energy bin
+#32) scanmaplist - default 0. Calculate one TS for each map of the maplist4 provided as input, or group by some set of maps (e.g. for fovbinnumer > 1) -> specify the name of the source and the prefix e.g. VELA,pl -> one MLE using pl law for each map of the maplist4 for VELA source. e.g. VELA,pl,5 -> one MLE each 5 maps of the maplist4
 #33) (CAT) addcat. Specify the string of the source to be analysed". e.g. addcat="2.0e-07 34.7  -0.5  2.5 12 2 W44 0.0 1 2000.0 0.0". Remove sources with the same name, to avoid duplicate
 #34) (CAT) catpath, the path of the cat file list (.multi). Default is /ANALYSIS3/catalogs/cat2.multi
 #35) (CAT) catminflux, the min flux to be selected from the cat list
@@ -449,6 +449,10 @@ for i in 1..stepi
 		
 		sourcename = p.scanmaplist.split(",")[0]
 		prefixscan = p.scanmaplist.split(",")[1]
+		nfovbins = 1
+		if p.scanmaplist.split(",").size == 3
+			nfovbins = p.scanmaplist.split(",")[2].to_i
+		end
 		mouthe = MultiOutput6.new
 		mouthe.readDataSingleSource(newoutfile + "_"+sourcename+".source")
 		puts mouthe.sicalc
@@ -480,18 +484,27 @@ for i in 1..stepi
 		indexmapl = 0;
 		fres = File.new(prefixscan + ".spe", "w")
 		puts "open " + newoutfile + ".maplist4"
-		File.open(newoutfile + ".maplist4").each_line do | line |
-			
-			lname = prefixscan + "_" + line.split(" ")[0].split(".cts.gz")[0] + "_s"
-			puts "Processing ... " + line + " in file " + lname
-			fml = File.new(lname + ".maplist4", "w")
-			fml.write(line)
-			fml.close()
-		end
 		
-		File.open(newoutfile + ".maplist4").each_line do | line |
-			
+		lines = File.readlines(newoutfile + ".maplist4")
+		
+		#File.open(newoutfile + ".maplist4").each_line do | line |
+		
+		iline = 0
+		while iline < lines.size
+		
+			line = lines[iline]
 			lname = prefixscan + "_" + line.split(" ")[0].split(".cts.gz")[0]
+			puts "Processing ... " + line + " in file " + lname + "_s"
+			fml = File.new(lname + "_s.maplist4", "w")
+			for iii in 0...nfovbins
+				fml.write(lines[iline + iii])
+			end
+			fml.close()
+			
+			iline = iline + nfovbins
+		
+			
+			#lname = prefixscan + "_" + line.split(" ")[0].split(".cts.gz")[0]
 			
 			cmd = $0 + " " +  filter + " " + lname + "_s.maplist4 " + newoutfile2 + ".multi " + lname + " galcoeff=" + mouthe.galcoeff.split(",")[indexmapl] + " isocoeff=" + mouthe.isocoeff.split(",")[indexmapl] + " fluxcorrection=" + p.fluxcorrection.to_s + " edpcorrection=" + p.edpcorrection.to_s + " emin_sources=" + emin_sin.to_s + " emax_sources=" + emax_sin.to_s
 			puts cmd
