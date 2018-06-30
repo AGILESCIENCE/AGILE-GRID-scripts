@@ -4,7 +4,7 @@
 #2) energyrange where to perform optimisation parameters: 00100-10000 00100-50000 00100-01000
 #3) analysisname, e.g. EDP1-EB01-FB01
 #4) IRF name, e.g. H0025
-#5) integrator type: 1..8 
+#5) integrator type: 1..8
 #6) selection from cat multi: minradius around cat sourcename
 #7) prefix (to be added to analysis name) e.g. FINAL
 #8) add fix flag: 1 (only flux free) or 3 (flux and position free)
@@ -181,14 +181,14 @@ f1 = File.new(maplist4name, "w")
 gcf = ""
 if irf == "H0025"
 	if fovarchive == false
-		formatline2(f1, 100, 300, 25)
-		formatline2(f1, 300, 1000, 25)
+		formatline2(f1, 100, 300)
+		formatline2(f1, 300, 1000)
 		if energyrange.split("-")[1].to_i > 1000
-			formatline2(f1, 1000, 3000, 25)
-			formatline2(f1, 3000, 10000, 25)
+			formatline2(f1, 1000, 3000)
+			formatline2(f1, 3000, 10000)
 			gcf = fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
 			if energyrange.split("-")[1].to_i == 50000
-				formatline2(f1, 10000, 50000, 25)
+				formatline2(f1, 10000, 50000)
 				gcf = fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
 			end
 		else
