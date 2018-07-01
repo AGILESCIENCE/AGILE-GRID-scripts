@@ -156,6 +156,11 @@ if Dir["EMIN00100_EMAX00300_??_FM3*.exp.gz"].size.to_i > 0
 	fovarchivenum = Dir["EMIN00100_EMAX00300_??_FM3*.exp.gz"].size
 end
 
+energyarchive = true
+if Dir["EMIN*"].size == 0
+	energyarchive = false
+end
+
 #build maplist
 suffix = "R" + inttype.to_s  + "_C" + format("%02d", minradius.to_f*10) + "-" + ARGV[1] + "-" + ARGV[2] + "-" + ARGV[3] + "-" + ARGV[4]
 
@@ -176,7 +181,10 @@ puts "# prepare " + maplist4name + " " + fovarchive.to_s
 f1 = File.new(maplist4name, "w")
 gcf = ""
 if irf == "H0025"
-	if fovarchive == false
+	if energyarchive == false
+		f1.write("FM3.119_ASDCe_H0025_B01.cts.gz FM3.119_ASDCe_H0025_B01.exp.gz FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
+	end
+	if fovarchive == false and energyarchive == true
 		f1.write("EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
 		f1.write("EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
 		if energyrange.split("-")[1].to_i > 1000
@@ -190,7 +198,8 @@ if irf == "H0025"
 		else
 			gcf = fixgalcoeff.to_s + "," + fixgalcoeff.to_s
 		end
-	else
+	end
+	if fovarchive == true and energyarchive == true
 		formatlinefov5(f1, 100, 300)
 		gcf = fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
 		formatlinefov5(f1, 300, 1000)
@@ -216,7 +225,10 @@ f1.close()
 f2 = File.new(maplist4namefull, "w")
 gcffull = ""
 if irf == "H0025"
-	if fovarchive == false
+	if energyarchive == false
+		f2.write("FM3.119_ASDCe_H0025_B01.cts.gz FM3.119_ASDCe_H0025_B01.exp.gz FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
+	end
+	if fovarchive == false and energyarchive == true
 		f2.write("EMIN00030_EMAX00050_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00030_EMAX00050_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00030_EMAX00050_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
 		f2.write("EMIN00050_EMAX00100_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00050_EMAX00100_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00050_EMAX00100_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
 		f2.write("EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
@@ -225,7 +237,8 @@ if irf == "H0025"
 		f2.write("EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
 		f2.write("EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
 		gcffull = fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
-	else
+	end
+	if fovarchive == true and energyarchive == true
 		formatlinefov5(f2, 50, 100)
 		gcf = fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
 		formatlinefov5(f2, 100, 300)
@@ -250,14 +263,18 @@ f2.close()
 f3 = File.new(maplist4namehe, "w")
 gcfhe = ""
 if irf == "H0025"
-	if fovarchive == false
+	if energyarchive == false
+		f3.write("FM3.119_ASDCe_H0025_B01.cts.gz FM3.119_ASDCe_H0025_B01.exp.gz FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
+	end
+	if fovarchive == false and energyarchive == true
 		f3.write("EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
 		f3.write("EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00300_EMAX01000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
 		f3.write("EMIN01000_EMAX03000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN01000_EMAX03000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN01000_EMAX03000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
 		f3.write("EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN03000_EMAX10000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
 		f3.write("EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.cts.gz EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.exp.gz EMIN10000_EMAX50000_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
 		gcfhe = fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
-	else
+	end
+	if fovarchive == true and energyarchive == true
 		formatlinefov5(f3, 100, 300)
 		gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
 		formatlinefov5(f3, 300, 1000)
