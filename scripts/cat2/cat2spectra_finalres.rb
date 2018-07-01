@@ -161,6 +161,8 @@ if Dir["EMIN*"].size == 0
 	energyarchive = false
 end
 
+puts "archive type: fov " + fovarchive.to_s + " energy " + energyarchive.to_s
+
 #build maplist
 suffix = "R" + inttype.to_s  + "_C" + format("%02d", minradius.to_f*10) + "-" + ARGV[1] + "-" + ARGV[2] + "-" + ARGV[3] + "-" + ARGV[4]
 
@@ -183,6 +185,7 @@ gcf = ""
 if irf == "H0025"
 	if energyarchive == false
 		f1.write("FM3.119_ASDCe_H0025_B01.cts.gz FM3.119_ASDCe_H0025_B01.exp.gz FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
+		gcf = fixgalcoeff.to_s
 	end
 	if fovarchive == false and energyarchive == true
 		f1.write("EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
@@ -227,6 +230,7 @@ gcffull = ""
 if irf == "H0025"
 	if energyarchive == false
 		f2.write("FM3.119_ASDCe_H0025_B01.cts.gz FM3.119_ASDCe_H0025_B01.exp.gz FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
+		gcffull = fixgalcoeff.to_s
 	end
 	if fovarchive == false and energyarchive == true
 		f2.write("EMIN00030_EMAX00050_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00030_EMAX00050_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00030_EMAX00050_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
@@ -265,6 +269,7 @@ gcfhe = ""
 if irf == "H0025"
 	if energyarchive == false
 		f3.write("FM3.119_ASDCe_H0025_B01.cts.gz FM3.119_ASDCe_H0025_B01.exp.gz FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
+		gcfhe = fixgalcoeff.to_s
 	end
 	if fovarchive == false and energyarchive == true
 		f3.write("EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.cts.gz EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.exp.gz EMIN00100_EMAX00300_FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")
