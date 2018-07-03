@@ -1,0 +1,2 @@
+import xphs_vf as xs
+xs.computeUL(help = 0, sens_type = 'INT', expmap='/Users/fioretti/pro_python/Maps/POINT01C.exp', gasmap='/Users/fioretti/pro_python/Maps/POINT01C.gas', gal = 0.7, iso = 12., cont = 10., sign = 4., emin = 100., emax = 10000., model = 0, index = 2.1, par2 = 0, par3 = 0)

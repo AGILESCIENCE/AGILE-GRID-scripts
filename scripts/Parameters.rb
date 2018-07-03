@@ -109,7 +109,7 @@ class Parameters
 			@minimizeralg = "Migrad"
 			@minimizerdefstrategy = 2
 			@mindefaulttolerance = 0.01
-			@edpcorrection = 1.0
+			@edpcorrection = 0.75
 			@fluxcorrection = 1
 			@scanmaplist = 0
 		end
