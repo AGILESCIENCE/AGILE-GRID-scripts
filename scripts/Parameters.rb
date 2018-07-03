@@ -4,6 +4,7 @@ class Parameters
 			@addcat = ""
 			@catminflux = "25e-08"
 			@catminradius = "0"
+			@contourpoints = 40
 			@integratortype = "1"
 			@catpath = "/ANALYSIS3/catalogs/cat2.multi"
 			@checksourceposition = nil
@@ -117,6 +118,10 @@ class Parameters
 					@phasecode = 18 #POIN
 				end
 			end
+		end
+		
+		def contourpoints
+			@contourpoints
 		end
 		
 		def checksourceposition
@@ -661,6 +666,8 @@ class Parameters
 			value = argv.split("=")[1];
 			puts keyw.to_s + " " + value.to_s
 			case keyw
+				when "contourpoints"
+					@contourpoints = value;
 				when "catminflux"
 					@catminflux = value
 				when "catminradius"

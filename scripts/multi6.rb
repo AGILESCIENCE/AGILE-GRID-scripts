@@ -45,6 +45,7 @@
 #34) (CAT) catpath, the path of the cat file list (.multi). Default is /ANALYSIS3/catalogs/cat2.multi
 #35) (CAT) catminflux, the min flux to be selected from the cat list
 #36) (CAT) catminradius, the min radius to be selected from the cat list
+#37) contourpoints, Number of points to determine the contour (0-400)
 
 # MAPLIST
 #Each line contains a set of maps:
@@ -131,7 +132,7 @@ datautils = DataUtils.new
 fits = Fits.new
 
 if ARGV[0].to_s == "help" || ARGV[0].to_s == "h" || ARGV[0] == nil
-	system("head -127 " + $0 );
+	system("head -128 " + $0 );
 	exit;
 end
 
@@ -287,7 +288,7 @@ for i in 1..stepi
 		alikeutils.rewriteMultiInputWithSingleSourceToAnalyze(listsource, newlistsource, p.fixisogalstep0, "1");
 		
 		if p.listsourceextended == "" 
-			cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multi " + inputfilemaps22.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource.to_s + " " + outfile22.to_s + " " + ulcl.to_s + " " + loccl.to_s + " " + p.galmode2.to_s + " " + p.galmode2fit.to_s + " " + p.isomode2.to_s + " " + p.isomode2fit.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype;
+			cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multi " + inputfilemaps22.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource.to_s + " " + outfile22.to_s + " " + ulcl.to_s + " " + loccl.to_s + " " + p.galmode2.to_s + " " + p.galmode2fit.to_s + " " + p.isomode2.to_s + " " + p.isomode2fit.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype + " " + p.contourpoints.to_s;
 			datautils.execute(outfile2, cmd)	
 		else
 			cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multiext " + inputfilemaps22.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource.to_s + " " + p.listsourceextended + " " + outfile22.to_s + " " + ulcl.to_s + " " + loccl.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype;
@@ -369,7 +370,7 @@ for i in 1..stepi
 	
 	if p.listsourceextended == ""
 	
-		cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multi " + inputfilemaps.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource.to_s + "  " + newoutfile + " " + ulcl.to_s + " " + loccl.to_s + " " + p.galmode2.to_s + " " + p.galmode2fit.to_s + " " + p.isomode2.to_s + " " + p.isomode2fit.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype;
+		cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multi " + inputfilemaps.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource.to_s + "  " + newoutfile + " " + ulcl.to_s + " " + loccl.to_s + " " + p.galmode2.to_s + " " + p.galmode2fit.to_s + " " + p.isomode2.to_s + " " + p.isomode2fit.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype + " " + p.contourpoints.to_s;
 		datautils.execute(outfile2, cmd)
 	
 	else
@@ -403,7 +404,7 @@ for i in 1..stepi
 			
 			if p.listsourceextended == ""
 	
-				cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multi " + inputfilemaps.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource2.to_s + "  " + newoutfile + " " + ulcl.to_s + " " + loccl.to_s + " " + p.galmode2.to_s + " " + p.galmode2fit.to_s + " " + p.isomode2.to_s + " " + p.isomode2fit.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype.to_s;
+				cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multi " + inputfilemaps.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource2.to_s + "  " + newoutfile + " " + ulcl.to_s + " " + loccl.to_s + " " + p.galmode2.to_s + " " + p.galmode2fit.to_s + " " + p.isomode2.to_s + " " + p.isomode2fit.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype.to_s + " " + p.contourpoints.to_s;
 				datautils.execute(outfile2, cmd)
 				
 			else
@@ -475,7 +476,7 @@ for i in 1..stepi
 		fheso.close()
 		system("cp " + newoutfile2 + ".multi " + prefixscan + ".multi")
 		
-		cmd = $0 + " " +  filter + " " + newoutfile + ".maplist4 " + newoutfile2 + ".multi " + newoutfile2 + " galcoeff=" + mouthe.galcoeff + " isocoeff=" + mouthe.isocoeff + " fluxcorrection=" + p.fluxcorrection.to_s + " edpcorrection=" + p.edpcorrection.to_s + " emin_sources=" + emin_sin.to_s + " emax_sources=" + emax_sin.to_s
+		cmd = $0 + " " +  filter + " " + newoutfile + ".maplist4 " + newoutfile2 + ".multi " + newoutfile2 + " galcoeff=" + mouthe.galcoeff + " isocoeff=" + mouthe.isocoeff + " fluxcorrection=" + p.fluxcorrection.to_s + " edpcorrection=" + p.edpcorrection.to_s + " emin_sources=" + emin_sin.to_s + " emax_sources=" + emax_sin.to_s + " contourpoints=" + p.contourpoints.to_s
 		
 		puts cmd
 		system cmd
