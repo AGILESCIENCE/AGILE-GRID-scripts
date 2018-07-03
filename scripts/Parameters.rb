@@ -1,6 +1,10 @@
 class Parameters
 	public
 		def initialize()
+			@expratioevaluation = 1
+			@minThreshold = 0
+			@maxThreshold = 15
+			@squareSize = 10
 			@addcat = ""
 			@catminflux = "25e-08"
 			@catminradius = "0"
@@ -118,6 +122,22 @@ class Parameters
 					@phasecode = 18 #POIN
 				end
 			end
+		end
+		
+		def expratioevaluation
+			@expratioevaluation
+		end
+		
+		def minThreshold
+			@minThreshold
+		end
+		
+		def maxThreshold
+			@maxThreshold
+		end
+		
+		def squareSize
+			@squareSize = 10
 		end
 		
 		def contourpoints
@@ -666,6 +686,14 @@ class Parameters
 			value = argv.split("=")[1];
 			puts keyw.to_s + " " + value.to_s
 			case keyw
+				when "expratioevaluation"
+					@expratioevaluation = value
+				when "minThreshold"
+					@minThreshold = value
+				when "maxThreshold"
+					@maxThreshold = value
+				when "squareSize"
+					@squareSize = value
 				when "contourpoints"
 					@contourpoints = value;
 				when "catminflux"
