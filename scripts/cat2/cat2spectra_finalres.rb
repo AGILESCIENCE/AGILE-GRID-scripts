@@ -343,7 +343,7 @@ else
 end
 
 system("rm INT_"+fan+"*")
-cmd = "multi6.rb FM3.119_ASDC2_"+irf+" " + maplist4name +" none INT_"+fan+" addcat=\""+ catline +"\" catminradius=" + minradius.to_s + " catminflux="+minf.to_s+" fluxcorrection=1 emin_sources=100 emax_sources=50000 edpcorrection=0.75 minimizertype=Minuit minimizeralg=Migrad minimizerdefstrategy=2 scanmaplist=" + sourcename + "," + fan + "," + fovarchivenum.to_s + " fluxcorrection=1 " + cmdadd.to_s + " integratortype=" + inttype.to_s + " galcoeff=" + galcoeff.to_s
+cmd = "multi6.rb FM3.119_ASDC2_"+irf+" " + maplist4name +" none INT_"+fan+" addcat=\""+ catline +"\" catminradius=" + minradius.to_s + " catminflux="+minf.to_s+" fluxcorrection=1 emin_sources=100 emax_sources=50000 edpcorrection=0.75 minimizertype=Minuit minimizeralg=Migrad minimizerdefstrategy=1 scanmaplist=" + sourcename + "," + fan + "," + fovarchivenum.to_s + " fluxcorrection=1 " + cmdadd.to_s + " integratortype=" + inttype.to_s + " galcoeff=" + galcoeff.to_s
 #galmode2=3 isomode2=3
 puts cmd
 system cmd
