@@ -63,7 +63,7 @@ for i in ${!expfiles[*]} ; do
         echo "${convfile[$j]}.specwt" >> ${convfilelist}
     done
     dispfile=${templatebase}.disp.conv.sky
-    AG_add_diff5 diffusefilelist=${convfilelist} edpfile=${caldir}/AG_GRID_G0017_SFMG_I0025.edp.gz sarfile=${caldir}/AG_GRID_G0017_SFMG_I0025.sar.gz outfile=\!${dispfile} emin=${addemin} emax=${addemax} > ${dispfile}.out 2>&1
+    AG_add_diff diffusefilelist=${convfilelist} edpfile=${caldir}/AG_GRID_G0017_SFMG_H0025.edp.gz sarfile=${caldir}/AG_GRID_G0017_SFMG_H0025.sar.gz outfile=\!${dispfile} emin=${addemin} emax=${addemax} > ${dispfile}.out 2>&1
     ftstat ${dispfile} chatter=0
     dispsum=`pget ftstat sum`
     fextract ${dispfile}+0 \!norm_${dispfile}

@@ -61,7 +61,7 @@ for i in ${!convemin[*]} ; do
     fparkey ${convemin[i]} $padfile E_MIN add=yes insert=CRVAL2
     fparkey ${convemax[i]} $padfile E_MAX add=yes insert=E_MIN
     fparkey ${convindex[i]} $padfile INDEX add=yes insert=E_MAX
-    ( AG_diff_conv diffusefile=$padfile sarfile=${caldir}/AG_GRID_G0017_SFMG_I0025.sar.gz psdfile=${caldir}/AG_GRID_G0017_SFMG_I0025.psd.gz edpfile=${caldir}/AG_GRID_G0017_SFMG_I0025.edp.gz outfile=\!${convfile[$i]} > $outname 2>&1 ; fparkey 0 $padfile -E_MIN ; fparkey 0 $padfile -E_MAX ; fparkey 0 $padfile -INDEX ; rm ${PFILES}/*.par ; rmdir ${PFILES} )
+    ( AG_diff_conv diffusefile=$padfile sarfile=${caldir}/AG_GRID_G0017_SFMG_H0025.sar.gz psdfile=${caldir}/AG_GRID_G0017_SFMG_H0025.psd.gz edpfile=${caldir}/AG_GRID_G0017_SFMG_H0025.edp.gz outfile=\!${convfile[$i]} > $outname 2>&1 ; fparkey 0 $padfile -E_MIN ; fparkey 0 $padfile -E_MAX ; fparkey 0 $padfile -INDEX ; rm ${PFILES}/*.par ; rmdir ${PFILES} )
 done
 PFILES=${PFILES_OLD}
 

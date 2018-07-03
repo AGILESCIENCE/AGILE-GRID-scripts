@@ -182,6 +182,23 @@ maplist4namehe = fan + "_FM3.119_ASDCe_"+irf+"_B01_"+energyrange+".he.maplist4"
 puts "# prepare " + maplist4name + " " + fovarchive.to_s
 f1 = File.new(maplist4name, "w")
 gcf = ""
+
+if irf == "I0025"
+	f1.write("EMIN00100_EMAX00400_FM3.119_ASDCe_I0025_B01.cts.gz EMIN00100_EMAX00400_FM3.119_ASDCe_I0025_B01.exp.gz EMIN00100_EMAX00400_FM3.119_ASDCe_I0025_B01.gas.gz 25 -1 -1\n")
+	f1.write("EMIN00400_EMAX01000_FM3.119_ASDCe_I0025_B01.cts.gz EMIN00400_EMAX01000_FM3.119_ASDCe_I0025_B01.exp.gz EMIN00400_EMAX01000_FM3.119_ASDCe_I0025_B01.gas.gz 25 -1 -1\n")
+	if energyrange.split("-")[1].to_i > 1000
+		f1.write("EMIN01000_EMAX03000_FM3.119_ASDCe_I0025_B01.cts.gz EMIN01000_EMAX03000_FM3.119_ASDCe_I0025_B01.exp.gz EMIN01000_EMAX03000_FM3.119_ASDCe_I0025_B01.gas.gz 25 -1 -1\n")
+		f1.write("EMIN03000_EMAX10000_FM3.119_ASDCe_I0025_B01.cts.gz EMIN03000_EMAX10000_FM3.119_ASDCe_I0025_B01.exp.gz EMIN03000_EMAX10000_FM3.119_ASDCe_I0025_B01.gas.gz 25 -1 -1\n")
+		gcf = fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		if energyrange.split("-")[1].to_i == 50000
+			f1.write("EMIN10000_EMAX50000_FM3.119_ASDCe_I0025_B01.cts.gz EMIN10000_EMAX50000_FM3.119_ASDCe_I0025_B01.exp.gz EMIN10000_EMAX50000_FM3.119_ASDCe_I0025_B01.gas.gz 25 -1 -1\n")
+			gcf = fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		end
+		else
+		gcf = fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+	end
+end
+
 if irf == "H0025"
 	if energyarchive == false
 		f1.write("FM3.119_ASDCe_H0025_B01.cts.gz FM3.119_ASDCe_H0025_B01.exp.gz FM3.119_ASDCe_H0025_B01.gas.gz 25 -1 -1\n")

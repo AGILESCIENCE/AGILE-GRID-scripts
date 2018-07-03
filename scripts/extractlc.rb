@@ -13,7 +13,7 @@
 #generate a LC list reading the files with the pattern contained in prefix
 
 load ENV["AGILE"] + "scripts/conf.rb"
-load ENV["AGILE"] + "scripts/MultiOutput.rb"
+load ENV["AGILE"] + "scripts/MultiOutput6.rb"
 
 datautils = DataUtils.new
 agilefov = AgileFOV.new
@@ -82,7 +82,7 @@ a.each do | xx |
 			
 	obname = xx.split("_")[0];
 
-	mo = MultiOutput.new;
+	mo = MultiOutput6.new;
 	mo.setCalcPhase(t0, period);
 	mo.readDataSingleSource(xx);
 	
