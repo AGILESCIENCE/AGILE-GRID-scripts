@@ -261,22 +261,22 @@ if irf == "H0025"
 	end
 	if fovarchive == true and energyarchive == true
 		formatlinefov5(f2, 50, 100)
-		gcf = fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		gcffull = fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
 		formatlinefov5(f2, 100, 300)
-		gcf += ","
-		gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		gcffull += ","
+		gcffull += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
 		formatlinefov5(f2, 300, 1000)
-		gcf += ","
-		gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		gcffull += ","
+		gcffull += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
 		formatlinefov5(f2, 1000, 3000)
-		gcf += ","
-		gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		gcffull += ","
+		gcffull += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
 		formatlinefov5(f2, 3000, 10000)
-		gcf += ","
-		gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		gcffull += ","
+		gcffull += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
 		formatlinefov5(f2, 10000, 50000)
-		gcf += ","
-		gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		gcffull += ","
+		gcffull += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
 	end
 end
 f2.close()
@@ -298,19 +298,19 @@ if irf == "H0025"
 	end
 	if fovarchive == true and energyarchive == true
 		formatlinefov5(f3, 100, 300)
-		gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		gcfhe += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
 		formatlinefov5(f3, 300, 1000)
-		gcf += ","
-		gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		gcfhe += ","
+		gcfhe += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
 		formatlinefov5(f3, 1000, 3000)
-		gcf += ","
-		gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		gcfhe += ","
+		gcfhe += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
 		formatlinefov5(f3, 3000, 10000)
-		gcf += ","
-		gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		gcfhe += ","
+		gcfhe += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
 		formatlinefov5(f3, 10000, 50000)
-		gcf += ","
-		gcf += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
+		gcfhe += ","
+		gcfhe += fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s + "," + fixgalcoeff.to_s
 	end
 end
 f3.close()
