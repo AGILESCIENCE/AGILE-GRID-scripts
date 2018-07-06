@@ -31,7 +31,7 @@ else
 	minsqrtTS = 0.0;
 end
 
-	multioutput = MultiOutput.new
+	multioutput = MultiOutput6.new
 	
 	index = 0;
 	lastline = "";

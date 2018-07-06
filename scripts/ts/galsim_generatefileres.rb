@@ -21,7 +21,7 @@ l = ARGV[1]
 b = ARGV[2]
 dist = ARGV[3]
 
-m = MultiOutput.new
+m = MultiOutput6.new
 d = DataUtils.new
 
 f1 = File.new("lst_00", "w")

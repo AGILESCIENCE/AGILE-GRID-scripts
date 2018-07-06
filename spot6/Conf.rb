@@ -558,7 +558,7 @@ class Conf
 		end
 		
 		Dir[sourceexpr].each do | source |
-			mo = MultiOutput.new
+			mo = MultiOutput6.new
 			mo.readDataSingleSource(source)
 			if mo.sqrtTS.to_f >= @analysis_result_minSqrtTS.to_f
 				#distance criteria

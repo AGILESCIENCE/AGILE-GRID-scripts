@@ -406,7 +406,7 @@ begin
 		#--------
 	
 		#modifico ora i dati della sorgente che e' stata calcolata
-		sout = MultiOutput.new
+		sout = MultiOutput6.new
 		sout.readDataSingleSource(resfilename.to_s + "_" + namesource.to_s);
 	
 		#se la significativita' con fixflag=7 e' troppo bassa, metti fixflag=3 e ripeti l'analisi

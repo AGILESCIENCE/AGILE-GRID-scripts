@@ -221,7 +221,7 @@ class AlikeUtils
 
 		def convertMultiResToMulti(filenameinput, filenameoutput, antype, minsqrtTS, cutsqrtts, maxoffaxis, radioussearch) 
 			datautil = DataUtils.new;
-			multioutput = MultiOutput.new
+			multioutput = MultiOutput6.new
 			index = 0;
 			outl = [];
 			modefile = 3

@@ -278,7 +278,7 @@ def genaitoffspot6(rttype)
 				basefile = nfile.split("_MLE0000")[0].split("++")[1]
 				basedirres="http://agilepipe.iasfbo.inaf.it/analysis/spot6/" + basefile + "/"
 
-				mout = MultiOutput.new
+				mout = MultiOutput6.new
 				mout.readDataSingleSource(nfile)
 				mout.assoccat(",");
 

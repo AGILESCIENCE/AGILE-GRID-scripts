@@ -24,7 +24,7 @@ b = ARGV[2]
 distuser = ARGV[3]
 inputtype = ARGV[4]
 
-m = MultiOutput.new
+m = MultiOutput6.new
 d = DataUtils.new
 
 foutrC = File.new("lst_00.iclCALC", "w")

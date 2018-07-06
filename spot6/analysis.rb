@@ -426,7 +426,7 @@ if detGIF != "" and detGIF != "tbd" and detGIF != "nop"
 		puts cmd
 		system(cmd)
 		giffot = "GIF" + mle + "_" + detGIF
-		mo = MultiOutput.new
+		mo = MultiOutput6.new
 		mo.readDataSingleSource(giffot);
 		if galcoeff == "-1"
 			galcoeff = mo.galcoeff
@@ -551,7 +551,7 @@ if analysis_name == "spot6"
 		alertthrmin_egal = 5
 		Dir["MLE0000_*.source"].each do | file |
 			#rttype = file.split("_")[3]
-			mo = MultiOutput.new
+			mo = MultiOutput6.new
 			mo.readDataSingleSource(file)
 			pref = "_="
 			if mo.sqrtTS.to_f > 3
@@ -582,7 +582,7 @@ if analysis_name == "spot6"
 					puts "copy results"
 					Dir[pathalerts + "/*.source"].each do | fsource |
 
-						mo2 = MultiOutput.new
+						mo2 = MultiOutput6.new
 						mo2.readDataSingleSource(fsource)
 						if datautils.distance(mo2.l_peak, mo2.b_peak, mo.l_peak, mo.b_peak).to_f < 1
 							snear = true

@@ -1,7 +1,7 @@
 load ENV["AGILE"] + "/scripts/conf.rb"
 
 datautils = DataUtils.new
-mo = MultiOutput.new
+mo = MultiOutput6.new
 
 mo.readDataSingleSource(ARGV[0]);
 l1 = mo.l_peak;
