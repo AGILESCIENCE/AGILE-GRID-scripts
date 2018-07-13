@@ -46,7 +46,7 @@
 #35) (CAT) catminflux, the min flux to be selected from the cat list
 #36) (CAT) catminradius, the min radius to be selected from the cat list
 #37) contourpoints, Number of points to determine the contour (0-400)
-#38) testmode 0, 1, 2
+#38) testmode 0, 1 (gal-1sigma), 2 (gal+1sigma), 3 (iso-1sigma), 4 (iso+1sigma)
 
 # MAPLIST
 #Each line contains a set of maps:
@@ -559,10 +559,10 @@ for i in 1..stepi
 				end
 				icfd1 = mouthe.isocoeff.split(",")[iline + iii];
 				icfd1_err = mouthe.isocoeff_err.split(",")[iline + iii];
-				if p.testmode.to_i == 1
+				if p.testmode.to_i == 3
 					icfd1 = (icfd1.to_f - icfd1_err.to_f).to_s
 				end
-				if p.testmode.to_i == 2
+				if p.testmode.to_i == 4
 					icfd1 = (icfd1.to_f + icfd1_err.to_f).to_s
 				end
 				isocoeffout += icfd1.to_s
