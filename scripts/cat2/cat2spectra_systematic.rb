@@ -318,21 +318,22 @@ else
 	cmdadd = " galmode2=0 isomode2=0 "
 end
 
+
 system("rm SYS0_"+fan+"*")
-cmd = "multi6.rb FM3.119_ASDC2_"+irf+" " + maplist4name +" none SYS0_"+fan+" testmode=0 addcat=\""+ catline +"\" catminradius=" + minradius.to_s + " catminflux="+minf.to_s+" fluxcorrection=2 emin_sources=100 emax_sources=50000 edpcorrection=0.75 minimizertype=Minuit minimizeralg=Migrad minimizerdefstrategy=2 scanmaplist=" + sourcename + "," + fan + "," + fovarchivenum.to_s + " " + cmdadd.to_s + " integratortype=" + inttype.to_s + " galcoeff=" + galcoeff.to_s
+cmd = "multi6.rb FM3.119_ASDC2_"+irf+" " + maplist4name +" none SYS0_"+fan+" testmode=0 addcat=\""+ catline +"\" catminradius=" + minradius.to_s + " catminflux="+minf.to_s+" fluxcorrection=2 emin_sources=100 emax_sources=50000 edpcorrection=0.75 minimizertype=Minuit minimizeralg=Migrad minimizerdefstrategy=2 scanmaplist=" + sourcename + ",SYS0_" + fan + "," + fovarchivenum.to_s + " " + cmdadd.to_s + " integratortype=" + inttype.to_s + " galcoeff=" + galcoeff.to_s
 #galmode2=3 isomode2=3
 puts cmd
 system cmd
 #fluxcorrection=1 isomode2=1 isomode2fit=2  # galmode2=1 isomode2=1 galmode2fit=1 isomode2fit=2
 
 system("rm SYS1_"+fan+"*")
-cmd = "multi6.rb FM3.119_ASDC2_"+irf+" " + maplist4name +" none SYS1_"+fan+" testmode=1 addcat=\""+ catline +"\" catminradius=" + minradius.to_s + " catminflux="+minf.to_s+" fluxcorrection=2 emin_sources=100 emax_sources=50000 edpcorrection=0.75 minimizertype=Minuit minimizeralg=Migrad minimizerdefstrategy=2 scanmaplist=" + sourcename + "," + fan + "," + fovarchivenum.to_s + " " + cmdadd.to_s + " integratortype=" + inttype.to_s + " galcoeff=" + galcoeff.to_s
+cmd = "multi6.rb FM3.119_ASDC2_"+irf+" " + maplist4name +" none SYS1_"+fan+" testmode=1 addcat=\""+ catline +"\" catminradius=" + minradius.to_s + " catminflux="+minf.to_s+" fluxcorrection=2 emin_sources=100 emax_sources=50000 edpcorrection=0.75 minimizertype=Minuit minimizeralg=Migrad minimizerdefstrategy=2 scanmaplist=" + sourcename + ",SYS1_" + fan + "," + fovarchivenum.to_s + " " + cmdadd.to_s + " integratortype=" + inttype.to_s + " galcoeff=" + galcoeff.to_s
 #galmode2=3 isomode2=3
 puts cmd
 system cmd
 
 system("rm SYS2_"+fan+"*")
-cmd = "multi6.rb FM3.119_ASDC2_"+irf+" " + maplist4name +" none SYS2_"+fan+" testmode=2 addcat=\""+ catline +"\" catminradius=" + minradius.to_s + " catminflux="+minf.to_s+" fluxcorrection=2 emin_sources=100 emax_sources=50000 edpcorrection=0.75 minimizertype=Minuit minimizeralg=Migrad minimizerdefstrategy=2 scanmaplist=" + sourcename + "," + fan + "," + fovarchivenum.to_s + " " + cmdadd.to_s + " integratortype=" + inttype.to_s + " galcoeff=" + galcoeff.to_s
+cmd = "multi6.rb FM3.119_ASDC2_"+irf+" " + maplist4name +" none SYS2_"+fan+" testmode=2 addcat=\""+ catline +"\" catminradius=" + minradius.to_s + " catminflux="+minf.to_s+" fluxcorrection=2 emin_sources=100 emax_sources=50000 edpcorrection=0.75 minimizertype=Minuit minimizeralg=Migrad minimizerdefstrategy=2 scanmaplist=" + sourcename + ",SYS2_" + fan + "," + fovarchivenum.to_s + " " + cmdadd.to_s + " integratortype=" + inttype.to_s + " galcoeff=" + galcoeff.to_s
 #galmode2=3 isomode2=3
 puts cmd
 system cmd
