@@ -497,8 +497,8 @@ for i in 1..stepi
 		mouthe = MultiOutput6.new
 		mouthe.readDataSingleSource(newoutfile + "_"+sourcename+".source")
 		puts mouthe.sicalc
-		puts mouthe.galcoeff.to_s + " +/- " mouthe.galcoeff_err.to_s
-		puts mouthe.isocoeff.to_s  + " +/- " mouthe.isocoeff_err.to_s
+		puts mouthe.galcoeff.to_s + " +/- " + mouthe.galcoeff_err.to_s
+		puts mouthe.isocoeff.to_s  + " +/- " + mouthe.isocoeff_err.to_s
 		
 		newoutfile2 = prefixscan + "_" + newoutfile;
 		system("cp " + lastoutfile + " " + newoutfile2 + ".originalres")
