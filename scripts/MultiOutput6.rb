@@ -8,7 +8,9 @@ class MultiOutput6
 	end
 
 	def readDataSingleSource2(res, sourcename)
-		puts res.to_s + "_" + sourcename  + ".source"
+		puts res
+		puts sourcename
+		puts res.to_s + "_" + sourcename.to_s + ".source"
 		readDataSingleSource(res.to_s + "_" + sourcename);
 	end
 	
@@ -981,6 +983,7 @@ end
 			f1 = File.new(resname + ".resfullsel", "w")
 			freg = File.new(resname + ".reg", "w")
 			File.open(multilist).each_line do | line |
+				puts "## " + line
 				multioutput = MultiOutput6.new()
 				name = line.split(" ")[6];
 				multioutput.readDataSingleSource2(resname, name)
