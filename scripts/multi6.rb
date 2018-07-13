@@ -546,10 +546,10 @@ for i in 1..stepi
 				end
 				gcfd1 = mouthe.galcoeff.split(",")[iline + iii];
 				gcfd1_err = mouthe.galcoeff_err.split(",")[iline + iii];
-				if testmode.to_i == 1
+				if p.testmode.to_i == 1
 					gcfd1 = (gcfd1.to_f - gcfd1_err.to_f).to_s
 				end
-				if testmode.to_i == 2
+				if p.testmode.to_i == 2
 					gcfd1 = (gcfd1.to_f + gcfd1_err.to_f).to_s
 				end
 				galcoeffout += gcfd1.to_s
@@ -559,10 +559,10 @@ for i in 1..stepi
 				end
 				icfd1 = mouthe.isocoeff.split(",")[iline + iii];
 				icfd1_err = mouthe.isocoeff_err.split(",")[iline + iii];
-				if testmode.to_i == 1
+				if p.testmode.to_i == 1
 					icfd1 = (icfd1.to_f - icfd1_err.to_f).to_s
 				end
-				if testmode.to_i == 2
+				if p.testmode.to_i == 2
 					icfd1 = (icfd1.to_f + icfd1_err.to_f).to_s
 				end
 				isocoeffout += icfd1.to_s
