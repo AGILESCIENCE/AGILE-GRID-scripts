@@ -1,6 +1,7 @@
 class Parameters
 	public
 		def initialize()
+			@testmode = 0
 			@expratioevaluation = 1
 			@minThreshold = 0
 			@maxThreshold = 15
@@ -122,6 +123,10 @@ class Parameters
 					@phasecode = 18 #POIN
 				end
 			end
+		end
+		
+		def testmode
+			@testmode
 		end
 		
 		def expratioevaluation
@@ -686,6 +691,8 @@ class Parameters
 			value = argv.split("=")[1];
 			puts keyw.to_s + " " + value.to_s
 			case keyw
+				when "testmode"
+					@testmode = value
 				when "expratioevaluation"
 					@expratioevaluation = value
 				when "minThreshold"

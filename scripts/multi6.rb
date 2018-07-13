@@ -39,13 +39,14 @@
 #29) mindefaulttolerance. Defaul 0.01
 #xx) integratortype (1 gauss 2 gaussht 3 gausslefevre 4 gausslefevreht)
 #30) edpcorrection, default 0 (no), 1 yes. EDP cleaning correction NOT IMPLEMENTED YET
-#31) fluxcorrection, defaul 0 (no), 1 yes. Flux calculation correction for spectral shape
+#31) fluxcorrection, defaul 0 (no), 1 yes. Flux calculation correction for spectral shape in output - 2 input and output
 #32) scanmaplist - default 0. Calculate one TS for each map of the maplist4 provided as input, or group by some set of maps (e.g. for fovbinnumer > 1) -> specify the name of the source and the prefix e.g. VELA,pl -> one MLE using pl law for each map of the maplist4 for VELA source. e.g. VELA,pl,5 -> one MLE each 5 maps of the maplist4
 #33) (CAT) addcat. Specify the string of the source to be analysed". e.g. addcat="2.0e-07 34.7  -0.5  2.5 12 2 W44 0.0 1 2000.0 0.0". Remove sources with the same name, to avoid duplicate
 #34) (CAT) catpath, the path of the cat file list (.multi). Default is /ANALYSIS3/catalogs/cat2.multi
 #35) (CAT) catminflux, the min flux to be selected from the cat list
 #36) (CAT) catminradius, the min radius to be selected from the cat list
 #37) contourpoints, Number of points to determine the contour (0-400)
+#38) testmode 0, 1, 2
 
 # MAPLIST
 #Each line contains a set of maps:
@@ -103,6 +104,8 @@
 #1 set gal0 for L0 and gal1 for L1
 #2 set gal0 for L0 and L1
 #3 set gal1 for L0 and L1
+#4 set gal1 - gal1err for L0 and L1
+#5 set gal1 + gal1err for L0 and L1
 
 #GALMODE2FIT
 #	0 do not fit
@@ -111,9 +114,11 @@
 
 #ISOMODE2
 #0 none
-#1 set gal0 for L0 and gal1 for L1
-#2 set gal0 for L0 and L1
-#3 set gal1 for L0 and L1
+#1 set iso0 for L0 and gal1 for L1
+#2 set iso0 for L0 and L1
+#3 set iso1 for L0 and L1
+#4 set iso1 - iso1err for L0 and L1
+#5 set iso1 + iso1err for L0 and L1
 
 #ISOMODE2FIT
 #	0 do not fit
@@ -492,8 +497,8 @@ for i in 1..stepi
 		mouthe = MultiOutput6.new
 		mouthe.readDataSingleSource(newoutfile + "_"+sourcename+".source")
 		puts mouthe.sicalc
-		puts mouthe.galcoeff
-		puts mouthe.isocoeff
+		puts mouthe.galcoeff.to_s + " +/- " mouthe.galcoeff_err.to_s
+		puts mouthe.isocoeff.to_s  + " +/- " mouthe.isocoeff_err.to_s
 		
 		newoutfile2 = prefixscan + "_" + newoutfile;
 		system("cp " + lastoutfile + " " + newoutfile2 + ".originalres")
@@ -539,11 +544,28 @@ for i in 1..stepi
 				if galcoeffout != ""
 					galcoeffout += ","
 				end
-				galcoeffout += mouthe.galcoeff.split(",")[iline + iii]
+				gcfd1 = mouthe.galcoeff.split(",")[iline + iii];
+				gcfd1_err = mouthe.galcoeff_err.split(",")[iline + iii];
+				if testmode.to_i == 1
+					gcfd1 = (gcfd1.to_f - gcfd1_err.to_f).to_s
+				end
+				if testmode.to_i == 2
+					gcfd1 = (gcfd1.to_f + gcfd1_err.to_f).to_s
+				end
+				galcoeffout += gcfd1.to_s
+				
 				if isocoeffout != ""
 					isocoeffout += ","
 				end
-				isocoeffout += mouthe.isocoeff.split(",")[iline + iii]
+				icfd1 = mouthe.isocoeff.split(",")[iline + iii];
+				icfd1_err = mouthe.isocoeff_err.split(",")[iline + iii];
+				if testmode.to_i == 1
+					icfd1 = (icfd1.to_f - icfd1_err.to_f).to_s
+				end
+				if testmode.to_i == 2
+					icfd1 = (icfd1.to_f + icfd1_err.to_f).to_s
+				end
+				isocoeffout += icfd1.to_s
 			end
 			fml.close()
 			puts "isocoeffout: "
