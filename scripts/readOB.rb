@@ -39,6 +39,7 @@ end
 datautils = DataUtils.new
 agilefov = AgileFOV.new
 
+totaltime = 0
 File.open(ENV["AGILE"]+"/scripts/AGILEOBPOINT.list").each_line do | line |
 	af = line.split(" ");
 	lc = af[1];
@@ -50,6 +51,7 @@ File.open(ENV["AGILE"]+"/scripts/AGILEOBPOINT.list").each_line do | line |
 	if dist.to_f <= fov.to_f
 		t0 = datautils.time_utc_to_tt(tstart)
 		t1 = datautils.time_utc_to_tt(tstop)
+		totaltime = totaltime.to_f + (t1.to_f - t0.to_f)
 		#puts line.chomp.to_s + " " + t0.to_s + " " + t1.to_s	
 		puts (t0.to_f + addtime.to_f).to_s + "\t" + (t1.to_f).to_s + "\t" + obname.to_s + "\t"+gal.to_s+"\t"+iso.to_s+"\t" + lc.to_s + "\t" + bc.to_s
 		
@@ -58,3 +60,4 @@ File.open(ENV["AGILE"]+"/scripts/AGILEOBPOINT.list").each_line do | line |
 # 		puts obname.to_s + " & " + lc.to_s + " & " + bc.to_s + " & " + t0mjd.to_s + "-" + t1mjd.to_s + " & " + format("%.2f", dist) + "\\\\"
 	end
 end
+puts "Total days of exposure " + (totaltime.to_f / 86400).to_s
