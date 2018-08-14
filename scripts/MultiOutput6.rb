@@ -1,5 +1,23 @@
 load ENV["AGILE"] + "/scripts/DataUtils.rb"
 
+ def isnil(value)
+		@isnil = value.to_s
+                if value == nil
+                        @isnil = "-1"
+                else
+                        @isnil = value.to_s
+                end
+                if value == "nan" or value == "-nan"
+                        @isnil = "-1"
+		else
+			@isnil = value.to_s
+                end
+                #if value == ""
+                #        @isnil = "-1"
+                #end
+		
+end
+
 class MultiOutput6
 
 	def setCalcPhase(t0, period)
@@ -313,14 +331,6 @@ class MultiOutput6
 		
 	end
 	
-	def isnil(value)
-		if value == nil
-			@isnil = " "
-		else
-			@isnil = value.to_s
-		end
-	end
-	
 	def assoccat(endof)
 		datautils = DataUtils.new
 		@assoc = ""
@@ -356,9 +366,11 @@ class MultiOutput6
 	def multiOutputLineFull3HTML(name, flag)
 		
 		assoccat("<br>")
-		
-		@multiOutputLineFull3HTML = "<tr><td>" + @label.to_s + "</td><td>" + name.to_s + "</td><td>" + format("%.2f", @sqrtTS) + "</td><td>" + format("%.2E", isnil(@flux).to_s) + " +/- " + format("%.2E", isnil(@flux_error).to_s) + "</td><td>" + format("%.2E", isnil(@flux_ul).to_s) + "</td><td>"  + isnil(@fluxcor).to_s + "</td><td>" + @l_peak.to_s + "</td><td>" + @b_peak.to_s + "</td><td>" + format("%.2f", @dist) + "</td><td>" + isnil(@l).to_s + "</td><td>" + isnil(@b).to_s + "</td><td>" + format("%.2f", isnil(@distellipse)) + "</td><td>" + format("%.2f", isnil(@r)) + "</td><td>" + format("%.2f", isnil(@ell_a)) +  "</td><td>" + format("%.2f", isnil(@ell_b)) + "</td><td>" + format("%.2f", isnil(@ell_phi)) + "</td><td>" + format("%.2f", isnil(@counts).to_s) + " +/- " + format("%.2f", isnil(@counts_error).to_s) + "</td><td>" + format("%.2f", isnil(@counts_ul).to_s) + "</td><td>" + @assoc.to_s + "</td><td>" + format("%.3E", @exposure) + "</td><td>" +  isnil(@expratio).to_s + "</td><td>" + @typefun + " " + @sicalc.to_s + " +/- " + @sicalc_error.to_s + " " + @par2.to_s + " +/- " + @par2_error.to_s + " " + @par3.to_s + " +/- " + @par3_error.to_s + "</td><td>" + @timestart_utc.to_s + "</td><td>" + @timestop_utc.to_s + "</td><td>" + format("%.2f", @timestart_mjd) + "</td><td>" + format("%.2f", @timestop_mjd) + "</td><td>" + @timestart_tt.to_s + "</td><td>" + @timestop_tt.to_s + "</td><td>" + @galcoeffzero.to_s + "</td><td>" + @galcoeffzero_err.to_s + "</td><td>" + @galcoeff.to_s + "</td><td>" + @galcoeff_err.to_s + "</td><td>"  + @isocoeffzero.to_s + "</td><td>" + @isocoeffzero_err.to_s + "</td><td>"  + @isocoeff.to_s + "</td><td>" + @isocoeff_err.to_s + "</td><td>" + @fit_cts.to_s + "</td><td>"  + @fit_fcn0.to_s + "</td><td>" + @fit_fcn1.to_s + "</td><td>" + @fit_edm0.to_s + "</td><td>" + @fit_edm1.to_s + "</td><td>" + @fit_iter0.to_s + "</td><td>" + @fit_iter1.to_s  + "</td><td>" + @fix.to_s + "</td><td>" + @si_start.to_s + "</td><td>" + @ulconflevel.to_s + "</td><td>" + @srcconflevel.to_s + "</td><td>" + @startL.to_s + "</td><td>" + @startB.to_s + "</td><td>" + @startFlux.to_s + "</td><td>[ " + @lmin.to_s + " , " + @lmax.to_s + " ] [ " + @bmin.to_s + " , " + @bmax.to_s + " ] " + "</td><td>" + @energyrange.to_s + "</td><td>" + @fovrange.to_s + "</td><td>" + @albedo.to_s + "</td><td>" + @binsize.to_s + "</td><td>" + @expstep.to_s + "</td><td>" + @phasecode.to_s + "</td><td>" + @mlestep_res.to_s + "</td><td>" + @mlestep_cts.to_s + "</td><td>" + @likelihood1.to_s + "</td><td>" + @erg.to_s + " +/- " + @erg_error.to_s + "</td></tr>";
-		
+		begin
+		@multiOutputLineFull3HTML = "<tr><td>" + @label.to_s + "</td><td>" + name.to_s + "</td><td>" + format("%.2f", isnil(@sqrtTS)) + "</td><td>" + format("%.2E", isnil(@flux).to_s) + " +/- " + format("%.2E", isnil(@flux_error).to_s) + "</td><td>" + format("%.2E", isnil(@flux_ul).to_s) + "</td><td>"  + isnil(@fluxcor).to_s + "</td><td>" + isnil(@l_peak).to_s + "</td><td>" + isnil(@b_peak).to_s + "</td><td>" + format("%.2f", isnil(@dist)) + "</td><td>" + isnil(@l).to_s + "</td><td>" + isnil(@b).to_s + "</td><td>" + format("%.2f", isnil(@distellipse)) + "</td><td>" + format("%.2f", isnil(@r)) + "</td><td>" + format("%.2f", isnil(@ell_a)) +  "</td><td>" + format("%.2f", isnil(@ell_b)) + "</td><td>" + format("%.2f", isnil(@ell_phi)) + "</td><td>" + format("%.2f", isnil(@counts).to_s) + " +/- " + format("%.2f", isnil(@counts_error).to_s) + "</td><td>" + format("%.2f", isnil(@counts_ul).to_s) + "</td><td>" + @assoc.to_s + "</td><td>" + format("%.3E", isnil(@exposure)) + "</td><td>" +  isnil(@expratio).to_s + "</td><td>" + isnil(@typefun).to_s + " " + isnil(@sicalc).to_s + " +/- " + isnil(@sicalc_error).to_s + " " + isnil(@par2).to_s + " +/- " + isnil(@par2_error).to_s + " " + isnil(@par3).to_s + " +/- " + isnil(@par3_error).to_s + "</td><td>" + isnil(@timestart_utc).to_s + "</td><td>" +  isnil(@timestop_utc).to_s + "</td><td>" + format("%.2f",  isnil(@timestart_mjd)) + "</td><td>" + format("%.2f",  isnil(@timestop_mjd)) + "</td><td>" +  isnil(@timestart_tt).to_s + "</td><td>" +  isnil(@timestop_tt).to_s + "</td><td>" +  isnil(@galcoeffzero).to_s + "</td><td>" +  isnil(@galcoeffzero_err).to_s + "</td><td>" +  isnil(@galcoeff).to_s + "</td><td>" +  isnil(@galcoeff_err).to_s + "</td><td>"  +  isnil(@isocoeffzero).to_s + "</td><td>" +  isnil(@isocoeffzero_err).to_s + "</td><td>"  +  isnil(@isocoeff).to_s + "</td><td>" +  isnil(@isocoeff_err).to_s + "</td><td>" +  isnil(@fit_cts).to_s + "</td><td>"  +  isnil(@fit_fcn0).to_s + "</td><td>" +  isnil(@fit_fcn1).to_s + "</td><td>" +  isnil(@fit_edm0).to_s + "</td><td>" +  isnil(@fit_edm1).to_s + "</td><td>" +  isnil(@fit_iter0).to_s + "</td><td>" +  isnil(@fit_iter1).to_s  + "</td><td>" + @fix.to_s + "</td><td>" + @si_start.to_s + "</td><td>" + @ulconflevel.to_s + "</td><td>" + @srcconflevel.to_s + "</td><td>" + @startL.to_s + "</td><td>" + @startB.to_s + "</td><td>" + @startFlux.to_s + "</td><td>[ " + @lmin.to_s + " , " + @lmax.to_s + " ] [ " + @bmin.to_s + " , " + @bmax.to_s + " ] " + "</td><td>" + @energyrange.to_s + "</td><td>" + @fovrange.to_s + "</td><td>" + @albedo.to_s + "</td><td>" + @binsize.to_s + "</td><td>" + @expstep.to_s + "</td><td>" + @phasecode.to_s + "</td><td>" + @mlestep_res.to_s + "</td><td>" + @mlestep_cts.to_s + "</td><td>" +  isnil(@likelihood1).to_s + "</td><td>" +  isnil(@erg).to_s + " +/- " +  isnil(@erg_error).to_s + "</td></tr>";
+		rescue
+			@multiOutputLineFull3HTML = ""
+		end
 	end
 	
 	def multiOutputLineFull3HTMLheader(flag)
@@ -960,7 +972,7 @@ class MultiOutput6List
 			mjdsize = multioutput.timestop_mjd.to_f - multioutput.timestart_mjd.to_f
 			mjdcenter = multioutput.timestart_mjd.to_f + mjdsize.to_f / 2.0
 			#calculate distance between lpointing, bpointing to l, b. NOW is -1
-			flc.write(format("%.2E",flux.to_s) + " " + format("%.2E", fluxerror.to_s)  + " " + fluxtype.to_s  + " " + format("%.7f", mjdcenter.to_s)  + " " + format("%.4f",mjdsize.to_s) + " " + format("%.2f", distpointcalc.to_s) + " " + runname + " " +  format("%.2f", multioutput.sqrtTS.to_s) + " " + format("%.2E", multioutput.exposure.to_s) + " " + multioutput.galcoeff.chomp.to_s + " " + multioutput.isocoeff.chomp.to_s + " " + format("%.7f", multioutput.timestart_mjd.to_s) + " " + format("%.7f", multioutput.timestop_mjd.to_s) + " " + format("%.2f", multioutput.timestart_tt.to_s) + " " + format("%.2f", multioutput.timestop_tt.to_s) + " " + format("%.3f", multioutput.dist.to_s) + " ( " + multioutput.fullellipseline  + " ) " + multioutput.fix + "\n");
+			flc.write(format("%.2E",isnil(flux).to_s) + " " + format("%.2E", snil(fluxerror).to_s)  + " " + fluxtype.to_s  + " " + format("%.7f", mjdcenter.to_s)  + " " + format("%.4f",mjdsize.to_s) + " " + format("%.2f", distpointcalc.to_s) + " " + runname + " " +  format("%.2f", isnil(multioutput.sqrtTS).to_s) + " " + format("%.2E", isnil(multioutput.exposure).to_s) + " " + multioutput.galcoeff.chomp.to_s + " " + multioutput.isocoeff.chomp.to_s + " " + format("%.7f", multioutput.timestart_mjd.to_s) + " " + format("%.7f", multioutput.timestop_mjd.to_s) + " " + format("%.2f", multioutput.timestart_tt.to_s) + " " + format("%.2f", multioutput.timestop_tt.to_s) + " " + format("%.3f", multioutput.dist.to_s) + " ( " + multioutput.fullellipseline  + " ) " + multioutput.fix + "\n");
 		end
 		f.close();
 		f1.close();
@@ -1063,7 +1075,8 @@ end
 				mjdsize = multioutput.timestop_mjd.to_f - multioutput.timestart_mjd.to_f
 				mjdcenter = multioutput.timestart_mjd.to_f + mjdsize.to_f / 2.0
 				#calculate distance between lpointing, bpointing to l, b. NOW is -1
-				flc.write(format("%.2E",flux.to_s) + " " + format("%.2E", fluxerror.to_s)  + " " + fluxtype.to_s  + " " + format("%.7f", mjdcenter.to_s)  + " " + format("%.4f",mjdsize.to_s) + " " + format("%.2f", distpointcalc.to_s) + " " + runname + " " +  format("%.2f", multioutput.sqrtTS.to_s) + " " + format("%.2E", multioutput.exposure.to_s) + " " + multioutput.galcoeff.chomp.to_s + " " + multioutput.isocoeff.chomp.to_s + " " + format("%.7f", multioutput.timestart_mjd.to_s) + " " + format("%.7f", multioutput.timestop_mjd.to_s) + " " + format("%.2f", multioutput.timestart_tt.to_s) + " " + format("%.2f", multioutput.timestop_tt.to_s) + " " + format("%.3f", multioutput.dist.to_s) + " ( " + multioutput.fullellipseline  + " ) " + multioutput.fix + "\n");
+				flc.write(format("%.2E",isnil(flux)) + " " + format("%.2E", isnil(fluxerror))  + " " + isnil(fluxtype).to_s  + " " + format("%.7f", mjdcenter.to_s)  + " " + format("%.4f",mjdsize.to_s) + " " + format("%.2f", isnil(distpointcalc)) + " " + runname + " " +  format("%.2f", isnil(multioutput.sqrtTS)) + " " + format("%.2E", isnil(multioutput.exposure)) + " " + multioutput.galcoeff.chomp.to_s + " " + multioutput.isocoeff.chomp.to_s + " " + format("%.7f", multioutput.timestart_mjd.to_s) + " " + format("%.7f", multioutput.timestop_mjd.to_s) + " " + format("%.2f", multioutput.timestart_tt.to_s) + " " + format("%.2f", multioutput.timestop_tt.to_s) + " " + format("%.3f", isnil(multioutput.dist)) + " ( " + isnil(multioutput.fullellipseline).to_s  + " ) " + isnil(multioutput.fix).to_s + "\n");
+
 			end
 			f.close();
 			f1.close();
