@@ -52,7 +52,17 @@
 #27) (SEL) skytype: 0 SKY000-1 + SKY000-5, 1 gc_allsky maps + SKY000-5, 2 SKY000-5, 3 SKY001 (old galcenter, binsize 0.1, full sky), 4 SKY002 (new galcenter, binsize 0.1, full sky)
 #28) skymapL: sky map low resolution
 #29) skymapH: sky map high resolution
-#30) dq: data quality, default 0. dq = 1 -> albedorad=80,fovradmax=60. dq = 2 -> albedorad=80,fovradmax=50. dq = 3 -> albedorad=90,fovradmax=60. dq = 4 -> albedorad=90,fovradmax=50. dq=0 use standard albedorad and fovradmax
+#30) dq: data quality, default 0. 
+#	dq = 1 -> albedorad=80 ,fovradmax=60 
+#	dq = 2 -> albedorad=80 ,fovradmax=50 
+#	dq = 3 -> albedorad=90 ,fovradmax=60 
+#	dq = 4 -> albedorad=90 ,fovradmax=50 
+#	dq = 5 -> albedorad=100,fovradmax=50
+#	dq = 6 -> albedorad=90 ,fovradmax=40
+#	dq = 7 -> albedorad=100 ,fovradmax=40
+#	dq = 8 -> albedorad=90 ,fovradmax=30
+#	dq = 9 -> albedorad=100 ,fovradmax=30
+#	dq=0 use standard albedorad and fovradmax
 #31) filtercode = 0 G+L+S, filtercode=5 only G
 #32) execap, AP: exec aperture photometry (default 0) 
 #33) timeslot, AP: timeslot for aperture photometry
@@ -72,7 +82,7 @@ datautils = DataUtils.new
 parameters = Parameters.new
 
 if ARGV[0].to_s == "help" || ARGV[0] == nil || ARGV[0] == "h"
-	system("head -68 " + $0 );
+	system("head -78 " + $0 );
 	exit;
 end
 

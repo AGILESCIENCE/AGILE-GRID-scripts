@@ -952,7 +952,26 @@ class Parameters
 				@albedorad = 90
 				@fovradmax = 50
 			end
-			
+			if @dq.to_i == 5
+                                @albedorad = 100
+                                @fovradmax = 50
+                        end
+			if @dq.to_i == 6
+                                @albedorad = 90
+                                @fovradmax = 40
+                        end
+			if @dq.to_i == 7
+                                @albedorad = 100
+                                @fovradmax = 40
+                        end	
+			if @dq.to_i == 8
+                                @albedorad = 90
+                                @fovradmax = 30
+                        end
+			if @dq.to_i == 9
+                                @albedorad = 100
+                                @fovradmax = 30
+                        end
 			if @expstep.to_f == -1
 				@expstep = 4;
 				if @binsize.to_f == 0.05
