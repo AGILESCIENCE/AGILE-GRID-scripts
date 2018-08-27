@@ -171,4 +171,4 @@ tstart.zip(tstop, e, c, flux, s, def_fluxw, aa_fluxw, ab1_fluxw, ab2_fluxw, ab3_
 end
 #print str
 
-File.open(apfile, 'w') { |file| file.write(str) }
+File.open(apfile + ".ap2", 'w') { |file| file.write(str) }
