@@ -129,7 +129,7 @@
 #extract_catalog.rb /ANALYSIS3/catalogs/cat2.multi 195.09 4.28 list.multi 0.1 1 5 0 10 0 0 25e-06
 
 #Examples
-#multi6.rb FM3.119_ASDCe_H0025 FM3.119_ASDCe_H0025_B01_00100-50000.maplist4 none RES1 addcat="2.0e-07 0.647894 61.9818  2.1 3 2 NS 0.0 0 0.0 0.0" catminflux=0e-08
+#multi.rb FM3.119_ASDCe_H0025 FM3.119_ASDCe_H0025_B01_00100-50000.maplist4 none RES1 addcat="2.0e-07 0.647894 61.9818  2.1 3 2 NS 0.0 0 0.0 0.0" catminflux=0e-08
 
 #########################################Minimizers
 #*** * Minuit (library libMinuit). Old version of Minuit, based on the TMinuit class. The list of possible algorithms are:
