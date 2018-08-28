@@ -10,6 +10,3 @@ echo "install spot6"
 test -d $AGILE/AGILEPIPE/spot6 || mkdir -p $AGILE/AGILEPIPE/spot6
 cp -rf spot6/* $AGILE/AGILEPIPE/spot6
 
-echo "install cat2 scripts"
-test -d $AGILE/scripts || mkdir -p $AGILE/scripts
-cp -rf cat2 $AGILE/scripts
