@@ -415,7 +415,7 @@ if detGIF != "" and detGIF != "tbd" and detGIF != "nop"
 			puts cmd
 			system(cmd)
 		end
-		cmd = "multi6.rb " + filter + " GIFMAP.maplist4 " + fnhyp + " GIF" + mle
+		cmd = "multi.rb " + filter + " GIFMAP.maplist4 " + fnhyp + " GIF" + mle
 		if galcoeff != "-1"
 			cmd = cmd + " galcoeff=" + galcoeff
 		end
@@ -451,7 +451,7 @@ if not (multiparam.to_s == "nop" || proj.to_s == "AIT")
 		isocoefffinal = isocoeff
 	end
 
-	cmd = "multi6.rb " + filter + " MAP.maplist4 " + fnhyp + " " + mle + " galcoeff=" + galcoefffinal + " isocoeff=" + isocoefffinal + " " + multiparam
+	cmd = "multi.rb " + filter + " MAP.maplist4 " + fnhyp + " " + mle + " galcoeff=" + galcoefffinal + " isocoeff=" + isocoefffinal + " " + multiparam
 	puts cmd
 	system(cmd)
 

@@ -100,8 +100,8 @@ sed "s/FM3/..\/FM3/g" ../FM3.119_ASDCe_H0025_B01.maplist4 > FM3.119_ASDCe_H0025_
 ### multi5.rb FM3.119_ASDCe_I0025 FM3.119_ASDCe_I0025_B01_100-50000.maplist4 ${analysisname}.multi ${analysisname}.res listsourceextended=${analysisname}.multiext >> commands.log 2>&1
 ### RUN2
 
-echo "multi6.rb FM3.119_ASDCe_H0025 FM3.119_ASDCe_H0025_B01_100-50000.maplist4 ${analysisname}.multi ${analysisname}.res listsourceextended=${analysisname}.multiext " >> commands.log 2>&1
+echo "multi.rb FM3.119_ASDCe_H0025 FM3.119_ASDCe_H0025_B01_100-50000.maplist4 ${analysisname}.multi ${analysisname}.res listsourceextended=${analysisname}.multiext " >> commands.log 2>&1
 
-multi6.rb FM3.119_ASDCe_H0025 FM3.119_ASDCe_H0025_B01_100-50000.maplist4 ${analysisname}.multi ${analysisname}.res listsourceextended=${analysisname}.multiext  >> commands.log 2>&1
+multi.rb FM3.119_ASDCe_H0025 FM3.119_ASDCe_H0025_B01_100-50000.maplist4 ${analysisname}.multi ${analysisname}.res listsourceextended=${analysisname}.multiext  >> commands.log 2>&1
 
 echo "Source ${analysisname} run completed." >> $logfile
