@@ -47,27 +47,27 @@ class GammaAP:
         return;
 
     def calculateLS(self, verbose=0, plot=1):
-		#normalization standard model log psd
-		ls = LombScargle(self.tstartA, self.ctsdataA, normalization='standard')
-		frequency, power = ls.autopower(minimum_frequency=1e-7, maximum_frequency=1e-4, samples_per_peak=100)
-		pls = ls.false_alarm_probability(power.max(), method='baluev')
-		ind = power.argmax()
-		maxf = frequency[ind]
-		daymax = 1 / maxf / 86400.
+        #normalization standard model log psd
+        ls = LombScargle(self.tstartA, self.ctsdataA, normalization='standard')
+        frequency, power = ls.autopower(minimum_frequency=1e-7, maximum_frequency=1e-4, samples_per_peak=100)
+        pls = ls.false_alarm_probability(power.max(), method='baluev')
+        ind = power.argmax()
+        maxf = frequency[ind]
+        daymax = 1 / maxf / 86400.
 
-		if verbose == 1:
-			print('pls ' + str(pls) + ' with power of ' + str(power.max()) + ' at frequency ' + str(maxf) + ' Hz (' + str(daymax) + ') days' )
+        if verbose == 1:
+            print('pls ' + str(pls) + ' with power of ' + str(power.max()) + ' at frequency ' + str(maxf) + ' Hz (' + str(daymax) + ') days' )
 
-		if plot == 1:
-			plt.subplot(1, 1, 1)
-			plt.plot(frequency, power)
-			plt.gca().set_xscale("log")
-			plt.gca().set_yscale("log")
-			#plt.subplot(3, 1, 2)
-			#best_frequency = frequency[np.argmax(power)]
-			#t_fit = np.linspace(0, 1)
-			#y_fit = LombScargle(tstartA, ctsdataA).model(t_fit, best_frequency)
-			#plt.plot(t_fit, y_fit)
-			plt.show()
+            if plot == 1:
+                plt.subplot(1, 1, 1)
+                plt.plot(frequency, power)
+                plt.gca().set_xscale("log")
+                plt.gca().set_yscale("log")
+                #plt.subplot(3, 1, 2)
+                #best_frequency = frequency[np.argmax(power)]
+                #t_fit = np.linspace(0, 1)
+                #y_fit = LombScargle(tstartA, ctsdataA).model(t_fit, best_frequency)
+                #plt.plot(t_fit, y_fit)
+                plt.show()
 
-		return pls, maxf
+        return pls, maxf
