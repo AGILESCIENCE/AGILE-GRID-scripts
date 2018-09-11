@@ -2,13 +2,17 @@ import string, os, sys
 import numpy as np
 import sys
 import math
+from scipy.stats import norm
+
+#e = EvalRates()
+#e.calculateRateWithoutExp(1, 0.7, 0e-08, 1.2e-4, 0.76, 1.75, 400)
 
 class EvalRates:
 
     def __init__(self):
         return
 
-    def getInstrumentPSF(self, selinstrumentID = 0, emin=100):
+    def getInstrumentPSF(self, instrumentID = 0, emin=100):
         #AGILE
         if instrumentID == 0:
             if emin < 1700.: psf = 0.3 # deg.
@@ -81,7 +85,7 @@ class EvalRates:
     #fluxsource [cts] / [cm2 s]
     #gasvalue [cts] / [cm2 s sr]
     def calculateRate(self, verbose = 0, ranal= -1, exposure = 40000, fluxsource = 0e-08, gasvalue=-1, gal = 0.7, iso = 10., emin = 100., emax = 50000., instrumentID = 0):
-        bkg_ON, src_ON = calculateRateWithoutExp(verbose, ranal, fluxsource, gasvalue, gal, iso, emin, emax, instrumentID)
+        bkg_ON, src_ON = self.calculateRateWithoutExp(verbose, ranal, fluxsource, gasvalue, gal, iso, emin, emax, instrumentID)
         ctstot = (bkg_ON + src_ON) * exposure # [cts]
         snr = src_ON * exposure / math.sqrt(float(ctstot))
 
