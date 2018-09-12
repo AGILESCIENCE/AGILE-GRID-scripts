@@ -18,7 +18,7 @@
 #13) proj: projection ARC or AIT, default ARC
 #14) albedorad: default 80
 #15) (SEL) fovbinnumber: number of bins between fovradmin and fovradmax. Dim = (fovradmax-fovradmin)/fovbinnumber, default 1
-#16) (SEL) energybin or eb: default 0, 
+#16) (SEL) energybin or eb: default 0,
 #	=1 activate [00030-00050] [00050-00100], [00100-00400], [00400-01000], [01000-03000], [03000, 10000], [10000, 50000])
 #	=2 activate [00030-00050] [00050-00100], [00100-00200], [00200-00400], [00400-01000], [01000-03000], [03000, 500000])
 #	=3 activate [00100-00200], [00200-00400], [00400-01000], [01000-03000])
@@ -52,11 +52,11 @@
 #27) (SEL) skytype: 0 SKY000-1 + SKY000-5, 1 gc_allsky maps + SKY000-5, 2 SKY000-5, 3 SKY001 (old galcenter, binsize 0.1, full sky), 4 SKY002 (new galcenter, binsize 0.1, full sky)
 #28) skymapL: sky map low resolution
 #29) skymapH: sky map high resolution
-#30) dq: data quality, default 0. 
-#	dq = 1 -> albedorad=80 ,fovradmax=60 
-#	dq = 2 -> albedorad=80 ,fovradmax=50 
-#	dq = 3 -> albedorad=90 ,fovradmax=60 
-#	dq = 4 -> albedorad=90 ,fovradmax=50 
+#30) dq: data quality, default 0.
+#	dq = 1 -> albedorad=80 ,fovradmax=60
+#	dq = 2 -> albedorad=80 ,fovradmax=50
+#	dq = 3 -> albedorad=90 ,fovradmax=60
+#	dq = 4 -> albedorad=90 ,fovradmax=50
 #	dq = 5 -> albedorad=100,fovradmax=50
 #	dq = 6 -> albedorad=90 ,fovradmax=40
 #	dq = 7 -> albedorad=100 ,fovradmax=40
@@ -64,9 +64,11 @@
 #	dq = 9 -> albedorad=100 ,fovradmax=30
 #	dq=0 use standard albedorad and fovradmax
 #31) filtercode = 0 G+L+S, filtercode=5 only G
-#32) execap, AP: exec aperture photometry (default 0) 
+#32) execap, AP: exec aperture photometry (default 0) - 1 AP with FITS - 2 AP with telem
 #33) timeslot, AP: timeslot for aperture photometry
 #34) ranal, AP: radius of analysis to extract event, for aperture photometry
+#35) execap2_evtfile
+#36) execap2_logfile
 
 #Lo script crea le mappe mancanti, e se ne crea almeno uno aggiunge la corrispondente riga nel .maplitsX. Attenzione quindi alle duplicazioni
 
@@ -223,7 +225,7 @@ end
 index_name_cor = BASEDIR_ARCHIVE.to_s + "/DATA/INDEX/3901.cor.index"
 puts "index name cor: " + index_name_cor;
 tstart = 0
-tstop = 0	
+tstop = 0
 if(parameters.timetype == "CONTACT")
 	#estrazione dei tempi min e max dal corfileindex
 
@@ -302,7 +304,7 @@ while time.to_f < tstop.to_f
 	int = name + ".int.gz";
 
 	conffile4 = name + ".maplist4";
-	
+
 	prefix = name
 
 
@@ -315,7 +317,7 @@ while time.to_f < tstop.to_f
 	#else
 	#	fconf4 = File.new(conffile4, "a")
 	#end
-	
+
 	puts "energybinnumber=" + energybinnumber.to_s
 
 	createdexpmap = false
@@ -323,7 +325,7 @@ while time.to_f < tstop.to_f
 
 		for stepe in 1..energybinnumber.to_i
 			emin = parameters.emin;
-			emax = parameters.emax; 
+			emax = parameters.emax;
 			prefixi = ""
 			if energybinnumber != 1
 				emin = eminarr[stepe-1]
@@ -341,7 +343,7 @@ while time.to_f < tstop.to_f
 			puts "skymap: " + skymap.to_s
 			puts "skymap LOW res: " + skymapL.to_s
 			puts "skymap HIGH res: " + skymapH.to_s
-		
+
 			if parameters.fovbinnumber.to_i == 1
 				fovmin = parameters.fovradmin
 				fovmax = parameters.fovradmax
@@ -361,19 +363,19 @@ while time.to_f < tstop.to_f
 			exp2 = prefixi.to_s  + exp.to_s
 			gas2 = prefixi.to_s  + gas.to_s
 			int2 = prefixi.to_s  + int.to_s
-			
+
 			createdmap = false
-		
+
 			#BUILD22
 			lonpole = 180.0
-			
+
 			if parameters.execap.to_i == 0
 
 				# generate maps
 				if File.exists?(cts2) == false
 					cmd = "cp " + PATH + "share/AG_ctsmapgen.par . "
 					datautils.execute(prefix, cmd);
-				
+
 					cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_ctsmapgen " + cts2.to_s  + " " + indexfilter.to_s + " " + parameters.timelist.to_s  + "  " + parameters.mapsize.to_s + " " + parameters.binsize.to_s + " "  + l.to_s + " " + b.to_s + " " + lonpole.to_s + " " + " " + parameters.albedorad.to_s + " " + parameters.phasecode.to_s + " " + parameters.filtercode.to_s + " "  + parameters.proj.to_s + " "+ t0.to_s + " " + t1.to_s + " " + emin.to_s + " " + emax.to_s + " " + fovmin.to_s + " " + fovmax.to_s;
 					datautils.execute(prefix, cmd);
 					createdmap = true
@@ -386,25 +388,25 @@ while time.to_f < tstop.to_f
 					edpmatrixfull =  PATHMODEL + edpmatrix
 				end
 				if File.exists?(exp2) == false
-			
+
 					if createdexpmap == false
 						cmd = "cp " + PATH + "share/AG_expmapgen.par . "
 						datautils.execute(prefix, cmd);
-				
+
 						#campionamento ogni 0.1 sec del file di LOG
 						#maplist = mapstream >> mapspec.fovradmin >> mapspec.fovradmax >> mapspec.emin >> mapspec.emax >> mapspec.index;
 						cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_expmapgen " + exp2.to_s + " " + indexlog.to_s  +  " " + sarmatrixfull.to_s +  " " + edpmatrixfull.to_s + " " + parameters.maplistgen.to_s + " " + " " + parameters.timelist.to_s + " " + parameters.mapsize.to_s + " " + parameters.binsize.to_s  + " " + l.to_s + " " + b.to_s + " " + lonpole.to_s + " " + parameters.albedorad.to_s + " 0.5 360.0 5.0 " + parameters.phasecode.to_s + " " +  parameters.proj.to_s + " " + parameters.expstep.to_s + " " + parameters.timestep.to_s +  " " + parameters.spectralindex.to_s + " " + t0.to_s + " " + t1.to_s + " " + emin.to_s + " " + emax.to_s  + " " + fovmin.to_s + " " + fovmax.to_s;
 						datautils.execute(prefix, cmd);
 						createdmap = true
-						if parameters.maplistgen != "None" 
+						if parameters.maplistgen != "None"
 							createdexpmap = true
 						end
-					
+
 						cmd = "rm ./AG_expmapgen.par"
 						#datautils.execute(prefix, cmd);
 					end
 				end
-		
+
 				if File.exists?(gas2) == false
 					cmd = "cp " + PATH + "share/AG_gasmapgen.par . "
 					datautils.execute(prefix, cmd);
@@ -414,7 +416,7 @@ while time.to_f < tstop.to_f
 					cmd = "rm ./AG_gasmapgen.par"
 					#datautils.execute(prefix, cmd);
 				end
-		
+
 				if File.exists?(int2) == false
 					cmd = "cp " + PATH + "share/AG_intmapgen.par . "
 					datautils.execute(prefix, cmd);
@@ -423,16 +425,17 @@ while time.to_f < tstop.to_f
 					cmd = "rm ./AG_intmapgen.par"
 					#datautils.execute(prefix, cmd);
 				end
-				
+
 				if createdmap == true
 					fconf4.write(cts2.to_s + " " + exp2.to_s + " " + gas2.to_s + " " + bincenter.to_s + " -1 -1 \n")
 				end
-		
+
 				if parameters.makelc != nil
 					datautils.extractlc(flc, prefixi.to_s + prefix.to_s, l, b, t0, t1)
 					system("rm " + prefixi.to_s + prefix.to_s + "*")
 				end
-			else
+			end
+			if parameters.execap.to_i > 0
 
 				# execute ap
 				listfile=prefixi.to_s + name + ".ap"
@@ -443,10 +446,17 @@ while time.to_f < tstop.to_f
 				end
 				cmd = "cp " + PATH + "share/AG_ap.par . "
 				datautils.execute(prefix, cmd);
-				cmd = "export PFILES=.:$PFILES; "+PATH+"bin/AG_ap "+listfile+" "+indexlog.to_s+" "+indexfilter.to_s+" "+sarmatrixfull.to_s+" "+edpmatrixfull.to_s+" "+parameters.timelist.to_s+" "+parameters.ranal.to_s+" "+l.to_s+" "+b.to_s+" "+lonpole.to_s+" "+" "+parameters.albedorad.to_s+" 0.5 360.0 5.0 "+parameters.phasecode.to_s+" "+parameters.timestep.to_s+" "+parameters.spectralindex.to_s+" "+t0.to_s+" "+t1.to_s+" "+emin.to_s+" "+emax.to_s+" "+fovmin.to_s+" "+fovmax.to_s+" "+parameters.filtercode.to_s+" "+parameters.timeslot.to_s
+				if parameters.execap.to_i == 1
+					cmd = "export PFILES=.:$PFILES; "+PATH+"bin/AG_ap "+listfile+" "+indexlog.to_s+" "+indexfilter.to_s+" "+sarmatrixfull.to_s+" "+edpmatrixfull.to_s+" "+parameters.timelist.to_s+" "+parameters.ranal.to_s+" "+l.to_s+" "+b.to_s+" "+lonpole.to_s+" "+" "+parameters.albedorad.to_s+" 0.5 360.0 5.0 "+parameters.phasecode.to_s+" "+parameters.timestep.to_s+" "+parameters.spectralindex.to_s+" "+t0.to_s+" "+t1.to_s+" "+emin.to_s+" "+emax.to_s+" "+fovmin.to_s+" "+fovmax.to_s+" "+parameters.filtercode.to_s+" "+parameters.timeslot.to_s
+				end
+				if parameters.execap.to_i == 2
+					indexlog = parameters.execap2_logfile
+					indexfilter = parameters.execap2_evtfile
+					cmd = "export PFILES=.:$PFILES; "+PATH+"bin/AG_gammaextract "+listfile+" "+indexlog.to_s+" "+indexfilter.to_s+" "+sarmatrixfull.to_s+" "+edpmatrixfull.to_s+" "+parameters.timelist.to_s+" "+parameters.ranal.to_s+" "+l.to_s+" "+b.to_s+" "+lonpole.to_s+" "+" "+parameters.albedorad.to_s+" 0.5 360.0 5.0 "+parameters.phasecode.to_s+" "+parameters.timestep.to_s+" "+parameters.spectralindex.to_s+" "+t0.to_s+" "+t1.to_s+" "+emin.to_s+" "+emax.to_s+" "+fovmin.to_s+" "+fovmax.to_s+" "+parameters.filtercode.to_s+" "+parameters.timeslot.to_s
+				end
 				datautils.execute(prefix, cmd);
 			end
-		
+
 			puts "###"
 			puts stepi-1
 		end
@@ -462,4 +472,3 @@ if parameters.makelc != nil
 end
 
 exit(0)
-

@@ -1,6 +1,8 @@
 class Parameters
 	public
 		def initialize()
+			@execap2_evtfile = ""
+			@execap2_logfile = ""
 			@testmode = 0
 			@expratioevaluation = 1
 			@minThreshold = 0
@@ -80,7 +82,7 @@ class Parameters
 			@nruns=1
 			@seed=0
 			@dq = 0
-			
+
 			@fixisogalstep0 = nil;
 			@doublestep = nil;
 			@galcoeff = "-1";
@@ -91,7 +93,7 @@ class Parameters
 			@lpointing = -1;
 			@bpointing = -1;
 			@outputres = nil
-			
+
 			#only for multi
 			@offaxis = 30;
 			@maplist = nil;
@@ -114,109 +116,117 @@ class Parameters
 			@fluxcorrection = 1
 			@scanmaplist = 0
 		end
-		
+
 		def setPhaseCode(tstop)
 			if @phasecode == -1
-				if tstop.to_f >= 182692800.0 
+				if tstop.to_f >= 182692800.0
 					@phasecode = 6 #SPIN
 				else
 					@phasecode = 18 #POIN
 				end
 			end
 		end
-		
+
 		def testmode
 			@testmode
 		end
-		
+
+		def execap2_evtfile
+			@execap2_evtfile
+		end
+
+		def execap2_logfile
+			@execap2_logfile
+		end
+
 		def expratioevaluation
 			@expratioevaluation
 		end
-		
+
 		def minThreshold
 			@minThreshold
 		end
-		
+
 		def maxThreshold
 			@maxThreshold
 		end
-		
+
 		def squareSize
 			@squareSize = 10
 		end
-		
+
 		def contourpoints
 			@contourpoints
 		end
-		
+
 		def checksourceposition
 			@checksourceposition
 		end
-		
+
 		def integratortype
 			@integratortype
 		end
-		
+
 		def catminflux
 			@catminflux
 		end
-		
+
 		def catminradius
 			@catminradius
 		end
-		
+
 		def addcat
 			@addcat
 		end
-		
+
 		def catpath
 			@catpath
 		end
-		
+
 		def skytype
             @skytype
         end
-        
+
         def eboundaryIF
         	@eboundaryIF
         end
-		
+
 		def scanmaplist
 			@scanmaplist
 		end
-        
+
         def dq
             @dq
         end
-        
+
         def emin_sources
             @emin_sources
         end
-        
+
         def emax_sources
             @emax_sources
         end
-        
+
         def useEDPmatrixforEXP
         	@useEDPmatrixforEXP
         end
-        
+
         def timetype
             @timetype
         end
-		
+
 		def prefix
 			@prefix
 		end
-		
+
 		def flag
 			@flag
 		end
-		
+
 		def listsourceextended
 			@listsourceextended
 		end
-		
+
 		def filter
 			@filter
 		end
@@ -228,47 +238,47 @@ class Parameters
 		def opmode
 			@opmode
 		end
-		
+
 		def nruns
 			@nruns
 		end
-		
+
 		def seed
 			@seed
 		end
-		
+
 		def execap
 			@execap
 		end
-		
+
 		def radius
 			@radius
 		end
-		
+
 		def t1s
 			@t1s
 		end
-		
+
 		def t2s
 			@t2s
 		end
-		
+
 		def t1b
 			@t1b
 		end
-		
+
 		def t2b
 			@t2b
 		end
-		
+
 		def shiftt1b
 			@shiftt1b
 		end
-		
+
 		def shiftt2b
 			@shiftt2b
 		end
-		
+
 		def filtercode
 			@filtercode
 		end
@@ -276,11 +286,11 @@ class Parameters
 		def timeslot
 			@timeslot
 		end
-		
+
 		def timeslotstart
 			@timeslotstart
 		end
-		
+
 		def timeslotend
 			@timeslotend
 		end
@@ -288,100 +298,100 @@ class Parameters
 		def outputtype
 			@outputtype
 		end
-		
-		
+
+
 		def findermultimode
 			@findermultimode
 		end
-		
+
 		def maplist
 			@maplist
 		end
-		
+
 		def maplistgen
 			@maplistgen
 		end
-		
+
 		def timelist
 			@timelist
 		end
-		
+
 		def onlymaps
 			@onlymaps
 		end
-		
+
 		def skymapH
 			@skymapH
 		end
-		
+
 		def skymapL
 			@skymapL
 		end
-		
+
 		def setonlymaps(val)
 			@onlymaps=val
 		end
-		
+
 		def cluster
 			@cluster
 		end
-		
+
 		def outfile
 			@outfile
 		end
-		
+
 		def outfile2
 			@outfile2
 		end
-		
+
 		def offaxis
 			@offaxis
 		end
-		
+
 		def ulcl
 			@ulcl
 		end
-		
+
 		def token
 			@token
 		end
-		
+
 		def loccl
 			@loccl
 		end
-		
+
 		def fixisogalstep0
-			@fixisogalstep0 
+			@fixisogalstep0
 		end
-		
+
 		def doublestep
 			@doublestep
 		end
-		
+
 		def galcoeff
 			@galcoeff
 		end
-		
+
 		def galmode
 			@galmode
 		end
-		
+
 		def isomode
 			@isomode
 		end
-		
+
 		def proj
 			@proj
 		end
-		
+
 		def phasecode
 			@phasecode
 		end
-		
+
 		def timebinsize
 			@timebinsize
 		end
-		
+
 		def makelc
 			@makelc
 		end
@@ -405,167 +415,167 @@ class Parameters
 		def outputres
 			@outputres
 		end
-		
+
 		def enablespotfinder
 			@enablespotfinder
 		end
-		
+
 		def gammaextractbin
 			@gammaextractbin
 		end
-		
+
 		def disablespotfinder
 			@disablespotfinder
 		end
-		
+
 		def makealikesingle
 			@makealikesingle
 		end
-		
+
 		def binsize
 			@binsize
 		end
-		
+
 		def fixisogal
 			@fixisogal
 		end
-		
+
 		def list
 			@list
 		end
-		
+
 		def mapsize
 			@mapsize
 		end
-		
+
 		def spectralindex
 			@spectralindex
 		end
-		
+
 		def emin
 			@emin
 		end
-		
+
 		def emax
 			@emax
 		end
-		
+
 		def fovradmin
 			@fovradmin
 		end
-		
+
 		def fovradmax
 			@fovradmax
 		end
-		
+
 		def albedorad
 			@albedorad
 		end
-		
+
 		def minTS
 			@minTS
 		end
-		
+
 		def SFsmooth
 			@SFsmooth
 		end
-		
+
 		def SFnumberofsource
 			@SFnumberofsource
 		end
-		
+
 		def SFrextract
 			@SFrextract
 		end
-		
+
 		def SFuseint
 			@SFuseint
 		end
-		
+
 		def SFradiousremove
 			@SFradiousremove
 		end
-		
+
 		def SFalgspotfinder
 			@SFalgspotfinder
 		end
-		
+
 		def SFantype
 			@SFantype
 		end
-		
+
 		def ITbinstepiterative
 			@ITbinstepiterative
 		end
-		
+
 		def ITscanit
 			@ITscanit
 		end
-		
+
 		def ITradit
 			@ITradit
 		end
-		
+
 		def ranal
 			@ranal
 		end
-		
+
 		def expstep
 			@expstep
 		end
-		
+
 		def timestep
 			@timestep
 		end
-		
+
 		def fovbinnumber
 			@fovbinnumber
 		end
-		
+
 		def energybin
 			@energybin
 		end
-		
+
 		def galmode2
 			@galmode2
 		end
-		
+
 		def galmode2fit
 			@galmode2fit
 		end
-		
+
 		def isomode2
 			@isomode2
 		end
-		
+
 		def isomode2fit
 			@isomode2fit
 		end
-		
+
 		def minimizertype
 			@minimizertype
 		end
-		
+
 		def minimizeralg
 			@minimizeralg
 		end
-		
+
 		def minimizerdefstrategy
 			@minimizerdefstrategy
 		end
-		
+
 		def mindefaulttolerance
 			@mindefaulttolerance
 		end
-		
+
 		def edpcorrection
 			@edpcorrection
 		end
-		
+
 		def fluxcorrection
 			@fluxcorrection
 		end
-		
+
 		def processInput(startindex, s, filter)
 			for i in startindex...s.size
 				if s[i] == nil
@@ -574,14 +584,14 @@ class Parameters
 					processLine(s[i]);
 				end
 			end
-			
+
 			if filter != nil
 				@filter = filter
 			end
-			
+
 			initparam();
 		end
-		
+
 		def buildCommandLine()
 				a = "offaxis=" + @offaxis.to_s + " "
 				if @outfile != nil
@@ -650,12 +660,12 @@ class Parameters
 				a = a + "SFsmooth=" + @SFsmooth.to_s + " "
 				a = a + "SFnumberofsource=" + @SFnumberofsource.to_s + " "
 				a = a + "SFuseint=" + @SFuseint.to_s + " "
-				a = a + "SFrextract= " + @SFrextract.to_s + " " 
+				a = a + "SFrextract= " + @SFrextract.to_s + " "
 				a = a + "SFradiousremove=" + @SFradiousremove.to_s + " "
 				a = a + "SFalgspotfinder=" + @SFalgspotfinder.to_s + " "
 				a = a + "SFantype=" + @SFantype.to_s + " "
 				a = a + "ITbinstepiterative=" + @ITbinstepiterative.to_s + " "
-				a = a + "ITscanit=" + @ITscanit.to_s + " " 
+				a = a + "ITscanit=" + @ITscanit.to_s + " "
 				a = a + "ITradit=" + @ITradit.to_s + " "
 				a = a + "expstep=" + @expstep.to_s + " "
 				a = a + "timestep=" + @timestep.to_s + " "
@@ -684,13 +694,17 @@ class Parameters
 				end
 				@buildCommandLine = a
 		end
-		
+
 
 		def processLine(argv)
 			keyw = argv.split("=")[0];
 			value = argv.split("=")[1];
 			puts keyw.to_s + " " + value.to_s
 			case keyw
+				when "execap2_evtfile"
+					@execap2_evtfile = value
+				when "execap2_logfile"
+					@execap2_logfile = value
 				when "testmode"
 					@testmode = value
 				when "expratioevaluation"
@@ -922,20 +936,20 @@ class Parameters
 					puts "Keyword " + argv.to_s + " error."
 					#exit;
 			end
-			
-			
+
+
 		end
-		
+
 		def initparam()
 			if @emax.to_f > 50000
 				puts "Error in the energy range: the maximum energy should be 50000"
 				exit(1)
 			end
-			
+
 			if @ITradit.to_f == 0
 				@ITradit = @mapsize.to_i / 2.0 - @ranal.to_i
 			end
-			
+
 			if @dq.to_i == 1
 				@albedorad = 80
 				@fovradmax = 60
@@ -963,7 +977,7 @@ class Parameters
 			if @dq.to_i == 7
                                 @albedorad = 100
                                 @fovradmax = 40
-                        end	
+                        end
 			if @dq.to_i == 8
                                 @albedorad = 90
                                 @fovradmax = 30
@@ -996,7 +1010,7 @@ class Parameters
 					@expstep = 1;
 				end
 			end
-			
+
 			if @loccl.to_f == 95
 				@loccl = 5.99147
 			end
@@ -1010,34 +1024,33 @@ class Parameters
 				@loccl = 2.29575
 			end
 
-			
+
 			#check only available combination of IRF matrices and SKY maps
 			fconf = @filter.split("_");
 			#skytype: 0 SKY000-1 + SKY000-5, 1 gc_allsky maps + SKY000-5, 2 SKY000-5, 3 SKY001 (old galcenter, binsize 0.1, full sky), 4 SKY002 (new galcenter, binsize 0.1, full sky)
-			
+
 			#I0023: skytype=0, skytype=1, skytype=2, skytype=4
 			if @skytype.to_i == 3
 				puts "Error: skytype=3 not available. Set skytype=4"
 				@skytype = 4
 			end
-			
+
 			#I0025: skyteype=4
-			if fconf[2] == "I0025" 
+			if fconf[2] == "I0025"
 				if @skytype.to_i != 4
 					puts "Error: only skytype=4 with IRF=I0025 is available. Set skytype=4"
 					@skytype = 4
 				end
 				@eboundaryIF = 400
 			end
-			
-			if fconf[2] == "H0025" 
+
+			if fconf[2] == "H0025"
 				if @skytype.to_i != 4
 					puts "Error: only skytype=4 with IRF=H0025 is available. Set skytype=4"
 					@skytype = 4
 				end
 				@eboundaryIF = 300
 			end
-			
+
 		end
 end
-
