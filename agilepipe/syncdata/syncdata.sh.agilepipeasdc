@@ -1,0 +1,127 @@
+#!/bin/bash
+
+# Copyright (c) 2016, AGILE team
+# Authors: Andrea Zoli <zoli@iasfbo.inaf.it>
+#
+# Any information contained in this software is property of the AGILE TEAM
+# and is strictly private and confidential. All rights reserved.
+
+#trap exit SIGINT SIGTERM
+
+TIMEOUT=5
+MAX_RETRIES=12
+CHAIN=agileobs
+
+retry()
+{
+    i=0
+    false
+    while [[ $? -ne 0 && $i -lt $MAX_RETRIES ]] ;
+    do
+        i=$(($i+1))
+        $@
+    done
+    if [ $i -eq $MAX_RETRIES ]
+    then
+        date
+        echo "Err: reached the maximum number of $MAX_RETRIES retries with $TIMEOUT seconds of timeout! Quit."
+        exit 1
+    fi
+}
+
+TIMEOUT_NO_QUIT=5
+MAX_RETRIES_NO_QUIT=2
+
+retry_no_quit()
+{
+    i=0
+    false
+    while [[ $? -ne 0 && $i -lt $MAX_RETRIES_NO_QUIT ]] ;
+    do
+        i=$(($i+1))
+        $@
+    done
+    if [ $i -eq $MAX_RETRIES_NO_QUIT ]
+    then
+        date
+        echo "Err: reached the maximum number of $MAX_RETRIES_NO_QUIT retries with $TIMEOUT_NO_QUIT seconds of timeout!"
+    fi
+}
+
+ssh_cmd()
+{
+    ssh -o ConnectTimeout=$TIMEOUT -o ConnectionAttempts=$MAX_RETRIES $@
+    if [[ $? -ne 0 ]] ; then
+        date
+        echo "Err: reached the maximum number of $MAX_RETRIES retries with $TIMEOUT seconds of timeout!"
+        exit 1
+    fi
+}
+
+#echo "Rebuild gs@agiles3 symbolic links.."
+#ssh_cmd gs@agiles3 '$HOME/build_tmplinks_'$CHAIN'.sh'
+#echo "Rebuild complete."
+
+date
+#echo "Copying files from gs@agiles3.."
+#retry rsync -rLptgoDvz --timeout=$TIMEOUT 'gs@agiles3:$HOME/tmplog_'$CHAIN'/' '/ASDC_PROC2/DATA_2/LOG/'
+#retry rsync -rLptgoDvz --timeout=$TIMEOUT 'gs@agiles3:$HOME/tmpevt_'$CHAIN'/' '/ASDC_PROC2/FM3.119_2/EVT/'
+#retry rsync -rLptgoDvz --timeout=$TIMEOUT 'gs@agiles3:$HOME/tmpaux_'$CHAIN'/' '/ASDC_PROC2/DATA_2/AUX/'
+#retry rsync -rLptgoDvz --timeout=$TIMEOUT 'gs@agiles3:$HOME/tmpcor_'$CHAIN'/' '/ASDC_PROC2/DATA_2/COR/'
+#echo "Transfer complete."
+
+echo "Rebuild the indexes.."
+log_index=/ASDC_PROC2/DATA_2/INDEX/LOG.log.index
+AG_indexgen /ASDC_PROC2/DATA_2/LOG LOG ${log_index}_tmp
+if [ -f /ASDC_PROC2/DATA_2/INDEX/add_log.index ] ; then
+    echo >> ${log_index}_tmp
+    cat /ASDC_PROC2/DATA_2/INDEX/add_log.index >> ${log_index}_tmp
+fi
+sort -k3 ${log_index}_tmp -o ${log_index}_tmp
+mv ${log_index}_tmp ${log_index}
+
+$AGILE/AGILEPIPE/AUX_indexgen.rb
+mv /ASDC_PROC2/DATA_2/INDEX/tmp_ACSMAN.index /ASDC_PROC2/DATA_2/INDEX/ACSMAN.index
+mv /ASDC_PROC2/DATA_2/INDEX/tmp_EARTH.index /ASDC_PROC2/DATA_2/INDEX/EARTH.index
+mv /ASDC_PROC2/DATA_2/INDEX/tmp_SAS.index /ASDC_PROC2/DATA_2/INDEX/SAS.index
+
+evt_index=/ASDC_PROC2/FM3.119_2/INDEX/EVT.index
+AG_indexgen /ASDC_PROC2/FM3.119_2/EVT EVT ${evt_index}_tmp
+if [ -f /ASDC_PROC2/FM3.119_2/INDEX/add_evt.index ] ; then
+    echo >> ${evt_index}_tmp
+    cat /ASDC_PROC2/FM3.119_2/INDEX/add_evt.index >> ${evt_index}_tmp
+fi
+sort -k3 ${evt_index}_tmp -o ${evt_index}_tmp
+mv ${evt_index}_tmp ${evt_index}
+
+cor_index=/ASDC_PROC2/DATA_2/INDEX/COR_ALL.index
+cor_3908_index=/ASDC_PROC2/DATA_2/INDEX/COR_3908.index
+cor_3913_index=/ASDC_PROC2/DATA_2/INDEX/COR_3913.index
+cor_3201_index=/ASDC_PROC2/DATA_2/INDEX/COR_3201.index
+AG_indexgen /ASDC_PROC2/DATA_2/COR COR ${cor_index}_tmp
+if [ -f /ASDC_PROC2/DATA_2/INDEX/add_cor.index ] ; then
+    echo >> ${cor_index}_tmp
+    cat /ASDC_PROC2/DATA_2/INDEX/add_cor.index >> ${cor_index}_tmp
+fi
+sort -k3 ${cor_index}_tmp -o ${cor_index}_tmp
+mv ${cor_index}_tmp ${cor_index}
+grep 3908_000.lv1.cor.gz ${cor_index} | egrep -v "PKP043336|PKP043338|PKP043328" > ${cor_3908_index} # exclude thoose probably bugged 3908 files
+grep 3913_000.lv1.cor.gz ${cor_index} | egrep -v "PKP043336|PKP043338|PKP043328" > ${cor_3913_index}
+grep 3201_000.lv1.cor.gz ${cor_index} | egrep -v "PKP043336|PKP043338|PKP043328" > ${cor_3201_index}
+echo "Rebuild complete."
+
+#echo "Copying files to agilepipebkp.."
+#retry_no_quit rsync -av --timeout=$TIMEOUT_NO_QUIT '/ASDC_PROC2/' 'rt@agilepipebkp.iasfbo.inaf.it:/ASDC_PROC2/'
+#echo "Transfer complete."
+
+#echo "Copying files to gtb7hide.."
+#retry_no_quit rsync -av --timeout=$TIMEOUT_NO_QUIT --exclude 'DATA_2/AUX' --include 'DATA_2/COR/*3908_000.lv1.cor.gz' --exclude 'DATA_2/COR/*' '/ASDC_PROC2/' 'agilepipe@gtb7hide.giano.iasfbo:/ASDC_PROC2/'
+#echo "Transfer complete."
+
+echo "Updating first/last orbit.."
+sort --key=3 $PATH_DATA/FM3.119_$ARCHIVE/INDEX/EVT.index | tail -1 > $PATH_RES/commands/lastorbit
+sort --key=3 $PATH_DATA/FM3.119_$ARCHIVE/INDEX/EVT.index | head -1 > $PATH_RES/commands/firstorbit
+sort --key=3 $PATH_DATA/DATA_$ARCHIVE/INDEX/LOG.log.index | tail -1 > $PATH_RES/commands/lastorbitlog
+sort --key=3 $PATH_DATA/DATA_$ARCHIVE/INDEX/LOG.log.index | head -1 > $PATH_RES/commands/firstorbitlog
+echo "Update complete."
+date
