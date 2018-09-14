@@ -14,6 +14,7 @@ class EvalRates:
 
     def getInstrumentPSF(self, instrumentID = 0, emin=100):
         #AGILE
+        psf = 0
         if instrumentID == 0:
             if emin < 1700.: psf = 0.3 # deg.
             if emin < 1000.: psf = 1. # deg.
@@ -84,7 +85,8 @@ class EvalRates:
     #exposure [cm2 s]
     #fluxsource [cts] / [cm2 s]
     #gasvalue [cts] / [cm2 s sr]
-    def calculateRate(self, verbose = 0, ranal= -1, exposure = 40000, fluxsource = 0e-08, gasvalue=-1, gal = 0.7, iso = 10., emin = 100., emax = 50000., instrumentID = 0):
+
+    def calculateRateAndSNR(self, verbose = 0, ranal= -1, exposure = 40000, fluxsource = 0e-08, gasvalue=-1, gal = 0.7, iso = 10., emin = 100., emax = 50000., instrumentID = 0):
         bkg_ON, src_ON = self.calculateRateWithoutExp(verbose, ranal, fluxsource, gasvalue, gal, iso, emin, emax, instrumentID)
         ctstot = (bkg_ON + src_ON) * exposure # [cts]
         snr = src_ON * exposure / math.sqrt(float(ctstot))
