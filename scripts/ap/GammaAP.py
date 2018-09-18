@@ -308,19 +308,24 @@ class GammaAP:
 		fileclean.close()
 		print("* Write ap2 file: tstart tstop exp[cm2 s] cts 0:flux[cts/exp] 1:flux_var 2:def_fluxw 3:aa_fluxw 4:ab1_fluxw 5:ab2_fluxw 6:ab3_fluxw 7:def_fluxwB 8:aa_fluxwB 9:ab1_fluxwB 10:ab2_fluxwB 11:ab3_fluxwB")
 		print("  B means normalization for a background model: calculateCtsFromConstantModel(2, 0.0006, 1, 30, 100, 10000, 0)")
-		ii=10
+
+		self.writeVonMisses(apfile, 2)
+		self.writeVonMisses(apfile, 3)
+		self.writeVonMisses(apfile, 4)
+		self.writeVonMisses(apfile, 10)
+		print('End normalisation')
+		return
+
+	def writeVonMisses(self, apfile, ii):
 		filevm = open(apfile + ".vm" + str(ii),"w")
 		n = 0
 		for x in self.expdataA:
-			line = str(self.tstartA[n] + (self.tstopA[n] - self.tstartA[n])/2.0) + " " + str(self.res[n,ii]) + " " + str(self.res[n,1]) + "\n"
+			line = str(self.tstartA[n] + (self.tstopA[n] - self.tstartA[n])/2.0) + " " + str(self.res[n,ii]) + " " + str(np.sqrt(np.fabs(self.res[n,ii]))) + "\n"
 			filevm.write(line)
 			n = n + 1
 
 		filevm.close()
 		print("* Write Von Misses file: tcenter  "+str(ii)+":flux 1:flux_var")
-
-		print('End normalisation')
-		return
 
 	def calculateLS(self, verbose=0, plot=1, rescol=0, minfreq=-1, maxfreq=-1):
 		#normalization standard model log psd
