@@ -322,12 +322,15 @@ class GammaAP:
 		print('End normalisation')
 		return
 
-	def calculateLS(self, verbose=0, plot=1, rescol=0):
+	def calculateLS(self, verbose=0, plot=1, rescol=0, minfreq=-1, maxfreq=-1):
 		#normalization standard model log psd
 		#, normalization='standard'
 		ls = LombScargle(self.tstartA, self.res[:,rescol])
-		#frequency, power = ls.autopower(minimum_frequency=1e-6, maximum_frequency=10e-4, samples_per_peak=10)
-		frequency, power = ls.autopower()
+		if minfreq != -1:
+			#10e-6, 10e-4 , samples_per_peak=10
+			frequency, power = ls.autopower(minimum_frequency=minfreq, maximum_frequency=maxfreq)
+		else:
+			frequency, power = ls.autopower()
 		pls = ls.false_alarm_probability(power.max(), method='baluev')
 		ind = power.argmax()
 		maxf = frequency[ind]
@@ -383,3 +386,38 @@ class GammaAP:
 			#y_fit = LombScargle(tstartA, ctsdataA).model(t_fit, best_frequency)
 			#plt.plot(t_fit, y_fit)
 			plt.show()
+
+
+	def plotVonMisses(self, filename, mu=0.0):
+		diml=0
+		with open(filename, "r") as ins:
+			for line in ins:
+				if(line != ""):
+					val = line.split()
+					print(len(val))
+					if len(val) > 2:
+						muv = float(val[0])
+						if(muv == float(mu)):
+							diml += 1
+
+		print("diml " + str(diml))
+		frequency = np.zeros(diml)
+		power = np.zeros(diml)
+
+		diml=0
+		with open(filename, "r") as ins:
+			for line in ins:
+				if(line != ""):
+					val = line.split()
+					if len(val) > 2:
+						print(val)
+						muv = float(val[0])
+						if(muv == mu):
+							frequency[diml] = float(val[1])
+							power[diml] = float(val[2])
+							diml += 1
+
+		plt.plot(frequency, power)
+		plt.gca().set_xscale("log")
+		#plt.gca().set_yscale("log")
+		plt.show()
