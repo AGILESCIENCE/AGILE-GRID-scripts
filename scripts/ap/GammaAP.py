@@ -358,13 +358,13 @@ class GammaAP:
 
 		return pls, power.max(), maxf
 
-	def scanLS(self):
+	def scanLS(self, minfreq=-1, maxfreq=-1):
 		fileclean = open(self.apfile + ".apres","w")
 		for i in range(0,14):
-			pls, pmax, maxf = self.calculateLS(0 ,0, i)
+			pls, pmax, maxf = self.calculateLS(0 ,0, i, minfreq, maxfreq)
 			daymax = 1 / maxf / 86400.
-			print(str(i) + ' ' + str(pls) + ' ' + str(pmax) + ' ' + str(maxf) + ' ' + str(daymax))
-			fileclean.write(str(i) + ' ' + str(pls) + ' ' + str(pmax) + ' ' + str(maxf) + ' ' + str(daymax) + "\n")
+			print("LS " + str(i) + ' ' + str(pls) + ' ' + str(pmax) + ' ' + str(maxf) + ' ' + str(daymax))
+			fileclean.write("LS " + str(i) + ' ' + str(pls) + ' ' + str(pmax) + ' ' + str(maxf) + ' ' + str(daymax) + "\n")
 		fileclean.close()
 		return
 
@@ -393,36 +393,102 @@ class GammaAP:
 			plt.show()
 
 
-	def plotVonMisses(self, filename, mu=0.0):
+	def plotVonMisses(self, filename, mu=0.0, verbose=1, plot=1):
 		diml=0
 		with open(filename, "r") as ins:
 			for line in ins:
 				if(line != ""):
 					val = line.split()
-					print(len(val))
+					#print(len(val))
 					if len(val) > 2:
 						muv = float(val[0])
 						if(muv == float(mu)):
 							diml += 1
 
-		print("diml " + str(diml))
+		#print("diml " + str(diml))
 		frequency = np.zeros(diml)
 		power = np.zeros(diml)
 
 		diml=0
+
+		maxf = 0
+		maxp = 0
 		with open(filename, "r") as ins:
 			for line in ins:
 				if(line != ""):
 					val = line.split()
 					if len(val) > 2:
-						print(val)
+						#print(val)
 						muv = float(val[0])
 						if(muv == mu):
+
+
 							frequency[diml] = float(val[1])
 							power[diml] = float(val[2])
+
+							if maxf == 0:
+								maxf = frequency[diml]
+								maxp = power[diml]
+
+							if power[diml] > maxp:
+								maxf = frequency[diml]
+								maxp = power[diml]
 							diml += 1
 
-		plt.plot(frequency, power)
-		plt.gca().set_xscale("log")
-		#plt.gca().set_yscale("log")
-		plt.show()
+		daymax = 1 / maxf / 86400.
+
+		if verbose == 1:
+			print('pls -1 with power of ' + str(maxp) + ' at frequency ' + str(maxf) + ' Hz (' + str(daymax) + ') days' )
+
+		if plot == 1:
+			plt.plot(frequency, power)
+			plt.gca().set_xscale("log")
+			#plt.gca().set_yscale("log")
+			plt.show()
+
+		return maxf, maxp
+
+	def scanVM(self, vmfilename):
+		vmtype = vmfilename.split(".ap.")[1].split(".")[0]
+		fileclean = open(self.apfile + ".apres", "a")
+		muA = []
+		mu = 0.0
+		muA.append(mu)
+		with open(vmfilename, "r") as ins:
+			for line in ins:
+				if(line != ""):
+					val = line.split()
+					#print(len(val))
+					if len(val) > 2:
+						muv = float(val[0])
+						if(muv != mu):
+							muA.append(muv)
+							mu = muv
+
+		for i in muA:
+			maxf, maxp = self.plotVonMisses(vmfilename, i, 0, 0)
+			daymax = 1 / maxf / 86400.
+			print(vmtype + 'mu ' + str(i) + ' -1 ' + str(maxp) + ' ' + str(maxf) + ' ' + str(daymax))
+			fileclean.write(vmtype + 'mu ' + str(i) + ' -1 ' + str(maxp) + ' ' + str(maxf) + ' ' + str(daymax)+ "\n")
+		fileclean.close()
+		return
+
+	def runVomMisses(nthreads, ii):
+		cmd = "./eval_vonmises.prg "+str(nthreads)+" 0 0.5e-06 5.0e-06 0 100 < " + apfilename + ".vm"+str(ii)+" > " + apfilename + ".vm"+str(ii)+".res"
+		os.system(cmd)
+		cmd = "./grid_freq.prg 0.5e-06 5.0e-06 1000 600 < " + apfilename + ".vm"+str(ii)+".res > " + apfilename + ".vm"+str(ii)+".resgf"
+		os.system(cmd)
+
+	def fullAnalysis(self, apfilename, analyzevm=-1):
+		self.normalizeAP(apfilename)
+		if analyzevm == 1:
+			self.runVomMisses(48, 2)
+			self.runVomMisses(48, 3)
+			#runVomMisses(48, 4)
+			#runVomMisses(48, 10)
+
+		self.scanLS(0.5e-6, 5e-6)
+		self.scanVM(apfilename + ".vm2.resgf")
+		self.scanVM(apfilename + ".vm3.resgf")
+		#self.scanVM(apfilename + ".vm4.resgf")
+		#self.scanVM(apfilename + ".vm10.resgf")
