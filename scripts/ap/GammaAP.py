@@ -474,21 +474,21 @@ class GammaAP:
 		return
 
 	def runVomMisses(nthreads, ii):
-		cmd = "./eval_vonmises.prg "+str(nthreads)+" 0 0.5e-06 5.0e-06 0 100 < " + apfilename + ".vm"+str(ii)+" > " + apfilename + ".vm"+str(ii)+".res"
+		cmd = "module load icc-18.0.1; "+os.environ['AGILE']+"/bin/eval_vonmises.prg "+str(nthreads)+" 0 0.5e-06 5.0e-06 0 100 < " + apfilename + ".vm"+str(ii)+" > " + apfilename + ".vm"+str(ii)+".res"
 		os.system(cmd)
-		cmd = "./grid_freq.prg 0.5e-06 5.0e-06 1000 600 < " + apfilename + ".vm"+str(ii)+".res > " + apfilename + ".vm"+str(ii)+".resgf"
+		cmd = "module load icc-18.0.1; "+os.environ['AGILE']+"/bin/grid_freq.prg 0.5e-06 5.0e-06 1000 600 < " + apfilename + ".vm"+str(ii)+".res > " + apfilename + ".vm"+str(ii)+".resgf"
 		os.system(cmd)
 
-	def fullAnalysis(self, apfilename, analyzevm=-1):
+	def fullAnalysis(self, apfilename, analyzevm=-1, vonmissesthread=48):
 		self.normalizeAP(apfilename)
 		if analyzevm == 1:
-			self.runVomMisses(48, 2)
-			self.runVomMisses(48, 3)
-			#runVomMisses(48, 4)
+			self.runVomMisses(vonmissesthread, 2)
+			self.runVomMisses(vonmissesthread, 3)
+			self.runVomMisses(vonmissesthread, 5)
 			#runVomMisses(48, 10)
 
 		self.scanLS(0.5e-6, 5e-6)
 		self.scanVM(apfilename + ".vm2.resgf")
 		self.scanVM(apfilename + ".vm3.resgf")
-		#self.scanVM(apfilename + ".vm4.resgf")
+		self.scanVM(apfilename + ".vm5.resgf")
 		#self.scanVM(apfilename + ".vm10.resgf")
