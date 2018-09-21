@@ -311,7 +311,7 @@ class GammaAP:
 
 		self.writeVonMisses(apfile, 2)
 		self.writeVonMisses(apfile, 3)
-		self.writeVonMisses(apfile, 4)
+		self.writeVonMisses(apfile, 5)
 		self.writeVonMisses(apfile, 10)
 		print('End normalisation')
 		return
