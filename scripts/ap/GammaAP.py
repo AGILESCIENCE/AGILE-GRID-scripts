@@ -473,7 +473,7 @@ class GammaAP:
 		fileclean.close()
 		return
 
-	def runVomMisses(nthreads, ii):
+	def runVomMisses(self, nthreads, ii):
 		cmd = "module load icc-18.0.1; "+os.environ['AGILE']+"/bin/eval_vonmises.prg "+str(nthreads)+" 0 0.5e-06 5.0e-06 0 100 < " + apfilename + ".vm"+str(ii)+" > " + apfilename + ".vm"+str(ii)+".res"
 		os.system(cmd)
 		cmd = "module load icc-18.0.1; "+os.environ['AGILE']+"/bin/grid_freq.prg 0.5e-06 5.0e-06 1000 600 < " + apfilename + ".vm"+str(ii)+".res > " + apfilename + ".vm"+str(ii)+".resgf"
