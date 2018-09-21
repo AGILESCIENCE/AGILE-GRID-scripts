@@ -448,8 +448,8 @@ class GammaAP:
 
 		return maxf, maxp
 
-	def scanVM(self, vmfilename):
-		vmtype = vmfilename.split(".ap.")[1].split(".")[0]
+	def scanVM(self, vmfilename, coltype):
+		vmtype = "vm" + str(coltype)
 		fileclean = open(self.apfile + ".apres", "a")
 		muA = []
 		mu = 0.0
@@ -488,7 +488,7 @@ class GammaAP:
 			#runVomMisses(48, 10)
 
 		self.scanLS(0.5e-6, 5e-6)
-		self.scanVM(apfilename + ".vm2.resgf")
-		self.scanVM(apfilename + ".vm3.resgf")
-		self.scanVM(apfilename + ".vm5.resgf")
+		self.scanVM(apfilename + ".vm2.resgf", 2)
+		self.scanVM(apfilename + ".vm3.resgf", 3)
+		self.scanVM(apfilename + ".vm5.resgf", 5)
 		#self.scanVM(apfilename + ".vm10.resgf")
