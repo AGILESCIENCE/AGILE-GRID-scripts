@@ -474,9 +474,9 @@ class GammaAP:
 		return
 
 	def runVomMisses(self, nthreads, ii):
-		cmd = "module load icc-18.0.1; "+os.environ['AGILE']+"/bin/eval_vonmises.prg "+str(nthreads)+" 0 0.5e-06 5.0e-06 0 100 < " + self.apfile + ".vm"+str(ii)+" > " + self.apfile + ".vm"+str(ii)+".res"
+		cmd = "module load icc-18.0.1; module load gcc-5.4.0; "+os.environ['AGILE']+"/bin/eval_vonmises.prg "+str(nthreads)+" 0 0.5e-06 5.0e-06 0 100 < " + self.apfile + ".vm"+str(ii)+" > " + self.apfile + ".vm"+str(ii)+".res"
 		os.system(cmd)
-		cmd = "module load icc-18.0.1; "+os.environ['AGILE']+"/bin/grid_freq.prg 0.5e-06 5.0e-06 1000 600 < " + self.apfile + ".vm"+str(ii)+".res > " + self.apfile + ".vm"+str(ii)+".resgf"
+		cmd = "module load icc-18.0.1; module load gcc-5.4.0; "+os.environ['AGILE']+"/bin/grid_freq.prg 0.5e-06 5.0e-06 1000 600 < " + self.apfile + ".vm"+str(ii)+".res > " + self.apfile + ".vm"+str(ii)+".resgf"
 		os.system(cmd)
 
 	def fullAnalysis(self, apfilename, analyzevm=-1, vonmissesthread=48):
