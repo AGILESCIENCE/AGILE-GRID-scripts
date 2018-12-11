@@ -62,14 +62,14 @@ MACHINENAME=193.204.103.218
 #MACHINENAME=agiles3
 
 echo "Rebuild gs@"$MACHINENAME" symbolic links for log, aux, cor.."
-ssh_cmd gs@$MACHINENAME '/tmp/build_tmplinks_'$CHAIN'_log.sh'
+ssh_cmd gs@$MACHINENAME '/home/gs/build_tmplinks_'$CHAIN'_log.sh'
 echo "Rebuild complete."
 
 date
 echo "Copying log, aux, cor from gs@"$MACHINENAME".."
 retry rsync -rLptgoDvz --timeout=$TIMEOUT 'gs@'$MACHINENAME':/tmp/tmplog_'$CHAIN'/' '/ASDC_PROC2/DATA_2/LOG/'
 retry rsync -rLptgoDvz --timeout=$TIMEOUT 'gs@'$MACHINENAME':/tmp/tmpaux_'$CHAIN'/' '/ASDC_PROC2/DATA_2/AUX/'
-retry rsync -rLptgoDvz --delete --timeout=$TIMEOUT 'gs@'$MACHINENAME':/tmp/tmpcor_'$CHAIN'/' '/ASDC_PROC2/DATA_2/COR/'
+retry rsync -rLptgoDvz --timeout=$TIMEOUT 'gs@'$MACHINENAME':/tmp/tmpcor_'$CHAIN'/' '/ASDC_PROC2/DATA_2/COR/'
 echo "Transfer complete."
 
 echo "Rebuild and distribute COR indexes and commands.."
@@ -141,7 +141,7 @@ echo "Transfer complete indexes."
 ##################### EVT
 
 echo "Rebuild gs@"$MACHINENAME" symbolic links for evt.."
-ssh_cmd gs@$MACHINENAME '/tmp/build_tmplinks_'$CHAIN'_evt.sh'
+ssh_cmd gs@$MACHINENAME '/home/gs/build_tmplinks_'$CHAIN'_evt.sh'
 echo "Rebuild complete."
 
 echo "Copying evts from gs@"$MACHINENAME".."

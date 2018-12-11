@@ -25,7 +25,7 @@ for file in $aux_files ; do
 done
 rm -r $tmpcordir &> /dev/null
 mkdir $tmpcordir
-cor_files=$(mysql -s -B -hagiles9 -ugs agile2 -e "SELECT CONCAT('/storage1/agile/agile2/LV1corr','/',filename) FROM IndexL1Corr WHERE datemin>=\"$datemin\";")
+cor_files=$(mysql -s -B -hagiles9 -ugs agile2 -e "SELECT CONCAT('/storage1/agile/agile2/LV1corr','/',filename) FROM IndexL1Corr WHERE datemin>=\"$datemin\" AND datemin<=now();")
 for file in $cor_files ; do
     ln -s $file $tmpcordir/$(basename $file)
 done
