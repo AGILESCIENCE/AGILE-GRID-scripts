@@ -43,7 +43,7 @@ for file in $aux_files ; do
 done
 rm -r $tmpcordir &> /dev/null
 mkdir $tmpcordir
-cor_files=$(mysql -s -B -hagiles9 -uagileobs agile2 -e "SELECT CONCAT('/storage1/agile/agile2/LV1corr','/',filename) FROM IndexL1Corr WHERE datemin>=\"$datemin\";")
+cor_files=$(mysql -s -B -hagiles9 -uagileobs agile2 -e "SELECT CONCAT('/storage1/agile/agile2/LV1corr','/',filename) FROM IndexL1Corr WHERE CHANNEL=1 AND datemin>=\"$datemin\" AND datemin<=now();")
 #cor_files=$(mysql -s -B -hagiles9 -uagileobs agile2 -e "SELECT CONCAT('/storage1/agile/agile2/LV1corr','/',filename) FROM IndexL1Corr WHERE (Channel=1) AND datemin<=\"2018-01-01T00:00:00\" AND datemin>=\"2017-04-31T11:59:59\";") 
 
 for file in $cor_files ; do
