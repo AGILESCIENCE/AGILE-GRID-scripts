@@ -1,0 +1,1 @@
+pgrep hermes.php > /dev/null || (. ./initalertmanager.sh ; date >> $LOG/hermes.log ; cd $AGILE/AGILEPIPE/hermesalarm/ ; pwd >> $LOG/hermes.log ; /usr/bin/php ./hermes.php prod 0 0 0 0 >> $LOG/hermes.log 2>&1)

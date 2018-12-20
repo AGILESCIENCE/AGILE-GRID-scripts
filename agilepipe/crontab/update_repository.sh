@@ -1,0 +1,1 @@
+pgrep  -u "$(whoami)" -xf "python ./update_repository.py 1" > /dev/null || (. ./initpipe36.sh ; date >> $LOG/update_repository.log ; cd $PIPEMANAGER ; python ./update_repository.py 1 >> $LOG/update_repository.log 2>&1)
