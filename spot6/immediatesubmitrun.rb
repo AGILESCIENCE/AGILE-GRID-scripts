@@ -7,13 +7,13 @@
 # Any information contained in this software is property of the AGILE TEAM
 # and is strictly private and confidential. All rights reserved.
 
-load ENV["AGILE"] + "/AGILEPIPE/env.rb"
-load ENV["AGILE"] + "/AGILEPIPE/spot6/Conf.rb"
+load ENV["AGILEPIPE"] + "/env.rb"
+load ENV["AGILEPIPE"] + "/spot6/Conf.rb"
 
 $root = ENV['PATH_RES']
 
 def clusteranalysis(filenameconf)
-	agilepipe_path = ENV["AGILE"] + "/AGILEPIPE/"
+	agilepipe_path = ENV["AGILEPIPE"] + "/"
 
 	analysistype = nil
 	instrument = nil

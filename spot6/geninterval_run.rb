@@ -25,8 +25,8 @@
 #19) galcoeff (optional) -> set this galcoeff into the .conf (fixed)
 
 
-load ENV["AGILE"] + "/AGILEPIPE/env.rb"
-load ENV["AGILE"] + "/AGILEPIPE/spot6/Conf.rb"
+load ENV["AGILEPIPE"] + "/env.rb"
+load ENV["AGILEPIPE"] + "/spot6/Conf.rb"
 load ENV["AGILE"] + "/scripts/conf.rb"
 
 class CommandLineParam
@@ -174,7 +174,7 @@ def makeAP(source_name, ap_conffile, tstart, tend, lsource, bsource, tshift, abs
 
 	system("mv " + newconffilename + " " + abspath + "/commands/");
 	if commandline.immediatesubmitrun.to_i == 1
-		cmd = ENV["AGILE"] + "/AGILEPIPE/spot6/immediatesubmitrun.rb " + abspath + "/commands/" + newconffilename.split("/").last
+		cmd = ENV["AGILEPIPE"] + "/spot6/immediatesubmitrun.rb " + abspath + "/commands/" + newconffilename.split("/").last
 		puts cmd
 		system cmd
 	end
@@ -445,7 +445,7 @@ while tcurrent.to_f <= tend.to_f
 
 	system("mv " + newconffilename + " " + abspath + "/commands/");
 	if commandline.immediatesubmitrun.to_i == 1
-		cmd = ENV["AGILE"] + "/AGILEPIPE/spot6/immediatesubmitrun.rb " + abspath + "/commands/" + newconffilename.split("/").last
+		cmd = ENV["AGILEPIPE"] + "/spot6/immediatesubmitrun.rb " + abspath + "/commands/" + newconffilename.split("/").last
 		puts cmd
 		system cmd
 	end

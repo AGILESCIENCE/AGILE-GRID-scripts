@@ -1,11 +1,11 @@
 #! /usr/bin/ruby
 
-load ENV["AGILE"] + "/AGILEPIPE/env.rb"
-load ENV["AGILE"] + "/AGILEPIPE/spot6/Conf.rb"
+load ENV["AGILEPIPE"] + "/env.rb"
+load ENV["AGILEPIPE"] + "/spot6/Conf.rb"
 load ENV["AGILE"] + "/scripts/conf.rb"
 
 def sendmail(subject, bodyfile)
-	agilepipeconf = ENV["AGILE"] + "/AGILEPIPE/agilepipe.conf"
+	agilepipeconf = ENV["AGILEPIPE"] + "/agilepipe.conf"
 	recipients = []
 	lines = File.open(agilepipeconf).to_a
 	sendit = false
@@ -93,7 +93,7 @@ def runait(lastcontacttime, day, hours_shift)
 		confoutfilename = "/tmp/aitoff_rt"+format("%02i", day)+"_"+rand(10000000).to_i.to_s+".conf"
 		fo = File.new(confoutfilename, "w")
 		index = 0
-		File.open(ENV["AGILE"] + "/AGILEPIPE/spot6/cards/ait_rt/aitoff_rt.conf").each_line do | line |
+		File.open(ENV["AGILEPIPE"] + "/spot6/cards/ait_rt/aitoff_rt.conf").each_line do | line |
 			out = line
 			if index.to_i == 1
 				out1 = line.split(",")[0]
@@ -149,9 +149,9 @@ def runspot6(lastcontacttime, day, hours_shift, tstart, tstop)
 
 	#change and copy the card
 	indexfile = 0;
-	Dir[ENV["AGILE"] + "/AGILEPIPE/spot6/cards/"+SPOT6CARDDIR.to_s+"/*.conf"].sort.each do | file |
+	Dir[ENV["AGILEPIPE"] + "/spot6/cards/"+SPOT6CARDDIR.to_s+"/*.conf"].sort.each do | file |
 		indexring = 0;
-		File.open(ENV["AGILE"] + "/AGILEPIPE/spot6/cards/"+SPOT6CARDDIR.to_s+"/ringsB.coord").each_line do | coords |
+		File.open(ENV["AGILEPIPE"] + "/spot6/cards/"+SPOT6CARDDIR.to_s+"/ringsB.coord").each_line do | coords |
 			if coords.split(" ").size < 6
 				next
 			end
@@ -252,7 +252,7 @@ def genaitoffspot6(rttype)
 			puts "gen .reg and .html error"
 		end
 
-		cmd = ENV["AGILE"] + "/AGILEPIPE/spot6/ds9.rb " + pathaitoff + " " + pathalerts + "/" + rttype + "spot6.ctsall 1 -1 7 B 2 png 1400x1000 " + existsFile(pathalerts + "/spot6.reg");
+		cmd = ENV["AGILEPIPE"] + "/spot6/ds9.rb " + pathaitoff + " " + pathalerts + "/" + rttype + "spot6.ctsall 1 -1 7 B 2 png 1400x1000 " + existsFile(pathalerts + "/spot6.reg");
 		puts cmd
 		system(cmd)
 		system("cp " + pathalerts + "/" + rttype + "spot6.ctsall.png " + apppath + "lastaitspot6_"+rttype+".png")
@@ -262,7 +262,7 @@ def genaitoffspot6(rttype)
 		system("cp " + b02[b02.size() - 1] + " " + apppath);
 
 		if File.exists?(pathaitoffint)
-			cmd = ENV["AGILE"] + "/AGILEPIPE/spot6/ds9.rb " + pathaitoffint + " " + pathalerts + "/" + rttype + "spot6.intall 0 0.0010 7 B 2 png 1400x1000 " + existsFile(pathalerts + "/spot6.reg");
+			cmd = ENV["AGILEPIPE"] + "/spot6/ds9.rb " + pathaitoffint + " " + pathalerts + "/" + rttype + "spot6.intall 0 0.0010 7 B 2 png 1400x1000 " + existsFile(pathalerts + "/spot6.reg");
 			puts cmd
 			system(cmd)
 			system("cp " + pathalerts + "/" + rttype + "spot6.intall.png " + apppath + "lastaitspot6_"+rttype+".int.png")

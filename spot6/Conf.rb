@@ -348,7 +348,7 @@ class Conf
 	
 	def plotjpgmap_arc(map)
 		if File.exists?(map)
-			cmd = ENV["AGILE"] + "/AGILEPIPE/spot6/ds9.rb " + map + " " + map.split(".gz")[0] + " 1 -1 1 B all png 1400x1400 "
+			cmd = ENV["AGILEPIPE"] + "/spot6/ds9.rb " + map + " " + map.split(".gz")[0] + " 1 -1 1 B all png 1400x1400 "
 			puts cmd
 			system(cmd)		
 		end	
@@ -356,7 +356,7 @@ class Conf
 	
 	def plotjpgmap_ait(map)
 		if File.exists?(map)
-			cmd = ENV["AGILE"] + "/AGILEPIPE/spot6/ds9.rb " + map + " " + map.split(".gz")[0] + " 1 -1 1 B 2 png 1400x1000 ";
+			cmd = ENV["AGILEPIPE"] + "/spot6/ds9.rb " + map + " " + map.split(".gz")[0] + " 1 -1 1 B 2 png 1400x1000 ";
 			puts cmd
 			system(cmd)	
 		end
@@ -368,9 +368,9 @@ class Conf
 				if @ds91 != "none"
 					fname = file.split(".cts.gz")[0]
 					if @ds91 == "default"
-						cmd = ENV["AGILE"] + "/AGILEPIPE/spot6/ds9.rb " + file + " " + mle  + "_" + fname + ".ctsall 1 -1 " + smooth.to_s + " B all png 1400x1400 " + existsFile(mle + ".reg") + " " +  existsFile(mle + ".multi.reg") + " " + existsFile(@regfile)
+						cmd = ENV["AGILEPIPE"] + "/spot6/ds9.rb " + file + " " + mle  + "_" + fname + ".ctsall 1 -1 " + smooth.to_s + " B all png 1400x1400 " + existsFile(mle + ".reg") + " " +  existsFile(mle + ".multi.reg") + " " + existsFile(@regfile)
 					else
-						cmd = ENV["AGILE"] + "/AGILEPIPE/spot6/ds9.rb " + file + " " + mle  + "_" + fname + ".ctsall " + @ds91.to_s +  " png 1400x1400 " + existsFile(mle + ".reg") + " " +  existsFile(mle + ".multi.reg") + " " + existsFile(@regfile)
+						cmd = ENV["AGILEPIPE"] + "/spot6/ds9.rb " + file + " " + mle  + "_" + fname + ".ctsall " + @ds91.to_s +  " png 1400x1400 " + existsFile(mle + ".reg") + " " +  existsFile(mle + ".multi.reg") + " " + existsFile(@regfile)
 					end
 					if @reg == "yes" or @reg == "reg" or @reg == "con"
 						cmd += " "
@@ -389,9 +389,9 @@ class Conf
 				if @ds92 != "none"
 					fname = file.split(".int.gz")[0]
 					if @ds92 == "default"
-						cmd = ENV["AGILE"] + "/AGILEPIPE/spot6/ds9.rb " + file + " " + mle  + "_" + fname + ".intall 1 -1 " + smooth.to_s + " B all png 1400x1400 " + existsFile(mle + ".reg") + " " +  existsFile(mle + ".multi.reg") + " " + existsFile(@regfile)
+						cmd = ENV["AGILEPIPE"] + "/spot6/ds9.rb " + file + " " + mle  + "_" + fname + ".intall 1 -1 " + smooth.to_s + " B all png 1400x1400 " + existsFile(mle + ".reg") + " " +  existsFile(mle + ".multi.reg") + " " + existsFile(@regfile)
 					else
-						cmd = ENV["AGILE"] + "/AGILEPIPE/spot6/ds9.rb " + file + " " + mle  + "_" + fname + ".intall " + @ds92.to_s +  " png 1400x1400 " + existsFile(mle + ".reg") + " " +  existsFile(mle + ".multi.reg") + " " + existsFile(@regfile)
+						cmd = ENV["AGILEPIPE"] + "/spot6/ds9.rb " + file + " " + mle  + "_" + fname + ".intall " + @ds92.to_s +  " png 1400x1400 " + existsFile(mle + ".reg") + " " +  existsFile(mle + ".multi.reg") + " " + existsFile(@regfile)
 					end
 					if @reg == "yes" or @reg == "reg" or @reg == "con"
 						cmd += " "
@@ -410,9 +410,9 @@ class Conf
 				if @ds93 != "none"
 					fname = file.split(".exp.gz")[0]
 					if @ds93 == "default"
-						cmd = ENV["AGILE"] + "/AGILEPIPE/spot6/ds9.rb " + file + " " + mle  + "_" + fname + ".expall 1 -1 1 B all png 1400x1400 " + existsFile(mle + ".reg") + " " +  existsFile(mle + ".multi.reg") + " " + existsFile(@regfile)
+						cmd = ENV["AGILEPIPE"] + "/spot6/ds9.rb " + file + " " + mle  + "_" + fname + ".expall 1 -1 1 B all png 1400x1400 " + existsFile(mle + ".reg") + " " +  existsFile(mle + ".multi.reg") + " " + existsFile(@regfile)
 					else
-						cmd = ENV["AGILE"] + "/AGILEPIPE/spot6/ds9.rb " + file + " " + mle  + "_" + fname + ".expall " + @ds93.to_s +  " png 1400x1400 " + existsFile(mle + ".reg") + " " +  existsFile(mle + ".multi.reg") + " " + existsFile(@regfile)
+						cmd = ENV["AGILEPIPE"] + "/spot6/ds9.rb " + file + " " + mle  + "_" + fname + ".expall " + @ds93.to_s +  " png 1400x1400 " + existsFile(mle + ".reg") + " " +  existsFile(mle + ".multi.reg") + " " + existsFile(@regfile)
 					end
 					if @reg == "yes" or @reg == "reg" or @reg == "con"
 						cmd += " "
@@ -440,7 +440,7 @@ class Conf
 						#end
 						#puts cmd
 						#system(cmd)
-						cmd = ENV["AGILE"] + "/AGILEPIPE/spot6/ds9.rb " + file + " " + mle  + "_" + fname + ".cts2   2 -1 " + smooth.to_s + " B 16 png 1800x1800 " + existsFile(mle + ".reg") + " " +  existsFile(mle + ".multi.reg") + " " + existsFile(@regfile)
+						cmd = ENV["AGILEPIPE"] + "/spot6/ds9.rb " + file + " " + mle  + "_" + fname + ".cts2   2 -1 " + smooth.to_s + " B 16 png 1800x1800 " + existsFile(mle + ".reg") + " " +  existsFile(mle + ".multi.reg") + " " + existsFile(@regfile)
 						if @reg == "yes" or @reg == "reg" or @reg == "con"
 							cmd += " "
 							cmd += existsFile(@fndisplayreg)
@@ -448,7 +448,7 @@ class Conf
 						puts cmd
 						system(cmd)
 					else
-						cmd = ENV["AGILE"] + "/AGILEPIPE/spot6/ds9.rb " + file + " " + mle  + "_" + fname + ".cts2   " + @ds94.to_s +  " png 1800x1800 " + existsFile(mle + ".reg") + " " +  existsFile(mle + ".multi.reg") + " " + existsFile(@regfile)
+						cmd = ENV["AGILEPIPE"] + "/spot6/ds9.rb " + file + " " + mle  + "_" + fname + ".cts2   " + @ds94.to_s +  " png 1800x1800 " + existsFile(mle + ".reg") + " " +  existsFile(mle + ".multi.reg") + " " + existsFile(@regfile)
 						if @reg == "yes" or @reg == "reg" or @reg == "con"
 							cmd += " "
 							cmd += existsFile(@fndisplayreg)
@@ -607,7 +607,7 @@ class Conf
         begin 
             #generate light curve image
             Dir[pathanalysis + "/*.lc"].each do | lc |
-                cmd = "xvfb-run -a -s \"-screen 0 2000x2000x24\" " + ENV["AGILE"] + "/AGILEPIPE/light-curve/AGILE_LC.py \"Light Curve\" \"" + lc.to_s + "\" \"etichetta\" \"" + lc.to_s + ".png\""
+                cmd = "xvfb-run -a -s \"-screen 0 2000x2000x24\" " + ENV["AGILEPIPE"] + "/light-curve/AGILE_LC.py \"Light Curve\" \"" + lc.to_s + "\" \"etichetta\" \"" + lc.to_s + ".png\""
             	puts cmd
             	system cmd
             end

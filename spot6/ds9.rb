@@ -14,7 +14,7 @@
 #12) additional command
 
 load ENV["AGILE"] + "/scripts/conf.rb"
-load ENV["AGILE"] + "/AGILEPIPE/env.rb"
+load ENV["AGILEPIPE"] + "/env.rb"
 
 if ARGV[0].to_s == "help" || ARGV[0] == nil || ARGV[0] == "h"
 	system("head -14 " + $0 );

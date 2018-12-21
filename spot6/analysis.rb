@@ -8,8 +8,8 @@ require 'rubygems'
 require 'mysql'
 
 load ENV["AGILE"] + "/scripts/conf.rb"
-load ENV["AGILE"] + "/AGILEPIPE/env.rb"
-load ENV["AGILE"] + "/AGILEPIPE/spot6/Conf.rb"
+load ENV["AGILEPIPE"] + "/env.rb"
+load ENV["AGILEPIPE"] + "/spot6/Conf.rb"
 
 def getcoeff(path, coefftype, timeend, timetype)
 	if File.exists?(PATH_RES + "/" + path + "/analysisres.ob")
@@ -629,9 +629,9 @@ if proj.to_s == "AIT"
 	#cmd = "export DISPLAY=localhost:3.0; ds9.rb MAP.cts.gz " + mle  + ".ctsall 2 -1 " + smooth.to_s + " B 2 jpg 1500x1000 " +  regcat.to_s;
 	if File.exists?("MAP.cts.gz") and ds91 != "none"
 		if ds91 == "default"
-			cmd = ENV["AGILE"] + "/AGILEPIPE/spot6/ds9.rb MAP.cts.gz " + mle  + "_MAP.ctsall 1 -1 " + smooth.to_s + " B 2 png 1400x1000 ";
+			cmd = ENV["AGILEPIPE"] + "/spot6/ds9.rb MAP.cts.gz " + mle  + "_MAP.ctsall 1 -1 " + smooth.to_s + " B 2 png 1400x1000 ";
 		else
-			cmd = ENV["AGILE"] + "/AGILEPIPE/spot6/ds9.rb MAP.cts.gz " + mle  + "_MAP.ctsall " + ds91.to_s + " png 1400x1000 ";
+			cmd = ENV["AGILEPIPE"] + "/spot6/ds9.rb MAP.cts.gz " + mle  + "_MAP.ctsall " + ds91.to_s + " png 1400x1000 ";
 		end
 		puts "reg: " + reg + " fndisplayreg: " + fndisplayreg
 		if reg == "yes" or reg == "reg" or reg == "con"
@@ -645,9 +645,9 @@ if proj.to_s == "AIT"
 	end
 	if File.exists?("MAP.int.gz") and ds92 != "none"
 		if ds92 == "default"
-			cmd = ENV["AGILE"] + "/AGILEPIPE/spot6/ds9.rb MAP.int.gz " + mle  + "_MAP.intall 0 0.0010 " + smooth.to_s + " B 2 png 1400x1000 ";
+			cmd = ENV["AGILEPIPE"] + "/spot6/ds9.rb MAP.int.gz " + mle  + "_MAP.intall 0 0.0010 " + smooth.to_s + " B 2 png 1400x1000 ";
 		else
-			cmd = ENV["AGILE"] + "/AGILEPIPE/spot6/ds9.rb MAP.int.gz " + mle  + "_MAP.intall " + ds92.to_s + " png 1400x1000 ";
+			cmd = ENV["AGILEPIPE"] + "/spot6/ds9.rb MAP.int.gz " + mle  + "_MAP.intall " + ds92.to_s + " png 1400x1000 ";
 		end
 		puts "reg: " + reg + " fndisplayreg: " + fndisplayreg
 		if reg == "yes" or reg == "reg" or reg == "con"
@@ -661,9 +661,9 @@ if proj.to_s == "AIT"
 	end
 	if File.exists?("MAP.exp.gz") and ds93 != "none"
 		if ds93 == "default"
-			cmd = ENV["AGILE"] + "/AGILEPIPE/spot6/ds9.rb MAP.exp.gz " + mle  + "_MAP.expall 1 -1 1 B 2 png 1400x1000 ";
+			cmd = ENV["AGILEPIPE"] + "/spot6/ds9.rb MAP.exp.gz " + mle  + "_MAP.expall 1 -1 1 B 2 png 1400x1000 ";
 		else
-			cmd = ENV["AGILE"] + "/AGILEPIPE/spot6/ds9.rb MAP.exp.gz " + mle  + "_MAP.expall " + ds93.to_s +  " png 1400x1000 ";
+			cmd = ENV["AGILEPIPE"] + "/spot6/ds9.rb MAP.exp.gz " + mle  + "_MAP.expall " + ds93.to_s +  " png 1400x1000 ";
 		end
 		puts "reg: " + reg + " fndisplayreg: " + fndisplayreg
 		if reg == "yes" or reg == "reg" or reg == "con"

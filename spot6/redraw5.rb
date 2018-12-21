@@ -2,8 +2,8 @@
 #0) config file name
 
 load ENV["AGILE"] + "/scripts/conf.rb"
-load ENV["AGILE"] + "/AGILEPIPE/env.rb"
-load ENV["AGILE"] + "/AGILEPIPE/spot6/Conf.rb"
+load ENV["AGILEPIPE"] + "/env.rb"
+load ENV["AGILEPIPE"] + "/spot6/Conf.rb"
 
 datautils = DataUtils.new
 alikeutils = AlikeUtils.new
