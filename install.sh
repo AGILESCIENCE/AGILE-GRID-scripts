@@ -24,6 +24,3 @@ cp -rf spot6/* $AGILEPIPE/spot6
 cp -rf spot6/env.rb $AGILEPIPE
 cp -rf spot6/template.ll $AGILEPIPE
 
-echo "install agilepipe"
-test -d $AGILEPIPE || mkdir -p $AGILEPIPE
-cp -rf agilepipe/* $AGILEPIPE
