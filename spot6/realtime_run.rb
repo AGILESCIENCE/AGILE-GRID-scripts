@@ -276,13 +276,13 @@ def genaitoffspot6(rttype)
 				system("mv " + file + " " + nfile);
 
 				basefile = nfile.split("_MLE0000")[0].split("++")[1]
-				basedirres="http://agilepipe.iasfbo.inaf.it/analysis/spot6/" + basefile + "/"
+				basedirres="http://"+ENV["HOSTNAME"]+".iasfbo.inaf.it/analysis/spot6/" + basefile + "/"
 
 				mout = MultiOutput6.new
 				mout.readDataSingleSource(nfile)
 				mout.assoccat(",");
 
-				subject = "S6" + basefile.split("_")[3] + " " + format("%.2f", mout.sqrtTS) + " (" + format("%.2f", mout.l_peak) + "," + format("%.2f", mout.b_peak) + "," + format("%.2E", mout.exposure) + ") " + format("[%.2f-%.2f]", mout.timestart_mjd, mout.timestop_mjd) + " " + format("%.1E", mout.flux) + "+/-" + format("%.1E", mout.flux_error) + " " + mout.assoc.to_s
+				subject = "S6b" + basefile.split("_")[3] + " " + format("%.2f", mout.sqrtTS) + " (" + format("%.2f", mout.l_peak) + "," + format("%.2f", mout.b_peak) + "," + format("%.2E", mout.exposure) + ") " + format("[%.2f-%.2f]", mout.timestart_mjd, mout.timestop_mjd) + " " + format("%.1E", mout.flux) + "+/-" + format("%.1E", mout.flux_error) + " " + mout.assoc.to_s
 
 				system("cat " + nfile + " > alert")
 				system("echo \" \" >> alert")
@@ -322,7 +322,7 @@ def genaitoffspot6(rttype)
 				stringoutput += "\n";
 				falert.write(stringoutput);
 
-				falert.write("\nAGILE SPOT6 alert system for gamma-ray transients developed by Andrea Bulgarelli (INAF)\n")
+				falert.write("\nAGILE SPOT6b alert system for gamma-ray transients developed by Andrea Bulgarelli (INAF)\n")
 
 				falert.close()
 
