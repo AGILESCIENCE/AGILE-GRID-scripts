@@ -38,6 +38,9 @@ def sendmail(subject, bodyfile)
 		if line.include?("smtp =")
 			smtp = line.split("=")[1].gsub!(/\s+/,'')
 		end
+                if line.include?("hostname =")
+         		hostname = line.split("=")[1].gsub!(/\s+/,'')
+		end
 	end
 	if sendit == true
 		puts "Sending email '" + subject + "' to " + to
@@ -276,7 +279,7 @@ def genaitoffspot6(rttype)
 				system("mv " + file + " " + nfile);
 
 				basefile = nfile.split("_MLE0000")[0].split("++")[1]
-				basedirres="http://"+ENV["HOSTNAME"]+".iasfbo.inaf.it/analysis/spot6/" + basefile + "/"
+				basedirres="http://"+hostname+"/analysis/spot6/" + basefile + "/"
 
 				mout = MultiOutput6.new
 				mout.readDataSingleSource(nfile)
