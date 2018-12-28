@@ -43,7 +43,7 @@ if type.to_i == 2
 	mjd1_A = time
 end
 if type.to_i == 3
-	index_name_cor = "/AGILE_PROC3/DATA/INDEX/3901.cor.index"
+	index_name_cor = ENV["PATH_DATA"] + "/DATA/INDEX/3901.cor.index"
 	datautils.extractTimeMinMaxForContact(index_name_cor, time);
     time1_A = datautils.tmin;
     time1_B = datautils.tmax;
@@ -82,7 +82,7 @@ if time2 != 0
 	end
 	if type.to_i == 3
 		
-		index_name_cor = "/AGILE_PROC3/DATA/INDEX/3901.cor.index"
+		index_name_cor = ENV["PATH_DATA"] + "/DATA/INDEX/3901.cor.index"
 		datautils2.extractTimeMinMaxForContact(index_name_cor, time2);
         time2_A = datautils2.tmin;
         time2_B = datautils2.tmax;

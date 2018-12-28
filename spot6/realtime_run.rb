@@ -286,8 +286,8 @@ def genaitoffspot6(rttype)
 
 				system("cat " + nfile + " > alert")
 				system("echo \" \" >> alert")
-				puts "cat /ANALYSIS3/spot6/" + basefile + "/MLE0000 >> alert"
-				system("cat /ANALYSIS3/spot6/" + basefile + "/MLE0000 >> alert")
+				puts "cat "+ENV["PATH_RES"]+"/spot6/" + basefile + "/MLE0000 >> alert"
+				system("cat "+ENV["PATH_RES"]+"/spot6/" + basefile + "/MLE0000 >> alert")
 				falert = File.open("alert", "a")
 				falert.write("\n")
 

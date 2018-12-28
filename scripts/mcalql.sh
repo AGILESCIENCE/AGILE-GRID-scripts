@@ -33,7 +33,7 @@ export MCALOUT="$(readlink -m $outdir)/"
 
 mkdir -p ${MCALOUT}{H,RT,misc,grid_offset,count_rate,sci_RM,elcal}
 
-indexfile="/AGILE_PROC3/DATA_ASDC2/INDEX/COR_3908.index"
+indexfile=$PATH_DATA"/DATA_ASDC2/INDEX/COR_3908.index"
 
 telemfile=$(python -c "
 import sys
