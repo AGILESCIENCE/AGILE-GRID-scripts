@@ -47,6 +47,7 @@ def sendmail(subject, bodyfile)
 		cmd = "mail -v -s \"" + subject + "\" -S smtp-use-starttls -S ssl-verify=ignore -S smtp-auth=login -S smtp=" + smtp +
 			  " -S from=" + from + " -S smtp-auth-user=" + from + " -S smtp-auth-password=" + pass + " -S nss-config-dir=~/.certs" +
 			  " -S ssl-verify=ignore " + recipients.join(" ") + " < " + bodyfile
+ 		puts cmd
 		system(cmd)
 	end
 end
@@ -232,6 +233,13 @@ def existsFile(filename)
 end
 
 def genaitoffspot6(rttype)
+	agilepipeconf = ENV["AGILEPIPE"] + "/agilepipe.conf"
+        lines = File.open(agilepipeconf).to_a
+        for line in lines do
+                if line.include?("hostname =")
+                        hostname = line.split("=")[1].gsub!(/\s+/,'')
+                end
+        end
 	if SPOT6GEN_HTMLANDPNG.to_i == 0
 		return
 	end
@@ -331,9 +339,10 @@ def genaitoffspot6(rttype)
 
 				datautils = DataUtils.new
 				#distance from Vela e Geminga
-				if datautils.distance(mout.l_peak, mout.b_peak, 263.5, -2.8) > 1 and datautils.distance(mout.l_peak, mout.b_peak, 195.13, 4.26) > 1
+				puts "ready to send mail..."
+				#if datautils.distance(mout.l_peak, mout.b_peak, 263.5, -2.8) > 1 and datautils.distance(mout.l_peak, mout.b_peak, 195.13, 4.26) > 1
 					sendmail(subject, "alert")
-				end
+				#end
 			end
 		rescue
 			puts "mail problem"
