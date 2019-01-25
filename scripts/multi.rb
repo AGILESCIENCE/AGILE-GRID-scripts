@@ -1,5 +1,4 @@
 #! /usr/bin/ruby
-#script for BUILD24
 ################ Mandatory and ordered parameters:
 #00) filter (default FM3.119_2_I0025)
 #01) maplist - Note that the extension .maplist4 is mandatory. See below for more details.
