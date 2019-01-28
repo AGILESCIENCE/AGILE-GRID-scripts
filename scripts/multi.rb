@@ -41,7 +41,7 @@
 #31) fluxcorrection, defaul 0 (no), 1 yes. Flux calculation correction for spectral shape in output - 2 input and output
 #32) scanmaplist - default 0. Calculate one TS for each map of the maplist4 provided as input, or group by some set of maps (e.g. for fovbinnumer > 1) -> specify the name of the source and the prefix e.g. VELA,pl -> one MLE using pl law for each map of the maplist4 for VELA source. e.g. VELA,pl,5 -> one MLE each 5 maps of the maplist4
 #33) (CAT) addcat. Specify the string of the source to be analysed". e.g. addcat="2.0e-07 34.7  -0.5  2.5 12 2 W44 0.0 1 2000.0 0.0". Remove sources with the same name, to avoid duplicate
-#34) (CAT) catpath, the path of the cat file list (.multi). Default is /ANALYSIS3/catalogs/cat2.multi
+#34) (CAT) catpath, the path of the cat file list (.multi). Default is ENV["PATH_RES"] + /catalogs/cat2.multi
 #35) (CAT) catminflux, the min flux to be selected from the cat list
 #36) (CAT) catminradius, the min radius to be selected from the cat list
 #37) contourpoints, Number of points to determine the contour (0-400)
@@ -125,7 +125,7 @@
 #	2 powerlaw fit
 
 #Extract list from CAT2
-#extract_catalog.rb /ANALYSIS3/catalogs/cat2.multi 195.09 4.28 list.multi 0.1 1 5 0 10 0 0 25e-06
+#extract_catalog.rb ENV["PATH_RES"] + /catalogs/cat2.multi 195.09 4.28 list.multi 0.1 1 5 0 10 0 0 25e-06
 
 #Examples
 #multi.rb FM3.119_ASDCe_H0025 FM3.119_ASDCe_H0025_B01_00100-50000.maplist4 none RES1 addcat="2.0e-07 0.647894 61.9818  2.1 3 2 NS 0.0 0 0.0 0.0" catminflux=0e-08
