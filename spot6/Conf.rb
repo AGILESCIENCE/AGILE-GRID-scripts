@@ -1,5 +1,5 @@
-#/ANALYSIS3/dir_run_output/run_name/runid(.conf)
-#/ANALYSIS3/dir_analysis_result/analysis_name
+#ENV["PATH_RES"] + /dir_run_output/run_name/runid(.conf)
+#ENV["PATH_RES"] + /dir_analysis_result/analysis_name
 #FILTER_ARCHIVE_IRF
 #template_ID, skyregion_id
 #copyresults
@@ -60,8 +60,8 @@
 # - se la sorgente con sqrtTS piu' alto e quella che si sta analizzando, non si fa nulla
 # - se la sorgente con sqrtTS piu' alto e' un'altra, si aggiunge alla lista del .multi in uscita da questa procedura con flusso e TS calcolati qui
 #Save results
-#The analysis is saved in /ANALYSIS3/dir_run_output/proj_dir_run_output
-#A selection of the analysis is saved using dir_analysis_result,analysis_result_minSqrtTS,analysis_result_sourcename --> save results in /ANALYSIS3/dir_analysis_result (save .source) with sqrt(TS) >= analysis_result_minSqrtTS and of a source named 'sourcename' or 'all' (analysis_result_sourcename)
+#The analysis is saved in ENV["PATH_RES"] + /dir_run_output/proj_dir_run_output
+#A selection of the analysis is saved using dir_analysis_result,analysis_result_minSqrtTS,analysis_result_sourcename --> save results in ENV["PATH_RES"] + /dir_analysis_result (save .source) with sqrt(TS) >= analysis_result_minSqrtTS and of a source named 'sourcename' or 'all' (analysis_result_sourcename)
 #For cluster: use queue
 
 
