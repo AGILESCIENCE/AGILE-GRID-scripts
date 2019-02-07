@@ -13,7 +13,7 @@ class Parameters
 			@catminradius = "0"
 			@contourpoints = 40
 			@integratortype = "1"
-			@catpath = "/ANALYSIS3/catalogs/cat2.multi"
+			@catpath = ENV["PATH_RES"] + "/catalogs/cat2.multi"
 			@checksourceposition = nil
 			@execap = 0
 			@radius = 10

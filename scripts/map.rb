@@ -1,5 +1,4 @@
 #! /usr/bin/ruby
-#script for BUILD24
 #00) filter DIR (es: FM3.119_2_I0023, FM3.119_ASDCe_I0023, FM3.119_ASDCSTDf_I0023, FM3.119_ASDCSTDk_I0023)
 #01) output file name prefix
 #02) time start: contact or TT or MJD or UTC (default TT, use timetype)

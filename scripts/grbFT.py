@@ -19,8 +19,8 @@ import pyfits
 from astropy.coordinates import SkyCoord
 from astropy.coordinates import FK5
 
-log_index = "/ASDC_PROC2/DATA_2/INDEX/LOG.log.index"
-evt_index = "/ASDC_PROC2/FT3ab_2/INDEX/EVT.index"
+log_index = os.environ['PATH_DATA'] + "/DATA_2/INDEX/LOG.log.index"
+evt_index = os.environ['PATH_DATA'] + "/FT3ab_2/INDEX/EVT.index"
 
 def fromGaltoRaDec(l_coord, b_coord):
     c = SkyCoord("galactic", l=l_coord, b=b_coord, unit="deg")
