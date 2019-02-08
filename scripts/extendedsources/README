@@ -9,6 +9,8 @@ Example: load environment on agile cluster gtbc4.giano.iasfbo
     module load heasoft-6.17
     heainit
 
+This work also with BUILD25
+
 ### 1. Generate a circle representing the extended source we want to analyze ###
 
 Command:
@@ -81,3 +83,9 @@ The file explist file this time contains the lines:
     EMIN10000_EMAX50000_FM3.119_ASDCe_I0025_B01.exp.gz 2.1
 
 Five templates will be generated, one for each exposure map.
+
+### 4. Simplified procedure for single channel and circle
+
+With BUILD25 it is possible to change the file cmd_single.sh and add your own source, single energy channel and IRF.
+The file is intended as an example of the right steps.
+The configuration module are loaded insided the container agilepipe
