@@ -64,6 +64,5 @@ for i in ${!convemin[*]} ; do
     ( AG_diff_conv diffusefile=$padfile sarfile=${caldir}/AG_GRID_G0017_SFMG_$5.sar.gz psdfile=${caldir}/AG_GRID_G0017_SFMG_$5.psd.gz edpfile=${caldir}/AG_GRID_G0017_SFMG_$5.edp.gz outfile=\!${convfile[$i]} > $outname 2>&1 ; fparkey 0 $padfile -E_MIN ; fparkey 0 $padfile -E_MAX ; fparkey 0 $padfile -INDEX ; rm ${PFILES}/*.par ; rmdir ${PFILES} )
 done
 PFILES=${PFILES_OLD}
-:%s/I0025/$5/g
 
 
