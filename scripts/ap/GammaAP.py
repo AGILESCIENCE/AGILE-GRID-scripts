@@ -251,6 +251,38 @@ class GammaAP:
 			ii += 1
 		return
 
+	#load an ap2 file
+	def loadnormalizedAP(self, ap2file):
+		self.apfile = ap2file
+		n=0
+		with open(ap2file, "r") as ins:
+			for line in ins:
+				if(line != ""):
+					val = line.split()
+					if len(val) > 2:
+						n = n + 1
+		self.diml = n
+
+		self.res = np.zeros((self.diml, 14))
+		self.tstartA = np.zeros(self.diml)
+		self.tstopA = np.zeros(self.diml)
+		self.expdataA = np.zeros(self.diml)
+		self.ctsdataA = np.zeros(self.diml)
+		n=0
+		with open(ap2file, "r") as ins:
+			for line in ins:
+				if(line != ""):
+					val = line.split()
+					if len(val) > 2:
+							self.tstartA[n] = float(val[0])
+							self.tstopA[n] = float(val[1])
+							self.expdataA[n] = float(val[2])
+							self.ctsdataA[n] = float(val[3])
+							for i in range(0,12):
+								self.res[n,i] = float(val[4+i])
+							n = n + 1
+		print("Loaded " + str(n) + " lines")
+
 	def normalizeAP(self, apfile):
 
 		if self.diml == 0:
@@ -344,7 +376,7 @@ class GammaAP:
 		if verbose == 1:
 			print('pls ' + str(pls) + ' with power of ' + str(power.max()) + ' at frequency ' + str(maxf) + ' Hz (' + str(daymax) + ') days' )
 
-		if plot == 1:
+		if plot > 0:
 			plt.subplot(1, 1, 1)
 			plt.plot(frequency, power)
 			plt.gca().set_xscale("log")
@@ -354,7 +386,10 @@ class GammaAP:
 			#t_fit = np.linspace(0, 1)
 			#y_fit = LombScargle(tstartA, ctsdataA).model(t_fit, best_frequency)
 			#plt.plot(t_fit, y_fit)
+		if plot == 1:
 			plt.show()
+		if plot == 2:
+			plt.savefig(self.apfile + ".apres.ls."+str(rescol)+".png", format='png', dpi=1200)
 
 		return pls, power.max(), maxf
 
@@ -440,11 +475,14 @@ class GammaAP:
 		if verbose == 1:
 			print('pls -1 with power of ' + str(maxp) + ' at frequency ' + str(maxf) + ' Hz (' + str(daymax) + ') days' )
 
-		if plot == 1:
+		if plot > 0:
 			plt.plot(frequency, power)
 			plt.gca().set_xscale("log")
 			#plt.gca().set_yscale("log")
+		if plot == 1:
 			plt.show()
+		if plot == 2:
+                        plt.savefig(filename+"."+str(mu)+".png", format='png', dpi=1200)
 
 		return maxf, maxp
 
@@ -478,6 +516,11 @@ class GammaAP:
 		os.system(cmd)
 		cmd = "module load icc-18.0.1; module load gcc-5.4.0; "+os.environ['AGILE']+"/bin/grid_freq.prg 0.5e-06 5.0e-06 1000 600 < " + self.apfile + ".vm"+str(ii)+".res > " + self.apfile + ".vm"+str(ii)+".resgf"
 		os.system(cmd)
+
+	def plotLS(self, ap2file, i):
+		self.apfile = ap2file
+		self.loadnormalizedAP(ap2file)
+		pls, pmax, maxf = self.calculateLS(1, 2, int(i), 0.5e-6, 5e-6)
 
 	def fullAnalysis(self, apfilename, analyzevm=-1, vonmissesthread=48):
 		self.normalizeAP(apfilename)
