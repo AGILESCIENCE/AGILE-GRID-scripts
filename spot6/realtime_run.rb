@@ -49,6 +49,7 @@ def sendmail(subject, bodyfile)
 			  " -S ssl-verify=ignore " + recipients.join(" ") + " < " + bodyfile
  		puts cmd
 		system(cmd)
+		system("rm " + bodyfile)
 	end
 end
 
@@ -294,12 +295,12 @@ def genaitoffspot6(rttype)
 				mout.assoccat(",");
 
 				subject = "S6b" + basefile.split("_")[3] + " " + format("%.2f", mout.sqrtTS) + " (" + format("%.2f", mout.l_peak) + "," + format("%.2f", mout.b_peak) + "," + format("%.2E", mout.exposure) + ") " + format("[%.2f-%.2f]", mout.timestart_mjd, mout.timestop_mjd) + " " + format("%.1E", mout.flux) + "+/-" + format("%.1E", mout.flux_error) + " " + mout.assoc.to_s
-
-				system("cat " + nfile + " > alert")
-				system("echo \" \" >> alert")
-				puts "cat "+ENV["PATH_RES"]+"/spot6/" + basefile + "/MLE0000 >> alert"
-				system("cat "+ENV["PATH_RES"]+"/spot6/" + basefile + "/MLE0000 >> alert")
-				falert = File.open("alert", "a")
+				filenamealert = pathalerts + "/alert"
+				system("cat " + nfile + " > " + filenamealert)
+				system("echo \" \" >> " + filenamealert)
+				puts "cat "+ENV["PATH_RES"]+"/spot6/" + basefile + "/MLE0000 >> " + filenamealert
+				system("cat "+ENV["PATH_RES"]+"/spot6/" + basefile + "/MLE0000 >> " + filenamealert)
+				falert = File.open(filenamealert, "a")
 				falert.write("\n")
 
 				stringoutput = "Dir: " + basedirres + "\n"
@@ -341,7 +342,7 @@ def genaitoffspot6(rttype)
 				#distance from Vela e Geminga
 				puts "ready to send mail..."
 				#if datautils.distance(mout.l_peak, mout.b_peak, 263.5, -2.8) > 1 and datautils.distance(mout.l_peak, mout.b_peak, 195.13, 4.26) > 1
-					sendmail(subject, "alert")
+					sendmail(subject, filenamealert)
 				#end
 			end
 		rescue
