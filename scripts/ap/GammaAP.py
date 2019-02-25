@@ -442,6 +442,10 @@ class GammaAP:
 			#plt.plot(t_fit, y_fit)
 			plt.show()
 
+	def plotLS(self, ap2file, i):
+		self.apfile = ap2file
+		self.loadnormalizedAP(ap2file)
+		pls, pmax, maxf = self.calculateLS(1, 2, int(i), 0.5e-6, 5e-6)
 
 	def plotVonMisses(self, filename, mu=0.0, verbose=1, plot=1):
 		diml=0
