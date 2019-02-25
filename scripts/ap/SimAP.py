@@ -174,8 +174,8 @@ class SimAP:
                      tstop   = float(val[1])
                      expdata = float(val[2])
                      ###############
-                     if(expdata != 0):
-                        expdata = 300000
+                     #if(expdata != 0):
+                    #     expdata = 300000
 
                      ctsdata = int(val[3])
 
@@ -199,7 +199,7 @@ class SimAP:
             print('Frequency2 ', 1 / (period/2))
             phi = 0
             print('Phi ', phi)
-            peak_size = 40000e-08
+            peak_size = 400e-08
             print('peak_size ', peak_size)
             deltaflux = peak_size
             print('deltaflux ', deltaflux)

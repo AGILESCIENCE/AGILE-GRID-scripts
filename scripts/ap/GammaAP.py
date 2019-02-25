@@ -544,7 +544,7 @@ class GammaAP:
 		print(cmd)
 		os.system(cmd)
 
-	def significanceVonMisses(self, nthreads, ii):
+	def significanceVonMisses(self, nthreads, ii, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100):
 		print("significance von misses periodogram")
 		cmd = "module load icc-18.0.1; module load gcc-5.4.0; "+os.environ['AGILE']+"/bin/coeffs_XY.prg "+str(nthreads)+ " " + str(self.freqmin) + " " + str(self.freqmax) + " 0 " + str(self.vmnumax) + " < " + self.apfile + ".vm"+str(ii)+" > " + self.apfile + ".vm"+str(ii)+".sig"
 		print(cmd)
