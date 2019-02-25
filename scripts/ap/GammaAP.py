@@ -530,15 +530,20 @@ class GammaAP:
 		self.vmnoise=1
 		#Arguments: threads number, noise scalability flag (zero for NOT to scale), f_min, f_max, nu_min, nu_max
 		cmd = "module load icc-18.0.1; module load gcc-5.4.0; "+os.environ['AGILE']+"/bin/eval_vonmises.prg "+str(nthreads)+" "+ str(self.vmnoise) + " " + str(self.freqmin) + " " + str(self.freqmax) + " 0 " + str(self.vmnumax) + " < " + self.apfile + ".vm"+str(ii)+" > " + self.apfile + ".vm"+str(ii)+".res"
+		print(cmd)
 		os.system(cmd)
+
+	def runVomMissesGridFreq(self, ii, ngrid=1000, tspan=10800):
 		#Arguments: f_min, f_max, N, original time series span T
 		#T is used to organize an almost-logarithmic f-scale; use any T<=0 to request linear f-scale
-		cmd = "module load icc-18.0.1; module load gcc-5.4.0; "+os.environ['AGILE']+"/bin/grid_freq.prg "+ str(self.vmnoise) + " " + str(self.freqmin) + " 1000 600 < " + self.apfile + ".vm"+str(ii)+".res > " + self.apfile + ".vm"+str(ii)+".resgf"
+		cmd = "module load icc-18.0.1; module load gcc-5.4.0; "+os.environ['AGILE']+"/bin/grid_freq.prg "+ str(self.freqmin) + " " + str(self.freqmax) + " " + str(ngrid) + " " + str(tspan) + " < " + self.apfile + ".vm"+str(ii)+".res > " + self.apfile + ".vm"+str(ii)+".resgf"
+		print(cmd)
 		os.system(cmd)
 
 	def significanceVonMisses(self, nthreads, ii):
 		print("significance von misses periodogram")
 		cmd = "module load icc-18.0.1; module load gcc-5.4.0; "+os.environ['AGILE']+"/bin/coeffs_XY.prg "+str(nthreads)+ " " + str(self.freqmin) + " " + str(self.freqmax) + " 0 " + str(self.vmnumax) + " < " + self.apfile + ".vm"+str(ii)+" > " + self.apfile + ".vm"+str(ii)+".sig"
+		print(cmd)
 		os.system(cmd)
 		#res =W * pow(2.7182818, -z) * (z * 1.20555 + (5.116071 + 1) * (sqrt(z) / 2) )
 		#res2=W * pow(2.7182818, -z) * (2 * z * 1.20555 + 5.116071 * sqrt(z))
@@ -547,7 +552,7 @@ class GammaAP:
 		#W * e^(-z) * (  2 * z * Xnumax + Y_numax  * sqrt(z) )
 
 
-	def fullAnalysis(self, apfilename, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100):
+	def fullAnalysis(self, apfilename, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800):
 		self.normalizeAP(apfilename)
 		self.freqmin=float(freqmin)
 		self.freqmax=float(freqmax)
@@ -559,6 +564,11 @@ class GammaAP:
 			self.runVomMisses(vonmissesthread, 7)
 			self.runVomMisses(vonmissesthread, 10)
 			#runVomMisses(48, 10)
+
+		self.runVomMissesGridFreq(3, ngridfreq, tgridfreq)
+		self.runVomMissesGridFreq(5, ngridfreq, tgridfreq)
+		self.runVomMissesGridFreq(7, ngridfreq, tgridfreq)
+		self.runVomMissesGridFreq(10, ngridfreq, tgridfreq)
 
 		self.scanLS(self.freqmin, self.freqmax)
 		self.scanVM(apfilename + ".vm3.resgf", 3)
