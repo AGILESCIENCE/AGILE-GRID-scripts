@@ -362,6 +362,21 @@ class GammaAP:
 	def calculateLS(self, verbose=0, plot=1, rescol=0, minfreq=-1, maxfreq=-1):
 		#normalization standard model log psd
 		#, normalization='standard'
+		#rescol
+		#0 flux cts/exp -> NO
+		#1 variance of the flux -> NO
+		#2 def_fluxw -> NO
+		#3 aa_fluxw
+		#4 ab1_fluxw
+		#5 ab2_fluxw
+		#6 ab3_fluxw
+		#7 def_fluxwB
+		#8 aa_fluxwB
+		#9 ab1_fluxwB
+		#10 ab2_fluxwB
+		#11 ab3_fluxwB
+		#12 cts
+		#13 exp
 		ls = LombScargle(self.tstartA, self.res[:,rescol])
 		if minfreq != -1:
 			#10e-6, 10e-4 , samples_per_peak=10
@@ -532,21 +547,21 @@ class GammaAP:
 		#W * e^(-z) * (  2 * z * Xnumax + Y_numax  * sqrt(z) )
 
 
-	def fullAnalysis(self, apfilename, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100):
+		def fullAnalysis(self, apfilename, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100):
 		self.normalizeAP(apfilename)
 		self.freqmin=float(freqmin)
 		self.freqmax=float(freqmax)
 		self.vmnumax=float(vmnumax)
 
 		if analyzevm == 1:
-			self.runVomMisses(vonmissesthread, 2)
 			self.runVomMisses(vonmissesthread, 3)
 			self.runVomMisses(vonmissesthread, 5)
+			self.runVomMisses(vonmissesthread, 7)
 			self.runVomMisses(vonmissesthread, 10)
 			#runVomMisses(48, 10)
 
 		self.scanLS(self.freqmin, self.freqmax)
-		self.scanVM(apfilename + ".vm2.resgf", 2)
-		self.scanVM(apfilename + ".vm3.resgf", 3)
-		self.scanVM(apfilename + ".vm5.resgf", 5)
+		self.scanVM(apfilename + ".vm2.resgf", 3)
+		self.scanVM(apfilename + ".vm3.resgf", 5)
+		self.scanVM(apfilename + ".vm5.resgf", 7)
 		self.scanVM(apfilename + ".vm10.resgf", 10)

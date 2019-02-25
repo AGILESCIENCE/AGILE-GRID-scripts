@@ -45,20 +45,22 @@ class SimAP:
                  nlines += 1
 
         tzero = tstart
-        bin_number = tstop - tstart
+        bin_number = int(tstop - tstart)
         print('number of bins: ' + str(bin_number))
         nintervals = int(nlines)
         print('number of intervals: ' + str(nintervals))
-        light_curve = np.full(int(bin_number),0)
+        light_curve = np.zeros(bin_number)
         #light_curve_mean = np.full(int(bin_number),0)
-        light_curve_mean_period = np.full(nintervals,0)
+        light_curve_mean_period = np.zeros(nintervals)
         omega = 2*np.pi/period
         print("start light_curve fill")
         for i in range(int(tstart),int(tstop)):
 
             lam = math.fabs(peak_size * np.sin(omega*(i) + phi) + deltaflux)
+
         #    lam = peak_size * np.sin(omega*(i) + phi) + deltaflux
-            light_curve[int(i-tzero)] += lam
+            light_curve[int(i-tzero)] = lam
+            #print(str(i) + " " + str(light_curve[int(i-tzero)]))
 
         print("end light_curve fill")
 
@@ -76,12 +78,13 @@ class SimAP:
                 #print(str(tstart) + '-' + str(tstop) + ' TT ' + str(tstop-tstart) + ' s ' + str(meanflux) + ' cts / cm2 s')
                 #for i in range(int(tstart),int(tstop)):
                 #   light_curve_mean[int(i-tzero)] = meanflux
+                #print(meanflux)
                 light_curve_mean_period[nline] = meanflux
                 nline += 1
-                print(nline)
+                #print(nline)
 
         if(plot == 1):
-            plt.plot(light_curve,'-o' ,markersize=1)
+            plt.plot(light_curve_mean_period,'-o' ,markersize=1)
             #plt.plot(light_curve_mean,'-o' ,markersize=1)
             #plt.plot(light_curve_mean_period,'-o')
             plt.savefig(apfile+".lc.png")
@@ -191,21 +194,21 @@ class SimAP:
 
             #generate simulated lc
             period = 8.4474 * 86400.
-            print('Period %f',  period)
-            print('Frequency %d', 1 / period)
-            print('Frequency2 %d', 1 / (period/2))
+            print('Period ',  period)
+            print('Frequency ', 1 / period)
+            print('Frequency2 ', 1 / (period/2))
             phi = 0
-            print('Phi %f', phi)
-            peak_size = 4000e-08
-            print('peak_size %f', peak_size)
+            print('Phi ', phi)
+            peak_size = 40000e-08
+            print('peak_size ', peak_size)
             deltaflux = peak_size
-            print('deltaflux %f', deltaflux)
+            print('deltaflux ', deltaflux)
 
 
             erate.calculateRateAndSNR(0, ranal, expsum / len(expdataA), peak_size,  gasvalue, gal, iso, emin, emax, 0)
 
             print("Start add_sinusoidal_signal")
-            lc = self.add_sinusoidal_signal(apfile,1, period,phi,peak_size,deltaflux)
+            lc = self.add_sinusoidal_signal(apfile, 1, period,phi,peak_size,deltaflux)
             print("End add_sinusoidal_signal")
 
             indexA = 0
@@ -239,6 +242,7 @@ class SimAP:
                 #int_source_flux = ((emax**(1. - index))/(1. - index) - (emin**(1. - index))/(1. - index))*omega_ranal # [cts / cm2 s]
 
                 #A) flux source from variabile LC
+                #print(lc[indexA])
                 fluxsource = lc[indexA] * fluxscalefactor #[cts / cm2 s]
                 #print(str(tstart) + '-' + str(tstop) + ' ' +  str(lc[indexA]) )
 
@@ -261,7 +265,7 @@ class SimAP:
                 if writerealdata == 1:
                     ctsdata = ctsdataA[indexA]
 
-                row = str(tstart) + " " + str(tstop) + " " + str(expdata) + " " + str(ctsdata) + " " + str(bkg_ON) + " " + str(ctsgal) + " " + str(ctsiso) + " " + " " + str(src_ON) + ' ' + str(snr) + "\n"
+                row = str(tstart) + " " + str(tstop) + " " + str(expdata) + " " + str(ctsdata) + " " + str(fluxsource) + " " + str(bkg_ON) + " " + str(ctsgal) + " " + str(ctsiso) + " " + " " + str(src_ON) + ' ' + str(snr) + "\n"
                 file.write(row)
                 row2 = str(tstart) + " " + str(tstop) + " " + str(expdata) + " " + str(ctsdata) + "\n"
                 file2.write(row2)
