@@ -547,7 +547,7 @@ class GammaAP:
 		#W * e^(-z) * (  2 * z * Xnumax + Y_numax  * sqrt(z) )
 
 
-		def fullAnalysis(self, apfilename, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100):
+	def fullAnalysis(self, apfilename, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100):
 		self.normalizeAP(apfilename)
 		self.freqmin=float(freqmin)
 		self.freqmax=float(freqmax)
