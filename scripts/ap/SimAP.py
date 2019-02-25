@@ -48,16 +48,19 @@ class SimAP:
         bin_number = tstop - tstart
         print('number of bins: ' + str(bin_number))
         nintervals = int(nlines)
-        print('number of intervals: ' + str(nlines))
+        print('number of intervals: ' + str(nintervals))
         light_curve = np.full(int(bin_number),0)
-        light_curve_mean = np.full(int(bin_number),0)
+        #light_curve_mean = np.full(int(bin_number),0)
         light_curve_mean_period = np.full(nintervals,0)
         omega = 2*np.pi/period
+        print("start light_curve fill")
         for i in range(int(tstart),int(tstop)):
 
             lam = math.fabs(peak_size * np.sin(omega*(i) + phi) + deltaflux)
         #    lam = peak_size * np.sin(omega*(i) + phi) + deltaflux
             light_curve[int(i-tzero)] += lam
+
+        print("end light_curve fill")
 
         nline = 0
         with open(apfile, "r") as ins:
@@ -71,10 +74,11 @@ class SimAP:
                    meanflux += light_curve[int(i-tzero)]
                 meanflux /= int(tstop-tstart)
                 #print(str(tstart) + '-' + str(tstop) + ' TT ' + str(tstop-tstart) + ' s ' + str(meanflux) + ' cts / cm2 s')
-                for i in range(int(tstart),int(tstop)):
-                   light_curve_mean[int(i-tzero)] = meanflux
+                #for i in range(int(tstart),int(tstop)):
+                #   light_curve_mean[int(i-tzero)] = meanflux
                 light_curve_mean_period[nline] = meanflux
                 nline += 1
+                print(nline)
 
         if(plot == 1):
             plt.plot(light_curve,'-o' ,markersize=1)
@@ -167,8 +171,8 @@ class SimAP:
                      tstop   = float(val[1])
                      expdata = float(val[2])
                      ###############
-                     #if(expdata != 0):
-                    #     expdata = 40000
+                     if(expdata != 0):
+                        expdata = 300000
 
                      ctsdata = int(val[3])
 
@@ -192,7 +196,7 @@ class SimAP:
             print('Frequency2 %d', 1 / (period/2))
             phi = 0
             print('Phi %f', phi)
-            peak_size = 200e-08
+            peak_size = 4000e-08
             print('peak_size %f', peak_size)
             deltaflux = peak_size
             print('deltaflux %f', deltaflux)
@@ -200,7 +204,9 @@ class SimAP:
 
             erate.calculateRateAndSNR(0, ranal, expsum / len(expdataA), peak_size,  gasvalue, gal, iso, emin, emax, 0)
 
+            print("Start add_sinusoidal_signal")
             lc = self.add_sinusoidal_signal(apfile,1, period,phi,peak_size,deltaflux)
+            print("End add_sinusoidal_signal")
 
             indexA = 0
             for x in expdataA:

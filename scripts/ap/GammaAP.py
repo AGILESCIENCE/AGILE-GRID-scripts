@@ -513,14 +513,24 @@ class GammaAP:
 
 	def runVomMisses(self, nthreads, ii):
 		self.vmnoise=1
+		#Arguments: threads number, noise scalability flag (zero for NOT to scale), f_min, f_max, nu_min, nu_max
 		cmd = "module load icc-18.0.1; module load gcc-5.4.0; "+os.environ['AGILE']+"/bin/eval_vonmises.prg "+str(nthreads)+" "+ str(self.vmnoise) + " " + str(self.freqmin) + " " + str(self.freqmax) + " 0 " + str(self.vmnumax) + " < " + self.apfile + ".vm"+str(ii)+" > " + self.apfile + ".vm"+str(ii)+".res"
 		os.system(cmd)
+		#Arguments: f_min, f_max, N, original time series span T
+		#T is used to organize an almost-logarithmic f-scale; use any T<=0 to request linear f-scale
 		cmd = "module load icc-18.0.1; module load gcc-5.4.0; "+os.environ['AGILE']+"/bin/grid_freq.prg "+ str(self.vmnoise) + " " + str(self.freqmin) + " 1000 600 < " + self.apfile + ".vm"+str(ii)+".res > " + self.apfile + ".vm"+str(ii)+".resgf"
 		os.system(cmd)
 
-	def significanceVonMisses():
+	def significanceVonMisses(self, nthreads, ii):
 		print("significance von misses periodogram")
-		
+		cmd = "module load icc-18.0.1; module load gcc-5.4.0; "+os.environ['AGILE']+"/bin/coeffs_XY.prg "+str(nthreads)+ " " + str(self.freqmin) + " " + str(self.freqmax) + " 0 " + str(self.vmnumax) + " < " + self.apfile + ".vm"+str(ii)+" > " + self.apfile + ".vm"+str(ii)+".sig"
+		os.system(cmd)
+		#res =W * pow(2.7182818, -z) * (z * 1.20555 + (5.116071 + 1) * (sqrt(z) / 2) )
+		#res2=W * pow(2.7182818, -z) * (2 * z * 1.20555 + 5.116071 * sqrt(z))
+		#z max  value of the periodogram
+		#W * e^(-z) * (  z * Xnumax + ( Y_numax + Y_nu0 ) * (sqrt(z) / 2)  )
+		#W * e^(-z) * (  2 * z * Xnumax + Y_numax  * sqrt(z) )
+
 
 	def fullAnalysis(self, apfilename, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100):
 		self.normalizeAP(apfilename)
