@@ -341,9 +341,9 @@ class GammaAP:
 		print("* Write ap2 file: tstart tstop exp[cm2 s] cts 0:flux[cts/exp] 1:flux_var 2:def_fluxw 3:aa_fluxw 4:ab1_fluxw 5:ab2_fluxw 6:ab3_fluxw 7:def_fluxwB 8:aa_fluxwB 9:ab1_fluxwB 10:ab2_fluxwB 11:ab3_fluxwB")
 		print("  B means normalization for a background model: calculateCtsFromConstantModel(2, 0.0006, 1, 30, 100, 10000, 0)")
 
-		self.writeVonMisses(apfile, 2)
 		self.writeVonMisses(apfile, 3)
 		self.writeVonMisses(apfile, 5)
+		self.writeVonMisses(apfile, 7)
 		self.writeVonMisses(apfile, 10)
 		print('End normalisation')
 		return
