@@ -561,7 +561,7 @@ class GammaAP:
 			#runVomMisses(48, 10)
 
 		self.scanLS(self.freqmin, self.freqmax)
-		self.scanVM(apfilename + ".vm2.resgf", 3)
-		self.scanVM(apfilename + ".vm3.resgf", 5)
-		self.scanVM(apfilename + ".vm5.resgf", 7)
+		self.scanVM(apfilename + ".vm3.resgf", 3)
+		self.scanVM(apfilename + ".vm5.resgf", 5)
+		self.scanVM(apfilename + ".vm7.resgf", 7)
 		self.scanVM(apfilename + ".vm10.resgf", 10)
