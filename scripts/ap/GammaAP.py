@@ -341,6 +341,7 @@ class GammaAP:
 		print("* Write ap2 file: tstart tstop exp[cm2 s] cts 0:flux[cts/exp] 1:flux_var 2:def_fluxw 3:aa_fluxw 4:ab1_fluxw 5:ab2_fluxw 6:ab3_fluxw 7:def_fluxwB 8:aa_fluxwB 9:ab1_fluxwB 10:ab2_fluxwB 11:ab3_fluxwB")
 		print("  B means normalization for a background model: calculateCtsFromConstantModel(2, 0.0006, 1, 30, 100, 10000, 0)")
 
+		self.writeVonMisses(apfile, 2)
 		self.writeVonMisses(apfile, 3)
 		self.writeVonMisses(apfile, 5)
 		self.writeVonMisses(apfile, 7)
@@ -583,19 +584,24 @@ class GammaAP:
 		self.freqmax=float(freqmax)
 		self.vmnumax=float(vmnumax)
 
+		self.scanLS(self.freqmin, self.freqmax)
+
 		if analyzevm == 1:
+			self.runVomMisses(vonmissesthread, 2)
 			self.runVomMisses(vonmissesthread, 3)
 			self.runVomMisses(vonmissesthread, 5)
 			self.runVomMisses(vonmissesthread, 7)
 			self.runVomMisses(vonmissesthread, 10)
 			#runVomMisses(48, 10)
 
+		self.runVomMissesGridFreq(2, ngridfreq, tgridfreq)
 		self.runVomMissesGridFreq(3, ngridfreq, tgridfreq)
 		self.runVomMissesGridFreq(5, ngridfreq, tgridfreq)
 		self.runVomMissesGridFreq(7, ngridfreq, tgridfreq)
 		self.runVomMissesGridFreq(10, ngridfreq, tgridfreq)
 
-		self.scanLS(self.freqmin, self.freqmax)
+
+		self.scanVM(apfilename + ".vm3.resgf", 2)
 		self.scanVM(apfilename + ".vm3.resgf", 3)
 		self.scanVM(apfilename + ".vm5.resgf", 5)
 		self.scanVM(apfilename + ".vm7.resgf", 7)
