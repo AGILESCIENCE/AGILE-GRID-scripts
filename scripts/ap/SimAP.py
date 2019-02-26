@@ -199,7 +199,7 @@ class SimAP:
             print('Frequency2 ', 1 / (period/2))
             phi = 0
             print('Phi ', phi)
-            peak_size = 400e-08
+            peak_size = 50e-08
             print('peak_size ', peak_size)
             deltaflux = peak_size
             print('deltaflux ', deltaflux)

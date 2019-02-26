@@ -549,12 +549,33 @@ class GammaAP:
 		cmd = "module load icc-18.0.1; module load gcc-5.4.0; "+os.environ['AGILE']+"/bin/coeffs_XY.prg "+str(nthreads)+ " " + str(freqmin) + " " + str(freqmax) + " 0 " + str(vmnumax) + " < " + self.apfile + ".vm"+str(ii)+" > " + self.apfile + ".vm"+str(ii)+".sig"
 		print(cmd)
 		os.system(cmd)
-		#res =W * pow(2.7182818, -z) * (z * 1.20555 + (5.116071 + 1) * (sqrt(z) / 2) )
-		#res2=W * pow(2.7182818, -z) * (2 * z * 1.20555 + 5.116071 * sqrt(z))
-		#z max  value of the periodogram
-		#W * e^(-z) * (  z * Xnumax + ( Y_numax + Y_nu0 ) * (sqrt(z) / 2)  )
-		#W * e^(-z) * (  2 * z * Xnumax + Y_numax  * sqrt(z) )
 
+
+	def evaluateSignificanceVonMisses(self, W, Xnumax, Ynumax, z, Ynu0=1):
+		#z max  value of the periodogram
+
+		#res =W * pow(2.7182818, -z) * (z * 1.20555 + (5.116071 + 1) * (sqrt(z) / 2) )
+		#W * e^(-z) * (  z * Xnumax + ( Ynumax + Ynu0 ) * (sqrt(z) / 2)  )
+		#import numpy as np
+		#W =
+		#Xnumax =
+		#Ynumax =
+		#Ynu0=
+		#z=
+		#W * np.power(np.e, -z) * (  z * Xnumax + ( Ynumax + Ynu0) * np.sqrt(z) / 2.0 )
+
+		#import numpy as np
+		#W =
+		#Xnumax =
+		#Ynumax =
+		#z=
+		#W * np.power(np.e, -z) * (  2 * z * Xnumax + Ynumax  * np.sqrt(z) )
+		#W * e^(-z) * (  2 * z * Xnumax + Ynumax  * sqrt(z) )
+		#res2=W * pow(2.7182818, -z) * (2 * z * 1.20555 + 5.116071 * sqrt(z))
+		sig1=W * np.power(np.e, -z) * (  z * Xnumax + ( Ynumax + Ynu0) * np.sqrt(z) / 2.0 )
+		print("sig1= " + str(sig1))
+		sig2=W * np.power(np.e, -z) * (  2 * z * Xnumax + Ynumax  * np.sqrt(z) )
+		print("sig2= " + str(sig2))
 
 	def fullAnalysis(self, apfilename, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800):
 		self.normalizeAP(apfilename)
