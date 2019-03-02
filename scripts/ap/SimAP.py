@@ -94,7 +94,7 @@ class SimAP:
 
 
     # RES_600_R2.ap 2 0.0006 0.7 10 100 10000
-    def calculateAPLC(self, help=1, apfile='', ranal= -1, gasvalue=-1, gal = 0.7, iso = 10., emin = 100., emax = 50000., instrumentID=0):
+    def calculateAPLC(self, help=1, apfile='', ranal= -1, gasvalue=-1, gal = 0.7, iso = 10., emin = 100., emax = 50000., period = 729855.36, expdatafixed=0, peak_size = 50e-08, instrumentID=0):
         if (help == "1"):
             print('--------------------------------------------------------------')
             print('                      apsimlc parameters                      ')
@@ -107,6 +107,9 @@ class SimAP:
             print('5 iso = background iso value (the value is implicitly multiplied by e-05)')
             print('6 emin = minimum energy [MeV]')
             print('7 emax = maximum energy [MeV]')
+            print('8 period in seconds 8.4474 * 86400 = 729855.36')
+            print('9 expdatafixed = fix exposure data to a fixed value if > 0')
+            print('10 peak_size = the maximum value of the sinusoidal source to be simulated. 50e-08')
             #print '- gaspixelsize = the pixel size'
         else:
 
@@ -174,8 +177,9 @@ class SimAP:
                      tstop   = float(val[1])
                      expdata = float(val[2])
                      ###############
-                     #if(expdata != 0):
-                    #     expdata = 300000
+                     if(expdatafixed > 0):
+                        if(expdata != 0):
+                            expdata = 300000
 
                      ctsdata = int(val[3])
 
@@ -193,13 +197,12 @@ class SimAP:
             apfile = apfile + ".clean.ap"
 
             #generate simulated lc
-            period = 8.4474 * 86400.
+
             print('Period ',  period)
             print('Frequency ', 1 / period)
             print('Frequency2 ', 1 / (period/2))
             phi = 0
             print('Phi ', phi)
-            peak_size = 50e-08
             print('peak_size ', peak_size)
             deltaflux = peak_size
             print('deltaflux ', deltaflux)

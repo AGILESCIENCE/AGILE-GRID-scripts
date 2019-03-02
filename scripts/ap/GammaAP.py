@@ -473,11 +473,9 @@ class GammaAP:
 				if(line != ""):
 					val = line.split()
 					if len(val) > 2:
-						#print(val)
+						#print(str(val[0]) + " " + str(val[1]) + " " + str(val[2]))
 						muv = float(val[0])
 						if(muv == mu):
-
-
 							frequency[diml] = float(val[1])
 							power[diml] = float(val[2])
 
@@ -488,6 +486,7 @@ class GammaAP:
 							if power[diml] > maxp:
 								maxf = frequency[diml]
 								maxp = power[diml]
+
 							diml += 1
 
 		daymax = 1 / maxf / 86400.
@@ -592,7 +591,6 @@ class GammaAP:
 			self.runVomMisses(vonmissesthread, 5)
 			self.runVomMisses(vonmissesthread, 7)
 			self.runVomMisses(vonmissesthread, 10)
-			#runVomMisses(48, 10)
 
 		self.runVomMissesGridFreq(2, ngridfreq, tgridfreq)
 		self.runVomMissesGridFreq(3, ngridfreq, tgridfreq)
@@ -601,7 +599,7 @@ class GammaAP:
 		self.runVomMissesGridFreq(10, ngridfreq, tgridfreq)
 
 
-		self.scanVM(apfilename + ".vm3.resgf", 2)
+		self.scanVM(apfilename + ".vm2.resgf", 2)
 		self.scanVM(apfilename + ".vm3.resgf", 3)
 		self.scanVM(apfilename + ".vm5.resgf", 5)
 		self.scanVM(apfilename + ".vm7.resgf", 7)
