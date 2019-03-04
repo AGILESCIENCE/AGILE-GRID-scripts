@@ -56,7 +56,7 @@ if __name__ == '__main__':
         print "Ex. "+sys.argv[0]+" 347470746.0 45.13 33.00"
         sys.exit(0)
     time = float(sys.argv[1])
-    logfile = get_log(ENV["PATH_DATA"] + "/DATA_ASDC2/INDEX/LOG.log.index", time)
+    logfile = get_log(os.environ['PATH_DATA'] + "/DATA_ASDC2/INDEX/LOG.log.index", time)
     ra, dec = gal_to_eq(sys.argv[2], sys.argv[3])
     theta, phi = get_theta_phi(time, ra, dec, logfile)
     print theta, phi
