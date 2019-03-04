@@ -36,24 +36,24 @@
 #27) minimizeralg. Default Migrad
 #28) minimizerdefstrategy. Default 2 for Minuit
 #29) mindefaulttolerance. Defaul 0.01
-#xx) integratortype (1 gauss 2 gaussht 3 gausslefevre 4 gausslefevreht)
+#30) integratortype (1 gauss 2 gaussht 3 gausslefevre 4 gausslefevreht)
 #FLUX CORRECTION:
-#30) edpcorrection, default 0.75, otherwise any value between 0 and 1. EDP correction is enabled only for E>1000 MeV and if fluxcorrection=1, and only for point sources. FLux = flux * edpcorrection 
-#31) fluxcorrection. default 0 (no) - 1 yes. Flux calculation correction for spectral shape in output - 2 correction in input and output
-#32) scanmaplist - default 0. Calculate one TS for each map of the maplist4 provided as input, or group by some set of maps (e.g. for fovbinnumer > 1) -> specify the name of the source and the prefix e.g. VELA,pl -> one MLE using pl law for each map of the maplist4 for VELA source. e.g. VELA,pl,5 -> one MLE each 5 maps of the maplist4
-#33) (CAT) addcat. Specify the string of the source to be analysed". e.g. addcat="2.0e-07 34.7  -0.5  2.5 12 2 W44 0.0 1 2000.0 0.0". Remove sources with the same name, to avoid duplicate
-#34) (CAT) catpath, the path of the cat file list (.multi). Default is ENV["PATH_RES"] + /catalogs/cat2.multi
-#35) (CAT) catminflux, the min flux to be selected from the cat list
-#36) (CAT) catminradius, the min radius to be selected from the cat list
-#37) contourpoints, Number of points to determine the contour (0-400)
-#38) testmode 0, 1 (gal-1sigma), 2 (gal+1sigma), 3 (iso-1sigma), 4 (iso+1sigma)
+#31) edpcorrection, default 0.75, otherwise any value between 0 and 1. EDP correction is enabled only for E>1000 MeV and if fluxcorrection=1, and only for point sources. FLux = flux * edpcorrection
+#32) fluxcorrection. default 0 (no) - 1 yes. Flux calculation correction for spectral shape in output - 2 correction in input and output
+#33) scanmaplist - default 0. Calculate one TS for each map of the maplist4 provided as input, or group by some set of maps (e.g. for fovbinnumer > 1) -> specify the name of the source and the prefix e.g. VELA,pl -> one MLE using pl law for each map of the maplist4 for VELA source. e.g. VELA,pl,5 -> one MLE each 5 maps of the maplist4
+#34) (CAT) addcat. Specify the string of the source to be analysed". e.g. addcat="2.0e-07 34.7  -0.5  2.5 12 2 W44 0.0 1 2000.0 0.0". Remove sources with the same name, to avoid duplicate
+#35) (CAT) catpath, the path of the cat file list (.multi). Default is ENV["PATH_RES"] + /catalogs/cat2.multi
+#36) (CAT) catminflux, the min flux to be selected from the cat list
+#37) (CAT) catminradius, the min radius to be selected from the cat list
+#38) contourpoints, Number of points to determine the contour (0-400)
+#39) testmode 0, 1 (gal-1sigma), 2 (gal+1sigma), 3 (iso-1sigma), 4 (iso+1sigma)
 
 # MAPLIST
 #Each line contains a set of maps:
 #	<countsMap> <exposureMap> <gasMap> <offAxisAngle> <galCoeff> <isoCoeff>
 #	where:
 #	offAxisAngle is in degrees;
-#	galcoeff and isocoeff are the coefficients for the galactic and isotropic diffuse components. 
+#	galcoeff and isocoeff are the coefficients for the galactic and isotropic diffuse components.
 #	If positive they will be considered fixed (but see galmode and isomode below).
 #	The file names are separated by a space, so their name should not contain one.
 
@@ -91,10 +91,10 @@
 #3) "LogParabola", "( x / [par2] ) ^ ( -( [index] + [par3] * log ( x / [par2] ) ) )"
 
 #GALMODE e ISOMODE
-#   galmode and isomode are an integer value saying how the corresponding coefficients galcoeff or 
+#   galmode and isomode are an integer value saying how the corresponding coefficients galcoeff or
 #   isoCoeff found in all the lines of the maplist are to be used:
 #		0: all the coefficients are fixed.
-#		1: all the coefficients are fixed if positive, variable if negative (the absolte value is the 
+#		1: all the coefficients are fixed if positive, variable if negative (the absolte value is the
 #		initial value). This is the default behaviour.
 #		2: all the coefficients are variable, regardless of their sign.
 #		3: all the coefficients are proportionally variable, that is the relative weight of their absolute value is kept.
@@ -172,7 +172,7 @@ datautils = DataUtils.new
 fits = Fits.new
 
 if ARGV[0].to_s == "help" || ARGV[0].to_s == "h" || ARGV[0] == nil
-	system("head -128 " + $0 );
+	system("head -168 " + $0 );
 	exit;
 end
 
@@ -220,18 +220,18 @@ if p.addcat != ""
 		system("touch " + listsource)
 		puts listsource
 	end
-	
+
 	listsourcetmp1 = listsource + ".tmp1"
 	fout1 = File.new(listsourcetmp1, "w")
 	fout1.write(p.addcat + "\n")
 	fout1.close()
-	
+
 	ll = p.addcat.split(" ")
 	listsourcetmp2 = listsource + ".tmp2"
 	cmd = "extract_catalog.rb " + p.catpath + " " + ll[1].to_s + " " + ll[2].to_s + " " + listsourcetmp2 + " 0.1 1 5 0 10 0 0 " + p.catminflux.to_s + " " +  p.catminradius.to_s
 	puts cmd
 	system cmd
-	
+
 	listsourcetmp3 = listsource + ".tmp3"
 	listsourcetmp4 = listsource + ".tmp4"
 	alikeutils.appendMulti(listsourcetmp2, listsourcetmp1, listsourcetmp3, 0.1)
@@ -244,22 +244,22 @@ end
 if(emin_sin.to_f != p.emin_sources.to_f or emax_sin.to_f != p.emax_sources.to_f)
 	puts "change the flux"
 	listsourceold = listsource
-	listsource = format("en_%05d_%05d_", emin_sin, emax_sin) + listsource 
+	listsource = format("en_%05d_%05d_", emin_sin, emax_sin) + listsource
 	fouts = File.new(listsource, "w")
 	File.open(listsourceold).each_line do | line |
         l = line.split(" ")
         gamma = l[3].to_f
         fl = l[0].to_f
-		
+
 		c = p.emin_sources.to_f
 		d = p.emax_sources.to_f
 		a = emin_sin.to_f
 		b = emax_sin.to_f
-        
+
         p1 = fl * (gamma-1) / ( c ** (1-gamma) - d ** (1-gamma) )
-        
+
         f1 = (p1 / (gamma-1)) * ( a ** (1-gamma) - b ** (1-gamma) )
-        
+
         fouts.write(f1.to_s)
         for ii in 1..l.size()
         	fouts.write(" " + l[ii].to_s)
@@ -309,50 +309,50 @@ datautils.execute(outfile2, cmd);
 for i in 1..stepi
 	#outfile
 	outfile = baseoutfile
-	
+
 
 	#selezione delle calibration matrix
 	filterbase = filter.split("_")[0];
 	datautils.getResponseMatrix(filter);
 	matrixconf = datautils.getResponseMatrixString(filter);
-	
+
 	#per prima cosa, se richiesto, si cerca il valore di gal e iso
 	inputfilemaps = inputmaplist
 	if p.fixisogalstep0 != nil
 		outfile22 = outfile.to_s + ".step0"
 		inputfilemaps22 = outfile.to_s + ".step0" + ".maplist4"
 		alikeutils.rewriteMaplist(inputfilemaps, inputfilemaps22, p.galcoeff, p.isocoeff)
-		
+
 		#aggiorna il .multi mettendo a fixflag=1 solo la sorgente specificata in p.fixisogalstep0
 		newlistsource = outfile.to_s + ".step0" + ".multi"
 		alikeutils.rewriteMultiInputWithSingleSourceToAnalyze(listsource, newlistsource, p.fixisogalstep0, "1");
-		
-		if p.listsourceextended == "" 
+
+		if p.listsourceextended == ""
 			cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multi " + inputfilemaps22.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource.to_s + " " + outfile22.to_s + " " + ulcl.to_s + " " + loccl.to_s + " " + p.galmode2.to_s + " " + p.galmode2fit.to_s + " " + p.isomode2.to_s + " " + p.isomode2fit.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype + " " + p.expratioevaluation.to_s + " " + p.minThreshold.to_s + " " +  p.maxThreshold.to_s + " " + p.squareSize.to_s + " " + p.contourpoints.to_s;
-			datautils.execute(outfile2, cmd)	
+			datautils.execute(outfile2, cmd)
 		else
 			cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multiext " + inputfilemaps22.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource.to_s + " " + p.listsourceextended + " " + outfile22.to_s + " " + ulcl.to_s + " " + loccl.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype;
 			datautils.execute(outfile2, cmd)
 		end
-		
+
 		#step0b: prendi il valore di gal e iso calcolati e genera il maplist4 per le analisi successive
 		multioutput.readDataSingleSource2(outfile22, p.fixisogalstep0);
 		maplist = outfile22 + ".tmpmaplist4"
-		
+
 		alikeutils.rewriteMaplist(inputfilemaps, maplist, multioutput.galcoeff, multioutput.isocoeff)
-		
+
 	end
-	
+
 	if p.fixisogalstep0 == nil
 		#copy the .maplist4 in .maplist
 		maplist = outfile.to_s + ".maplist4"
 		if p.galcoeff.to_f >= -1 and p.isocoeff.to_f >= -1
 			alikeutils.rewriteMaplist(inputmaplist, maplist, p.galcoeff, p.isocoeff);
-		else	
+		else
 			system("cp " + inputmaplist + " " + maplist)
 		end
 	end
-	
+
 	#si esce dai due step precedenti con il maplist corretto
 
 	if p.findermultimode != nil && i.to_i == 2
@@ -360,7 +360,7 @@ for i in 1..stepi
 		ulcl = p.ulcl
 		loccl = p.loccl
 	end
-	
+
 	if p.doublestep != nil && i.to_i == 2
 		prefixi = ""
 	end
@@ -375,11 +375,11 @@ for i in 1..stepi
 		end
 		maplist = inputfilemaps
 	end
-	
+
 	##....
 
 	#list source
-	newlistsource = outfile.to_s + prefixi.to_s + ".multi" 
+	newlistsource = outfile.to_s + prefixi.to_s + ".multi"
 	#if p.findermultimode != nil && i.to_i == 1
 	#if File.exists?(newlistsource) == false #WARNING, BE CAREFUL
 			datautils.execute(outfile2, "cp " + listsource.to_s + " " + newlistsource.to_s)
@@ -387,18 +387,18 @@ for i in 1..stepi
 	#end
 	if p.findermultimode != nil && i.to_i == 2
 		#rewrite newlistsource
-	
+
 		multioutput.readDataSingleSource2(lastoutfile, p.findermultimode.split(",")[0])
-	
+
 		alikeutils.rewriteMultiInputWithNewCoordinatesSource(listsource, newlistsource, p.findermultimode.split(",")[0], multioutput.l_peak, multioutput.b_peak);
-	
+
 	end
 
 	if p.doublestep != nil && i.to_i == 1
 		#rewrite newlistsource with fixflag == 1 for all the sources except source names starting with _
 		alikeutils.rewriteMultiListWithFixflag(listsource, newlistsource, 1)
 	end
-	
+
 	if p.doublestep != nil && i.to_i == 2
 		#rewrite newlistsource with fixflag = doublestep_fixflag, sqrt(TS) > doublestep_thr except for sources with source name starting with _
 		cmd = "convertMultiResToInput.rb " + lastoutfile.to_s + " " + newlistsource.to_s + " " + doublestep_fixflag.to_s + " " + doublestep_thr.to_s + " " + doublestep_maxradius.to_s + " 90 1"
@@ -407,21 +407,21 @@ for i in 1..stepi
 	end
 
 	newoutfile = outfile.to_s + prefixi.to_s
-	
+
 	if p.listsourceextended == ""
-	
+
 		cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multi " + inputfilemaps.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource.to_s + "  " + newoutfile + " " + ulcl.to_s + " " + loccl.to_s + " " + p.galmode2.to_s + " " + p.galmode2fit.to_s + " " + p.isomode2.to_s + " " + p.isomode2fit.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " "  + p.integratortype + " " + p.expratioevaluation.to_s + " " + p.minThreshold.to_s + " " +  p.maxThreshold.to_s + " " + p.squareSize.to_s + " " + p.contourpoints.to_s;
 		datautils.execute(outfile2, cmd)
-	
+
 	else
-		
+
 		cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multiext " + inputfilemaps.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource.to_s + " " + p.listsourceextended.to_s + " " + newoutfile + " " + ulcl.to_s + " " + loccl.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype;
 		datautils.execute(outfile2, cmd)
-		
+
 	end
-	
-	
-	
+
+
+
 	if p.checksourceposition != nil
 		checksource_name = p.checksourceposition.split(",")[0]
 		checksource_maxR = p.checksourceposition.split(",")[1]
@@ -430,52 +430,52 @@ for i in 1..stepi
 		if multioutput.r.to_f > 0
 			checksource_maxR = multioutput.r.to_f
 		end
-		
+
 		#check if ff>1 and check if too far
 		if multioutput.fix.to_i > 1 and multioutput.dist.to_f > checksource_maxR.to_f
 			#repeat analysis
 			newlistsource2 = "far." + newlistsource.to_s
 			alikeutils.rewriteMultiInputWithSingleSourcenewFixFlag(newlistsource, newlistsource2, checksource_name, "1");
-			
+
 			#clean results
 			puts "rm " + newoutfile + ".res* *.source"
             system("rm " + newoutfile + ".res*")
             system("rm " + newoutfile + "*.source*")
-			
+
 			if p.listsourceextended == ""
-	
+
 				cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multi " + inputfilemaps.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource2.to_s + "  " + newoutfile + " " + ulcl.to_s + " " + loccl.to_s + " " + p.galmode2.to_s + " " + p.galmode2fit.to_s + " " + p.isomode2.to_s + " " + p.isomode2fit.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype.to_s + " " + p.expratioevaluation.to_s + " " + p.minThreshold.to_s + " " +  p.maxThreshold.to_s + " " + p.squareSize.to_s + " " + p.contourpoints.to_s;
 				datautils.execute(outfile2, cmd)
-				
+
 			else
-		
+
 				cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_multiext " + inputfilemaps.to_s + " " + matrixconf.to_s + " "  + p.ranal.to_s + " " + p.galmode.to_s + " " + p.isomode.to_s +  " " + newlistsource2.to_s + " " + p.listsourceextended.to_s + " " + newoutfile + " " + ulcl.to_s + " " + loccl.to_s + " " + p.edpcorrection.to_s + " " + p.fluxcorrection.to_s + " " + p.minimizertype.to_s +  " " + p.minimizeralg.to_s + " " + p.minimizerdefstrategy.to_s + " " + p.mindefaulttolerance.to_s + " " + p.integratortype.to_s;;
 				datautils.execute(outfile2, cmd)
-		
+
 			end
 		end
 	end
 
 	#cmd = "ruby ~/grid_scripts3/convertMultiResToReg.rb " + outfile.to_s + " white";
 	#datautils.execute(outfile2, cmd)
-	
+
 	mout = MultiOutputList.new
 	mout.readSources(newoutfile, newlistsource, p.flag);
 
 	cmd = "ruby " + ENV["AGILE"] + "/scripts/convertMultiInputToReg.rb " + newlistsource.to_s + " green";
 	datautils.execute(outfile2, cmd)
 
-	
+
 	fits.readFitsHeader(cts.to_s);
 	cmd = "echo \"" + fits.utc_start + "\" >> " + newoutfile.to_s + "";
 	datautils.execute(outfile2, cmd)
 
 	cmd = "echo \"" + fits.utc_end + "\" >> " + newoutfile.to_s + "";
 	datautils.execute(outfile2, cmd)
-	
+
 	cmd = "ruby " + ENV["AGILE"] + "/scripts/convertMultiResToInput.rb " + newoutfile.to_s + "  " + newoutfile.to_s + ".resfull.multi";
 	datautils.execute(outfile2, cmd)
-	
+
 	cmd = "ruby " + ENV["AGILE"] + "/scripts/extractres2.rb " + newoutfile.to_s + ".resfull " + newoutfile.to_s + ".res2 none";
 	datautils.execute(outfile2, cmd)
 
@@ -485,9 +485,9 @@ for i in 1..stepi
 	system("cat " + newoutfile.to_s + "")
 
 	lastoutfile = newoutfile
-	
+
 	if p.scanmaplist != 0
-		
+
 		sourcename = p.scanmaplist.split(",")[0]
 		prefixscan = p.scanmaplist.split(",")[1]
 		nfovbins = 1
@@ -499,7 +499,7 @@ for i in 1..stepi
 		puts mouthe.sicalc
 		puts mouthe.galcoeff.to_s + " +/- " + mouthe.galcoeff_err.to_s
 		puts mouthe.isocoeff.to_s  + " +/- " + mouthe.isocoeff_err.to_s
-		
+
 		newoutfile2 = prefixscan + "_" + newoutfile;
 		system("cp " + lastoutfile + " " + newoutfile2 + ".originalres")
 		system("cp " + lastoutfile + ".multi " + newoutfile2 + ".multi.originalres")
@@ -515,26 +515,26 @@ for i in 1..stepi
 		end
 		fheso.close()
 		system("cp " + newoutfile2 + ".multi " + prefixscan + ".multi")
-		
+
 		cmd = $0 + " " +  filter + " " + newoutfile + ".maplist4 " + newoutfile2 + ".multi " + newoutfile2 + " galcoeff=" + mouthe.galcoeff + " isocoeff=" + mouthe.isocoeff + " fluxcorrection=" + p.fluxcorrection.to_s + " edpcorrection=" + p.edpcorrection.to_s + " emin_sources=" + emin_sin.to_s + " emax_sources=" + emax_sin.to_s + " contourpoints=" + p.contourpoints.to_s
-		
+
 		puts cmd
 		system cmd
-		
-		
+
+
 		indexmapl = 0;
 		fres = File.new(prefixscan + ".spe", "w")
 		puts "open " + newoutfile + ".maplist4"
-		
+
 		lines = File.readlines(newoutfile + ".maplist4")
-		
+
 		#File.open(newoutfile + ".maplist4").each_line do | line |
-		
+
 		iline = 0
 		while iline < lines.size
 			galcoeffout = ""
 			isocoeffout = ""
-			
+
 			line = lines[iline]
 			lname = prefixscan + "_" + line.split(" ")[0].split(".cts.gz")[0]
 			puts "Processing ... " + line + " in file " + lname + "_s"
@@ -553,7 +553,7 @@ for i in 1..stepi
 					gcfd1 = (gcfd1.to_f + gcfd1_err.to_f).to_s
 				end
 				galcoeffout += gcfd1.to_s
-				
+
 				if isocoeffout != ""
 					isocoeffout += ","
 				end
@@ -571,17 +571,17 @@ for i in 1..stepi
 			puts "isocoeffout: "
 			puts isocoeffout
 			iline = iline + nfovbins
-			
+
 			#build galcoeff and isocoeff
-			
-			
+
+
 			#lname = prefixscan + "_" + line.split(" ")[0].split(".cts.gz")[0]
-			
+
 			#cmd = $0 + " " +  filter + " " + lname + "_s.maplist4 " + newoutfile2 + ".multi " + lname + " galcoeff=" + mouthe.galcoeff.split(",")[indexmapl] + " isocoeff=" + mouthe.isocoeff.split(",")[indexmapl] + " fluxcorrection=" + p.fluxcorrection.to_s + " edpcorrection=" + p.edpcorrection.to_s + " emin_sources=" + emin_sin.to_s + " emax_sources=" + emax_sin.to_s
 			cmd = $0 + " " +  filter + " " + lname + "_s.maplist4 " + newoutfile2 + ".multi " + lname + " galcoeff=" + galcoeffout + " isocoeff=" + isocoeffout + " fluxcorrection=" + p.fluxcorrection.to_s + " edpcorrection=" + p.edpcorrection.to_s + " emin_sources=" + emin_sin.to_s + " emax_sources=" + emax_sin.to_s
 			puts cmd
 			system cmd
-			
+
 			mouthe2 = MultiOutput6.new
 			mouthe2.readDataSingleSource(lname + "_"+sourcename+".source")
 			#(0)sqrtts (1)flux[ph/cm2/s] (2)flux_err (3)erg[erg/cm2/s] (4)Erg_err (5)Emin (6)Emax (7)E_log_center (8)exp (9)flux_ul (10)spectral_index (11)spectral_index_err (12)id_detection or expcorfactor
@@ -594,14 +594,14 @@ for i in 1..stepi
 			else
 				ec = Math.log(e_max/e_min) / ( ( ( e_max ** (alpha+1))  -  (e_min ** (alpha+1))) / (alpha + 1 ) );
 			end
-			
+
 			ec = format("%.3f", e_min - ec)
-			
+
 			fres.write(mouthe2.sqrtTS.to_s + " " + mouthe2.flux.to_s + " " + mouthe2.flux_error.to_s + " " + " " + mouthe2.erglog.to_s + " " + mouthe2.erglog_error.to_s + " " + e_min.to_s + " " + e_max.to_s + " " + ec.to_s + " " + mouthe2.expspectracorfactor.to_s + " " + mouthe2.flux_ul.to_s + " " + mouthe2.sicalc.to_s + " " + mouthe2.sicalc_error.to_s + " " + mouthe2.likelihood1.to_s + " " + mouthe2.erglogul.to_s + "\n")
 			indexmapl = indexmapl.to_i + 1
 		end
 		fres.close()
-		
+
 		puts "-----------------------------------------------"
 		system("cat " + newoutfile2 + ".multi.originalres > " + prefixscan + ".sum")
 		puts "-----------------------------------------------"

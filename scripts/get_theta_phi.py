@@ -8,6 +8,7 @@ from pyrr import Quaternion, Vector3
 from math import acos, atan2
 from numpy.linalg import norm
 import sys
+import os
 
 def get_theta_phi(time_tt, ra, dec, logfile):
 

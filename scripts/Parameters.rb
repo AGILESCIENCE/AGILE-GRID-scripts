@@ -82,6 +82,8 @@ class Parameters
 			@nruns=1
 			@seed=0
 			@dq = 0
+			@l = 0
+			@b = 0
 
 			@fixisogalstep0 = nil;
 			@doublestep = nil;
@@ -129,6 +131,14 @@ class Parameters
 
 		def testmode
 			@testmode
+		end
+
+		def l
+			@l
+		end
+
+		def b
+			@b
 		end
 
 		def execap2_evtfile
@@ -703,6 +713,10 @@ class Parameters
 			case keyw
 				when "execap2_evtfile"
 					@execap2_evtfile = value
+				when "l"
+					@l = value
+				when "b"
+					@b = value
 				when "execap2_logfile"
 					@execap2_logfile = value
 				when "testmode"
