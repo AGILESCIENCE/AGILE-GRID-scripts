@@ -52,52 +52,17 @@ else
         skytype = 4
 end
 
-a = Dir[prefix1.to_s + "*.cts.gz"].sort
-index = 0;
-output = "temp" + index.to_s + ".cts.gz"
-cmd = "cp " + a[0].to_s + " " + output.to_s
+cmd= "cat " + prefix1.to_s + "*.maplist4 > tmp.maplist4"
 puts cmd
-system(cmd);
-output2=""
-a.each do | file |
-	if index == 0
-		index = index + 1
-		next
-	end
-	output = "temp" + (index-1).to_s + ".cts.gz"
-	output2 = "temp" + (index).to_s + ".cts.gz"
-	cmd = "fimgmerge " + file.to_s + " " + output.to_s + " " + output2.to_s + " 0 0 "
-	puts cmd;
-	system(cmd);
-	index = index + 1
-end
-cmd = "mv " + output2.to_s + " " + prefix2.to_s + ".cts.gz"
-system(cmd)
+system cmd
 
-a = Dir[prefix1.to_s + "*.exp.gz"].sort
-index = 0;
-output = "temp" + index.to_s + ".exp.gz"
-cmd = "cp " + a[0].to_s + " " + output.to_s
+
+cmd = "cp " + PATH + "share/AG_summapgen.par . "
 puts cmd
-system(cmd);
-output2=""
-a.each do | file |
-	if index == 0
-		index = index + 1
-		next
-	end
-	output = "temp" + (index-1).to_s + ".exp.gz"
-	output2 = "temp" + (index).to_s + ".exp.gz"
-	cmd = "fimgmerge " + file.to_s + " " + output.to_s + " " + output2.to_s + " 0 0 "
-	puts cmd;
-	system(cmd);
-	index = index + 1
-end
-cmd = "mv " + output2.to_s + " " + prefix2.to_s + ".exp.gz"
 system(cmd)
-
-cmd = "rm temp*"
-system(cmd);
+cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_summapgen tmp.maplist4 " + prefix2 + " sum"
+puts cmd
+system cmd
 
 datautils.getSkyMatrix(filter, emin1, emax1, skytype)
 skymap =  datautils.skymatrix;

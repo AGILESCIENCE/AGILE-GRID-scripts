@@ -1,3 +1,4 @@
+#! /usr/bin/ruby
 #0) num of bin
 #1) tbinsize (1 day = 86400)
 #2) tstart
@@ -12,7 +13,7 @@ datautils = DataUtils.new
 agilefov = AgileFOV.new
 
 if ARGV[0].to_s == "help" || ARGV[0].to_s == "h" || ARGV[0] == nil
-	system("head -7 " + $0 );
+	system("head -8 " + $0 );
 	exit;
 end
 numbin = ARGV[0]
