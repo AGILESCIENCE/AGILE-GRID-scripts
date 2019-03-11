@@ -25,7 +25,7 @@ emin = ARGV[5];
 emax = ARGV[6];
 commands = ARGV[7]
 
-tmpdir = timelist + rand(100000)
+tmpdir = timelist + "_" + rand(100000).to_s
 Dir.mkdir(tmpdir)
 FileUtils.cp(timelist, tmpdir)
 Dir.chdir(tmpdir)
@@ -45,4 +45,13 @@ end
 cmd = "mapmerge.rb " + name + " " + name + " " + filter + " " + emin + " " + emax + " -1 -1 4"
 puts cmd
 system cmd
+
+cmd = "cp "+name+".* .."
+puts cmd
+system cmd
+
+Dir.chdir("..")
+cmd = "rm -rf " + tmpdir
+puts cmd
+#system cmd
 
