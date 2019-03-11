@@ -53,5 +53,5 @@ system cmd
 Dir.chdir("..")
 cmd = "rm -rf " + tmpdir
 puts cmd
-#system cmd
+system cmd
 
