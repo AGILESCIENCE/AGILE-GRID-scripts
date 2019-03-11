@@ -36,7 +36,6 @@
 # =16 activate [00050-00100], [00100-00[3|4]00], [00[3|4]00-01000], [01000-03000], [03000, 100000], [10000, 50000])
 # =17 activate [00050-00100], [00100-00200], [00200-00400], [00400-01000], [01000-03000], [03000, 10000], [10000, 50000])
 #17) phasecode: optional, default 2. If -1 => automatic determination ==>  if (time end  > 182692800.0 (MJD 55119.5, UTC 2009-10-15T12:00:00, fine pointing) && phasecode == -1) then phasecode = 6 (SPIN) else phasecode = 18 (POIN)
-#18) timelist: a file with a list of tstart/stop
 #19) timebinsize: optional, default 999999999
 #20) makelc: optional, default 0
 #21) lpointing: optinal, default -1
@@ -77,6 +76,8 @@
 #18 -> per il pointing, esclude la SAA e il recovery
 # Normalmente usate il phasecode = 6 nei dati in spinning. Questo phasecode esclude i fotoni presenti nella SAA ridefinita con i conteggi dell'AC. Se invece vuoi usare la vecchia definizione della SAA (in base all'intensità del campo magnetico così come definito da TPZ) devi usare il phasecode = 6.
 
+#18) IT DOES NOT WORK timelist: a file with a list of tstart/stop
+
 load ENV["AGILE"] + "/scripts/conf.rb"
 
 datautils = DataUtils.new
@@ -100,6 +101,10 @@ filterdir = datautils.filterdir
 filterbase2 = filter.split("_")[0] + "_" + filter.split("_")[1];
 
 parameters.processInput(6, ARGV, filter)
+
+if parameters.timelist != "None"
+	puts "Error: use map_timelist.rb instead"
+end
 
 emin1 = parameters.emin;
 emax1 = parameters.emax;
