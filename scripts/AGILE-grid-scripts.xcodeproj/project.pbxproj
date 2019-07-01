@@ -19,10 +19,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		DD2FAA4222356B0700465EF0 /* AGILE-grid-scripts */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "AGILE-grid-scripts"; path = "/Users/bulgarelli/devel.agile/AGILE-GRID-CAT2-Setup/AGILE-GRID-ScienceTools-Setup/AGILE-GRID-scripts/scripts/build/Debug/AGILE-grid-scripts"; sourceTree = "<absolute>"; };
-		DD2FAA4322356B2A00465EF0 /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scripts; sourceTree = "<group>"; };
+		DD2FAA4322356B2A00465EF0 /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = scripts; sourceTree = "<group>"; };
 		DDC6630620E82D470002C1F9 /* catalogs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = catalogs; path = ../catalogs; sourceTree = "<group>"; };
 		DDC6630720F015D90002C1F9 /* spot6 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = spot6; path = ../spot6; sourceTree = "<group>"; };
+		DDFA79B5228DC0680021627F /* AGILE-grid-scripts */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "AGILE-grid-scripts"; path = "/Users/bulgarelli/devel.agile/AGILE-GRID-CAT2-Setup/AGILE-GRID-ScienceTools-Setup/AGILE-GRID-scripts/scripts/build/Debug/AGILE-grid-scripts"; sourceTree = "<absolute>"; };
+		DDFA79B8228DD0490021627F /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scripts; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +41,7 @@
 			isa = PBXGroup;
 			children = (
 				DD2FAA4322356B2A00465EF0 /* scripts */,
+				DDFA79B8228DD0490021627F /* scripts */,
 				DDC6630720F015D90002C1F9 /* spot6 */,
 				DDC6630620E82D470002C1F9 /* catalogs */,
 			);
@@ -62,7 +64,7 @@
 			);
 			name = "AGILE-grid-scripts";
 			productName = "AGILE-grid-scripts";
-			productReference = DD2FAA4222356B0700465EF0 /* AGILE-grid-scripts */;
+			productReference = DDFA79B5228DC0680021627F /* AGILE-grid-scripts */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */

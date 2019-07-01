@@ -105,7 +105,7 @@ class Parameters
 			@outfile2 = nil
 			@energybin = 0;
 			@emin_sources = 100
-			@emax_sources = 50000
+			@emax_sources = 10000
 			@galmode2 = 0
 			@galmode2fit = 0
 			@isomode2 = 0

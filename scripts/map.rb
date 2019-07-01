@@ -303,6 +303,7 @@ while time.to_f < tstop.to_f
 		name = format("%04d", index) + "_" + nameori.to_s;
 	end
 	cts = name + ".cts.gz";
+    the = name + ".the.gz";
 	exp = name + ".exp.gz";
 	gas = name + ".gas.gz";
 	int = name + ".int.gz";
@@ -364,6 +365,7 @@ while time.to_f < tstop.to_f
 			puts "Map generation for " + stepi.to_s + " fovmin " + fovmin.to_s + " and fovmax " + fovmax.to_s + " with center " + bincenter.to_s
 
 			cts2 = prefixi.to_s  + cts.to_s
+            the2 = prefixi.to_s  + the.to_s
 			exp2 = prefixi.to_s  + exp.to_s
 			gas2 = prefixi.to_s  + gas.to_s
 			int2 = prefixi.to_s  + int.to_s
@@ -385,6 +387,15 @@ while time.to_f < tstop.to_f
 					createdmap = true
 					cmd = "rm ./AG_ctsmapgen.par"
 					#datautils.execute(prefix, cmd);
+					
+					
+                    #cmd = "cp " + PATH + "share/AG_thetamapgen.par . "
+                    #datautils.execute(prefix, cmd);
+					
+                    #cmd = "export PFILES=.:$PFILES; " + PATH + "bin/AG_thetamapgen " + the2.to_s  + " " + indexfilter.to_s + " " + "  " + parameters.mapsize.to_s + " " + parameters.binsize.to_s + " "  + l.to_s + " " + b.to_s + " " + lonpole.to_s + " " + " " + parameters.albedorad.to_s + " " + parameters.phasecode.to_s + " " + parameters.filtercode.to_s + " "  + parameters.proj.to_s + " "+ t0.to_s + " " + t1.to_s + " " + emin.to_s + " " + emax.to_s + " " + fovmin.to_s + " " + fovmax.to_s;
+                    #datautils.execute(prefix, cmd);
+                    #createdmap = true
+                    #cmd = "rm ./AG_thetamapgen.par"
 				end
 				sarmatrixfull = PATHMODEL + sarmatrix
 				edpmatrixfull = " None "

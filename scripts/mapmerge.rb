@@ -83,5 +83,5 @@ puts cmd
 system(cmd)
 
 ff=File.new(prefix2.to_s + ".maplist4", "w")
-ff.write(prefix2.to_s + ".cts.gz " + prefix2.to_s + ".exp.gz " + prefix2.to_s + ".gas.gz 30 " + galcoeff.to_s + " " + isocoeff.to_s)
+ff.write(prefix2.to_s + ".cts.gz " + prefix2.to_s + ".exp.gz " + prefix2.to_s + ".gas.gz 30 " + galcoeff.to_s + " " + isocoeff.to_s + "\n")
 ff.close() 
