@@ -2,9 +2,11 @@
 #script for BUILD25
 #00) filter DIR (es: FM3.119_2_I0023, FM3.119_ASDCe_I0023, FM3.119_ASDCSTDf_I0023, FM3.119_ASDCSTDk_I0023)
 #01) output file name prefix
-#02) l GRB 
+#02) l GRB
 #03) b GRB
 #04) T0
+#05) mdim
+#06) mres
 
 #optional
 
@@ -32,7 +34,7 @@ datautils = DataUtils.new
 parameters = Parameters.new
 
 if ARGV[0].to_s == "help" || ARGV[0] == nil || ARGV[0] == "h"
-	system("head -28 " + $0 );
+	system("head -30 " + $0 );
 	exit;
 end
 
@@ -41,13 +43,15 @@ output = ARGV[1];
 l = ARGV[2];
 b = ARGV[3];
 t0 = ARGV[4];
+mdim = ARGV[5];
+mres = ARGV[6];
 
 datautils.extractFilterDir(filter)
 filterdir = datautils.filterdir
 
 filterbase2 = filter.split("_")[0] + "_" + filter.split("_")[1];
 
-parameters.processInput(5, ARGV, filter)
+parameters.processInput(7, ARGV, filter)
 
 emin1 = parameters.emin;
 emax1 = parameters.emax;
@@ -110,8 +114,8 @@ edpmatrix = datautils.edpmatrix;
 	cmd = "cp " + PATH + "share/AG_lm5.par . "
 	datautils.execute("", cmd);
 	cmd = "export PFILES=.:$PFILES; "+PATH+"bin/AG_lm5 "+listfile+" "+indexlog.to_s+" "+indexfilter.to_s+" "+sarmatrixfull.to_s+" "+edpmatrixfull.to_s+" "+
-		  parameters.timelist.to_s+" "+lonpole.to_s+" "+" "+parameters.albedorad.to_s+" 0.5 360.0 5.0 "+
+		  parameters.timelist.to_s+" "+mdim+" "+mres+" "+lonpole.to_s+" "+" "+parameters.albedorad.to_s+" 0.5 360.0 5.0 "+
 		  parameters.phasecode.to_s+" "+parameters.timestep.to_s+" "+parameters.spectralindex.to_s+" "+parameters.emin.to_s+" "+parameters.emax.to_s+" "+
 		  parameters.fovradmin.to_s+" "+parameters.fovradmax.to_s+" "+parameters.filtercode.to_s+" "+tstart.to_s+" "+l.to_s+" "+b.to_s+" "+parameters.radius.to_s+" "+parameters.t1s.to_s+" "+parameters.t2s.to_s+" "+parameters.t1b.to_s+" "+parameters.shiftt1b.to_s+" "+parameters.t2b.to_s+" "+parameters.shiftt2b.to_s + " " + parameters.timeslot.to_s + " " + parameters.timeslotstart.to_s + " " + parameters.timeslotend.to_s
-		  
+
 	datautils.execute("", cmd);
