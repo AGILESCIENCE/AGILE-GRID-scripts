@@ -1,0 +1,4 @@
+echo $AGILE
+echo $AGILEPIPE
+echo $PATH_RES
+echo $PATH_DATA
