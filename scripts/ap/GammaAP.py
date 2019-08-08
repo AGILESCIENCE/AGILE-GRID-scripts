@@ -281,6 +281,13 @@ class GammaAP:
 							for i in range(0,12):
 								self.res[n,i] = float(val[4+i])
 							n = n + 1
+
+		n=0
+		for x in self.ctsdataA:
+			self.res[n,12] = self.ctsdataA[n]
+			self.res[n,13] = self.expdataA[n]
+			n = n + 1
+
 		print("Loaded " + str(n) + " lines")
 
 	def normalizeAP(self, apfile):
@@ -604,3 +611,30 @@ class GammaAP:
 		self.scanVM(apfilename + ".vm5.resgf", 5)
 		self.scanVM(apfilename + ".vm7.resgf", 7)
 		self.scanVM(apfilename + ".vm10.resgf", 10)
+
+	def fullAnalysisAP2(self, apfilename, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800):
+		self.loadnormalizedAP(apfilename)
+		self.freqmin=float(freqmin)
+		self.freqmax=float(freqmax)
+		self.vmnumax=float(vmnumax)
+		self.scanLS(self.freqmin, self.freqmax)
+
+		if analyzevm == 1:
+			self.runVomMisses(vonmissesthread, 2)
+			self.runVomMisses(vonmissesthread, 3)
+			self.runVomMisses(vonmissesthread, 5)
+			self.runVomMisses(vonmissesthread, 7)
+			self.runVomMisses(vonmissesthread, 10)
+
+			self.runVomMissesGridFreq(2, ngridfreq, tgridfreq)
+			self.runVomMissesGridFreq(3, ngridfreq, tgridfreq)
+			self.runVomMissesGridFreq(5, ngridfreq, tgridfreq)
+			self.runVomMissesGridFreq(7, ngridfreq, tgridfreq)
+			self.runVomMissesGridFreq(10, ngridfreq, tgridfreq)
+
+
+			self.scanVM(apfilename + ".vm2.resgf", 2)
+			self.scanVM(apfilename + ".vm3.resgf", 3)
+			self.scanVM(apfilename + ".vm5.resgf", 5)
+			self.scanVM(apfilename + ".vm7.resgf", 7)
+			self.scanVM(apfilename + ".vm10.resgf", 10)
