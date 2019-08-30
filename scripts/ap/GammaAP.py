@@ -7,6 +7,13 @@ import math
 import matplotlib.pyplot as plt
 from EvalRates import *
 
+#gasvalue IGR = 0.00054
+#gasvalue Vela = 0.00018
+#TODO
+#1) eliminare generazione AP2 e tutto il codice relativo. Includere
+# la possibilità di avere una LC di bkg indipendente da quella da analizzare, su cui determinare rate medio
+# le modifiche di AA
+
 class NormalizeAP:
 
 	def __init__(self):
@@ -19,9 +26,10 @@ class NormalizeAP:
 	# [2] Gehrels, 1986, ApJ, 303, 336
 	# [3] Kraft, Burrows, & Nousek, 1991, ApJ, 374, 344
 
-	#def_fluxw
+	#def_ratew
 	# Variance weighting corrected for low count statistic - Weighted Power Spectrum	 [1] [2]
-	def normalizeDef(self, expdataA, ctsdataA, fluxw, flux, s, ctssimA):
+	#se ctssimA e' passato, calcola il rate medio sul dato simulato
+	def normalizeDef(self, expdataA, ctsdataA, ratew, rate, s, ctssimA):
 		sum1 = 0.0
 		sum2 = 0.0
 		diml = len(expdataA)
@@ -34,42 +42,49 @@ class NormalizeAP:
 				nb_i = ctsdataA[n]
 			n_i = ctsdataA[n]
 
-			flux_i = nb_i / e_i
+			#calcola il rate medio sul dato vero o sul dato simulato
+			rate_i = nb_i / e_i
 			s_ip = 0.5 + np.sqrt(nb_i + 0.25)
 			s_im = -0.5 + np.sqrt(nb_i + 0.25)
-			s_irms = np.sqrt(s_ip*s_ip + s_im*s_im) / 2.0
+			s_irms = np.sqrt((s_ip*s_ip + s_im*s_im) / 2.0)
 			s_i = s_irms / e_i
-			sum1 += flux_i / (s_i*s_i)
+			sum1 += rate_i / (s_i*s_i)
 			sum2 += 1.0 / (s_i*s_i)
 
-			flux_i = n_i / e_i
-			flux[n] = flux_i
+			#calcola rate e errore su dato vero
+			rate_i = n_i / e_i
+			rate[n] = rate_i
+			s_ip = 0.5 + np.sqrt(n_i + 0.25)
+			s_im = -0.5 + np.sqrt(n_i + 0.25)
+			s_irms = np.sqrt((s_ip*s_ip + s_im*s_im) / 2.0)
+			s_i = s_irms / e_i
 			s[n] = s_i
 
 			n = n + 1
 
-		fluxw_mean = sum1 / sum2
+		#calcolo del rate medio
+		ratew_mean = sum1 / sum2
 
 		n=0
-		for flux_i in flux:
+		for rate_i in rate:
 			s_i =  s[n]
 			if s_i != 0.0:
-				#def_fluxw << (flux_i - fluxw_mean) / s_i
-				fluxw[n] = (flux_i - fluxw_mean) / (s_i*s_i)
+				#def_ratew << (rate_i - ratew_mean) / s_i
+				ratew[n] = (rate_i - ratew_mean) / (s_i*s_i)
 			else:
-				fluxw[n] = 0.0
+				ratew[n] = 0.0
 
 			n = n + 1
 
 		return
 
-	def normalizeAA(self, expdataA, ctsdataA, fluxAA, ctssimA):
+	def normalizeAA(self, expdataA, ctsdataA, rateAA, ctssimA):
 		#AA
 		sum1 = 0.0
 		sum2 = 0.0
 		sum3 = 0.0
 		diml = len(expdataA)
-		flux = np.zeros(diml)
+		rate = np.zeros(diml)
 
 		n=0
 		for e_i in expdataA:
@@ -79,51 +94,51 @@ class NormalizeAP:
 				nb_i = ctsdataA[n]
 			n_i = ctsdataA[n]
 
-			flux_i = nb_i / e_i
+			rate_i = nb_i / e_i
 			#method 1
 			s_ip = 0.5 + np.sqrt(nb_i + 0.25)
 			s_im = -0.5 + np.sqrt(nb_i + 0.25)
-			s_irms = np.sqrt(s_ip*s_ip + s_im*s_im) / 2.0
+			s_irms = np.sqrt((s_ip*s_ip + s_im*s_im) / 2.0)
 			s_i = s_irms / e_i
 
-			sum1 += flux_i / (s_i*s_i)
+			sum1 += rate_i / (s_i*s_i)
 			sum2 += 1.0 / (s_i*s_i)
-			sum3 += flux_i
+			sum3 += rate_i
 
-			flux_i = n_i / e_i
-			flux[n] = flux_i
+			rate_i = n_i / e_i
+			rate[n] = rate_i
 
 			n=n+1
 
-		flux_mean = sum3 / n
-		fluxw_mean = sum1 / sum2
+		rate_mean = sum3 / n
+		ratew_mean = sum1 / sum2
 
 		n=0
-		for flux_i in flux:
-			fluxpred_i = expdataA[n] * flux_mean
-			s_i = np.sqrt(fluxpred_i) / expdataA[n]
-			#aa_fluxw << (flux_i - fluxw_mean) / s_i
+		for rate_i in rate:
+			ratepred_i = expdataA[n] * rate_mean
+			s_i = np.sqrt(ratepred_i) / expdataA[n]
+			#aa_ratew << (rate_i - ratew_mean) / s_i
 			if s_i != 0.0:
-				fluxAA[n] = (flux_i - fluxw_mean) / (s_i*s_i)
+				rateAA[n] = (rate_i - ratew_mean) / (s_i*s_i)
 			else:
-				fluxAA[n] = 0.0
+				rateAA[n] = 0.0
 
 			n = n + 1
 
 		return
 
-	def normalizeAB(self, expdataA, ctsdataA, fluxAB1, fluxAB2, fluxAB3, ctssimA):
+	def normalizeAB2(self, expdataA, ctsdataA, rateAB1, rateAB2, rateAB3, ctssimA):
 		sum1 = 0.0
 		sum2 = 0.0
 		sum3 = 0.0
 		sum4 = 0.0
 		sum5 = 0.0
 		diml = len(expdataA)
-		flux = np.zeros(diml)
+		rate = np.zeros(diml)
 
-		ab1_fluxw = []
-		ab2_fluxw = []
-		ab3_fluxw = []
+		ab1_ratew = []
+		ab2_ratew = []
+		ab3_ratew = []
 		n=0
 		for e_i in expdataA:
 			if len(ctssimA) > 0:
@@ -132,47 +147,207 @@ class NormalizeAP:
 				nb_i = ctsdataA[n]
 			n_i = ctsdataA[n]
 
-			flux_i = nb_i / e_i
+			rate_i = nb_i / e_i
 			s_ip = 0.5 + np.sqrt(nb_i + 0.25)
 			s_im = -0.5 + np.sqrt(nb_i + 0.25)
-			s_irms = np.sqrt(s_ip*s_ip + s_im*s_im) / 2.0
+			s_irms = np.sqrt((s_ip*s_ip + s_im*s_im) / 2.0)
 			s_i = s_irms / e_i
-			sum1 += flux_i / (s_i*s_i)
+			sum1 += rate_i / (s_i*s_i)
 			sum2 += 1.0 / (s_i*s_i)
-			sum3 += flux_i
+			sum3 += rate_i
 			sum4 += nb_i
 			sum5 += e_i
 
-			flux_i = n_i / e_i
-			flux[n] = flux_i
+			rate_i = n_i / e_i
+			rate[n] = rate_i
+			s_ip = 0.5 + np.sqrt(n_i + 0.25)
+			s_im = -0.5 + np.sqrt(n_i + 0.25)
+			s_irms = np.sqrt((s_ip*s_ip + s_im*s_im) / 2.0)
+			s_i = s_irms / e_i
 			n = n + 1
 
-		fluxw_mean1 = sum1 / sum2
-		fluxw_mean2 = sum3 / n
-		fluxw_mean3 = sum4 / sum5
+		ratew_mean1 = sum1 / sum2
+		ratew_mean2 = sum3 / n
+		ratew_mean3 = sum4 / sum5
 		n=0
-		for flux_i in flux:
+		for rate_i in rate:
 			e_i = expdataA[n]
 
-			fluxpred_i = e_i * fluxw_mean1
-			s_i = np.sqrt(fluxpred_i) / e_i
-			#ab1_fluxw << (flux_i - fluxw_mean1) / s_i
-			fluxAB1[n] = (flux_i - fluxw_mean1) / (s_i*s_i)
+			ratepred_i = e_i * ratew_mean1
+			s_i = np.sqrt(ratepred_i) / e_i
+			#ab1_ratew << (rate_i - ratew_mean1) / s_i
+			rateAB1[n] = (rate_i - ratew_mean1) / (s_i*s_i)
 
-			fluxpred_i = e_i * fluxw_mean2
-			s_i = np.sqrt(fluxpred_i) / e_i
-			#ab2_fluxw << (flux_i - fluxw_mean2) / s_i
-			fluxAB2[n] = (flux_i - fluxw_mean2) / (s_i*s_i)
+			ratepred_i = e_i * ratew_mean2
+			s_i = np.sqrt(ratepred_i) / e_i
+			#ab2_ratew << (rate_i - ratew_mean2) / s_i
+			rateAB2[n] = (rate_i - ratew_mean2) / (s_i*s_i)
 
 			#red text method
-			fluxpred_i = e_i * fluxw_mean3
-			s_i = np.sqrt(fluxpred_i) / e_i
-			#ab3_fluxw << (flux_i - fluxw_mean3) / s_i
-			fluxAB3[n] = (flux_i - fluxw_mean3) / (s_i*s_i)
+			ratepred_i = e_i * ratew_mean3
+			s_i = np.sqrt(ratepred_i) / e_i
+			#ab3_ratew << (rate_i - ratew_mean3) / s_i
+			rateAB3[n] = (rate_i - ratew_mean3) / (s_i*s_i)
 
 			n = n + 1
 
 		return
+
+
+	def normalizeAB3(self, expdataA, ctsdataA, rateBkgExpected, rateAB11, rateAB12, rateAB13, rateAB14, rateAB21, rateAB22, rateAB23, rateAB24, rateAB31, rateAB32, rateABR1, rateABR2, rateABR3, rateABR4, rateAAR5, rate, rate_error):
+		sum1 = 0.0
+		sum2 = 0.0
+		sum3 = 0.0
+		sum4 = 0.0
+		sum5 = 0.0
+		diml = len(expdataA)
+		#rate = np.zeros(diml)
+		#rate_error = np.zeros(diml)
+		
+		n=0
+		for e_i in expdataA:
+			
+			n_i = ctsdataA[n] #cts
+			
+			rate_i = n_i / e_i #cts / cm2 s
+			rate[n] = rate_i #cts / cm2 s
+			
+			s_ip = 0.5 + np.sqrt(n_i + 0.25)
+			s_im = -0.5 + np.sqrt(n_i + 0.25)
+			s_irms = np.sqrt((s_ip*s_ip + s_im*s_im) / 2.0)
+			s_i = s_irms / e_i
+			rate_error[n] = s_i
+			sum1 += rate_i / (s_i*s_i)
+			sum2 += 1.0 / (s_i*s_i)
+			sum3 += rate_i
+			sum4 += n_i
+			sum5 += e_i
+			
+			n = n + 1
+			
+		ratew_mean1 = sum1 / sum2 #cts / cm2 s
+		ratew_mean2 = sum3 / n #cts / cm2 s
+		ratew_mean3 = sum4 / sum5 #cts / cm2 s
+		ratew_mean4 = rateBkgExpected #cts / cm2 s
+		print("ratew_mean1: " + str(ratew_mean1))
+		print("ratew_mean2: " + str(ratew_mean2))
+		print("ratew_mean3: " + str(ratew_mean3))
+		print("ratew_mean4: " + str(ratew_mean4))
+		
+		n=0
+		for rate_i in rate:
+			e_i = expdataA[n]
+			ctspred_i = e_i * ratew_mean1 #cts
+			sp_i = np.sqrt(ctspred_i) / e_i
+			sum1 += rate_i / (sp_i*sp_i)
+			sum2 += 1.0 / (sp_i*sp_i)
+		
+		ratew_mean1aa = sum1 / sum2 #cts / cm2 s
+		print("ratew_mean1aa: " + str(ratew_mean1aa))
+
+		n=0
+		for rate_i in rate:
+			e_i = expdataA[n]
+			s_i = rate_error[n]
+			
+			###############7.1.1
+			#0
+			ctspred_i = e_i * ratew_mean1 #cts
+			sp_i = np.sqrt(ctspred_i) / e_i
+			rateAB11[n] = (rate_i - ratew_mean1) / (sp_i*sp_i)
+			
+			###############7.1.2
+			#1
+			ctspred_i = e_i * ratew_mean2 #cts
+			sp_i = np.sqrt(ctspred_i) / e_i
+			rateAB12[n] = (rate_i - ratew_mean2) / (sp_i*sp_i)
+			
+			###############7.1.3
+			#2
+			ctspred_i = e_i * ratew_mean3 #cts
+			sp_i = np.sqrt(ctspred_i) / e_i
+			rateAB13[n] = (rate_i - ratew_mean3) / (sp_i*sp_i)
+			
+			###############7.1.4
+			#3
+			ctspred_i = e_i * ratew_mean4 #cts
+			sp_i = np.sqrt(ctspred_i) / e_i
+			rateAB14[n] = (rate_i - ratew_mean4) / (sp_i*sp_i)
+			
+			###############7.2.1
+			#4
+			ctspred_i = e_i * ratew_mean1 #cts
+			sp_i = np.sqrt(ctspred_i) / e_i
+			rateAB21[n] = (rate_i) / (sp_i*sp_i)
+			
+			###############7.2.2
+			#5
+			ctspred_i = e_i * ratew_mean2 #cts
+			sp_i = np.sqrt(ctspred_i) / e_i
+			rateAB22[n] = (rate_i) / (sp_i*sp_i)
+			
+			###############7.2.3
+			#6
+			ctspred_i = e_i * ratew_mean3 #cts
+			sp_i = np.sqrt(ctspred_i) / e_i
+			rateAB23[n] = (rate_i) / (sp_i*sp_i)
+			
+			###############7.2.4
+			#7
+			ctspred_i = e_i * ratew_mean4 #cts
+			sp_i = np.sqrt(ctspred_i) / e_i
+			rateAB24[n] = (rate_i) / (sp_i*sp_i)
+			
+			###############7.3.1
+			#rateAB31[n] = (rate_i - ratew_mean1) / (s_i*s_i)
+			
+			###############7.3.2
+			#rateAB32[n] = (rate_i - ratew_mean2) / (s_i*s_i)
+			
+			###############7.3.3
+			#rateAB33[n] = (rate_i - ratew_mean3) / (s_i*s_i)
+			
+			###############7.3.4
+			#rateAB34[n] = (rate_i - ratew_mean4) / (s_i*s_i)
+			
+			###############7.1.1aa
+			#8
+			ctspred_i = e_i * ratew_mean1aa #cts
+			sp_i = np.sqrt(ctspred_i) / e_i
+			rateAB31[n] = (rate_i - ratew_mean1aa) / (sp_i*sp_i)
+			
+			###############7.2.1aa
+			#9
+			ctspred_i = e_i * ratew_mean1aa #cts
+			sp_i = np.sqrt(ctspred_i) / e_i
+			rateAB32[n] = (rate_i) / (sp_i*sp_i)
+			
+			###############7.4.1
+			#rateAB41[n] = (rate_i ) / (s_i*s_i)
+			
+			###############rate
+			#10
+			rateABR1[n] = (rate_i - ratew_mean1) 
+			
+			###############rate
+			#11
+			rateABR2[n] = (rate_i - ratew_mean2)
+			
+			###############rate
+			#«12
+			rateABR3[n] = (rate_i - ratew_mean3)
+			
+			###############rate
+			#13
+			rateABR4[n] = (rate_i - ratew_mean4)
+			
+			#14
+			rateAAR5[n] = (rate_i - ratew_mean1aa)
+			
+			n = n + 1
+		
+		return
+
 
 #########################################
 class GammaAP:
@@ -186,20 +361,7 @@ class GammaAP:
 		self.ctssimA = []
 
 		#results
-		#0 flux cts/exp
-		#1 variance of the flux
-		#2 def_fluxw
-		#3 aa_fluxw
-		#4 ab1_fluxw
-		#5 ab2_fluxw
-		#6 ab3_fluxw
-		#7 def_fluxwB
-		#8 aa_fluxwB
-		#9 ab1_fluxwB
-		#10 ab2_fluxwB
-		#11 ab3_fluxwB
-		#12 cts
-		#13 exp
+
 		self.res = []
 		return
 
@@ -236,7 +398,7 @@ class GammaAP:
 						self.ctsdataA[nline] = ctsdata
 						nline += 1
 
-	def calculateCtsFromConstantModel(self, ranal= 1, gasvalue=0, gal = 0.7, iso = 20., emin = 100., emax = 10000., instrumentID = 0):
+	def calculateCtsFromConstantModel(self, ranal= 1, gasvalue=0, gal = 0.7, iso = 12., emin = 100., emax = 10000., instrumentID = 0):
 		if self.diml == 0:
 			print('Error: data not loaded')
 			return
@@ -252,7 +414,7 @@ class GammaAP:
 		return
 
 	#load an ap2 file
-	def loadnormalizedAP(self, ap2file):
+	def loadnormalizedAP2(self, ap2file):
 		self.apfile = ap2file
 		n=0
 		with open(ap2file, "r") as ins:
@@ -290,7 +452,7 @@ class GammaAP:
 
 		print("Loaded " + str(n) + " lines")
 
-	def normalizeAP(self, apfile):
+	def normalizeAP2(self, apfile):
 
 		if self.diml == 0:
 			self.loadDataAPAGILE(apfile)
@@ -305,33 +467,33 @@ class GammaAP:
 
 		nap = NormalizeAP()
 
-		#0 flux cts/exp
-		#1 variance of the flux
-		#2 def_fluxw
+		#0 rate cts/exp
+		#1 variance of the rate
+		#2 def_ratew
 		nap.normalizeDef(self.expdataA, self.ctsdataA, self.res[:,2], self.res[:,0], self.res[:,1], [])
 
-		#3 aa_fluxw
+		#3 aa_ratew
 		nap.normalizeAA(self.expdataA, self.ctsdataA, self.res[:,3], [])
 
-		#4 ab1_fluxw
-		#5 ab2_fluxw
-		#6 ab3_fluxw
-		nap.normalizeAB(self.expdataA, self.ctsdataA, self.res[:,4], self.res[:,5], self.res[:,6], [])
+		#4 ab1_ratew
+		#5 ab2_ratew
+		#6 ab3_ratew
+		nap.normalizeAB2(self.expdataA, self.ctsdataA, self.res[:,4], self.res[:,5], self.res[:,6], [])
 
 		if len(self.ctssimA) == 0:
-			self.calculateCtsFromConstantModel(2, 0.0006, 1, 30, 100, 10000, 0)
+			self.calculateCtsFromConstantModel(2, 0.0006, 1, 15, 100, 10000, 0)
 
 		if len(self.ctssimA) > 0:
-			#0 flux cts/exp
-			#1 variance of the flux
-			#7 def_fluxwB
+			#0 rate cts/exp
+			#1 variance of the rate
+			#7 def_ratewB
 			nap.normalizeDef(self.expdataA, self.ctsdataA, self.res[:,7], self.res[:,0], self.res[:,1], self.ctssimA)
-			#8 aa_fluxwB
+			#8 aa_ratewB
 			nap.normalizeAA(self.expdataA, self.ctsdataA, self.res[:,8], self.ctssimA)
-			#9 ab1_fluxwB
-			#10 ab2_fluxwB
-			#11 ab3_fluxwB
-			nap.normalizeAB(self.expdataA, self.ctsdataA, self.res[:,9], self.res[:,10], self.res[:,11], self.ctssimA)
+			#9 ab1_ratewB
+			#10 ab2_ratewB
+			#11 ab3_ratewB
+			nap.normalizeAB2(self.expdataA, self.ctsdataA, self.res[:,9], self.res[:,10], self.res[:,11], self.ctssimA)
 
 		fileclean = open(apfile + ".ap2","w")
 
@@ -345,7 +507,7 @@ class GammaAP:
 			n = n + 1
 
 		fileclean.close()
-		print("* Write ap2 file: tstart tstop exp[cm2 s] cts 0:flux[cts/exp] 1:flux_var 2:def_fluxw 3:aa_fluxw 4:ab1_fluxw 5:ab2_fluxw 6:ab3_fluxw 7:def_fluxwB 8:aa_fluxwB 9:ab1_fluxwB 10:ab2_fluxwB 11:ab3_fluxwB")
+		print("* Write ap2 file: tstart tstop exp[cm2 s] cts 0:rate[cts/exp] 1:rate_var 2:def_ratew 3:aa_ratew 4:ab1_ratew 5:ab2_ratew 6:ab3_ratew 7:def_ratewB 8:aa_ratewB 9:ab1_ratewB 10:ab2_ratewB 11:ab3_ratewB")
 		print("  B means normalization for a background model: calculateCtsFromConstantModel(2, 0.0006, 1, 30, 100, 10000, 0)")
 
 		self.writeVonMisses(apfile, 2)
@@ -356,6 +518,45 @@ class GammaAP:
 		print('End normalisation')
 		return
 
+
+	def normalizeAP3(self, apfile, ranal=2, gasvalue=0.0006, gal=0.7, iso=10, emin=100, emax=10000):
+				
+		if self.diml == 0:
+			self.loadDataAPAGILE(apfile)
+		
+		self.res = np.zeros((self.diml, 17))
+		
+		n=0
+		for x in self.ctsdataA:
+			n = n + 1
+		
+		nap = NormalizeAP()
+		
+		rate = EvalRates()
+		bkg_ON, src_ON = rate.calculateRateWithoutExp(0, ranal, 0e-08,  gasvalue, gal, iso, emin, emax, 0)
+		rateBkgExpected = bkg_ON
+		print(bkg_ON)
+		
+		nap.normalizeAB3(self.expdataA, self.ctsdataA, rateBkgExpected, self.res[:,0], self.res[:,1], self.res[:,2], self.res[:,3], self.res[:,4], self.res[:,5], self.res[:,6], self.res[:,7], self.res[:,8], self.res[:,9], self.res[:,10], self.res[:,11],self.res[:,12], self.res[:,13], self.res[:,14],self.res[:,15], self.res[:,16])
+		
+		fileclean = open(apfile + ".ap3","w")
+
+		n = 0
+		for x in self.expdataA:
+			line = str(self.tstartA[n]) + " " + str(self.tstopA[n]) + " " + str(self.expdataA[n]) + " " + str(int(self.ctsdataA[n]))
+			for i in range(0,17):
+				line += " " + str(self.res[n,i])
+			line += "\n"
+			fileclean.write(line)
+			n = n + 1
+		
+		fileclean.close()
+		print("* Write ap2 file: tstart tstop exp[cm2 s] cts 0:normAB11 1:normAB12 2:normAB13 3:normAB14 4:normAB21 5:normAB22 6:normAB23 7:normAB24 8:normAB11aa 9:normAB21aa 10:ratediffR1 11:ratediffR2 12:ratediffR3 13:ratediffR4 14:ratediffR1AA 15:rate 16:rate_error")
+		
+		print('End normalisation')
+		return
+		
+
 	def writeVonMisses(self, apfile, ii):
 		filevm = open(apfile + ".vm" + str(ii),"w")
 		n = 0
@@ -365,24 +566,24 @@ class GammaAP:
 			n = n + 1
 
 		filevm.close()
-		print("* Write Von Misses file: tcenter  "+str(ii)+":flux 1:flux_var")
+		print("* Write Von Misses file: tcenter  "+str(ii)+":rate 1:rate_var")
 
 	def calculateLS(self, verbose=0, plot=1, rescol=0, minfreq=-1, maxfreq=-1):
 		#normalization standard model log psd
 		#, normalization='standard'
 		#rescol
-		#0 flux cts/exp -> NO
-		#1 variance of the flux -> NO
-		#2 def_fluxw -> NO
-		#3 aa_fluxw
-		#4 ab1_fluxw
-		#5 ab2_fluxw
-		#6 ab3_fluxw
-		#7 def_fluxwB
-		#8 aa_fluxwB
-		#9 ab1_fluxwB
-		#10 ab2_fluxwB
-		#11 ab3_fluxwB
+		#0 rate cts/exp -> NO
+		#1 variance of the rate -> NO
+		#2 def_ratew -> NO
+		#3 aa_ratew
+		#4 ab1_ratew
+		#5 ab2_ratew
+		#6 ab3_ratew
+		#7 def_ratewB
+		#8 aa_ratewB
+		#9 ab1_ratewB
+		#10 ab2_ratewB
+		#11 ab3_ratewB
 		#12 cts
 		#13 exp
 		ls = LombScargle(self.tstartA, self.res[:,rescol])
@@ -397,7 +598,7 @@ class GammaAP:
 		daymax = 1 / maxf / 86400.
 
 		if verbose == 1:
-			print('pls ' + str(pls) + ' with power of ' + str(power.max()) + ' at frequency ' + str(maxf) + ' Hz (' + str(daymax) + ') days' )
+			print('Max value col %2d: FAR %.5e / power %.4f / frequency %.5e Hz (%.5f days)' %(rescol, pls, power.max(), maxf, daymax) )
 
 		if plot > 0:
 			plt.subplot(1, 1, 1)
@@ -416,12 +617,13 @@ class GammaAP:
 
 		return pls, power.max(), maxf
 
-	def scanLS(self, minfreq=-1, maxfreq=-1):
+	def scanLS(self, minfreq=-1, maxfreq=-1, rangemin=0, rangemax=14):
 		fileclean = open(self.apfile + ".apres","w")
-		for i in range(0,14):
+		for i in range(rangemin,rangemax):
 			pls, pmax, maxf = self.calculateLS(0 ,0, i, minfreq, maxfreq)
 			daymax = 1 / maxf / 86400.
-			print("LS " + str(i) + ' ' + str(pls) + ' ' + str(pmax) + ' ' + str(maxf) + ' ' + str(daymax))
+			#print("LS " + str(i) + ' ' + str(pls) + ' ' + str(pmax) + ' ' + str(maxf) + ' ' + str(daymax))
+			print('Max value %2d: FAR %.5e / power %.4f / frequency %.5e Hz (%.5f days)' %(i, pls, pmax, maxf, daymax) )
 			fileclean.write("LS " + str(i) + ' ' + str(pls) + ' ' + str(pmax) + ' ' + str(maxf) + ' ' + str(daymax) + "\n")
 		fileclean.close()
 		return
@@ -452,7 +654,7 @@ class GammaAP:
 
 	def plotLS(self, ap2file, i):
 		self.apfile = ap2file
-		self.loadnormalizedAP(ap2file)
+		self.loadnormalizedAP2(ap2file)
 		pls, pmax, maxf = self.calculateLS(1, 2, int(i), 0.5e-6, 5e-6)
 
 	def plotVonMisses(self, filename, mu=0.0, verbose=1, plot=1):
@@ -585,12 +787,12 @@ class GammaAP:
 		print("sig2= " + str(sig2))
 
 	def fullAnalysis(self, apfilename, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800):
-		self.normalizeAP(apfilename)
+		self.normalizeAP2(apfilename)
 		self.freqmin=float(freqmin)
 		self.freqmax=float(freqmax)
 		self.vmnumax=float(vmnumax)
 
-		self.scanLS(self.freqmin, self.freqmax)
+		self.scanLS(self.freqmin, self.freqmax, 0, 14)
 
 		if analyzevm == 1:
 			self.runVomMisses(vonmissesthread, 2)
@@ -612,12 +814,12 @@ class GammaAP:
 		self.scanVM(apfilename + ".vm7.resgf", 7)
 		self.scanVM(apfilename + ".vm10.resgf", 10)
 
-	def fullAnalysisAP2(self, apfilename, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800):
-		self.loadnormalizedAP(apfilename)
+	def fullAnalysisLoadAP2(self, ap2filename, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800):
+		self.loadnormalizedAP2(ap2filename)
 		self.freqmin=float(freqmin)
 		self.freqmax=float(freqmax)
 		self.vmnumax=float(vmnumax)
-		self.scanLS(self.freqmin, self.freqmax)
+		self.scanLS(self.freqmin, self.freqmax, 0, 14)
 
 		if analyzevm == 1:
 			self.runVomMisses(vonmissesthread, 2)
@@ -638,3 +840,14 @@ class GammaAP:
 			self.scanVM(apfilename + ".vm5.resgf", 5)
 			self.scanVM(apfilename + ".vm7.resgf", 7)
 			self.scanVM(apfilename + ".vm10.resgf", 10)
+
+
+	def fullAnalysis3(self, apfilename, ranal=2, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800):
+		self.normalizeAP3(apfilename, ranal)
+		self.freqmin=float(freqmin)
+		self.freqmax=float(freqmax)
+		self.vmnumax=float(vmnumax)
+		
+		self.scanLS(self.freqmin, self.freqmax, 0, 17)
+		#self.scanLS(-1, -1, 0, 19)
+
