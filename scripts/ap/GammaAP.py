@@ -26,7 +26,7 @@ class NormalizeAP:
 	# [2] Gehrels, 1986, ApJ, 303, 336
 	# [3] Kraft, Burrows, & Nousek, 1991, ApJ, 374, 344
 
-	#def_ratew
+
 	# Variance weighting corrected for low count statistic - Weighted Power Spectrum	 [1] [2]
 	#se ctssimA e' passato, calcola il rate medio sul dato simulato
 	def normalizeDef(self, expdataA, ctsdataA, ratew, rate, s, ctssimA):
@@ -452,6 +452,40 @@ class GammaAP:
 
 		print("Loaded " + str(n) + " lines")
 
+	#load an ap3 file
+	def loadnormalizedAP3(self, ap3file):
+		self.apfile = ap3file
+		n=0
+		with open(ap3file, "r") as ins:
+			for line in ins:
+				if(line != ""):
+					val = line.split()
+					if len(val) > 2:
+						n = n + 1
+		self.diml = n
+			
+		self.res = np.zeros((self.diml, 17))
+		self.tstartA = np.zeros(self.diml)
+		self.tstopA = np.zeros(self.diml)
+		self.expdataA = np.zeros(self.diml)
+		self.ctsdataA = np.zeros(self.diml)
+		
+		n=0
+		with open(ap3file, "r") as ins:
+			for line in ins:
+				if(line != ""):
+					val = line.split()
+					if len(val) > 2:
+						self.tstartA[n] = float(val[0])
+						self.tstopA[n] = float(val[1])
+						self.expdataA[n] = float(val[2])
+						self.ctsdataA[n] = float(val[3])
+						for i in range(0,17):
+							self.res[n,i] = float(val[4+i])
+						n = n + 1
+			
+		print("Loaded " + str(n) + " lines")
+
 	def normalizeAP2(self, apfile):
 
 		if self.diml == 0:
@@ -786,7 +820,7 @@ class GammaAP:
 		sig2=W * np.power(np.e, -z) * (  2 * z * Xnumax + Ynumax  * np.sqrt(z) )
 		print("sig2= " + str(sig2))
 
-	def fullAnalysis(self, apfilename, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800):
+	def fullAnalysis2(self, apfilename, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800):
 		self.normalizeAP2(apfilename)
 		self.freqmin=float(freqmin)
 		self.freqmax=float(freqmax)
@@ -851,3 +885,49 @@ class GammaAP:
 		self.scanLS(self.freqmin, self.freqmax, 0, 17)
 		#self.scanLS(-1, -1, 0, 19)
 
+		if analyzevm == 1:
+			self.runVomMisses(vonmissesthread, 0)
+			self.runVomMisses(vonmissesthread, 1)
+			self.runVomMisses(vonmissesthread, 2)
+			self.runVomMisses(vonmissesthread, 3)
+			self.runVomMisses(vonmissesthread, 8)
+			
+			self.runVomMissesGridFreq(0, ngridfreq, tgridfreq)
+			self.runVomMissesGridFreq(1, ngridfreq, tgridfreq)
+			self.runVomMissesGridFreq(2, ngridfreq, tgridfreq)
+			self.runVomMissesGridFreq(3, ngridfreq, tgridfreq)
+			self.runVomMissesGridFreq(8, ngridfreq, tgridfreq)
+			
+			
+			self.scanVM(apfilename + ".vm0.resgf", 0)
+			self.scanVM(apfilename + ".vm1.resgf", 1)
+			self.scanVM(apfilename + ".vm2.resgf", 2)
+			self.scanVM(apfilename + ".vm3.resgf", 3)
+			self.scanVM(apfilename + ".vm8.resgf", 8)
+
+	def fullAnalysisLoadAP3(self, ap3filename, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800):
+		self.loadnormalizedAP3(ap2filename)
+		self.freqmin=float(freqmin)
+		self.freqmax=float(freqmax)
+		self.vmnumax=float(vmnumax)
+		self.scanLS(self.freqmin, self.freqmax, 0, 17)
+		
+		if analyzevm == 1:
+			self.runVomMisses(vonmissesthread, 0)
+			self.runVomMisses(vonmissesthread, 1)
+			self.runVomMisses(vonmissesthread, 2)
+			self.runVomMisses(vonmissesthread, 3)
+			self.runVomMisses(vonmissesthread, 8)
+			
+			self.runVomMissesGridFreq(0, ngridfreq, tgridfreq)
+			self.runVomMissesGridFreq(1, ngridfreq, tgridfreq)
+			self.runVomMissesGridFreq(2, ngridfreq, tgridfreq)
+			self.runVomMissesGridFreq(3, ngridfreq, tgridfreq)
+			self.runVomMissesGridFreq(8, ngridfreq, tgridfreq)
+			
+			
+			self.scanVM(apfilename + ".vm0.resgf", 0)
+			self.scanVM(apfilename + ".vm1.resgf", 1)
+			self.scanVM(apfilename + ".vm2.resgf", 2)
+			self.scanVM(apfilename + ".vm3.resgf", 3)
+			self.scanVM(apfilename + ".vm8.resgf", 8)
