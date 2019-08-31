@@ -365,7 +365,7 @@ class GammaAP:
 		return
 
 	def loadDataAPAGILE(self, apfile):
-		print('Loading data...')
+		print('Loading data...' + apfile)
 		self.apfile = apfile
 		self.diml = 0
 		with open(apfile, "r") as ins:
