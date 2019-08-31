@@ -557,7 +557,7 @@ class GammaAP:
 		if self.diml == 0:
 			self.loadDataAPAGILE(apfile)
 		
-		self.res = np.zeros((self.diml, 17))
+		self.res = np.zeros((self.diml, 18))
 		
 		n=0
 		for x in self.ctsdataA:
@@ -572,19 +572,26 @@ class GammaAP:
 		
 		nap.normalizeAB3(self.expdataA, self.ctsdataA, rateBkgExpected, self.res[:,0], self.res[:,1], self.res[:,2], self.res[:,3], self.res[:,4], self.res[:,5], self.res[:,6], self.res[:,7], self.res[:,8], self.res[:,9], self.res[:,10], self.res[:,11],self.res[:,12], self.res[:,13], self.res[:,14],self.res[:,15], self.res[:,16])
 		
+		
+		fluxscalefactor=rate.getFluxScaleFactor(0, ranal, emin, emax)
+		n=0
+		for x in self.expdataA:
+			self.res[n,17] = self.res[:,13] / fluxscalefactor
+			
+		
 		fileclean = open(apfile + ".ap3","w")
 
 		n = 0
 		for x in self.expdataA:
 			line = str(self.tstartA[n]) + " " + str(self.tstopA[n]) + " " + str(self.expdataA[n]) + " " + str(int(self.ctsdataA[n]))
-			for i in range(0,17):
+			for i in range(0,18):
 				line += " " + str(self.res[n,i])
 			line += "\n"
 			fileclean.write(line)
 			n = n + 1
 		
 		fileclean.close()
-		print("* Write ap3 file: tstart tstop exp[cm2 s] cts 0:normAB11 1:normAB12 2:normAB13 3:normAB14 4:normAB21 5:normAB22 6:normAB23 7:normAB24 8:normAB11aa 9:normAB21aa 10:ratediffR1 11:ratediffR2 12:ratediffR3 13:ratediffR4 14:ratediffR1AA 15:rate 16:rate_error")
+		print("* Write ap3 file: tstart tstop exp[cm2 s] cts 0:normAB11 1:normAB12 2:normAB13 3:normAB14 4:normAB21 5:normAB22 6:normAB23 7:normAB24 8:normAB11aa 9:normAB21aa 10:ratediffR1 11:ratediffR2 12:ratediffR3 13:ratediffR4 14:ratediffR1AA 15:rate 16:rate_error 17:fluxdiffR4")
 		
 		print('End normalisation')
 		return
