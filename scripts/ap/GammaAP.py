@@ -583,7 +583,7 @@ class GammaAP:
 			s_im = -0.5 + np.sqrt(n_i + 0.25)
 			s_irms = np.sqrt((s_ip*s_ip + s_im*s_im) / 2.0)
 			s_i = s_irms / e_i
-			self.res[n,17] = s_i #flux error
+			self.res[n,18] = s_i #flux error
 			
 			n = n + 1
 			
