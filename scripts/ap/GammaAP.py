@@ -557,7 +557,7 @@ class GammaAP:
 		if self.diml == 0:
 			self.loadDataAPAGILE(apfile)
 		
-		self.res = np.zeros((self.diml, 22))
+		self.res = np.zeros((self.diml, 23))
 		
 		n=0
 		for x in self.ctsdataA:
@@ -576,26 +576,34 @@ class GammaAP:
 		fluxscalefactor=rate.getFluxScaleFactor(0, ranal, emin, emax)
 		n=0
 		for e_i in self.expdataA:
+			
+			#flux
 			self.res[n,17] = self.res[n,13] / float(fluxscalefactor)
 			
+			#flux error
 			n_i = self.res[n,13] / float(fluxscalefactor) * e_i
 			s_ip = 0.5 + np.sqrt(n_i + 0.25)
 			s_im = -0.5 + np.sqrt(n_i + 0.25)
 			s_irms = np.sqrt((s_ip*s_ip + s_im*s_im) / 2.0)
 			s_i = s_irms / e_i
-			self.res[n,18] = s_i #flux error
+			self.res[n,18] = s_i 
 			
-			self.res[n,19] = self.res[n,15] / float(fluxscalefactor)
+			#TS
+			self.res[n,19] = np.exp(self.ctsdataA[n]-rateBkgExpected * e_i) * (rateBkgExpected * e_i / self.ctsdataA[n])^self.ctsdataA[n]
 			
+			#flux rate
+			self.res[n,20] = self.res[n,15] / float(fluxscalefactor)
+			
+			#flux rate error
 			n_i = self.res[n,15] / float(fluxscalefactor) * e_i
 			s_ip = 0.5 + np.sqrt(n_i + 0.25)
 			s_im = -0.5 + np.sqrt(n_i + 0.25)
 			s_irms = np.sqrt((s_ip*s_ip + s_im*s_im) / 2.0)
 			s_i = s_irms / e_i
-			self.res[n,20] = s_i #flux error
+			self.res[n,21] = s_i #flux error
 			
 			#calculation of expected background counts rate
-			self.res[n,21] = rateBkgExpected * e_i
+			self.res[n,22] = rateBkgExpected * e_i
 			
 			n = n + 1
 			
@@ -605,14 +613,14 @@ class GammaAP:
 		n = 0
 		for x in self.expdataA:
 			line = str(self.tstartA[n]) + " " + str(self.tstopA[n]) + " " + str(self.expdataA[n]) + " " + str(int(self.ctsdataA[n]))
-			for i in range(0,22):
+			for i in range(0,23):
 				line += " " + str(self.res[n,i])
 			line += "\n"
 			fileclean.write(line)
 			n = n + 1
 		
 		fileclean.close()
-		print("* Write ap3 file: tstart tstop exp[cm2 s] cts 0:normAB11 1:normAB12 2:normAB13 3:normAB14 4:normAB21 5:normAB22 6:normAB23 7:normAB24 8:normAB11aa 9:normAB21aa 10:ratediffR1 11:ratediffR2 12:ratediffR3 13:ratediffR4 14:ratediffR1AA 15:rate 16:rate_error 17:flux_ratediffR4 18:flux_ratediffR4_error 19:flux_rate 20:flux_rate_error 21:cts_expBKG")
+		print("* Write ap3 file: tstart tstop exp[cm2 s] cts 0:normAB11 1:normAB12 2:normAB13 3:normAB14 4:normAB21 5:normAB22 6:normAB23 7:normAB24 8:normAB11aa 9:normAB21aa 10:ratediffR1 11:ratediffR2 12:ratediffR3 13:ratediffR4 14:ratediffR1AA 15:rate 16:rate_error 17:flux_ratediffR4 18:flux_ratediffR4_error 19:TS  20:flux_rate 22:flux_rate_error 22:cts_expBKG")
 		
 		print('End normalisation')
 		return
