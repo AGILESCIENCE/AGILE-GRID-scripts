@@ -10,9 +10,8 @@ from EvalRates import *
 #gasvalue IGR = 0.00054
 #gasvalue Vela = 0.00018
 #TODO
-#1) eliminare generazione AP2 e tutto il codice relativo. Includere
-# la possibilità di avere una LC di bkg indipendente da quella da analizzare, su cui determinare rate medio
-# le modifiche di AA
+#1) Includere la possibilità di avere una LC di bkg indipendente da quella da analizzare, su cui determinare rate medio
+
 
 class NormalizeAP:
 
