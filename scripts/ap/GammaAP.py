@@ -584,7 +584,7 @@ class GammaAP:
 			n = n + 1
 		
 		fileclean.close()
-		print("* Write ap2 file: tstart tstop exp[cm2 s] cts 0:normAB11 1:normAB12 2:normAB13 3:normAB14 4:normAB21 5:normAB22 6:normAB23 7:normAB24 8:normAB11aa 9:normAB21aa 10:ratediffR1 11:ratediffR2 12:ratediffR3 13:ratediffR4 14:ratediffR1AA 15:rate 16:rate_error")
+		print("* Write ap3 file: tstart tstop exp[cm2 s] cts 0:normAB11 1:normAB12 2:normAB13 3:normAB14 4:normAB21 5:normAB22 6:normAB23 7:normAB24 8:normAB11aa 9:normAB21aa 10:ratediffR1 11:ratediffR2 12:ratediffR3 13:ratediffR4 14:ratediffR1AA 15:rate 16:rate_error")
 		
 		print('End normalisation')
 		return
