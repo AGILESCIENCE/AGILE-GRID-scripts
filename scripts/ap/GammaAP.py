@@ -620,8 +620,13 @@ class GammaAP:
 			n = n + 1
 		
 		fileclean.close()
-		print("* Write ap3 file: tstart tstop exp[cm2 s] cts 0:normAB11 1:normAB12 2:normAB13 3:normAB14 4:normAB21 5:normAB22 6:normAB23 7:normAB24 8:normAB11aa 9:normAB21aa 10:ratediffR1 11:ratediffR2 12:ratediffR3 13:ratediffR4 14:ratediffR1AA 15:rate 16:rate_error 17:flux_ratediffR4 18:flux_ratediffR4_error 19:TS  20:flux_rate 22:flux_rate_error 22:cts_expBKG")
+		print("* Write ap3 file: tstart tstop exp[cm2 s] cts 0:normAB11 1:normAB12 2:normAB13 3:normAB14 4:normAB21 5:normAB22 6:normAB23 7:normAB24 8:normAB11aa 9:normAB21aa 10:ratediffR1 11:ratediffR2 12:ratediffR3 13:ratediffR4 14:ratediffR1AA 15:rate 16:rate_error 17:flux_ratediffR4 18:flux_ratediffR4_error 19:TS  20:flux_rate 21:flux_rate_error 22:cts_expBKG")
 		
+		self.writeVonMisses(apfile, 0)
+		self.writeVonMisses(apfile, 1)
+		self.writeVonMisses(apfile, 2)
+		self.writeVonMisses(apfile, 3)
+		self.writeVonMisses(apfile, 8)
 		print('End normalisation')
 		return
 		
@@ -917,7 +922,7 @@ class GammaAP:
 		self.freqmax=float(freqmax)
 		self.vmnumax=float(vmnumax)
 		
-		self.scanLS(self.freqmin, self.freqmax, 0, 17)
+		self.scanLS(self.freqmin, self.freqmax, 0, 18)
 		#self.scanLS(-1, -1, 0, 19)
 
 		if analyzevm == 1:
