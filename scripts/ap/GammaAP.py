@@ -576,7 +576,7 @@ class GammaAP:
 		fluxscalefactor=rate.getFluxScaleFactor(0, ranal, emin, emax)
 		n=0
 		for x in self.expdataA:
-			self.res[n,17] = self.res[:,13] / fluxscalefactor
+			self.res[n,17] = self.res[n,13] / fluxscalefactor
 			
 		
 		fileclean = open(apfile + ".ap3","w")
