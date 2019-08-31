@@ -514,7 +514,7 @@ class GammaAP:
 		nap.normalizeAB2(self.expdataA, self.ctsdataA, self.res[:,4], self.res[:,5], self.res[:,6], [])
 
 		if len(self.ctssimA) == 0:
-			self.calculateCtsFromConstantModel(2, 0.0006, 1, 15, 100, 10000, 0)
+			self.calculateCtsFromConstantModel(2, 0.00054, 1, 15, 100, 10000, 0)
 
 		if len(self.ctssimA) > 0:
 			#0 rate cts/exp
@@ -541,7 +541,7 @@ class GammaAP:
 
 		fileclean.close()
 		print("* Write ap2 file: tstart tstop exp[cm2 s] cts 0:rate[cts/exp] 1:rate_var 2:def_ratew 3:aa_ratew 4:ab1_ratew 5:ab2_ratew 6:ab3_ratew 7:def_ratewB 8:aa_ratewB 9:ab1_ratewB 10:ab2_ratewB 11:ab3_ratewB")
-		print("  B means normalization for a background model: calculateCtsFromConstantModel(2, 0.0006, 1, 30, 100, 10000, 0)")
+		print("  B means normalization for a background model: calculateCtsFromConstantModel(2, 0.00054, 1, 30, 100, 10000, 0)")
 
 		self.writeVonMisses(apfile, 2)
 		self.writeVonMisses(apfile, 3)
@@ -552,7 +552,7 @@ class GammaAP:
 		return
 
 
-	def normalizeAP3(self, apfile, ranal=2, gasvalue=0.0006, gal=0.7, iso=10, emin=100, emax=10000):
+	def normalizeAP3(self, apfile, ranal=2, gasvalue=0.00054, gal=0.7, iso=10, emin=100, emax=10000):
 				
 		if self.diml == 0:
 			self.loadDataAPAGILE(apfile)
