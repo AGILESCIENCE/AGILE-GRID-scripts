@@ -589,7 +589,7 @@ class GammaAP:
 			self.res[n,18] = s_i 
 			
 			#TS
-			self.res[n,19] = -2 np.log(np.exp(self.ctsdataA[n]-rateBkgExpected * e_i) * np.power(rateBkgExpected * e_i / self.ctsdataA[n], self.ctsdataA[n]))
+			self.res[n,19] = -2 * np.log(np.exp(self.ctsdataA[n]-rateBkgExpected * e_i) * np.power(rateBkgExpected * e_i / self.ctsdataA[n], self.ctsdataA[n]))
 			
 			#flux rate
 			self.res[n,20] = self.res[n,15] / float(fluxscalefactor)
