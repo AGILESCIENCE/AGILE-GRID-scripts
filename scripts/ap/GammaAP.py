@@ -228,10 +228,10 @@ class NormalizeAP:
 		ratew_mean2 = sum3 / n #cts / cm2 s
 		ratew_mean3 = sum4 / sum5 #cts / cm2 s
 		ratew_mean4 = rateBkgExpected #cts / cm2 s
-		print("ratew_mean1: %.3e"% ratew_mean1)
-		print("ratew_mean2: %.3e"% ratew_mean2)
-		print("ratew_mean3: %.3e"% ratew_mean3)
-		print("ratew_mean4: %.3e"% ratew_mean4)
+		print("ratew_mean1:          %.3e"% ratew_mean1)
+		print("ratew_mean2:          %.3e"% ratew_mean2)
+		print("ratew_mean3:          %.3e"% ratew_mean3)
+		print("ratew_mean4 bkgmodel: %.3e"% ratew_mean4)
 		
 		n=0
 		for rate_i in rate:
@@ -242,7 +242,7 @@ class NormalizeAP:
 			sum2 += 1.0 / (sp_i*sp_i)
 		
 		ratew_mean1aa = sum1 / sum2 #cts / cm2 s
-		print("ratew_mean1aa: %.3e" %ratew_mean1aa)
+		print("ratew_mean1aa:        %.3e" %ratew_mean1aa)
 
 		n=0
 		for rate_i in rate:
@@ -568,7 +568,7 @@ class GammaAP:
 		rate = EvalRates()
 		bkg_ON, src_ON = rate.calculateRateWithoutExp(0, ranal, 0e-08,  gasvalue, gal, iso, emin, emax, 0)
 		rateBkgExpected = bkg_ON
-		print(bkg_ON)
+		#print(bkg_ON)
 		
 		nap.normalizeAB3(self.expdataA, self.ctsdataA, rateBkgExpected, self.res[:,0], self.res[:,1], self.res[:,2], self.res[:,3], self.res[:,4], self.res[:,5], self.res[:,6], self.res[:,7], self.res[:,8], self.res[:,9], self.res[:,10], self.res[:,11],self.res[:,12], self.res[:,13], self.res[:,14],self.res[:,15], self.res[:,16])
 		
