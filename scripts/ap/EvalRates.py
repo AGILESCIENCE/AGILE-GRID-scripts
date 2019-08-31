@@ -18,12 +18,12 @@ class EvalRates:
 		if instrumentID == 0:
 			if emin < 1700.: psf = 0.3 # deg.
 			if emin < 1000.: psf = 1. # deg.
-			if emin < 400.: psf = 3.5 # deg.
+			if emin < 400.: psf = 2.4 # deg.calibration with Vela with ranal=2, 3, 4
 			if emin < 100.: psf = 5.0 # deg. da provare
 
 		return psf
 	
-	def getFluxScaleFactor(self, verbose=0, ranal= -1, emin = 100., emax = 50000., instrumentID = 0):
+	def getFluxScaleFactor(self, verbose=0, ranal= 2, emin = 100., emax = 10000., instrumentID = 0):
 		ranal = float(ranal)
 		emin = float(emin)
 		emax = float(emax)
@@ -39,7 +39,7 @@ class EvalRates:
 		#to take into account the extension of the PSF
 		fluxscalefactor = math.fabs(1-2*norm(0,  psf).cdf(ranal))
 		
-		print('Fluxscalefactor based on PSF: ' + str(fluxscalefactor))
+		print('Fluxscalefactor based on PSF: %.4f' % fluxscalefactor)
 
 		# ON - PSF region
 		omega_ranal = 2.*np.pi*(1. - np.cos(ranal*(np.pi/180.))) #[sr]
@@ -49,6 +49,8 @@ class EvalRates:
 		if verbose == 1:
 			print('[sr]   - ' + str(omega_ranal))
 			print('[sr] AC - ' + str(omega_ranalAC))
+			
+		return fluxscalefactor;
 
 	def calculateRateWithoutExp(self, verbose = 0, ranal= -1, fluxsource = 0e-08, gasvalue=-1, gal = 0.7, iso = 10., emin = 100., emax = 50000., instrumentID = 0):
 		fluxsource = float(fluxsource)

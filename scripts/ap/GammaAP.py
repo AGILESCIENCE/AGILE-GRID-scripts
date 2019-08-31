@@ -228,10 +228,10 @@ class NormalizeAP:
 		ratew_mean2 = sum3 / n #cts / cm2 s
 		ratew_mean3 = sum4 / sum5 #cts / cm2 s
 		ratew_mean4 = rateBkgExpected #cts / cm2 s
-		print("ratew_mean1: " + str(ratew_mean1))
-		print("ratew_mean2: " + str(ratew_mean2))
-		print("ratew_mean3: " + str(ratew_mean3))
-		print("ratew_mean4: " + str(ratew_mean4))
+		print("ratew_mean1: %.3e"% ratew_mean1)
+		print("ratew_mean2: %.3e"% ratew_mean2)
+		print("ratew_mean3: %.3e"% ratew_mean3)
+		print("ratew_mean4: %.3e"% ratew_mean4)
 		
 		n=0
 		for rate_i in rate:
@@ -242,7 +242,7 @@ class NormalizeAP:
 			sum2 += 1.0 / (sp_i*sp_i)
 		
 		ratew_mean1aa = sum1 / sum2 #cts / cm2 s
-		print("ratew_mean1aa: " + str(ratew_mean1aa))
+		print("ratew_mean1aa: %.3e" %ratew_mean1aa)
 
 		n=0
 		for rate_i in rate:
