@@ -875,8 +875,8 @@ class GammaAP:
 			self.scanVM(apfilename + ".vm10.resgf", 10)
 
 
-	def fullAnalysis3(self, apfilename, ranal=2, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800):
-		self.normalizeAP3(apfilename, ranal)
+	def fullAnalysis3(self, apfilename, ranal=2, gasvalue=0.00054, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800):
+		self.normalizeAP3(apfilename, ranal, gasvalue)
 		self.freqmin=float(freqmin)
 		self.freqmax=float(freqmax)
 		self.vmnumax=float(vmnumax)
@@ -904,8 +904,8 @@ class GammaAP:
 			self.scanVM(apfilename + ".vm3.resgf", 3)
 			self.scanVM(apfilename + ".vm8.resgf", 8)
 
-	def fullAnalysisLoadAP3(self, ap3filename, ranal = 2, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800):
-		self.loadnormalizedAP3(ap2filename, ranal)
+	def fullAnalysisLoadAP3(self, ap3filename, ranal = 2, gasvalue=0.00054, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800):
+		self.loadnormalizedAP3(ap2filename, ranal, gasvalue)
 		self.freqmin=float(freqmin)
 		self.freqmax=float(freqmax)
 		self.vmnumax=float(vmnumax)
