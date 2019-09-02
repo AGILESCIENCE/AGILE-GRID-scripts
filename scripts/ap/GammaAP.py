@@ -952,12 +952,12 @@ class GammaAP:
 			self.scanVM(apfilename + ".vm3.resgf", 3)
 			self.scanVM(apfilename + ".vm8.resgf", 8)
 
-	def fullAnalysisLoadAP3(self, ap3filename, ranal=2, gasvalue=0.00054, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800):
-		self.loadnormalizedAP3(ap3filename, ranal, gasvalue)
+	def fullAnalysisLoadAP3(self, ap3filename, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800):
+		self.loadnormalizedAP3(ap3filename)
 		self.freqmin=float(freqmin)
 		self.freqmax=float(freqmax)
 		self.vmnumax=float(vmnumax)
-		self.scanLS(self.freqmin, self.freqmax, 0, 17)
+		self.scanLS(self.freqmin, self.freqmax, 0, 18)
 		
 		if analyzevm == 1:
 			self.runVomMisses(vonmissesthread, 0)

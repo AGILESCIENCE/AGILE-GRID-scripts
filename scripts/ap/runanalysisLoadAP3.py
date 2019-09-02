@@ -7,4 +7,4 @@ if __name__ == '__main__':
 	for filename in log_name_list:	
 		print(filename)
 		ranal = filename.split("_")[2].split("R")[1]
-		os.system("python analyzeLoadAP3.py " + filename + " " + ranal)
+		os.system("python analyzeLoadAP3.py " + filename)
