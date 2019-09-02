@@ -463,7 +463,7 @@ class GammaAP:
 						n = n + 1
 		self.diml = n
 			
-		self.res = np.zeros((self.diml, 17))
+		self.res = np.zeros((self.diml, 23))
 		self.tstartA = np.zeros(self.diml)
 		self.tstopA = np.zeros(self.diml)
 		self.expdataA = np.zeros(self.diml)
@@ -479,7 +479,7 @@ class GammaAP:
 						self.tstopA[n] = float(val[1])
 						self.expdataA[n] = float(val[2])
 						self.ctsdataA[n] = float(val[3])
-						for i in range(0,17):
+						for i in range(0,23):
 							self.res[n,i] = float(val[4+i])
 						n = n + 1
 			
@@ -582,14 +582,21 @@ class GammaAP:
 			
 			#flux error
 			n_i = self.res[n,13] / float(fluxscalefactor) * e_i
-			s_ip = 0.5 + np.sqrt(n_i + 0.25)
-			s_im = -0.5 + np.sqrt(n_i + 0.25)
+			if n_i + 0.25 > 0:
+				s_ip = 0.5 + np.sqrt(n_i + 0.25)
+				s_im = -0.5 + np.sqrt(n_i + 0.25)
+			else:
+				s_ip = 0
+				s_im = 0
 			s_irms = np.sqrt((s_ip*s_ip + s_im*s_im) / 2.0)
 			s_i = s_irms / e_i
 			self.res[n,18] = s_i 
 			
 			#TS
-			self.res[n,19] = -2 * np.log(np.exp(self.ctsdataA[n]-rateBkgExpected * e_i) * np.power(rateBkgExpected * e_i / self.ctsdataA[n], self.ctsdataA[n]))
+			if self.ctsdataA[n] > 0:
+				self.res[n,19] = -2 * np.log(np.exp(self.ctsdataA[n]-rateBkgExpected * e_i) * np.power(rateBkgExpected * e_i / self.ctsdataA[n], self.ctsdataA[n]))
+			else:
+				self.res[n,19] = -1
 			
 			#flux rate
 			self.res[n,20] = self.res[n,15] / float(fluxscalefactor)
