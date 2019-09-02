@@ -554,8 +554,8 @@ class GammaAP:
 
 	def normalizeAP3(self, apfile, ranal=2, gasvalue=0.00054, gal=0.7, iso=10, emin=100, emax=10000):
 				
-		if self.diml == 0:
-			self.loadDataAPAGILE(apfile)
+		#if self.diml == 0:
+		self.loadDataAPAGILE(apfile)
 		
 		self.res = np.zeros((self.diml, 23))
 		
