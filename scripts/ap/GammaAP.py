@@ -610,6 +610,7 @@ class GammaAP:
 			self.res[n,21] = s_i #flux error
 			
 			#calculation of expected background counts rate
+			#26:cts_expBKG4
 			self.res[n,22] = rateBkgExpected * e_i
 			
 			n = n + 1
@@ -627,7 +628,8 @@ class GammaAP:
 			n = n + 1
 		
 		fileclean.close()
-		print("* Write ap3 file: tstart tstop exp[cm2 s] cts 0:normAB11 1:normAB12 2:normAB13 3:normAB14 4:normAB21 5:normAB22 6:normAB23 7:normAB24 8:normAB11aa 9:normAB21aa 10:ratediffR1 11:ratediffR2 12:ratediffR3 13:ratediffR4 14:ratediffR1AA 15:rate 16:rate_error 17:flux_ratediffR4 18:flux_ratediffR4_error 19:TS  20:flux_rate 21:flux_rate_error 22:cts_expBKG")
+		print("* Write ap3 file: tstart tstop exp[cm2 s] cts 0:normAB11 1:normAB12 2:normAB13 3:normAB14 4:normAB21 5:normAB22 6:normAB23 7:normAB24 8:normAB11aa 9:normAB21aa 10:ratediffR1 11:ratediffR2 12:ratediffR3 13:ratediffR4 14:ratediffR1AA 15:rate 16:rate_error 17:flux_ratediffR4 18:flux_ratediffR4_error 19:TS  20:flux_rate 21:flux_rate_error 22:cts_expBKG4")
+		print("AP3 file column numbers: 0:tstart 1:tstop 2:exp[cm2 s] 3:cts 4:normAB11 5:normAB12 6:normAB13 7:normAB14 8:normAB21 9:normAB22 10:normAB23 11:normAB24 12:normAB11aa 13:normAB21aa 14:ratediffR1 15:ratediffR2 16:ratediffR3 17:ratediffR4 18:ratediffR1AA 19:rate 20:rate_error 21:flux_ratediffR4 22:flux_ratediffR4_error 23:TS 24:flux_rate 25:flux_rate_error 26:cts_expBKG4")
 		
 		self.writeVonMisses(apfile, 0)
 		self.writeVonMisses(apfile, 1)
@@ -973,8 +975,8 @@ class GammaAP:
 			self.runVomMissesGridFreq(8, ngridfreq, tgridfreq)
 			
 			
-			self.scanVM(apfilename + ".vm0.resgf", 0)
-			self.scanVM(apfilename + ".vm1.resgf", 1)
-			self.scanVM(apfilename + ".vm2.resgf", 2)
-			self.scanVM(apfilename + ".vm3.resgf", 3)
-			self.scanVM(apfilename + ".vm8.resgf", 8)
+			self.scanVM(ap3filename + ".vm0.resgf", 0)
+			self.scanVM(ap3filename + ".vm1.resgf", 1)
+			self.scanVM(ap3filename + ".vm2.resgf", 2)
+			self.scanVM(ap3filename + ".vm3.resgf", 3)
+			self.scanVM(ap3filename + ".vm8.resgf", 8)

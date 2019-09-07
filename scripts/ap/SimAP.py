@@ -268,10 +268,11 @@ class SimAP:
 				src_ON = expdata * fluxsource # [cm^2 s] * [cts] / [cm^2 s] = [cts]
 				#src_ON2 = expdata * int_source_flux # [cm^2 s] * [cts] / [cm^2 s] = [cts]
 
-				ctstot = bkg_ON + src_ON # [cts]
-				snr = src_ON / math.sqrt(float(ctstot))
+				ctstot = float(bkg_ON + src_ON) # [cts]
+				snr = src_ON / math.sqrt(ctstot)
 				ctsdata = np.random.poisson(ctstot)
 				#ctsdata = ctstot
+				#print(ctstot)
 				meanratesim = meanratesim + ctsdata / expdata
 				meanratesimerr = meanratesimerr + ctsdata
 
