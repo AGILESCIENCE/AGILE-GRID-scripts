@@ -87,6 +87,7 @@ class EvalRates:
 			print('[sr] AC - ' + str(omega_ranalAC))
 
 		bkgdata = gasvalue*gal + iso*(10.**(-5)) # cts / [cm2 s sr]
+		print("background in [cts / cm2 s sr] %3f"%bkgdata)
 		bkg_ON = bkgdata*omega_ranal # [cts] / [cm^2 s sr] * [sr] = [cts] / [cm^2 s]
 
 		ctsgal = gasvalue*gal * omega_ranal #[cts] / [cm^2 s]
@@ -105,6 +106,7 @@ class EvalRates:
 		ctstot = bkg_ON + src_ON # [cts] / [cm^2 s]
 
 		if verbose == 1:
+			print('[cts] / [cm^2 s] - bkg_ON = %.3e' % bkg_ON)
 			print('[cts] / [cm^2 s] - src_ON = ' + str(src_ON))
 			print('[cts] / [cm^2 s] - ctstot (bkg + src) = ' + str(ctstot))
 			print('-------------- Moltiplica il valore sopra per exp in [cm2 s]')

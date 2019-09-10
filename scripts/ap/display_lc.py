@@ -134,9 +134,10 @@ def get_value_from_array(data_array):
 ###### MAIN #########
 
 mode = sys.argv[1]
-file_one = sys.argv[2]
+scatter = sys.argv[2]
+file_one = sys.argv[3]
 if(mode=="2"):
-    file_two = sys.argv[3]
+    file_two = sys.argv[4]
 
 flux_notation = 100000000
 exp_notation = 1000000
@@ -206,9 +207,11 @@ if(mode=="2"):
     print(len(dict_one))
     print(len(dict_two))
 
-    plot_scatter = True
-    #if(len(dict_two)!=len(dict_one)):
-    #    plot_scatter = False
+    if(scatter=="1"):
+        plot_scatter = True
+    else:
+        plot_scatter = False
+
 
     if(plot_scatter is True):
         dict_two_clean = []
