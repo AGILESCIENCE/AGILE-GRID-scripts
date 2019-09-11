@@ -283,7 +283,8 @@ class GammaAP:
 		print("Loaded " + str(n) + " lines")
 
 
-	def normalizeAP3(self, apfile, ranal=2, gasvalue=0.00054, gal=0.7, iso=10, emin=100, emax=10000):
+	#generation of AP3 file
+	def normalizeAP(self, apfile, ranal=2, gasvalue=0.00054, gal=0.7, iso=10, emin=100, emax=10000, writevonmissesfiles=1):
 				
 		#if self.diml == 0:
 		self.loadDataAPAGILE(apfile)
@@ -360,12 +361,14 @@ class GammaAP:
 		fileclean.close()
 		print("* AP3 file res column number:   tstart tstop exp[cm2 s] cts 0:normAB11 1:normAB12 2:normAB13 3:normAB14 4:normAB21 5:normAB22 6:normAB23 7:normAB24 8:normAB11aa 9:normAB21aa 10:ratediffR1 11:ratediffR2 12:ratediffR3 13:ratediffR4 14:ratediffR1AA 15:rate 16:rate_error 17:flux_ratediffR4 18:flux_ratediffR4_error 19:TS  20:flux_rate 21:flux_rate_error 22:cts_expBKG4")
 		print("AP3 file column number: 0:tstart 1:tstop 2:exp[cm2 s] 3:cts 4:normAB11 5:normAB12 6:normAB13 7:normAB14 8:normAB21 9:normAB22 10:normAB23 11:normAB24 12:normAB11aa 13:normAB21aa 14:ratediffR1 15:ratediffR2 16:ratediffR3 17:ratediffR4 18:ratediffR1AA 19:rate 20:rate_error 21:flux_ratediffR4 22:flux_ratediffR4_error 23:TS 24:flux_rate 25:flux_rate_error 26:cts_expBKG4")
+		#columns based on evaluation of analytic background
 		
-		self.writeVonMissesFile(apfile, 0)
-		self.writeVonMissesFile(apfile, 1)
-		self.writeVonMissesFile(apfile, 2)
-		self.writeVonMissesFile(apfile, 3)
-		self.writeVonMissesFile(apfile, 8)
+		if(writevonmissesfiles == 1):
+			self.writeVonMissesFile(apfile, 0)
+			self.writeVonMissesFile(apfile, 1)
+			self.writeVonMissesFile(apfile, 2)
+			self.writeVonMissesFile(apfile, 3)
+			self.writeVonMissesFile(apfile, 8)
 		print('End normalisation')
 		return
 		
@@ -416,7 +419,7 @@ class GammaAP:
 
 		return pls, power.max(), maxf
 
-	def scanLS(self, minfreq=-1, maxfreq=-1, rangemin=0, rangemax=14):
+	def scanLS(self, minfreq=-1, maxfreq=-1, rangemin=0, rangemax=23):
 		fileclean = open(self.apfile + ".apres","w")
 		for i in range(rangemin,rangemax):
 			pls, pmax, maxf = self.calculateLS(0 ,0, i, minfreq, maxfreq)
@@ -584,8 +587,8 @@ class GammaAP:
 		print("sig2= " + str(sig2))
 
 
-	def fullAnalysis3(self, apfilename, ranal=2, gasvalue=0.00054, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800):
-		self.normalizeAP3(apfilename, ranal, gasvalue)
+	def fullAnalysis(self, apfilename, ranal=2, gasvalue=0.00054, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800):
+		self.normalizeAP(apfilename, ranal, gasvalue)
 		self.freqmin=float(freqmin)
 		self.freqmax=float(freqmax)
 		self.vmnumax=float(vmnumax)

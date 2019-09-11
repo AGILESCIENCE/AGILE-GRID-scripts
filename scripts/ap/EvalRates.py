@@ -29,11 +29,11 @@ class EvalRates:
 		emax = float(emax)
 		if verbose == 1:
 			print('ranal %.2f'%ranal)
-			print('emin %d'% emin)
-			print('emax %d'% emax)
+			print('emin [MeV]: %d'% emin)
+			print('emax [MeV]: %d'% emax)
 		psf = self.getInstrumentPSF(instrumentID, emin)
 		if verbose == 1:
-			print('selected psf: ' + str(psf))
+			print('selected psf  : ' + str(psf))
 			print('selected ranal: ' + str(ranal))
 		
 		#to take into account the extension of the PSF
@@ -47,8 +47,8 @@ class EvalRates:
 		omega_ranalAC = (np.pi/180. * ranal)**2 * np.sin(np.pi/180. * 30) / (np.pi/180. * 30) #[sr]
 	
 		if verbose == 1:
-			print('[sr]   - ' + str(omega_ranal))
-			print('[sr] AC - ' + str(omega_ranalAC))
+			print('omega    [sr]  : ' + str(omega_ranal))
+			print('omega AC [sr]  : ' + str(omega_ranalAC))
 			
 		return fluxscalefactor;
 
@@ -61,15 +61,15 @@ class EvalRates:
 		emin = float(emin)
 		emax = float(emax)
 		if verbose == 1:
-			print('gasvalue %.5f'%gasvalue)
-			print('gascoeff %.2f'% gal)
-			print('isocoeff %.2f'% iso)
-			print('emin %d'% emin)
-			print('emax %d'% emax)
+			print('gasvalue    %.5f'%gasvalue)
+			print('gascoeff    %.2f'% gal)
+			print('isocoeff    %.2f'% iso)
+			print('emin [MeV]: %d'% emin)
+			print('emax [MeV]: %d'% emax)
 		psf = self.getInstrumentPSF(instrumentID, emin)
 		if verbose == 1:
-			print('selected psf: ' + str(psf))
-			print('selected ranal: ' + str(ranal))
+			print('selected psf   [deg]: ' + str(psf))
+			print('selected ranal [deg]: ' + str(ranal))
 
 		#to take into account the extension of the PSF
 		fluxscalefactor = math.fabs(1-2*norm(0,  psf).cdf(ranal))
@@ -83,11 +83,11 @@ class EvalRates:
 		omega_ranalAC = (np.pi/180. * ranal)**2 * np.sin(np.pi/180. * 30) / (np.pi/180. * 30) #[sr]
 
 		if verbose == 1:
-			print('[sr]   - ' + str(omega_ranal))
-			print('[sr] AC - ' + str(omega_ranalAC))
+			print('[sr]    : ' + str(omega_ranal))
+			print('[sr] AC : ' + str(omega_ranalAC))
 
 		bkgdata = gasvalue*gal + iso*(10.**(-5)) # cts / [cm2 s sr]
-		print("background in [cts / cm2 s sr] %3f"%bkgdata)
+		print("absolute background (gasvalue * gal + iso*(10^-5)) [cts / cm2 s sr]: %3f"%bkgdata)
 		bkg_ON = bkgdata*omega_ranal # [cts] / [cm^2 s sr] * [sr] = [cts] / [cm^2 s]
 
 		ctsgal = gasvalue*gal * omega_ranal #[cts] / [cm^2 s]
@@ -95,7 +95,7 @@ class EvalRates:
 
 		if verbose == 1:
 			print('--------------')
-			print('[cts] / [cm^2 s] - bkg_ON = ctsgal + ctsiso = ' + str(bkg_ON) + ' = ' + str(ctsgal) + ' + ' + str(ctsiso))
+			print('bkg_ON = ctsgal + ctsiso [cts / cm^2 s]: ' + str(bkg_ON) + ' = ' + str(ctsgal) + ' + ' + str(ctsiso))
 
 		#B) flux source constant
 		fluxsource = fluxsource * fluxscalefactor #[cts / cm2 s]
@@ -106,10 +106,10 @@ class EvalRates:
 		ctstot = bkg_ON + src_ON # [cts] / [cm^2 s]
 
 		if verbose == 1:
-			print('[cts] / [cm^2 s] - bkg_ON = %.3e' % bkg_ON)
-			print('[cts] / [cm^2 s] - src_ON = ' + str(src_ON))
-			print('[cts] / [cm^2 s] - ctstot (bkg + src) = ' + str(ctstot))
-			print('-------------- Moltiplica il valore sopra per exp in [cm2 s]')
+			print('bkg_ON [cts / cm^2 s]:            %.3e' % bkg_ON)
+			print('src_ON [cts / cm^2 s]:            %.3e' % src_ON)
+			print('ctstot (bkg + src) [cts / cm2 s]: %.3e' % ctstot)
+			#print('-------------- Moltiplica il valore sopra per exp in [cm2 s]')
 
 		return bkg_ON, src_ON
 
@@ -122,10 +122,10 @@ class EvalRates:
 		ctstot = (bkg_ON + src_ON) * exposure # [cts]
 		snr = src_ON * exposure / math.sqrt(float(ctstot))
 
-		print('src_ON = %.3e'% src_ON)
-		print('bkg_ON = %.3e'% bkg_ON)
-		print('ctstot = %.3f'% ctstot)
-		print('SNR = %.3f' % snr)
+		print('src_ON [cts / cm^2 s]: %.3e'% src_ON)
+		print('bkg_ON [cts / cm^2 s]: %.3e'% bkg_ON)
+		print('ctstot [cts]:          %.3f'% ctstot)
+		print('SNR: %.3f' % snr)
 		print('--------------')
 
 	def determinebestSNR(self, verbose=0, ranalstart= 0.1, ranalend =4.0, exposure = 40000, fluxsource = 0e-08, gasvalue=0.0006, gal = 0.7, iso = 10., emin = 100., emax = 10000., instrumentID = 0):
