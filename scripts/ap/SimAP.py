@@ -41,8 +41,6 @@ class SimAP:
     def get_flux_from_window_file(self,time,windowfile):
 
         flux = -1
-        print(time)
-        print(windowfile)
         with open(windowfile, "r") as file:
             for cnt, line in enumerate(file):
 
@@ -55,11 +53,10 @@ class SimAP:
 
 
                     # if bin is inside the window calculate flux
-                    if(time>=tstart and time <=tstop):
-
+                    if(time>=tstart and time<=tstop):
                         retta = self.trova_retta(tstart,minflux,tstop,maxflux)
                         flux = retta(time)
-                        print(flux)
+
                         break
 
         return flux
@@ -79,6 +76,8 @@ class SimAP:
 
         tzero = tstart
         bin_number = int(tstop - tstart)
+        print("tstart="+str(tstart))
+        print("tstop="+str(tstop))
         print('number of bins: ' + str(bin_number))
         nintervals = int(nlines)
         print('number of intervals: ' + str(nintervals))
@@ -88,30 +87,30 @@ class SimAP:
 
 
         for i in range(int(tstart),int(tstop)):
-
+            
             light_curve[int(i-tzero)] = self.get_flux_from_window_file(i,windowfile)
 
         print("end light_curve fill")
 
-        nline = 0
-        with open(apfile, "r") as ins:
-            for line in ins:
-                if(line != ""):
-                    val = line.split(" ")
-                    tstart  = float(val[0])
-                    tstop   = float(val[1])
-                    meanflux = 0
-                    for i in range(int(tstart),int(tstop)):
-                        print("calculate"+str(i))
-                        meanflux += light_curve[int(i-tzero)]
-                    meanflux /= int(tstop-tstart)
-                    #print(str(tstart) + '-' + str(tstop) + ' TT ' + str(tstop-tstart) + ' s ' + str(meanflux) + ' cts / cm2 s')
-                    #for i in range(int(tstart),int(tstop)):
-                    #   light_curve_mean[int(i-tzero)] = meanflux
-                    #print(meanflux)
-                    light_curve_mean_period[nline] = meanflux
-                    nline += 1
-                    #print(nline)
+        # nline = 0
+        # with open(apfile, "r") as ins:
+        #     for line in ins:
+        #         if(line != ""):
+        #             val = line.split(" ")
+        #             tstart  = float(val[0])
+        #             tstop   = float(val[1])
+        #             meanflux = 0
+        #             for i in range(int(tstart),int(tstop)):
+        #                 print("calculate"+str(i))
+        #                 meanflux += light_curve[int(i-tzero)]
+        #             meanflux /= int(tstop-tstart)
+        #             #print(str(tstart) + '-' + str(tstop) + ' TT ' + str(tstop-tstart) + ' s ' + str(meanflux) + ' cts / cm2 s')
+        #             #for i in range(int(tstart),int(tstop)):
+        #             #   light_curve_mean[int(i-tzero)] = meanflux
+        #             #print(meanflux)
+        #             light_curve_mean_period[nline] = meanflux
+        #             nline += 1
+        #             #print(nline)
 
         if(plot == 1):
             plt.plot(light_curve,'-o' ,markersize=1)
