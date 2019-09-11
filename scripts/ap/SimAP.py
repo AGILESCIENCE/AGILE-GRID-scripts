@@ -93,25 +93,25 @@ class SimAP:
 
         print("end light_curve fill")
 
-        # nline = 0
-        # with open(apfile, "r") as ins:
-        #     for line in ins:
-        #         if(line != ""):
-        #             val = line.split(" ")
-        #             tstart  = float(val[0])
-        #             tstop   = float(val[1])
-        #             meanflux = 0
-        #             for i in range(int(tstart),int(tstop)):
-        #                 print("calculate"+str(i))
-        #                 meanflux += light_curve[int(i-tzero)]
-        #             meanflux /= int(tstop-tstart)
-        #             #print(str(tstart) + '-' + str(tstop) + ' TT ' + str(tstop-tstart) + ' s ' + str(meanflux) + ' cts / cm2 s')
-        #             #for i in range(int(tstart),int(tstop)):
-        #             #   light_curve_mean[int(i-tzero)] = meanflux
-        #             #print(meanflux)
-        #             light_curve_mean_period[nline] = meanflux
-        #             nline += 1
-        #             #print(nline)
+        nline = 0
+        with open(apfile, "r") as ins:
+            for line in ins:
+                if(line != ""):
+                    val = line.split(" ")
+                    tstart  = float(val[0])
+                    tstop   = float(val[1])
+                    meanflux = 0
+                    for i in range(int(tstart),int(tstop)):
+                        print("calculate"+str(i))
+                        meanflux += light_curve[int(i-tzero)]
+                    meanflux /= int(tstop-tstart)
+                    #print(str(tstart) + '-' + str(tstop) + ' TT ' + str(tstop-tstart) + ' s ' + str(meanflux) + ' cts / cm2 s')
+                    #for i in range(int(tstart),int(tstop)):
+                    #   light_curve_mean[int(i-tzero)] = meanflux
+                    #print(meanflux)
+                    light_curve_mean_period[nline] = meanflux
+                    nline += 1
+                    #print(nline)
 
         if(plot == 1):
             plt.plot(light_curve,'-o' ,markersize=1)
