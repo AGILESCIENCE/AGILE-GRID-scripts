@@ -198,6 +198,60 @@ if(mode=="1"):
         ax[1,4].set_title("Exp Norm")
         ax[1,4].set(xlabel='Exp Norm 10^6')
 
+    plt.figure(1)
+    fig, ax = plt.subplots(3,3)
+    fig.suptitle('File 1 (red): '+os.path.basename(file_one))
+
+    bins = 40
+
+    #LC COUNT
+    ax[0,0].errorbar(data_array_one['x'], data_array_one['count'],xerr=data_array_one['xerr'], yerr=data_array_one['count_err'], label=os.path.basename(file_one), fmt='r.')
+    ax[0,0].set(xlabel="TT time *10^8", ylabel="Counts")
+    ax[0,0].grid(True)
+
+    #LC COUNT BKG
+    ax[0,1].errorbar(data_array_one['x'], data_array_one['count_bkg'],xerr=data_array_one['xerr'], yerr=data_array_one['count_bkg_err'], label=os.path.basename(file_one), fmt='r.')
+    ax[0,1].set(xlabel="TT time *10^8", ylabel="Counts Bkg")
+    ax[0,1].grid(True)
+
+    #LC EXP
+    ax[1,0].errorbar(data_array_one['x'], data_array_one['exp'],xerr=data_array_one['xerr'],  label=os.path.basename(file_one), fmt='r.')
+    ax[1,0].set(xlabel="TT time *10^8", ylabel="Exp")
+    ax[1,0].grid(True)
+
+    #LC EXP NORM
+    ax[1,1].errorbar(data_array_one['x'], data_array_one['exp_norm'],xerr=data_array_one['xerr'] , label=os.path.basename(file_one), fmt='r.')
+    ax[1,1].set(xlabel="TT time *10^8", ylabel="Exp Norm")
+    ax[1,1].grid(True)
+
+
+    #LC RATE
+    ax[0,2].errorbar(data_array_one['x'], data_array_one['rate'],xerr=data_array_one['xerr'],yerr=data_array_one['rate_err'],  label=os.path.basename(file_one), fmt='r.')
+    ax[0,2].set(xlabel="TT time *10^8", ylabel="Rate")
+    ax[0,2].grid(True)
+
+    #ISTOGRAMMA COUNT
+
+    mean = np.mean(data_array_one['count'])
+    std = np.std(data_array_one['count'])
+    n, bins, patches = ax[2,2].hist(data_array_one['count'], binsize, density=True, facecolor='r', alpha=0.6,label="mean: "+str(round(mean,2))+",std= "+str(round(std,2)))
+    ax[2,2].plot(bins, norm.pdf(bins, mean, std), color="black", linestyle="--", alpha=0.9)
+    ax[2,2].set_title("Count")
+    ax[2,2].set(xlabel='Count')
+    ax[2,2].legend()
+
+
+
+    #ISTOGRAMMA COUNT BKG
+    mean = np.mean(data_array_one['count_bkg'])
+    std = np.std(data_array_one['count_bkg'])
+    n, bins, patches = ax[1,2].hist(data_array_one['count_bkg'], binsize, density=True, facecolor='r', alpha=0.6,label="mean: "+str(round(mean,2))+",std= "+str(round(std,2)))
+    ax[1,2].plot(bins, norm.pdf(bins, mean, std), color="black", linestyle="--", alpha=0.9)
+    ax[1,2].set_title("Count")
+    ax[1,2].set(xlabel='Count')
+    ax[1,2].legend()
+
+
     plt.show()
 
 if(mode=="2"):
