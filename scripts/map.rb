@@ -78,7 +78,6 @@
 #18 -> per il pointing, esclude la SAA e il recovery
 # Normalmente usate il phasecode = 6 nei dati in spinning. Questo phasecode esclude i fotoni presenti nella SAA ridefinita con i conteggi dell'AC. Se invece vuoi usare la vecchia definizione della SAA (in base all'intensità del campo magnetico così come definito da TPZ) devi usare il phasecode = 6.
 
-#18) IT DOES NOT WORK timelist: a file with a list of tstart/stop
 
 load ENV["AGILE"] + "/scripts/conf.rb"
 
@@ -104,9 +103,7 @@ filterbase2 = filter.split("_")[0] + "_" + filter.split("_")[1];
 
 parameters.processInput(6, ARGV, filter)
 
-if parameters.timelist != "None"
-	puts "Error: use map_timelist.rb instead"
-end
+
 
 emin1 = parameters.emin;
 emax1 = parameters.emax;
@@ -230,46 +227,64 @@ end
 
 index_name_cor = BASEDIR_ARCHIVE.to_s + "/DATA/INDEX/3901.cor.index"
 puts "index name cor: " + index_name_cor;
+
 tstart = 0
 tstop = 0
-if(parameters.timetype == "CONTACT")
-	#estrazione dei tempi min e max dal corfileindex
 
-	datautils.extractTimeMinMaxForContact(index_name_cor, contact0);
-	tstart = datautils.tmin;
+if parameters.timelist != "None"
 
-	datautils.extractTimeMinMaxForContact(index_name_cor, contact1);
-	tstop = datautils.tmax;
-end
-if(parameters.timetype == "TT")
-	tstart = contact0;
-	tstop = contact1
-end
-if(parameters.timetype == "MJD")
-	tstart = datautils.time_mjd_to_tt(contact0);
-	tstop = datautils.time_mjd_to_tt(contact1);
-end
+	count = 0
+	last_line = ""
+	File.open(parameters.timelist).each_line do | line |
+		if(count == 0)
+			tstart = line.split(" ")[0]
+		end
+		count = count + 1
+		last_line = line
+	end
+	tstop = last_line.split(" ")[1]
 
-if(parameters.timetype == "UTC")
-	tstart = datautils.time_utc_to_tt(contact0)
-	tstop = datautils.time_utc_to_tt(contact1)
+else
+
+	if(parameters.timetype == "CONTACT")
+		#estrazione dei tempi min e max dal corfileindex
+
+		datautils.extractTimeMinMaxForContact(index_name_cor, contact0);
+		tstart = datautils.tmin;
+
+		datautils.extractTimeMinMaxForContact(index_name_cor, contact1);
+		tstop = datautils.tmax;
+	end
+	if(parameters.timetype == "TT")
+		tstart = contact0;
+		tstop = contact1
+	end
+	if(parameters.timetype == "MJD")
+		tstart = datautils.time_mjd_to_tt(contact0);
+		tstop = datautils.time_mjd_to_tt(contact1);
+	end
+
+	if(parameters.timetype == "UTC")
+		tstart = datautils.time_utc_to_tt(contact0)
+		tstop = datautils.time_utc_to_tt(contact1)
+	end
+
+	if tstart.to_f == 0
+		puts "Error in TMIN, exit"
+		exit(1)
+	end
+	if tstop.to_f == 0
+		puts "Error in TMAX, exit"
+		exit(1)
+	end
 end
+#phasecode
 
 puts "TMIN: " + tstart.to_s;
 puts "TMAX: " + tstop.to_s;
 
-if tstart.to_f == 0
-	puts "Error in TMIN, exit"
-	exit(1)
-end
-if tstop.to_f == 0
-	puts "Error in TMAX, exit"
-	exit(1)
-end
-
-#phasecode
-
 parameters.setPhaseCode(tstop)
+
 
 #selezione della sar matrix
 filterbase = filter.split("_")[0]
