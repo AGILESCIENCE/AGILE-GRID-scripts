@@ -19,10 +19,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		DD4AD00B22DE8A4B00DC8376 /* AGILE-grid-scripts */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "AGILE-grid-scripts"; path = "/Users/bulgarelli/devel.agile/AGILE-GRID-CAT2-Setup/AGILE-GRID-ScienceTools-Setup/AGILE-GRID-scripts/scripts/build/Debug/AGILE-grid-scripts"; sourceTree = "<absolute>"; };
-		DD4AD00C22DE8A6B00DC8376 /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scripts; sourceTree = "<group>"; };
 		DDC6630620E82D470002C1F9 /* catalogs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = catalogs; path = ../catalogs; sourceTree = "<group>"; };
 		DDC6630720F015D90002C1F9 /* spot6 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = spot6; path = ../spot6; sourceTree = "<group>"; };
+		DDE10D35233903F800547434 /* AGILE-grid-scripts */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "AGILE-grid-scripts"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDE10D362339041800547434 /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scripts; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,9 +39,10 @@
 		DDC662F120E82CF10002C1F9 = {
 			isa = PBXGroup;
 			children = (
-				DD4AD00C22DE8A6B00DC8376 /* scripts */,
+				DDE10D362339041800547434 /* scripts */,
 				DDC6630720F015D90002C1F9 /* spot6 */,
 				DDC6630620E82D470002C1F9 /* catalogs */,
+				DDE10D35233903F800547434 /* AGILE-grid-scripts */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,7 +63,7 @@
 			);
 			name = "AGILE-grid-scripts";
 			productName = "AGILE-grid-scripts";
-			productReference = DD4AD00B22DE8A4B00DC8376 /* AGILE-grid-scripts */;
+			productReference = DDE10D35233903F800547434 /* AGILE-grid-scripts */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
