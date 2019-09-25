@@ -36,6 +36,7 @@
 # =16 activate [00050-00100], [00100-00[3|4]00], [00[3|4]00-01000], [01000-03000], [03000, 100000], [10000, 50000])
 # =17 activate [00050-00100], [00100-00200], [00200-00400], [00400-01000], [01000-03000], [03000, 10000], [10000, 50000])
 #17) phasecode: optional, default 2. If -1 => automatic determination ==>  if (time end  > 182692800.0 (MJD 55119.5, UTC 2009-10-15T12:00:00, fine pointing) && phasecode == -1) then phasecode = 6 (SPIN) else phasecode = 18 (POIN)
+#18) timelist: a list of timeintervals tstart tstop in TT to generate summed maps
 #19) timebinsize: optional, default 999999999
 #20) makelc: optional, default 0
 #21) lpointing: optinal, default -1
