@@ -7,6 +7,15 @@ from scipy.stats import norm
 #e = EvalRates()
 #e.calculateRateWithoutExp(1, 0.7, 0e-08, 1.2e-4, 0.76, 1.75, 400)
 
+class MathUtils:
+	def steradiansCone(this, ranal):
+		return 2.*np.pi*(1. - np.cos(ranal*(np.pi/180.))) #[sr]
+		
+	def steradiansSquarePixel(this, dimpixel, theta=30):
+		pixel = (np.pi/180. * dimpixel)**2
+		return pixel * np.sin(np.pi/180. * theta) / (np.pi/180. * theta) #[sr]
+		#omega_ranalAC = (np.pi/180. * ranal)**2 * np.sin(np.pi/180. * 30) / (np.pi/180. * 30) #[sr]
+
 class EvalRates:
 
 	def __init__(self):
@@ -18,7 +27,7 @@ class EvalRates:
 		if instrumentID == 0:
 			if emin < 1700.: psf = 0.3 # deg.
 			if emin < 1000.: psf = 1. # deg.
-			if emin < 400.: psf = 2.4 # deg.calibration with Vela with ranal=2, 3, 4
+			if emin < 400.: psf = 2.1 # deg.calibration with Vela with ranal=2, 3, 4
 			if emin < 100.: psf = 5.0 # deg. da provare
 
 		return psf
@@ -40,19 +49,19 @@ class EvalRates:
 		fluxscalefactor = math.fabs(1-2*norm(0,  psf).cdf(ranal))
 		
 		print('Fluxscalefactor based on PSF: %.4f' % fluxscalefactor)
-
+		
 		# ON - PSF region
-		omega_ranal = 2.*np.pi*(1. - np.cos(ranal*(np.pi/180.))) #[sr]
-		#AC = Andrew
-		omega_ranalAC = (np.pi/180. * ranal)**2 * np.sin(np.pi/180. * 30) / (np.pi/180. * 30) #[sr]
-	
+		#omega_ranal = 2.*np.pi*(1. - np.cos(ranal*(np.pi/180.))) #[sr]
+		mu = MathUtils()
+		omega_ranal = mu.steradiansCone(ranal)
+		
 		if verbose == 1:
 			print('omega    [sr]  : ' + str(omega_ranal))
-			print('omega AC [sr]  : ' + str(omega_ranalAC))
+			#print('omega AC [sr]  : ' + str(omega_ranalAC))
 			
 		return fluxscalefactor;
 
-	def calculateRateWithoutExp(self, verbose = 0, ranal= -1, fluxsource = 0e-08, gasvalue=-1, gal = 0.7, iso = 10., emin = 100., emax = 50000., instrumentID = 0):
+	def calculateRateWithoutExp(self, verbose = 0, ranal= -1, fluxsource = 0e-08, gasvalue=-1, gal = 0.7, iso = 10., emin = 100., emax = 10000., instrumentID = 0):
 		fluxsource = float(fluxsource)
 		gasvalue = float(gasvalue) #andare direttamente nei file .disp.conv.sky.gz del modello e prendere il valore da li'
 		gal = float(gal)
@@ -77,20 +86,20 @@ class EvalRates:
 		if verbose == 1:
 			print('fluxscalefactor based on PSF: ' + str(fluxscalefactor))
 
-		# ON - PSF region
-		omega_ranal = 2.*np.pi*(1. - np.cos(ranal*(np.pi/180.))) #[sr]
-		#AC = Andrew
-		omega_ranalAC = (np.pi/180. * ranal)**2 * np.sin(np.pi/180. * 30) / (np.pi/180. * 30) #[sr]
+		# ON - PSF region - steradians of a cone of angle \theta
+		#omega_ranal = 2.*np.pi*(1. - np.cos(ranal*(np.pi/180.))) #[sr]
+		mu = MathUtils()
+		omega_ranal = mu.steradiansCone(ranal)
 
 		if verbose == 1:
 			print('[sr]    : ' + str(omega_ranal))
-			print('[sr] AC : ' + str(omega_ranalAC))
+			#print('[sr] AC : ' + str(omega_ranalAC))
 
 		bkgdata = gasvalue*gal + iso*(10.**(-5)) # cts / [cm2 s sr]
 		print("absolute background (gasvalue * gal + iso*(10^-5)) [cts / cm2 s sr]: %3f"%bkgdata)
 		bkg_ON = bkgdata*omega_ranal # [cts] / [cm^2 s sr] * [sr] = [cts] / [cm^2 s]
 
-		ctsgal = gasvalue*gal * omega_ranal #[cts] / [cm^2 s]
+		ctsgal = gasvalue * gal * omega_ranal #[cts] / [cm^2 s]
 		ctsiso = iso*(10.**(-5)) * omega_ranal #[cts] / [cm^2 s]
 
 		if verbose == 1:
@@ -117,7 +126,7 @@ class EvalRates:
 	#fluxsource [cts] / [cm2 s]
 	#gasvalue [cts] / [cm2 s sr]
 
-	def calculateRateAndSNR(self, verbose = 0, ranal= -1, exposure = 40000, fluxsource = 0e-08, gasvalue=-1, gal = 0.7, iso = 10., emin = 100., emax = 50000., instrumentID = 0):
+	def calculateRateAndSNR(self, verbose = 0, ranal= -1, exposure = 40000, fluxsource = 0e-08, gasvalue=-1, gal = 0.7, iso = 10., emin = 100., emax = 10000., instrumentID = 0):
 		bkg_ON, src_ON = self.calculateRateWithoutExp(verbose, ranal, fluxsource, gasvalue, gal, iso, emin, emax, instrumentID)
 		ctstot = (bkg_ON + src_ON) * exposure # [cts]
 		snr = src_ON * exposure / math.sqrt(float(ctstot))

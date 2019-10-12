@@ -66,7 +66,7 @@ def extract_data(file_name):
                #if(sqrtts < 0):
                    #continue
 
-               detection_array.append({"rate":rate,"rate_err":rate_err,"count":count,'count_err':count_err,"count_bkg":count_bkg,'count_bkg_err':count_bkg_err,"tstart":tstart,"tstop":tstop,"flux":flux,"flux_err":flux_err,"sqrtts":sqrtts,'exp':exp,'exp_norm':exp_norm})
+               detection_array.append({"rate":rate,"rate_err":rate_err,"count":count,"count_err":count_err,"count_bkg":count_bkg,"count_bkg_err":count_bkg_err,"tstart":tstart,"tstop":tstop,"flux":flux,"flux_err":flux_err,"sqrtts":sqrtts,"exp":exp,"exp_norm":exp_norm})
 
 
         return detection_array
