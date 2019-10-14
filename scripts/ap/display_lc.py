@@ -33,7 +33,7 @@ def extract_data(file_name):
                    exp_norm = -1
                    flux_err =  float(line.split()[1])*flux_notation
                    if(float(line.split()[7])>0):
-                       sqrtts =  np.sqrt(float(line.split()[7]))
+                       sqrtts =  float(line.split()[7])
                    else:
                        sqrtts =  -1
                    count = -1
@@ -48,8 +48,18 @@ def extract_data(file_name):
                    tstart = float(line.split()[0])
                    tstop =  float(line.split()[1])
                    rate = float(line.split()[19])*flux_notation
+                   if(rate < 0.0):
+                       print(line)
+                       continue
                    rate_err = float(line.split()[20])*flux_notation
+                   if(rate_err > 2000.0):
+                       print(line)
+                       continue
+                       
                    flux =  float(line.split()[21])*flux_notation
+                   if(flux < 0.0):
+                       print(line)
+                       continue
                    exp = float(line.split()[2])/exp_notation
                    exp_norm = float(line.split()[7])/exp_notation
                    flux_err =  float(line.split()[22])*flux_notation
@@ -62,9 +72,9 @@ def extract_data(file_name):
                    count_bkg = float(line.split()[26])
                    count_bkg_err = float(np.sqrt(count_bkg))/2
 
-               #FILTRO
-               #if(sqrtts < 0):
-                   #continue
+              #FILTRO
+              #if(rate_err > 10.0):
+                 #continue
 
                detection_array.append({"rate":rate,"rate_err":rate_err,"count":count,"count_err":count_err,"count_bkg":count_bkg,"count_bkg_err":count_bkg_err,"tstart":tstart,"tstop":tstop,"flux":flux,"flux_err":flux_err,"sqrtts":sqrtts,"exp":exp,"exp_norm":exp_norm})
 

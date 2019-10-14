@@ -232,13 +232,13 @@ class GammaAP:
 						nline += 1
 
 							
-	def calculateCtsFromConstantModel(self, ranal= 1, gasvalue=0, gal = 0.7, iso = 12., emin = 100., emax = 10000., instrumentID = 0):
+	def calculateCtsFromConstantModel(self, ranal= 1, gasvalue=0, gal = 0.7, iso = 12., emin = 100., emax = 10000., gindex=2.1, source_theta=30, instrumentID = 0):
 		if self.diml == 0:
 			print('Error: data not loaded')
 			return
 
 		rate = EvalRates()
-		bkg_ON, src_ON = rate.calculateRateWithoutExp(0, ranal, 0e-08,  gasvalue, gal, iso, emin, emax, instrumentID)
+		bkg_ON, src_ON = rate.calculateRateWithoutExp(0, ranal, 0e-08,  gasvalue, gal, iso, emin, emax, gindex, source_theta, instrumentID)
 		self.ctssimA = np.zeros(self.diml)
 		ii = 0
 		for exp in self.expdataA:
@@ -284,7 +284,7 @@ class GammaAP:
 
 
 	#generation of AP3 file
-	def normalizeAP(self, apfile, ranal=2, gasvalue=0.00054, gal=0.7, iso=10, emin=100, emax=10000, writevonmissesfiles=1):
+	def normalizeAP(self, apfile, ranal=2, gasvalue=0.00054, gal=0.7, iso=10, emin=100, emax=10000, gindex=2.1, writevonmissesfiles=1):
 				
 		#if self.diml == 0:
 		self.loadDataAPAGILE(apfile)
@@ -298,13 +298,13 @@ class GammaAP:
 		nap = NormalizeAP()
 		
 		rate = EvalRates()
-		bkg_ON, src_ON = rate.calculateRateWithoutExp(0, ranal, 0e-08,  gasvalue, gal, iso, emin, emax, 0)
+		bkg_ON, src_ON = rate.calculateRateWithoutExp(0, ranal, 0e-08,  gasvalue, gal, iso, emin, emax, gindex, 30, 0)
 		rateBkgExpected = bkg_ON
 		#print(bkg_ON)
 		
 		nap.normalizeAB3(self.expdataA, self.ctsdataA, rateBkgExpected, self.res[:,0], self.res[:,1], self.res[:,2], self.res[:,3], self.res[:,4], self.res[:,5], self.res[:,6], self.res[:,7], self.res[:,8], self.res[:,9], self.res[:,10], self.res[:,11],self.res[:,12], self.res[:,13], self.res[:,14],self.res[:,15], self.res[:,16])
 		
-		fluxscalefactor=rate.getFluxScaleFactor(0, ranal, emin, emax)
+		fluxscalefactor=rate.getFluxScaleFactor(0, gindex, ranal, emin, emax)
 		n=0
 		for e_i in self.expdataA:
 			
