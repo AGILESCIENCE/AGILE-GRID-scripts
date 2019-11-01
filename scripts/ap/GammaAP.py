@@ -10,7 +10,7 @@ from MethodVonMisses import *
 #gasvalue IGR = 0.00054
 #gasvalue Vela = 0.00018
 #TODO
-#1) Includere la possibilità di avere una LC di bkg indipendente da quella da analizzare, su cui determinare rate medio
+#1) Includere la possibilita' di avere una LC di bkg indipendente da quella da analizzare, su cui determinare rate medio
 
 
 class NormalizeAP:
@@ -20,7 +20,7 @@ class NormalizeAP:
 
 	# Section 2
 	#
-	# [1] Robin Corbet, LAT Light Curve Analysis: Aperture Photometry and Periodicity Searches, slides at COSPAR CBW 2010
+	# [1] Robin Corbet, LAT Light Curve Analysis Aperture Photometry and Periodicity Searches, slides at COSPAR CBW 2010
 	# [2] Gehrels, 1986, ApJ, 303, 336
 	# [3] Kraft, Burrows, & Nousek, 1991, ApJ, 374, 344
 
@@ -304,7 +304,8 @@ class GammaAP:
 		
 		nap.normalizeAB3(self.expdataA, self.ctsdataA, rateBkgExpected, self.res[:,0], self.res[:,1], self.res[:,2], self.res[:,3], self.res[:,4], self.res[:,5], self.res[:,6], self.res[:,7], self.res[:,8], self.res[:,9], self.res[:,10], self.res[:,11],self.res[:,12], self.res[:,13], self.res[:,14],self.res[:,15], self.res[:,16])
 		
-		fluxscalefactor=rate.getFluxScaleFactor(0, gindex, ranal, emin, emax)
+		fluxscalefactor=rate.getFluxScaleFactor(0, gindex, ranal, emin, emax) 
+		#/ 1.66
 		n=0
 		for e_i in self.expdataA:
 			

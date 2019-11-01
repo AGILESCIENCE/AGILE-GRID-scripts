@@ -21,8 +21,8 @@
 /* Begin PBXFileReference section */
 		DDC6630620E82D470002C1F9 /* catalogs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = catalogs; path = ../catalogs; sourceTree = "<group>"; };
 		DDC6630720F015D90002C1F9 /* spot6 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = spot6; path = ../spot6; sourceTree = "<group>"; };
-		DDCA55F22353978700C28508 /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scripts; sourceTree = "<group>"; };
-		DDE10D35233903F800547434 /* AGILE-grid-scripts */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "AGILE-grid-scripts"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDE10D35233903F800547434 /* AGILE-grid-scripts */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "AGILE-grid-scripts"; path = "/Users/bulgarelli/devel.agile/AGILE-GRID-CAT2-Setup/AGILE-GRID-ScienceTools-Setup/AGILE-GRID-scripts/scripts/build/Debug/AGILE-grid-scripts"; sourceTree = "<absolute>"; };
+		DDFD0AA82357827400F9D886 /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scripts; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,10 +39,9 @@
 		DDC662F120E82CF10002C1F9 = {
 			isa = PBXGroup;
 			children = (
-				DDCA55F22353978700C28508 /* scripts */,
+				DDFD0AA82357827400F9D886 /* scripts */,
 				DDC6630720F015D90002C1F9 /* spot6 */,
 				DDC6630620E82D470002C1F9 /* catalogs */,
-				DDE10D35233903F800547434 /* AGILE-grid-scripts */,
 			);
 			sourceTree = "<group>";
 		};

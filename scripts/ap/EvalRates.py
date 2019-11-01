@@ -259,6 +259,14 @@ class EvalRates:
 		print('ctstot [cts]:          %.3f'% ctstot)
 		print('SNR: %.3f' % snr)
 		print('--------------')
+		
+		alpha=1
+		N_off = bkg_ON * exposure
+		N_on  = src_ON * exposure
+		A_part = ((1. + alpha)/alpha)*(N_on/(N_on + N_off))
+		B_part = (1. + alpha)*(N_off/(N_on + N_off))
+		S_lima = np.sqrt(2)*math.sqrt((N_on*np.log(A_part)) + (N_off*np.log(B_part)))
+		print('S_lima: %.3f' % snr)
 
 	def determinebestSNR(self, verbose=0, ranalstart= 0.1, ranalend =4.0, exposure = 40000, fluxsource = 0e-08, gasvalue=0.0006, gal = 0.7, iso = 10., emin = 100., emax = 10000., gindex=2.1, source_theta=30, instrumentID = 0):
 
