@@ -309,10 +309,10 @@ class GammaAP:
 		n=0
 		for e_i in self.expdataA:
 			
-			#flux
+			#flux -> flux_ratediffR4
 			self.res[n,17] = self.res[n,13] / float(fluxscalefactor)
 			
-			#flux error
+			#flux error -> flux_ratediffR4_error
 			n_i = self.res[n,13] / float(fluxscalefactor) * e_i
 			if n_i + 0.25 > 0:
 				s_ip = 0.5 + np.sqrt(n_i + 0.25)

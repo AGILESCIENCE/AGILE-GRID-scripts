@@ -5,6 +5,7 @@ import math
 from scipy.stats import norm
 from astropy.io import fits
 from matplotlib import gridspec
+from EdpGrid import *
 
 #e = EvalRates()
 #e.calculateRateWithoutExp(1, 0.7, 0e-08, 1.2e-4, 0.76, 1.75, 400)
@@ -170,8 +171,17 @@ class EvalRates:
 		
 		#to take into account the extension of the PSF
 		fluxscalefactor = math.fabs(1-2*norm(0,  psf).cdf(ranal))
+		print('Fluxscalefactor based on PSF : %.4f' % fluxscalefactor)
 		
-		print('Fluxscalefactor based on PSF: %.4f' % fluxscalefactor)
+		#to take into account the spectral shape of the source (deviation from spectral index=2.1)
+		edpGrid = EdpGrid()
+		edp_file = os.environ['AGILE']+"/model/scientific_analysis/data/AG_GRID_G0017_SFMG_H0025.edp.gz"
+		edpGrid.readData(edp_file)
+		corrsi = edpGrid.detCorrectionSpectraFactorSimple(edpGrid, emin, emax, gindex)
+		print('Correction spectra factor: %.2f'%corrsi)
+		fluxscalefactor = fluxscalefactor / corrsi
+		
+		print('Fluxscalefactor based on PSF and correction spectra factor: %.4f' % fluxscalefactor)
 		
 		# ON - PSF region
 		#omega_ranal = 2.*np.pi*(1. - np.cos(ranal*(np.pi/180.))) #[sr]

@@ -348,14 +348,14 @@ class SimAP:
 
 				#A) flux source from variabile LC
 				#print(lc[indexA])
-				fluxsource = lc[indexA] * fluxscalefactor #[cts / cm2 s]
+				fluxsource = lc[indexA] * fluxscalefactor # [cts / cm2 s]
 				#print(str(tstart) + '-' + str(tstop) + ' ' +  str(lc[indexA]) )
 
 				#B) flux source constant
 				#fluxsource = 100e-08 * fluxscalefactor #[cts / cm2 s]
 
 				#Calculation of counts
-				src_ON = expdata * fluxsource # [cm^2 s] * [cts] / [cm^2 s] = [cts]
+				src_ON = expdata * fluxsource # [cm^2 s] * ( [cts] / [cm^2 s] ) = [cts]
 				#src_ON2 = expdata * int_source_flux # [cm^2 s] * [cts] / [cm^2 s] = [cts]
 
 				ctstot = float(bkg_ON + src_ON) # [cts]
