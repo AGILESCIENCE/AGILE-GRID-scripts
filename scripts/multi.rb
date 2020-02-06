@@ -39,7 +39,7 @@
 #30) integratortype (1 gauss 2 gaussht 3 gausslefevre 4 gausslefevreht)
 #FLUX CORRECTION:
 #31) edpcorrection, default 0.75, otherwise any value between 0 and 1. EDP correction is enabled only for E>1000 MeV and if fluxcorrection=1, and only for point sources. FLux = flux * edpcorrection
-#32) fluxcorrection. default 0 (no) - 1 yes. Flux calculation correction for spectral shape in output - 2 correction in input and output
+#32) fluxcorrection. default 1 (yes)  Flux calculation correction for spectral shape in output - 2 correction in input and output
 #33) scanmaplist - default 0. Calculate one TS for each map of the maplist4 provided as input, or group by some set of maps (e.g. for fovbinnumer > 1) -> specify the name of the source and the prefix e.g. VELA,pl -> one MLE using pl law for each map of the maplist4 for VELA source. e.g. VELA,pl,5 -> one MLE each 5 maps of the maplist4
 #34) (CAT) addcat. Specify the string of the source to be analysed". e.g. addcat="2.0e-07 34.7  -0.5  2.5 12 2 W44 0.0 1 2000.0 0.0". Remove sources with the same name, to avoid duplicate
 #35) (CAT) catpath, the path of the cat file list (.multi). Default is ENV["PATH_RES"] + /catalogs/cat2.multi
