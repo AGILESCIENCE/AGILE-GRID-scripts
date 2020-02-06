@@ -13,7 +13,10 @@
 # 5) path to AGILE index file (/AGILE_PROC3/DATA_2/INDEX/LOG.log.index)
 # 6) run number
 # 7) zmax: maximum zenith distance of the source to the center of the detector (unit: degrees) (50.0,60.0 ecc)
-#
+# 8) mode: agile || fermi || all
+
+# example
+
 # OUTPUT
 # a list of directory for each time window, format dir_[run]_[tstart]_[tstop]
 # output_[zmax]_[time window path] file for results
@@ -33,6 +36,7 @@ path_dati_fermi = sys.argv[4]
 path_log_index = sys.argv[5]
 run_number = sys.argv[6]
 zmax = float(sys.argv[7])
+mode = sys.argv[8]
 
 
 def MET2orbit(tmin, tmax, path_to_LOG, source='MySource', send=True):
@@ -65,11 +69,11 @@ def MET2orbit(tmin, tmax, path_to_LOG, source='MySource', send=True):
     print "files ", file, " created successfully"
     file.close()
     if send == True:
-        os.system("../merge_orbit_logs.sh "+str(filename)+" merged_list_"+str(tmin)+"_"+str(tmax)+".fits")
+        os.system("sh "+os.environ['AGILEPIPE']+"/scripts/offaxis/merge_orbit_logs.sh "+str(filename)+" merged_list_"+str(tmin)+"_"+str(tmax)+".fits")
 
 count = -1
 
-f = open("output_"+str(zmax)+"_"+time_window_file, "a+")
+f = open("output_"+str(zmax)+"_"+os.path.basename(time_window_file), "a+")
 f.close()
 
 
@@ -86,7 +90,7 @@ with open(time_window_file) as fp:
        tstop = float(line.split()[1])
        print("new ----- \n "+str(tstart)+" "+str(tstop))
 
-       f = open("output_"+str(zmax)+"_"+time_window_file, "a")
+       f = open("output_"+str(zmax)+"_"+os.path.basename(time_window_file), "a")
        f.write("\n#####\n")
        f.write(str(zmax)+" "+str(tstart)+" "+str(tstop)+"\n")
        f.close()
@@ -98,32 +102,37 @@ with open(time_window_file) as fp:
 
        #### FERMI ####
 
-       fermi_met_start = (tstart - 51910.0 ) * 86400.0
-       fermi_met_stop = (tstop - 51910.0 ) * 86400.0
+       if(mode == "fermi" or mode == "all"):
 
-       print("fermi time"+str(fermi_met_start)+" "+str(fermi_met_stop))
+           fermi_met_start = (tstart - 51910.0 ) * 86400.0
+           fermi_met_stop = (tstop - 51910.0 ) * 86400.0
 
-       check = fermicheck(path_dati_fermi, ra, dec, zmax=zmax, timelimiti=fermi_met_start, timelimitf=fermi_met_stop,out_name="../output_"+str(zmax)+"_"+time_window_file)
-       check.PlotVisibility()
-       #os.system("cp fermi_visibility*eps "+new_dir)
+           print("fermi time"+str(fermi_met_start)+" "+str(fermi_met_stop))
+
+           check = fermicheck(path_dati_fermi, ra, dec, zmax=zmax, timelimiti=fermi_met_start, timelimitf=fermi_met_stop,out_name="../output_"+str(zmax)+"_"+os.path.basename(time_window_file))
+           check.PlotVisibility()
+           #os.system("cp fermi_visibility*eps "+new_dir)
 
        #AGILE
 
-       agile_met_start = (tstart - 53005.0) *  86400.0;
-       agile_met_stop = (tstop - 53005.0) *  86400.0;
+       if(mode == "agile" or mode == "all"):
 
-       print("agile "+str(agile_met_start)+" "+str(agile_met_stop))
+           agile_met_start = (tstart - 53005.0) *  86400.0;
+           agile_met_stop = (tstop - 53005.0) *  86400.0;
 
-       MET2orbit(agile_met_start, agile_met_stop, path_log_index)
+           print("agile "+str(agile_met_start)+" "+str(agile_met_stop))
 
-       merged_file = glob.glob('./merged_list_*.fits')[0]
-       check = agilecheck(merged_file, ra, dec, zmax=zmax, timelimiti=agile_met_start, timelimitf=agile_met_stop, step=60, out_name="../output_"+str(zmax)+"_"+time_window_file)
-       check.PlotVisibility()
+           MET2orbit(agile_met_start, agile_met_stop, path_log_index)
+
+           merged_file = glob.glob('./merged_list_*.fits')[0]
+           check = agilecheck(merged_file, ra, dec, zmax=zmax, timelimiti=agile_met_start, timelimitf=agile_met_stop, step=60, out_name="../output_"+str(zmax)+"_"+os.path.basename(time_window_file))
+           check.PlotVisibility()
 
        ### MERGE TWO PLOT ###
 
+       #if(mode == "all"):
        from merge import *
        check=merge(timelimiti=tstart, timelimitf=tstop, t0=tstart+((tstop-tstart)/2),zmax=zmax)
-       check.Plotmerge()
+       check.Plotmerge(mode="agile")
 
        os.chdir("..")

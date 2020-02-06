@@ -24,16 +24,20 @@ class merge:
         self.step        = step*10.
         self.t0          = t0
 
-    def Plotmerge(self, show=False, showcnt=False):
+    def Plotmerge(self, show=False, showcnt=False, mode="all"):
 
-        agl_meantime, agl_separation = np.loadtxt('time_vs_separation_agile.txt', unpack=True)
-        lat_meantime, lat_separation = np.loadtxt('time_vs_separation_fermi.txt', unpack=True)
+        if(mode=="agile" or mode=="all"):
+            agl_meantime, agl_separation = np.loadtxt('time_vs_separation_agile.txt', unpack=True)
+        if(mode=="fermi" or mode=="all"):
+            lat_meantime, lat_separation = np.loadtxt('time_vs_separation_fermi.txt', unpack=True)
 
-        agl_filt = agl_meantime[(agl_meantime > self.timelimiti) & (agl_meantime < self.timelimitf)]
-        agl_sep_filt = agl_separation[(agl_meantime > self.timelimiti) & (agl_meantime < self.timelimitf)]
+        if(mode=="agile" or mode=="all"):
+            agl_filt = agl_meantime[(agl_meantime > self.timelimiti) & (agl_meantime < self.timelimitf)]
+            agl_sep_filt = agl_separation[(agl_meantime > self.timelimiti) & (agl_meantime < self.timelimitf)]
 
-        lat_filt = lat_meantime[(lat_meantime > self.timelimiti) & (lat_meantime < self.timelimitf)]
-        lat_sep_filt = lat_separation[(lat_meantime > self.timelimiti) & (lat_meantime < self.timelimitf)]
+        if(mode=="fermi" or mode=="all"):
+            lat_filt = lat_meantime[(lat_meantime > self.timelimiti) & (lat_meantime < self.timelimitf)]
+            lat_sep_filt = lat_separation[(lat_meantime > self.timelimiti) & (lat_meantime < self.timelimitf)]
 
         print 'Plotting figure...'
         f = plt.figure()
@@ -41,8 +45,10 @@ class merge:
 #ax.plot(agl_meantime, agl_separation, '-r', lat_meantime, lat_separation, 'gs')
 #        ax.plot(agl_filt - self.t0, agl_sep_filt, '-r', label='AGILE')
 #        ax.plot(lat_filt - self.t0, lat_sep_filt, 'gs', label='Fermi-LAT')
-        ax.plot(agl_filt - self.t0, agl_sep_filt, color='gray', label='AGILE')
-        ax.plot(lat_filt - self.t0, lat_sep_filt, '+', color='red', markersize=2, label='Fermi-LAT')
+        if(mode=="agile" or mode=="all"):
+            ax.plot(agl_filt - self.t0, agl_sep_filt, color='gray', label='AGILE')
+        if(mode=="fermi" or mode=="all"):
+            ax.plot(lat_filt - self.t0, lat_sep_filt, '+', color='red', markersize=2, label='Fermi-LAT')
 
 ##        agilecnt_mjd = self.PlotAgileCounts()
 ##        if showcnt==True:
