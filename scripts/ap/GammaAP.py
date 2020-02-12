@@ -304,7 +304,7 @@ class GammaAP:
 		
 		nap.normalizeAB3(self.expdataA, self.ctsdataA, rateBkgExpected, self.res[:,0], self.res[:,1], self.res[:,2], self.res[:,3], self.res[:,4], self.res[:,5], self.res[:,6], self.res[:,7], self.res[:,8], self.res[:,9], self.res[:,10], self.res[:,11],self.res[:,12], self.res[:,13], self.res[:,14],self.res[:,15], self.res[:,16])
 		
-		fluxscalefactor=rate.getFluxScaleFactor(0, gindex, ranal, emin, emax) 
+		fluxscalefactor=rate.getFluxScaleFactor(verbose=1, gindex=gindex, ranal=ranal, emin=emin, emax=emax)
 		#/ 1.66
 		n=0
 		for e_i in self.expdataA:
