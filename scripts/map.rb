@@ -9,7 +9,7 @@
 ### COMMON
 #06) timetype: CONTACT, MJD, UTC, TT, default TT
 #07) emin: energy min in MeV, if energybin=0, default 100
-#08) emax: energy max in MeV, if energybin=0, default 500000
+#08) emax: energy max in MeV, if energybin=0, default 50000
 #09) fovradmin: fov rad min, to be used also with fovbinnumber, default 0
 #10) fovradmax: fov rad max, to be used also with fovbinnumber, default 60
 #11) mapsize: map size (diameter of the map in degree), default 40
