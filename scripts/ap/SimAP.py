@@ -1,3 +1,25 @@
+# DESCRIPTION
+#       Agileap: AGILE Observatory Aperture Photometry Analysis
+# NOTICE
+#      Any information contained in this software
+#      is property of the AGILE TEAM and is strictly
+#      private and confidential.
+#      Copyright (C) 2005-2020 AGILE Team.
+#          Bulgarelli Andrea <andrea.bulgarelli@inaf.it>
+#          Valentina Fioretti <valentina.fioretti@inaf.it>
+#          Parmiggiani Nicolò <nicolo.parmiggiani@inaf.it>
+#      All rights reserved.
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 """
 	apsimlc.py
 	---------------------------------------------------------------------------------
@@ -321,7 +343,7 @@ class SimAP:
 			print("--- End signal model")
 
 
-			erate.calculateRateAndSNR(verbose=1, ranal=ranal, exposure=expsum / len(expdataA), fluxsource=peak_size,  gasvalue=gasvalue, gal=gal, iso=iso, emin=emin, emax=emax, gindex=gindex, instrumentID=0)
+			erate.calculateRateAndSig(verbose=1, ranalS=ranal, exposure=expsum / len(expdataA), fluxsource=peak_size,  gasvalue=gasvalue, gal=gal, iso=iso, emin=emin, emax=emax, gindex=gindex, instrumentID=0)
 
 			print("Start add signal")
 			if(mode == '0'):

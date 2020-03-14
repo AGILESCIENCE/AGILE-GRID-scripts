@@ -1,9 +1,35 @@
+# DESCRIPTION
+#       Agileap: AGILE Observatory Aperture Photometry Analysis
+# NOTICE
+#      Any information contained in this software
+#      is property of the AGILE TEAM and is strictly
+#      private and confidential.
+#      Copyright (C) 2005-2020 AGILE Team.
+#          Bulgarelli Andrea <andrea.bulgarelli@inaf.it>
+#          Valentina Fioretti <valentina.fioretti@inaf.it>
+#          Parmiggiani Nicolò <nicolo.parmiggiani@inaf.it>
+#      All rights reserved.
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 from math import pow
 import numpy as np
 import os
 from astropy.io import fits
 
-class EdpGrid:
+class Edp:
+
+	def __init__(self):
+		self.edpread = False
+		return
 
 	def getVal(self, trueE,  obsE,  theta,  phi):
 
@@ -16,9 +42,9 @@ class EdpGrid:
 		return self.m_edpgrid[p,n,m,l];
 
 
-
-	def readData(self,fits_name, verbose=0):
-
+	def readData(self, verbose=0):
+		fits_name = os.environ['AGILE']+"/model/scientific_analysis/data/AG_GRID_G0017_SFMG_H0025.edp.gz"
+		
 		hdulist_edp = fits.open(fits_name)
 		wcs_tab_edp = hdulist_edp[2].data
 		m_edptrueenergy = wcs_tab_edp.field('TRUE_ENERGY')[0]
@@ -32,6 +58,8 @@ class EdpGrid:
 		self.m_edpphi = m_edpphi
 
 		self.m_edpgrid = hdulist_edp[0].data
+		
+		self.edpread = True
 
 		if verbose == 1:
 			print("true energy " + str(len(m_edptrueenergy)))
@@ -60,16 +88,19 @@ class EdpGrid:
 
 		return m_normFactor
 
-	def detCorrectionSpectraFactorSimple(self, edpGrid,eMin,eMax,par1):
-		index = 2.1
+	def detCorrectionSpectraFactorSimple(self, eMin, eMax, par1, verbose=0):
+	
+		if(self.edpread == False):
+			self.readData(verbose)
+			
+		expindex = 2.1
 
-		m_edptrueenergy = edpGrid.m_edptrueenergy
-		m_edpobsenergy = edpGrid.m_edpobsenergy
-		m_edptheta = edpGrid.m_edptheta
-		m_edpphi = edpGrid.m_edpphi
+		m_edptrueenergy = self.m_edptrueenergy
+		m_edpobsenergy = self.m_edpobsenergy
+		m_edptheta = self.m_edptheta
+		m_edpphi = self.m_edpphi
 
 		eneChanCount = len(m_edptrueenergy)
-
 
 		#print(str(m_edptrueenergy[iMin])+" "+str(m_edptrueenergy[iMax]))
 		normsumpl = 0.0
@@ -81,9 +112,10 @@ class EdpGrid:
 				iMin = etrue
 			if eMax == m_edptrueenergy[etrue]:
 				iMax = etrue
-				
-		print("Energy min%.2f", m_edptrueenergy[iMin])
-		print("Energy max%.2f", m_edptrueenergy[iMax])
+			
+		if verbose == 1:
+			print('EDP Energy min = %.2f'% m_edptrueenergy[iMin])
+			print('EDP Energy max = %.2f'% m_edptrueenergy[iMax])
 
 		for i in range (iMin,iMax):
 			lastenergy = m_edptrueenergy[i+1]
@@ -93,7 +125,7 @@ class EdpGrid:
 			udp1 = self.UpdateNormPL(m_edptrueenergy[i], lastenergy, par1);
 			normsumple += udp1;
 
-			udp1 = self.UpdateNormPL(m_edptrueenergy[i], lastenergy, index);
+			udp1 = self.UpdateNormPL(m_edptrueenergy[i], lastenergy, expindex);
 			normsumpl += udp1;
 
 		#print("A "+str(normsumpl)+" "+str(normsumple));
@@ -101,7 +133,6 @@ class EdpGrid:
 
 		thetaind=0
 		phiind=0
-
 
 		avgValuePL = 0.0
 		avgValuePLE = 0.0
@@ -113,10 +144,10 @@ class EdpGrid:
 			for eobs in range(iMin,iMax+1):
 
 				#print("edp: " +str(thetaind)+ " "+str(phiind)+ " "+str(etrue)+ " "+str(eobs)+ " " + str(m_edptrueenergy[etrue]) + " " + str(m_edpobsenergy[eobs]) + " " + str(m_edptheta[thetaind]) + " " + str(m_edpphi[phiind]) + " " + str(edpGrid.getVal(m_edptrueenergy[etrue], m_edpobsenergy[eobs], m_edptheta[thetaind], m_edpphi[phiind])))
-				edpArr[etrue] += edpGrid.getVal(m_edptrueenergy[etrue], m_edpobsenergy[eobs], m_edptheta[thetaind], m_edpphi[phiind]); #CORRETTO
+				edpArr[etrue] += self.getVal(m_edptrueenergy[etrue], m_edpobsenergy[eobs], m_edptheta[thetaind], m_edpphi[phiind]); #CORRETTO
 
 
-			avgValuePL  += edpArr[etrue] * self.UpdateNormPL(m_edptrueenergy[etrue], lastenergy, index) * 1
+			avgValuePL  += edpArr[etrue] * self.UpdateNormPL(m_edptrueenergy[etrue], lastenergy, expindex) * 1
 			avgValuePLE += edpArr[etrue] * self.UpdateNormPL(m_edptrueenergy[etrue], lastenergy, par1) * 1
 
 		avgpl = 0.0
@@ -127,7 +158,7 @@ class EdpGrid:
 		avgple = avgValuePLE/normsumple
 
 		corr = avgpl/avgple
-		print("A " + str(m_edptheta[thetaind]) + " " + str(m_edpphi[phiind]) + " " + str(avgpl) + " " + str(avgple) + " " + str(avgpl - avgple) + " PL/" + str(avgpl / avgple))
+		#print("A " + str(m_edptheta[thetaind]) + " " + str(m_edpphi[phiind]) + " " + str(avgpl) + " " + str(avgple) + " " + str(avgpl - avgple) + " PL/" + str(avgpl / avgple))
 		return corr
 
 
@@ -143,7 +174,6 @@ if __name__ == "__main__":
 	# reading the energy dispersion file
 
 	edpGrid = EdpGrid()
-	edp_file = os.environ['AGILE']+"/model/scientific_analysis/data/AG_GRID_G0017_SFMG_H0025.edp.gz"
-	edpGrid.readData(edp_file)
+	
 
-	detCorrectionSpectraFactorSimple(edpGrid, 4, 12, par1)
+	detCorrectionSpectraFactorSimple(4, 12, par1)

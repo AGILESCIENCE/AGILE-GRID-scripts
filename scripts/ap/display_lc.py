@@ -66,7 +66,9 @@ def extract_data(file_name):
                    exp_norm = float(line.split()[7])/exp_notation
                    flux_err =  float(line.split()[22])*flux_notation
                    if(float(line.split()[23])>0):
-                       sqrtts =  np.sqrt(float(line.split()[23]))
+                       #sqrtts =  np.sqrt(float(line.split()[23]))
+                       sqrtts =  float(line.split()[23]) #Sa
+                       #sqrtts =  float(line.split()[27]) #Slm
                    else:
                        sqrtts =  -1
                    count = float(line.split()[3])
