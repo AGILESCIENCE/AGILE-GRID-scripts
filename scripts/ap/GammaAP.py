@@ -395,8 +395,8 @@ class GammaAP:
 			n = n + 1
 		
 		fileclean.close()
-		print("* AP3 file res column number:   tstart tstop exp[cm2 s] cts 0:normAB11 1:normAB12 2:normAB13 3:normAB14 4:normAB21 5:normAB22 6:normAB23 7:normAB24 8:normAB11aa 9:normAB21aa 10:ratediffR1 11:ratediffR2 12:ratediffR3 13:ratediffR4 14:ratediffR1AA 15:rate 16:rate_error 17:flux_ratediffR4 18:flux_ratediffR4_error 19:Sa 20:flux_rate 21:flux_rate_error 22:cts_expBKG4 23:Slm")
-		print("AP3 file column number: 0:tstart 1:tstop 2:exp[cm2 s] 3:cts 4:normAB11 5:normAB12 6:normAB13 7:normAB14 8:normAB21 9:normAB22 10:normAB23 11:normAB24 12:normAB11aa 13:normAB21aa 14:ratediffR1 15:ratediffR2 16:ratediffR3 17:ratediffR4 18:ratediffR1AA 19:rate 20:rate_error 21:flux_ratediffR4 22:flux_ratediffR4_error 23:Sa 24:flux_rate 25:flux_rate_error 26:cts_expBKG4 27:Slm")
+		print("* AP3 file res column number:   tstart tstop exp[cm2s] cts 0:normAB11 1:normAB12 2:normAB13 3:normAB14 4:normAB21 5:normAB22 6:normAB23 7:normAB24 8:normAB11aa 9:normAB21aa 10:ratediffR1 11:ratediffR2 12:ratediffR3 13:ratediffR4 14:ratediffR1AA 15:rate 16:rate_error 17:flux_ratediffR4 18:flux_ratediffR4_error 19:Sa 20:flux_rate 21:flux_rate_error 22:cts_expBKG4 23:Slm")
+		print("AP3 file column number: 0:tstart 1:tstop 2:exp[cm2s] 3:cts 4:normAB11 5:normAB12 6:normAB13 7:normAB14 8:normAB21 9:normAB22 10:normAB23 11:normAB24 12:normAB11aa 13:normAB21aa 14:ratediffR1 15:ratediffR2 16:ratediffR3 17:ratediffR4 18:ratediffR1AA 19:rate 20:rate_error 21:flux_ratediffR4 22:flux_ratediffR4_error 23:Sa 24:flux_rate 25:flux_rate_error 26:cts_expBKG4 27:Slm")
 		#columns based on evaluation of analytic background
 		
 		if(writevonmissesfiles == 1):
