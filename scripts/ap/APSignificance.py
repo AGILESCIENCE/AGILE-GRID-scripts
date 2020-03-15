@@ -65,4 +65,5 @@ class APSignificance:
 		ts = -2 * np.log(np.exp(ctsTOT-ctsB) * np.power(ctsB / ctsTOT, ctsTOT))
 		s = np.sqrt(ts)
 		return s
-		
+
+

@@ -37,6 +37,8 @@ from APSignificance import *
 class MathUtils:
 	def steradiansCone(this, ranal):
 		return 2.*np.pi*(1. - np.cos(ranal*(np.pi/180.))) #[sr]
+		#VF
+		#Omega_on = 2.*np.pi*(1. - np.cos(radius_on*(np.pi/180.)))
 		
 	def steradiansSquarePixel(this, dimpixel, theta=30):
 		pixel = (np.pi/180. * dimpixel)**2
@@ -115,7 +117,7 @@ class EvalRates:
 
 	##########################################################################
 	def calculateRateWithoutExp(self, verbose = 0, ranalS= -1, fluxsource = 0e-08, gasvalue=-1, gal = 0.7, iso = 10., emin = 100., emax = 10000., gindex=2.1, source_theta=30, instrumentID = 0):
-		fluxsource = float(fluxsource)
+
 		gasvalue = float(gasvalue) #andare direttamente nei file .disp.conv.sky.gz del modello e prendere il valore da li'
 
 		if verbose == 1:
@@ -192,7 +194,8 @@ class EvalRates:
 	#iso = iso coefficient
 	#ranalS = radius of analysis of S
 	#ranalB = radius of analysis of B. If the background is evaluated with AGILE MLE, ranalB=10, that is the usual radius of analysis used for the evalutation of gal and iso coefficients
-	def calculateRateAndSig(self, verbose = 0, ranalS= -1, exposure = 40000, fluxsource = 0e-08, gasvalue=-1, gal = 0.7, iso = 10., emin = 100., emax = 10000., gindex=2.1, source_theta=30, instrumentID = 0, ranalB = 10):
+	#alpha: alpha coefficient of Li&Ma (17) equation. If -1, let tool determine alpha
+	def calculateRateAndSig(self, verbose = 0, ranalS= -1, exposure = 40000, fluxsource = 0e-08, gasvalue=-1, gal = 0.7, iso = 10., emin = 100., emax = 10000., gindex=2.1, source_theta=30, instrumentID = 0, ranalB = 10, alpha=-1):
 
 		aps = APSignificance()
 		
@@ -213,9 +216,9 @@ class EvalRates:
 		
 		Sa = aps.Sa(verbose=verbose, ctsTOT=N_on, ctsB=N_off)
 		
-		if verbose == 1:
+		if verbose >= 2:
 			print('###########################################')
-			print('#         calculateRateAndSNR             #')
+			print('#         calculateRate Sig UL Sens       #')
 			print('###########################################')
 			print('rate_bkg_ON [cts / cm^2 s]: %.3e'% rate_bkg_ON)
 			print('rate_src_ON [cts / cm^2 s]: %.3e'% rate_src_ON)
@@ -226,6 +229,37 @@ class EvalRates:
 			print('Sig_SNR:                    %.3f'% snr)
 			print('Sig_lima:                   %.3f'% Slima)
 			print('Sig_a:                      %.3f'% Sa)
+			
+		aps = APSignificance()
+		#upper limit
+		fluxscalefactor = self.getFluxScaleFactor(verbose = verbose, gindex=gindex, ranal= ranalS, emin = emin, emax = emax, instrumentID = instrumentID, source_theta=source_theta)
+		
+		N_sourceUL, SignUL = self.calcFluxLevel(2, ctsB, ranalS, alpha=alpha)
+		rateUL = (N_sourceUL / exposure)
+		fluxUL = rateUL / fluxscalefactor
+		
+		if verbose >= 2:
+			print('UL:                     ')
+			print('cts_UL:                     %.1f'% N_sourceUL)
+			print('Sign_UL:                    %.2f'% SignUL)
+			print('rate_UL:                    %.2e'% rateUL)
+			print('flux_UL:                    %.2e'% fluxUL)
+
+		
+		#sensitivity
+		N_sourceSens, SignSens = self.calcFluxLevel(4, ctsB, ranalS, alpha=alpha)
+		rateSens = (N_sourceSens / exposure)
+		fluxSens = rateSens / fluxscalefactor
+		#N_sourceUL, SignUL, rateUL, fluxUL %.1f %.2f %.2e %.2e
+			
+		if verbose >= 2:
+			print('Sensitivity:                  ')
+			print('cts_Sens:                   %.1f'% N_sourceSens)
+			print('Sign_Sens:                  %.2f'% SignSens)
+			print('rate_Sens:                  %.2e'% rateSens)
+			print('flux_Sens:                  %.2e'% fluxSens)
+		
+		if verbose >= 1:
 			print('###########################################')
 		
 		return	
@@ -234,9 +268,11 @@ class EvalRates:
 	#ranalstartS = radius of analysis of S
 	#ranalendS = radius of analysis of S
 	#ranalB = radius of analysis of B. If the background is evaluated with AGILE MLE, ranalB=10, that is the usual radius of analysis used for the evalutation of gal and iso coefficients
-	def determinebestSig(self, verbose=0, ranalstartS= 0.1, ranalendS =4.0, exposure = 40000, fluxsource = 0e-08, gasvalue=0.0006, gal = 0.7, iso = 10., emin = 100., emax = 10000., gindex=2.1, source_theta=30, instrumentID = 0, ranalB = 10):
+	#alpha: alpha coefficient of Li&Ma (17) equation. If -1, let tool determine alpha
+	def determinebestSig(self, verbose=0, ranalstartS= 0.1, ranalendS =4.0, exposure = 40000, fluxsource = 0e-08, gasvalue=0.0006, gal = 0.7, iso = 10., emin = 100., emax = 10000., gindex=2.1, source_theta=30, instrumentID = 0, ranalB = 10, alpha=-1):
 
 		aps = APSignificance()
+		
 		for ranalS in np.arange(ranalstartS, ranalendS+0.1, 0.1):
 			
 			rate_bkg_ON, rate_src_ON = self.calculateRateWithoutExp(verbose=verbose, ranalS=ranalS, fluxsource=fluxsource, gasvalue=gasvalue, gal=gal, iso=iso, emin=emin, emax=emax, gindex=gindex, source_theta=source_theta, instrumentID=instrumentID)
@@ -249,9 +285,57 @@ class EvalRates:
 			N_off = ctsB
 			N_on  = ctsB + ctsS
 			
-			lima = aps.lima(verbose=verbose, N_on = N_on, N_off = N_off, ranalS=ranalS)
+			lima = aps.lima(verbose=verbose, N_on = N_on, N_off = N_off, ranalS=ranalS, alpha=alpha)
 			
 			Sa = aps.Sa(verbose=verbose, ctsTOT=N_on, ctsB=N_off)
+			
+			#upper limit
+			fluxscalefactor = self.getFluxScaleFactor(verbose = verbose, gindex=gindex, ranal= ranalS, emin = emin, emax = emax, instrumentID = instrumentID, source_theta=source_theta)
+			
+			N_sourceUL, SignUL = self.calcFluxLevel(2, ctsB, ranalS, alpha=alpha)
+			rateUL = (N_sourceUL / exposure)
+			fluxUL = rateUL / fluxscalefactor
+			
+			#sensitivity
+			N_sourceSens, SignSens = self.calcFluxLevel(4, ctsB, ranalS, alpha=alpha)
+			rateSens = (N_sourceSens / exposure)
+			fluxSens = rateSens / fluxscalefactor
+			
+			fluxSource = rate_src_ON / fluxscalefactor
+			
 			#saa = -1
-			print('%.2f %.3f %.3f %.3f %3d %3d' % (ranalS, snr, lima, Sa, N_on, N_off))
+			print('%.2f %.2f %.2f %.2f - %3d %.2e %.2e %3d %.2e - %.1f %.2f %.2e %.2e - %.1f %.2f %.2e %.2e' % (ranalS, snr, lima, Sa, ctsS, rate_src_ON, fluxSource, ctsB, rate_bkg_ON, N_sourceUL, SignUL, rateUL, fluxUL, N_sourceSens, SignSens, rateSens, fluxSens))
 		return
+
+	#ctsB
+	def calcFluxLevel(self, Sign, ctsB, ranalS, alpha=-1):
+		
+		aps = APSignificance()
+		N_source = 0.1
+		Ss = -1
+		N_on = N_source + ctsB
+		while(1):
+			if (ctsB > 0.):
+				N_on = N_source + ctsB
+				#Ss = aps.lima(verbose=0, alpha=alpha, N_on = N_on, N_off = ctsB, ranalS=ranalS)
+				Ss = aps.Sa(verbose=0, ctsTOT=N_on, ctsB=ctsB)
+				#print(N_source)
+				if (Ss >= Sign):
+					break
+				else:
+					N_source += 0.1
+			else:
+				N_source = 0.
+				break
+
+		return N_source, Ss
+		#F_lim = (N_source/expo_on)/PSF_norm
+
+		#print ("# Sensitivity parameters:")
+		#print ("# - sigma = %.2f"% Sign[js])
+		#print ("# - N_min = %.2f"% N_min[jmin])
+		#print ("# Sensitivity [phot/cm2/s] = %.2e"% F_lim)
+		#print ("###########################################")
+					
+		return
+
