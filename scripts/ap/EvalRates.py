@@ -30,22 +30,10 @@ from matplotlib import gridspec
 from Edp import *
 from PSFEval import *
 from APSignificance import *
+from MathUtils import *
 
 #e = EvalRates()
 #e.calculateRateWithoutExp(1, 0.7, 0e-08, 1.2e-4, 0.76, 1.75, 400)
-
-class MathUtils:
-	def steradiansCone(this, ranal):
-		return 2.*np.pi*(1. - np.cos(ranal*(np.pi/180.))) #[sr]
-		#VF
-		#Omega_on = 2.*np.pi*(1. - np.cos(radius_on*(np.pi/180.)))
-		
-	def steradiansSquarePixel(this, dimpixel, theta=30):
-		pixel = (np.pi/180. * dimpixel)**2
-		return pixel * np.sin(np.pi/180. * theta) / (np.pi/180. * theta) #[sr]
-		#omega_ranalAC = (np.pi/180. * ranal)**2 * np.sin(np.pi/180. * 30) / (np.pi/180. * 30) #[sr]
-		
-		
 
 class EvalRates:
 
@@ -84,7 +72,7 @@ class EvalRates:
 		#Integral PSF evaluation
 		psf = self.getInstrumentPSF(instrumentID=instrumentID, gindex=gindex, emin=emin, emax=emax, source_theta=source_theta, verbose=verbose)
 		if verbose == 1:
-			print('selected psf  : ' + str(psf))
+			print('selected psf  : %.4f' % psf)
 		
 		#fluxscalefactor to take into account the extension of the PSF and the fraction enclosed into the ranal
 		fluxscalefactor = math.fabs(1-2*norm(0,  psf).cdf(ranal))
@@ -308,7 +296,7 @@ class EvalRates:
 		return
 
 	#ctsB
-	def calcFluxLevel(self, Sign, ctsB, ranalS, alpha=-1):
+	def calcFluxLevel(self, Sign, ctsB, ranalS, alpha=-1, algorithm=2):
 		
 		aps = APSignificance()
 		N_source = 0.1
@@ -317,8 +305,11 @@ class EvalRates:
 		while(1):
 			if (ctsB > 0.):
 				N_on = N_source + ctsB
-				#Ss = aps.lima(verbose=0, alpha=alpha, N_on = N_on, N_off = ctsB, ranalS=ranalS)
-				Ss = aps.Sa(verbose=0, ctsTOT=N_on, ctsB=ctsB)
+				Ss = -1
+				if algorithm == 1:
+					Ss = aps.lima(verbose=0, alpha=alpha, N_on = N_on, N_off = ctsB, ranalS=ranalS)
+				if algorithm == 2:
+					Ss = aps.Sa(verbose=0, ctsTOT=N_on, ctsB=ctsB)
 				#print(N_source)
 				if (Ss >= Sign):
 					break
