@@ -195,8 +195,31 @@ if(mode=="1"):
 
     plt.figure(1)
 
-    plt.errorbar(data_array_one['x'], data_array_one['flux'],xerr=data_array_one['xerr'], yerr=data_array_one['flux_err'], label='flux 1', fmt='r.')
+    #plt.errorbar(data_array_one['x'], data_array_one['flux'],xerr=data_array_one['xerr'], yerr=data_array_one['flux_err'], label='flux 1', fmt='r.')
 
+    count = 0
+    for detection in dict_one:
+        if(count==0):
+            count=1
+            continue
+
+        if(detection['sqrtts']<3):
+            #add arrow
+            #plt.arrow(detection['x'],detection['flux'],0,-70,width=1,head_width=10,head_starts_at_zero=True)
+            plt.errorbar(detection['x'], detection['flux'],xerr=detection['x_err'], yerr=detection['flux_err'], fmt='rv')
+        else:
+            plt.errorbar(detection['x'], detection['flux'],xerr=detection['x_err'], yerr=detection['flux_err'], fmt='r.')
+
+
+    if(dict_one[0]['sqrtts']<3):
+        plt.errorbar(dict_one[0]['x'], dict_one[0]['flux'],xerr=dict_one[0]['x_err'], yerr=dict_one[0]['flux_err'], label=os.path.basename(file_one), fmt='rv')
+    else:
+        plt.errorbar(dict_one[0]['x'], dict_one[0]['flux'],xerr=dict_one[0]['x_err'], yerr=dict_one[0]['flux_err'], label=os.path.basename(file_one), fmt='r.')
+
+
+    plt.plot(data_array_one['x'], data_array_one['fixed_flux'], color='r', marker='o', linestyle='dashed', linewidth=1.5, markersize=3)
+
+    plt.ylim(ymin=0)
     plt.xlabel("TT time *10^8")
     plt.ylabel("Flux ph/cm2 s *10^-8")
     plt.grid(True)
@@ -383,6 +406,7 @@ if(mode=="2"):
 
     plt.xlabel("TT time *10^8")
     plt.ylabel("Flux ph/cm2 s *10^-8")
+    plt.ylim(ymin=0)
     plt.grid(True)
     plt.legend()
 
