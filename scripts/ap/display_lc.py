@@ -32,6 +32,8 @@ def extract_data(file_name):
                    x = tstart+(tstop-tstart)/2
                    x_err =  (tstop-tstart)/2
                    flux =  float(line.split()[0])*flux_notation
+                   if(flux == -1):
+                       flux=0
                    exp = float(line.split()[8])/exp_notation
                    exp_norm = -1
                    flux_err =  float(line.split()[1])*flux_notation
@@ -183,9 +185,10 @@ def get_value_from_array(data_array):
 
 mode = sys.argv[1]
 scatter = sys.argv[2]
-file_one = sys.argv[3]
+fixed_flux = float(sys.argv[3])
+file_one = sys.argv[4]
 if(mode=="2"):
-    file_two = sys.argv[4]
+    file_two = sys.argv[5]
 
 flux_notation = 100000000
 exp_notation = 1000000
@@ -225,7 +228,13 @@ if(mode=="1"):
 
 
     if not (file_one.endswith(".lc")):
-        plt.plot(data_array_one['x'], data_array_one['sensitivity'], color='r', marker='o', linestyle='dashed', linewidth=1.5, markersize=3,label=os.path.basename(file_one))
+        plt.plot(data_array_one['x'], data_array_one['sensitivity'], color='r', marker='o', linestyle='dashed', linewidth=1.5, markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
+
+    #plot fixed flux
+
+    if(fixed_flux!=-1):
+        plt.plot([np.amin(data_array_one['x']),np.amax(data_array_one['x'])], [fixed_flux,fixed_flux], color='g', linestyle='dashed', linewidth=1.5,label="Fixed Flux")
+
 
     plt.ylim(ymin=0)
     plt.xlabel("TT time *10^8")
@@ -410,9 +419,16 @@ if(mode=="2"):
         plt.errorbar(dict_two[0]['x'], dict_two[0]['flux'],xerr=dict_two[0]['x_err'], yerr=dict_two[0]['flux_err'], label=os.path.basename(file_two), fmt='b.')
 
     if not (file_one.endswith(".lc")):
-        plt.plot(data_array_one['x'], data_array_one['sensitivity'], color='r', marker='o', linestyle='dashed', linewidth=1.5, markersize=3,label=os.path.basename(file_one))
+        plt.plot(data_array_one['x'], data_array_one['sensitivity'], color='r', marker='o', linestyle='dashed', linewidth=1.5, markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
     if not (file_two.endswith(".lc")):
-        plt.plot(data_array_two['x'], data_array_two['sensitivity'], color='b', marker='o', linestyle='dashed', linewidth=1.5, markersize=3,label=os.path.basename(file_two))
+        plt.plot(data_array_two['x'], data_array_two['sensitivity'], color='b', marker='o', linestyle='dashed', linewidth=1.5, markersize=3,label=os.path.basename(file_two)+" (4 sigma sensitivity)")
+
+    #plot fixed flux
+
+    if(fixed_flux!=-1):
+        plt.plot([np.amin(data_array_one['x']),np.amax(data_array_one['x'])], [fixed_flux,fixed_flux], color='g', linestyle='dashed', linewidth=1.5,label="Fixed Flux")
+
+
 
     plt.xlabel("TT time *10^8")
     plt.ylabel("Flux ph/cm2 s *10^-8")
