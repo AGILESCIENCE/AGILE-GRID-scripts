@@ -29,6 +29,8 @@ def extract_data(file_name):
 
                    tstart = float(line.split()[13])
                    tstop =  float(line.split()[14])
+                   x = tstart+(tstop-tstart)/2
+                   x_err =  (tstop-tstart)/2
                    flux =  float(line.split()[0])*flux_notation
                    exp = float(line.split()[8])/exp_notation
                    exp_norm = -1
@@ -44,7 +46,12 @@ def extract_data(file_name):
                    rate = -1
                    rate_err = -1
                    flux_ul = -1
-                   fixed_flux = -1
+                   sensitivity = -1
+
+                   if(sqrtts<3):
+                       flux_ul = flux
+
+
 
 
                if(file_name.endswith(".ap3")):
@@ -64,7 +71,7 @@ def extract_data(file_name):
                    #    print(line)
                        #continue
                    rate_err = float(components[20])*flux_notation
-                   #if(rate_err > 2000.0):
+                   #if(rate_err >   2000.0):
                    #    print(line)
                        #continue
 
@@ -89,19 +96,19 @@ def extract_data(file_name):
 
                    flux_ul = float(components[31])*flux_notation
 
-                   fixed_flux = float(components[35])*flux_notation
+                   sensitivity = float(components[35])*flux_notation
 
 
                #FILTRO
-                   if(sqrtts < 3):
-                      flux_err = 0
-                      flux=flux_ul
+                   #if(sqrtts < 3):
+                    #  flux_err = 0
+                     # flux=flux_ul
                    #  continue
                    #else:
                    #  print(file_name)
                       #print(line)
 
-               detection_array.append({"x":x,"x_err":x_err,"rate":rate,"rate_err":rate_err,"count":count,"count_err":count_err,"count_bkg":count_bkg,"count_bkg_err":count_bkg_err,"tstart":tstart,"tstop":tstop,"flux":flux,"flux_err":flux_err,"sqrtts":sqrtts,"exp":exp,"exp_norm":exp_norm,"flux_ul":flux_ul,"fixed_flux":fixed_flux})
+               detection_array.append({"x":x,"x_err":x_err,"rate":rate,"rate_err":rate_err,"count":count,"count_err":count_err,"count_bkg":count_bkg,"count_bkg_err":count_bkg_err,"tstart":tstart,"tstop":tstop,"flux":flux,"flux_err":flux_err,"sqrtts":sqrtts,"exp":exp,"exp_norm":exp_norm,"flux_ul":flux_ul,"sensitivity":sensitivity})
 
 
         return detection_array
@@ -146,7 +153,7 @@ def get_value_from_array(data_array):
         rate = detection['rate']
         rate_err = detection['rate_err']
         flux_ul = detection["flux_ul"]
-        fixed_flux = detection["fixed_flux"]
+        sensitivity = detection["sensitivity"]
 
 
         tstart_array.append(tstart)
@@ -165,10 +172,10 @@ def get_value_from_array(data_array):
         rate_array.append(rate)
         rate_err_array.append(rate_err)
         flux_ul_array.append(flux_ul)
-        fixed_array.append(fixed_flux)
+        fixed_array.append(sensitivity)
 
 
-    return {"x":x_array,"xerr":xerr_array,"tstart":tstart_array,"tstop":tstop_array,"flux":flux_array,"flux_err":flux_err_array,"sqrtts":sqrtts_array,'exp':exp_array,'exp_norm':exp_norm_array,"count":count_array,'count_err':count_err_array,"count_bkg":count_bkg_array,'count_bkg_err':count_bkg_err_array,'rate':rate_array,'rate_err':rate_err_array,'fixed_flux':fixed_array,'flux_ul':flux_ul}
+    return {"x":x_array,"xerr":xerr_array,"tstart":tstart_array,"tstop":tstop_array,"flux":flux_array,"flux_err":flux_err_array,"sqrtts":sqrtts_array,'exp':exp_array,'exp_norm':exp_norm_array,"count":count_array,'count_err':count_err_array,"count_bkg":count_bkg_array,'count_bkg_err':count_bkg_err_array,'rate':rate_array,'rate_err':rate_err_array,'sensitivity':fixed_array,'flux_ul':flux_ul}
 
 
 
@@ -206,18 +213,19 @@ if(mode=="1"):
         if(detection['sqrtts']<3):
             #add arrow
             #plt.arrow(detection['x'],detection['flux'],0,-70,width=1,head_width=10,head_starts_at_zero=True)
-            plt.errorbar(detection['x'], detection['flux'],xerr=detection['x_err'], yerr=detection['flux_err'], fmt='rv')
+            plt.errorbar(detection['x'], detection['flux_ul'],xerr=detection['x_err'], yerr=0, fmt='rv')
         else:
             plt.errorbar(detection['x'], detection['flux'],xerr=detection['x_err'], yerr=detection['flux_err'], fmt='r.')
 
 
     if(dict_one[0]['sqrtts']<3):
-        plt.errorbar(dict_one[0]['x'], dict_one[0]['flux'],xerr=dict_one[0]['x_err'], yerr=dict_one[0]['flux_err'], label=os.path.basename(file_one), fmt='rv')
+        plt.errorbar(dict_one[0]['x'], dict_one[0]['flux_ul'],xerr=dict_one[0]['x_err'], yerr=0, label=os.path.basename(file_one), fmt='rv')
     else:
         plt.errorbar(dict_one[0]['x'], dict_one[0]['flux'],xerr=dict_one[0]['x_err'], yerr=dict_one[0]['flux_err'], label=os.path.basename(file_one), fmt='r.')
 
 
-    plt.plot(data_array_one['x'], data_array_one['fixed_flux'], color='r', marker='o', linestyle='dashed', linewidth=1.5, markersize=3)
+    if not (file_one.endswith(".lc")):
+        plt.plot(data_array_one['x'], data_array_one['sensitivity'], color='r', marker='o', linestyle='dashed', linewidth=1.5, markersize=3)
 
     plt.ylim(ymin=0)
     plt.xlabel("TT time *10^8")
@@ -370,7 +378,7 @@ if(mode=="2"):
         if(detection['sqrtts']<3):
             #add arrow
             #plt.arrow(detection['x'],detection['flux'],0,-70,width=1,head_width=10,head_starts_at_zero=True)
-            plt.errorbar(detection['x'], detection['flux'],xerr=detection['x_err'], yerr=detection['flux_err'], fmt='rv')
+            plt.errorbar(detection['x'], detection['flux_ul'],xerr=detection['x_err'], yerr=0, fmt='rv')
         else:
             plt.errorbar(detection['x'], detection['flux'],xerr=detection['x_err'], yerr=detection['flux_err'], fmt='r.')
 
@@ -383,7 +391,7 @@ if(mode=="2"):
         if(detection['sqrtts']<3):
             #add arrow
             #plt.arrow(detection['x'],detection['flux'],0,-70,width=1,head_width=10,head_starts_at_zero=True)
-            plt.errorbar(detection['x'], detection['flux'],xerr=detection['x_err'], yerr=detection['flux_err'], fmt='bv')
+            plt.errorbar(detection['x'], detection['flux_ul'],xerr=detection['x_err'], yerr=0, fmt='bv')
         else:
             plt.errorbar(detection['x'], detection['flux'],xerr=detection['x_err'], yerr=detection['flux_err'], fmt='b.')
 
@@ -391,18 +399,20 @@ if(mode=="2"):
     #plt.errorbar(data_array_one['x'], data_array_one['flux'],xerr=data_array_one['xerr'], yerr=data_array_one['flux_err'], label=os.path.basename(file_one), fmt='r.')
 
     if(dict_one[0]['sqrtts']<3):
-        plt.errorbar(dict_one[0]['x'], dict_one[0]['flux'],xerr=dict_one[0]['x_err'], yerr=dict_one[0]['flux_err'], label=os.path.basename(file_one), fmt='rv')
+        plt.errorbar(dict_one[0]['x'], dict_one[0]['flux_ul'],xerr=dict_one[0]['x_err'], yerr=0, label=os.path.basename(file_one), fmt='rv')
     else:
         plt.errorbar(dict_one[0]['x'], dict_one[0]['flux'],xerr=dict_one[0]['x_err'], yerr=dict_one[0]['flux_err'], label=os.path.basename(file_one), fmt='r.')
 
 
     if(dict_two[0]['sqrtts']<3):
-        plt.errorbar(dict_two[0]['x'], dict_two[0]['flux'],xerr=dict_two[0]['x_err'], yerr=dict_two[0]['flux_err'], label=os.path.basename(file_two), fmt='bv')
+        plt.errorbar(dict_two[0]['x'], dict_two[0]['flux_ul'],xerr=dict_two[0]['x_err'], yerr=0, label=os.path.basename(file_two), fmt='bv')
     else:
         plt.errorbar(dict_two[0]['x'], dict_two[0]['flux'],xerr=dict_two[0]['x_err'], yerr=dict_two[0]['flux_err'], label=os.path.basename(file_two), fmt='b.')
 
-    plt.plot(data_array_one['x'], data_array_one['fixed_flux'], color='r', marker='o', linestyle='dashed', linewidth=1.5, markersize=3)
-    plt.plot(data_array_two['x'], data_array_two['fixed_flux'], color='b', marker='o', linestyle='dashed', linewidth=1.5, markersize=3)
+    if not (file_one.endswith(".lc")):
+        plt.plot(data_array_one['x'], data_array_one['sensitivity'], color='r', marker='o', linestyle='dashed', linewidth=1.5, markersize=3)
+    if not (file_two.endswith(".lc")):
+        plt.plot(data_array_two['x'], data_array_two['sensitivity'], color='b', marker='o', linestyle='dashed', linewidth=1.5, markersize=3)
 
     plt.xlabel("TT time *10^8")
     plt.ylabel("Flux ph/cm2 s *10^-8")
