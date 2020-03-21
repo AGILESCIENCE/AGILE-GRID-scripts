@@ -85,9 +85,12 @@ def extract_data(file_name):
                    exp = float(components[2])/exp_notation
                    exp_norm = float(components[7])/exp_notation
                    flux_err =  float(components[22])*flux_notation
-                   if(float(components[23])>0):
+                   #23 Sa
+                   #27 Slima
+                   sindex=23
+                   if(float(components[sindex])>0):
                        #sqrtts =  np.sqrt(float(line.split()[23]))
-                       sqrtts =  float(components[23]) #Sa
+                       sqrtts =  float(components[sindex]) #Sa
                        #sqrtts =  float(line.split()[27]) #Slm
                    else:
                        sqrtts =  -1

@@ -8,6 +8,7 @@
 #          Bulgarelli Andrea <andrea.bulgarelli@inaf.it>
 #          Valentina Fioretti <valentina.fioretti@inaf.it>
 #          Parmiggiani Nicolò <nicolo.parmiggiani@inaf.it>
+#          Alessio Aboudan
 #      All rights reserved.
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -382,7 +383,11 @@ class GammaAP:
 			if self.ctsdataA[n] > 0:
 				ctsB = self.res[n,22]
 				
-				N_sourceUL, SignUL = rate.calcFluxLevel(2, ctsB, ranal, algorithm=2)
+				#1:LiMa
+				#2: Sa
+				algorithm=1
+				
+				N_sourceUL, SignUL = rate.calcCountsLimit(2, ctsB, ranal, algorithm=algorithm)
 				rateUL = (N_sourceUL / e_i)
 				fluxUL = rateUL / fluxscalefactor
 				self.res[n,24] = SignUL
@@ -391,7 +396,7 @@ class GammaAP:
 				self.res[n,27] = fluxUL
 				
 				#sensitivity4
-				N_sourceSens4, SignSens4 = rate.calcFluxLevel(4, ctsB, ranal, algorithm=2)
+				N_sourceSens4, SignSens4 = rate.calcCountsLimit(4, ctsB, ranal, algorithm=algorithm)
 				rateSens4 = (N_sourceSens4 / e_i)
 				fluxSens4 = rateSens4 / fluxscalefactor
 				self.res[n,28] = SignSens4
@@ -400,7 +405,7 @@ class GammaAP:
 				self.res[n,31] = fluxSens4
 				
 				#sensitivity5
-				N_sourceSens5, SignSens5 = rate.calcFluxLevel(5, ctsB, ranal, algorithm=2)
+				N_sourceSens5, SignSens5 = rate.calcCountsLimit(5, ctsB, ranal, algorithm=algorithm)
 				rateSens5 = (N_sourceSens5 / e_i)
 				fluxSens5 = rateSens5 / fluxscalefactor
 				self.res[n,32] = SignSens5
