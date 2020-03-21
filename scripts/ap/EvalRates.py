@@ -8,6 +8,7 @@
 #          Bulgarelli Andrea <andrea.bulgarelli@inaf.it>
 #          Valentina Fioretti <valentina.fioretti@inaf.it>
 #          Parmiggiani Nicolò <nicolo.parmiggiani@inaf.it>
+#          Alessio Aboudan
 #      All rights reserved.
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -30,22 +31,10 @@ from matplotlib import gridspec
 from Edp import *
 from PSFEval import *
 from APSignificance import *
+from MathUtils import *
 
 #e = EvalRates()
 #e.calculateRateWithoutExp(1, 0.7, 0e-08, 1.2e-4, 0.76, 1.75, 400)
-
-class MathUtils:
-	def steradiansCone(this, ranal):
-		return 2.*np.pi*(1. - np.cos(ranal*(np.pi/180.))) #[sr]
-		#VF
-		#Omega_on = 2.*np.pi*(1. - np.cos(radius_on*(np.pi/180.)))
-		
-	def steradiansSquarePixel(this, dimpixel, theta=30):
-		pixel = (np.pi/180. * dimpixel)**2
-		return pixel * np.sin(np.pi/180. * theta) / (np.pi/180. * theta) #[sr]
-		#omega_ranalAC = (np.pi/180. * ranal)**2 * np.sin(np.pi/180. * 30) / (np.pi/180. * 30) #[sr]
-		
-		
 
 class EvalRates:
 
@@ -69,6 +58,10 @@ class EvalRates:
 	
 	##########################################################################
 	def getFluxScaleFactor(self, verbose=0,  gindex=2.1, ranal= 2, emin = 100., emax = 10000., instrumentID = 0, source_theta=30):
+	
+		if instrumentID > 0:
+			return 0
+	
 		ranal = float(ranal)
 		emin = float(emin)
 		emax = float(emax)
@@ -82,14 +75,21 @@ class EvalRates:
 			print('input selected ranal: ' + str(ranal))
 		
 		#Integral PSF evaluation
+
 		psf = self.getInstrumentPSF(instrumentID=instrumentID, gindex=gindex, emin=emin, emax=emax, source_theta=source_theta, verbose=verbose)
 		if verbose == 1:
-			print('selected psf  : ' + str(psf))
+			print('selected psf  : %.4f' % psf)
 		
 		#fluxscalefactor to take into account the extension of the PSF and the fraction enclosed into the ranal
-		fluxscalefactor = math.fabs(1-2*norm(0,  psf).cdf(ranal))
+		#fluxscalefactor = math.fabs(1-2*norm(0,  psf).cdf(ranal))
+		#if verbose == 1:
+		#	print('Fluxscalefactor based on PSF enclosed fraction: %.4f' % fluxscalefactor)
+		
+		#fluxscalefactor2
+		psfc = PSFEval()
+		fluxscalefactor = psfc.EvalPSFScaleFactor(ranal=ranal, emin=emin, emax=emax, gindex=gindex, source_theta=source_theta, verbose=verbose)
 		if verbose == 1:
-			print('Fluxscalefactor based on PSF enclosed fraction: %.4f' % fluxscalefactor)
+			print('Fluxscalefactor2 based on PSF enclosed fraction: %.4f' % fluxscalefactor)
 		
 		#fluxscalefactor to take into account the spectral shape of the source (deviation from spectral index=2.1 of calculated exposure)
 		edp = Edp()
@@ -234,7 +234,7 @@ class EvalRates:
 		#upper limit
 		fluxscalefactor = self.getFluxScaleFactor(verbose = verbose, gindex=gindex, ranal= ranalS, emin = emin, emax = emax, instrumentID = instrumentID, source_theta=source_theta)
 		
-		N_sourceUL, SignUL = self.calcFluxLevel(2, ctsB, ranalS, alpha=alpha)
+		N_sourceUL, SignUL = self.calcCountsLimit(2, ctsB, ranalS, alpha=alpha)
 		rateUL = (N_sourceUL / exposure)
 		fluxUL = rateUL / fluxscalefactor
 		
@@ -247,7 +247,7 @@ class EvalRates:
 
 		
 		#sensitivity
-		N_sourceSens, SignSens = self.calcFluxLevel(4, ctsB, ranalS, alpha=alpha)
+		N_sourceSens, SignSens = self.calcCountsLimit(4, ctsB, ranalS, alpha=alpha)
 		rateSens = (N_sourceSens / exposure)
 		fluxSens = rateSens / fluxscalefactor
 		#N_sourceUL, SignUL, rateUL, fluxUL %.1f %.2f %.2e %.2e
@@ -292,12 +292,12 @@ class EvalRates:
 			#upper limit
 			fluxscalefactor = self.getFluxScaleFactor(verbose = verbose, gindex=gindex, ranal= ranalS, emin = emin, emax = emax, instrumentID = instrumentID, source_theta=source_theta)
 			
-			N_sourceUL, SignUL = self.calcFluxLevel(2, ctsB, ranalS, alpha=alpha)
+			N_sourceUL, SignUL = self.calcCountsLimit(2, ctsB, ranalS, alpha=alpha)
 			rateUL = (N_sourceUL / exposure)
 			fluxUL = rateUL / fluxscalefactor
 			
 			#sensitivity
-			N_sourceSens, SignSens = self.calcFluxLevel(4, ctsB, ranalS, alpha=alpha)
+			N_sourceSens, SignSens = self.calcCountsLimit(4, ctsB, ranalS, alpha=alpha)
 			rateSens = (N_sourceSens / exposure)
 			fluxSens = rateSens / fluxscalefactor
 			
@@ -308,7 +308,7 @@ class EvalRates:
 		return
 
 	#ctsB
-	def calcFluxLevel(self, Sign, ctsB, ranalS, alpha=-1):
+	def calcCountsLimit(self, Sign, ctsB, ranalS, alpha=-1, algorithm=2):
 		
 		aps = APSignificance()
 		N_source = 0.1
@@ -317,8 +317,11 @@ class EvalRates:
 		while(1):
 			if (ctsB > 0.):
 				N_on = N_source + ctsB
-				#Ss = aps.lima(verbose=0, alpha=alpha, N_on = N_on, N_off = ctsB, ranalS=ranalS)
-				Ss = aps.Sa(verbose=0, ctsTOT=N_on, ctsB=ctsB)
+				Ss = -1
+				if algorithm == 1:
+					Ss = aps.lima(verbose=0, alpha=alpha, N_on = N_on, N_off = ctsB, ranalS=ranalS)
+				if algorithm == 2:
+					Ss = aps.Sa(verbose=0, ctsTOT=N_on, ctsB=ctsB)
 				#print(N_source)
 				if (Ss >= Sign):
 					break

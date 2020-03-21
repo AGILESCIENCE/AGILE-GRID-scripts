@@ -8,6 +8,7 @@
 #          Bulgarelli Andrea <andrea.bulgarelli@inaf.it>
 #          Valentina Fioretti <valentina.fioretti@inaf.it>
 #          Parmiggiani Nicolò <nicolo.parmiggiani@inaf.it>
+#          Alessio Aboudan
 #      All rights reserved.
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
