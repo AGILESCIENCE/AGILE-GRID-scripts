@@ -297,12 +297,12 @@ if(mode=="1"):
 
     #LC EXP
     ax[1,0].errorbar(data_array_one['x'], data_array_one['exp'],xerr=data_array_one['xerr'],  label=os.path.basename(file_one), fmt='r.')
-    ax[1,0].set(xlabel="TT time *10^8", ylabel="Exp")
+    ax[1,0].set(xlabel="TT time *10^8", ylabel="Exp 10^6")
     ax[1,0].grid(True)
 
     #LC EXP NORM
     ax[1,1].errorbar(data_array_one['x'], data_array_one['exp_norm'],xerr=data_array_one['xerr'] , label=os.path.basename(file_one), fmt='r.')
-    ax[1,1].set(xlabel="TT time *10^8", ylabel="Exp Norm")
+    ax[1,1].set(xlabel="TT time *10^8", ylabel="Exp Norm 10^6")
     ax[1,1].grid(True)
 
 
@@ -568,13 +568,13 @@ if(mode=="2"):
     #LC EXP
     ax[1,0].errorbar(data_array_one['x'], data_array_one['exp'],xerr=data_array_one['xerr'],  label=os.path.basename(file_one), fmt='r.')
     ax[1,0].errorbar(data_array_two['x'], data_array_two['exp'],xerr=data_array_two['xerr'],  label=os.path.basename(file_two), fmt='b.')
-    ax[1,0].set(xlabel="TT time *10^8", ylabel="Exp")
+    ax[1,0].set(xlabel="TT time *10^8", ylabel="Exp 10^6")
     ax[1,0].grid(True)
 
     #LC EXP NORM
     ax[1,1].errorbar(data_array_one['x'], data_array_one['exp_norm'],xerr=data_array_one['xerr'] , label=os.path.basename(file_one), fmt='r.')
     ax[1,1].errorbar(data_array_two['x'], data_array_two['exp_norm'],xerr=data_array_two['xerr'], label=os.path.basename(file_two), fmt='b.')
-    ax[1,1].set(xlabel="TT time *10^8", ylabel="Exp Norm")
+    ax[1,1].set(xlabel="TT time *10^8", ylabel="Exp Norm 10^6")
     ax[1,1].grid(True)
 
     #### SCATER PLOT COUNT
