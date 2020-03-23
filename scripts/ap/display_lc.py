@@ -235,7 +235,7 @@ if(mode=="1"):
         f1_ax1.errorbar(dict_one[0]['x'], dict_one[0]['flux'],xerr=dict_one[0]['x_err'], yerr=dict_one[0]['flux_err'], label=os.path.basename(file_one), fmt='r.')
 
     if not (file_one.endswith(".lc")):
-        f1_ax1.plot(data_array_one['x'], data_array_one['sensitivity'], color='r', marker='o',  linewidth=1.5, markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
+        f1_ax1.plot(data_array_one['x'], data_array_one['sensitivity'], color='r', marker='o',  linewidth=1.5,linestyle='dashed', markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
 
     #plot fixed flux
     if(fixed_flux!=-1):
@@ -463,9 +463,9 @@ if(mode=="2"):
         f1_ax1.errorbar(dict_two[0]['x'], dict_two[0]['flux'],xerr=dict_two[0]['x_err'], yerr=dict_two[0]['flux_err'], label=os.path.basename(file_two), fmt='b.')
 
     if not (file_one.endswith(".lc")):
-        f1_ax1.plot(data_array_one['x'], data_array_one['sensitivity'], color='r', marker='o',  linewidth=1.5, markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
+        f1_ax1.plot(data_array_one['x'], data_array_one['sensitivity'], color='r', marker='o',  linestyle='dashed', linewidth=1.5, markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
     if not (file_two.endswith(".lc")):
-        f1_ax1.plot(data_array_two['x'], data_array_two['sensitivity'], color='b', marker='o',  linewidth=1.5, markersize=3,label=os.path.basename(file_two)+" (4 sigma sensitivity)")
+        f1_ax1.plot(data_array_two['x'], data_array_two['sensitivity'], color='b', marker='o',  linestyle='dashed', linewidth=1.5, markersize=3,label=os.path.basename(file_two)+" (4 sigma sensitivity)")
 
     #plot fixed flux
 
