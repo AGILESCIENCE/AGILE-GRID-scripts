@@ -268,7 +268,8 @@ if(mode=="1"):
     f1_ax1.grid(True)
     f1_ax1.legend()
 
-    fig1.subplots_adjust( wspace=0, hspace=1)
+    fig1.subplots_adjust(left=0.06,bottom=0.06,right=0.97,top=0.97, wspace=0, hspace=0)
+    #fig1.subplots_adjust( wspace=0, hspace=1)
 
     fig2, ax = plt.subplots(2,5)
     fig2.suptitle('File 1 (red): '+os.path.basename(file_one))
@@ -500,7 +501,7 @@ if(mode=="2"):
     f1_ax4.grid(True)
 
     #fig1.tight_layout()
-    fig1.subplots_adjust(wspace=0, hspace=1)
+    fig1.subplots_adjust(left=0.06,bottom=0.06,right=0.97,top=0.97,wspace=0,hspace=0)
 
 
 
