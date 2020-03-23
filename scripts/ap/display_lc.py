@@ -247,7 +247,7 @@ if(mode=="1"):
     f1_ax2.grid(True)
 
     #LC EXP
-    f1_ax3.errorbar(data_array_one['x'], data_array_one['exp'],xerr=data_array_one['xerr'],  label=os.path.basename(file_one), fmt='r.')
+    f1_ax3.errorbar(data_array_one['x'], data_array_one['exp'],xerr=data_array_one['xerr'], linestyle="-" , label=os.path.basename(file_one), fmt='r.')
     f1_ax3.set(xlabel="TT time *10^8", ylabel="Exp 10^6")
     f1_ax3.grid(True)
 
@@ -488,8 +488,8 @@ if(mode=="2"):
     f1_ax2.grid(True)
 
     #LC EXP
-    f1_ax3.errorbar(data_array_one['x'], data_array_one['exp'],xerr=data_array_one['xerr'],  label=os.path.basename(file_one), fmt='r.')
-    f1_ax3.errorbar(data_array_two['x'], data_array_two['exp'],xerr=data_array_two['xerr'],  label=os.path.basename(file_two), fmt='b.')
+    f1_ax3.errorbar(data_array_one['x'], data_array_one['exp'],xerr=data_array_one['xerr'], linestyle="-" ,  label=os.path.basename(file_one), fmt='r.')
+    f1_ax3.errorbar(data_array_two['x'], data_array_two['exp'],xerr=data_array_two['xerr'], linestyle="-" ,  label=os.path.basename(file_two), fmt='b.')
     f1_ax3.set(xlabel="TT time *10^8", ylabel="Exp 10^6")
     f1_ax3.grid(True)
 
