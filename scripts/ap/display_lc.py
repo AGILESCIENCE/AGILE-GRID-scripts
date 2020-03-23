@@ -206,7 +206,13 @@ if(mode=="1"):
 
     data_array_one = get_value_from_array(dict_one)
 
-    plt.figure(1)
+    fig1 = plt.figure(constrained_layout=False)
+
+    gs = GridSpec(6,1)
+    f1_ax1 = fig1.add_subplot(gs[:-3,0])
+    f1_ax2 = fig1.add_subplot(gs[3,0])
+    f1_ax3 = fig1.add_subplot(gs[4,0])
+    f1_ax4 = fig1.add_subplot(gs[5,0])
 
     #plt.errorbar(data_array_one['x'], data_array_one['flux'],xerr=data_array_one['xerr'], yerr=data_array_one['flux_err'], label='flux 1', fmt='r.')
 
@@ -219,35 +225,53 @@ if(mode=="1"):
         if(detection['sqrtts']<3):
             #add arrow
             #plt.arrow(detection['x'],detection['flux'],0,-70,width=1,head_width=10,head_starts_at_zero=True)
-            plt.errorbar(detection['x'], detection['flux_ul'],xerr=detection['x_err'], yerr=0, fmt='rv')
+            f1_ax1.errorbar(detection['x'], detection['flux_ul'],xerr=detection['x_err'], yerr=0, fmt='rv')
         else:
-            plt.errorbar(detection['x'], detection['flux'],xerr=detection['x_err'], yerr=detection['flux_err'], fmt='r.')
-
+            f1_ax1.errorbar(detection['x'], detection['flux'],xerr=detection['x_err'], yerr=detection['flux_err'], fmt='r.')
 
     if(dict_one[0]['sqrtts']<3):
-        plt.errorbar(dict_one[0]['x'], dict_one[0]['flux_ul'],xerr=dict_one[0]['x_err'], yerr=0, label=os.path.basename(file_one), fmt='rv')
+        f1_ax1.errorbar(dict_one[0]['x'], dict_one[0]['flux_ul'],xerr=dict_one[0]['x_err'], yerr=0, label=os.path.basename(file_one), fmt='rv')
     else:
-        plt.errorbar(dict_one[0]['x'], dict_one[0]['flux'],xerr=dict_one[0]['x_err'], yerr=dict_one[0]['flux_err'], label=os.path.basename(file_one), fmt='r.')
-
+        f1_ax1.errorbar(dict_one[0]['x'], dict_one[0]['flux'],xerr=dict_one[0]['x_err'], yerr=dict_one[0]['flux_err'], label=os.path.basename(file_one), fmt='r.')
 
     if not (file_one.endswith(".lc")):
-        plt.plot(data_array_one['x'], data_array_one['sensitivity'], color='r', marker='o', linestyle='dashed', linewidth=1.5, markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
+        f1_ax1.plot(data_array_one['x'], data_array_one['sensitivity'], color='r', marker='o',  linewidth=1.5, markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
 
     #plot fixed flux
-
     if(fixed_flux!=-1):
-        plt.plot([np.amin(data_array_one['x']),np.amax(data_array_one['x'])], [fixed_flux,fixed_flux], color='g', linestyle='dashed', linewidth=1.5,label="Fixed Flux")
+        f1_ax1.plot([np.amin(data_array_one['x']),np.amax(data_array_one['x'])], [fixed_flux,fixed_flux], color='g', linewidth=1.5,label="Fixed Flux")
+
+    #LC sqrts
+    f1_ax2.errorbar(data_array_one['x'], data_array_one['sqrtts'], xerr=data_array_one['xerr'],label=os.path.basename(file_one), fmt='r.')
+    f1_ax2.set(xlabel="TT time *10^8", ylabel="sqrt(TS)")
+    f1_ax2.grid(True)
+
+    #LC EXP
+    f1_ax3.errorbar(data_array_one['x'], data_array_one['exp'],xerr=data_array_one['xerr'],  label=os.path.basename(file_one), fmt='r.')
+    f1_ax3.set(xlabel="TT time *10^8", ylabel="Exp 10^6")
+    f1_ax3.grid(True)
+
+    #LC COUNT
+    f1_ax4.errorbar(data_array_one['x'], data_array_one['count'],xerr=data_array_one['xerr'], yerr=data_array_one['count_err'], label=os.path.basename(file_one), fmt='r.')
+    f1_ax4.set(xlabel="TT time *10^8", ylabel="Counts")
+    f1_ax4.grid(True)
 
 
-    plt.ylim(ymin=0)
-    plt.xlabel("TT time *10^8")
-    plt.ylabel("Flux ph/cm2 s *10^-8")
-    plt.grid(True)
-    plt.legend()
 
-    plt.figure(1)
-    fig, ax = plt.subplots(2,5)
-    fig.suptitle('File 1 (red): '+os.path.basename(file_one))
+
+
+    f1_ax1.set(xlabel='TT time *10^8', ylabel='Flux ph/cm2 s *10^-8')
+    f1_ax1.set_ylim(ymin=0)
+    #ax[0].xlabel("TT time *10^8")
+    #ax[0].ylabel("Flux ph/cm2 s *10^-8")
+    #ax[0].ylim(ymin=0)
+    f1_ax1.grid(True)
+    f1_ax1.legend()
+
+    fig1.subplots_adjust( wspace=0, hspace=1)
+
+    fig2, ax = plt.subplots(2,5)
+    fig2.suptitle('File 1 (red): '+os.path.basename(file_one))
     n, bins, patches = ax[0,0].hist(data_array_one['flux'], binsize, density=True, facecolor='r', alpha=0.6,label='flux 1')
     ax[0,0].plot(bins, norm.pdf(bins, np.mean(data_array_one['flux']), np.std(data_array_one['flux'])), color="black", linestyle="--", alpha=0.9)
     n, bins, patches = ax[0,1].hist(data_array_one['flux_err'], binsize, density=True, facecolor='r', alpha=0.6,label='flux err 1')
@@ -268,7 +292,7 @@ if(mode=="1"):
 
     n, bins, patches = ax[1,3].hist(data_array_one['exp'], binsize, density=True, facecolor='r', alpha=0.6,label='exp 1')
     ax[1,3].plot(bins, norm.pdf(bins, np.mean(data_array_one['exp']), np.std(data_array_one['exp'])), color="black", linestyle="--", alpha=0.9)
-    ax[1,3].set_title("Exp")
+    #ax[1,3].set_title("Exp")
     ax[1,3].set(xlabel='Exp 10^6')
 
     if(file_one.endswith(".ap3")):
@@ -279,12 +303,14 @@ if(mode=="1"):
         n, bins, patches = ax[1,4].hist(data_array_one['exp_norm'], binsize, density=True, facecolor='r', alpha=0.6,label='exp 1')
         ax[1,4].plot(bins, norm.pdf(bins, np.mean(data_array_one['exp_norm']), np.std(data_array_one['exp_norm'])), color="black", linestyle="--", alpha=0.9)
 
-        ax[1,4].set_title("Exp Norm")
+        #ax[1,4].set_title("Exp Norm")
         ax[1,4].set(xlabel='Exp Norm 10^6')
 
-    plt.figure(1)
-    fig, ax = plt.subplots(3,3)
-    fig.suptitle('File 1 (red): '+os.path.basename(file_one))
+
+    fig2.subplots_adjust(wspace=0.4, hspace=0.2)
+
+    fig3, ax = plt.subplots(3,3)
+    fig3.suptitle('File 1 (red): '+os.path.basename(file_one))
 
     bins = 40
 
@@ -320,7 +346,7 @@ if(mode=="1"):
     std = np.std(data_array_one['count'])
     n, bins, patches = ax[2,2].hist(data_array_one['count'], binsize, density=True, facecolor='r', alpha=0.6,label="mean: "+str(round(mean,2))+",std= "+str(round(std,2)))
     ax[2,2].plot(bins, norm.pdf(bins, mean, std), color="black", linestyle="--", alpha=0.9)
-    ax[2,2].set_title("Count")
+    #ax[2,2].set_title("Count")
     ax[2,2].set(xlabel='Count')
     ax[2,2].legend()
 
@@ -331,11 +357,14 @@ if(mode=="1"):
     std = np.std(data_array_one['count_bkg'])
     n, bins, patches = ax[1,2].hist(data_array_one['count_bkg'], binsize, density=True, facecolor='r', alpha=0.6,label="mean: "+str(round(mean,2))+",std= "+str(round(std,2)))
     ax[1,2].plot(bins, norm.pdf(bins, mean, std), color="black", linestyle="--", alpha=0.9)
-    ax[1,2].set_title("Count")
+    #ax[1,2].set_title("Count")
     ax[1,2].set(xlabel='Count')
     ax[1,2].legend()
 
+    fig3.subplots_adjust(wspace=0.4, hspace=0.3)
 
+
+    #plt.tight_layout()
     plt.show()
 
 if(mode=="2"):
@@ -378,8 +407,20 @@ if(mode=="2"):
         data_array_two = get_value_from_array(dict_two)
 
 
-    plt.figure(1)
+    #plt.figure(1)
+    #fig, ax = plt.subplots(ncols=1, nrows=4, constrained_layout=True)
 
+    fig1 = plt.figure(constrained_layout=False)
+
+    gs = GridSpec(6,1)
+    f1_ax1 = fig1.add_subplot(gs[:-3,0])
+    #f3_ax1.set_title('gs[0, :]')
+    f1_ax2 = fig1.add_subplot(gs[3,0])
+    #f3_ax2.set_title('gs[0, :]')
+    f1_ax3 = fig1.add_subplot(gs[4,0])
+    #f3_ax3.set_title('gs[0, :]')
+    f1_ax4 = fig1.add_subplot(gs[5,0])
+    #f3_ax4.set_title('gs[0, :]')
 
     count = 0
     for detection in dict_one:
@@ -390,9 +431,9 @@ if(mode=="2"):
         if(detection['sqrtts']<3):
             #add arrow
             #plt.arrow(detection['x'],detection['flux'],0,-70,width=1,head_width=10,head_starts_at_zero=True)
-            plt.errorbar(detection['x'], detection['flux_ul'],xerr=detection['x_err'], yerr=0, fmt='rv')
+            f1_ax1.errorbar(detection['x'], detection['flux_ul'],xerr=detection['x_err'], yerr=0, fmt='rv')
         else:
-            plt.errorbar(detection['x'], detection['flux'],xerr=detection['x_err'], yerr=detection['flux_err'], fmt='r.')
+            f1_ax1.errorbar(detection['x'], detection['flux'],xerr=detection['x_err'], yerr=detection['flux_err'], fmt='r.')
 
     count = 0
     for detection in dict_two:
@@ -403,45 +444,68 @@ if(mode=="2"):
         if(detection['sqrtts']<3):
             #add arrow
             #plt.arrow(detection['x'],detection['flux'],0,-70,width=1,head_width=10,head_starts_at_zero=True)
-            plt.errorbar(detection['x'], detection['flux_ul'],xerr=detection['x_err'], yerr=0, fmt='bv')
+            f1_ax1.errorbar(detection['x'], detection['flux_ul'],xerr=detection['x_err'], yerr=0, fmt='bv')
         else:
-            plt.errorbar(detection['x'], detection['flux'],xerr=detection['x_err'], yerr=detection['flux_err'], fmt='b.')
+            f1_ax1.errorbar(detection['x'], detection['flux'],xerr=detection['x_err'], yerr=detection['flux_err'], fmt='b.')
 
 
     #plt.errorbar(data_array_one['x'], data_array_one['flux'],xerr=data_array_one['xerr'], yerr=data_array_one['flux_err'], label=os.path.basename(file_one), fmt='r.')
 
     if(dict_one[0]['sqrtts']<3):
-        plt.errorbar(dict_one[0]['x'], dict_one[0]['flux_ul'],xerr=dict_one[0]['x_err'], yerr=0, label=os.path.basename(file_one), fmt='rv')
+        f1_ax1.errorbar(dict_one[0]['x'], dict_one[0]['flux_ul'],xerr=dict_one[0]['x_err'], yerr=0, label=os.path.basename(file_one), fmt='rv')
     else:
-        plt.errorbar(dict_one[0]['x'], dict_one[0]['flux'],xerr=dict_one[0]['x_err'], yerr=dict_one[0]['flux_err'], label=os.path.basename(file_one), fmt='r.')
+        f1_ax1.errorbar(dict_one[0]['x'], dict_one[0]['flux'],xerr=dict_one[0]['x_err'], yerr=dict_one[0]['flux_err'], label=os.path.basename(file_one), fmt='r.')
 
 
     if(dict_two[0]['sqrtts']<3):
-        plt.errorbar(dict_two[0]['x'], dict_two[0]['flux_ul'],xerr=dict_two[0]['x_err'], yerr=0, label=os.path.basename(file_two), fmt='bv')
+        f1_ax1.errorbar(dict_two[0]['x'], dict_two[0]['flux_ul'],xerr=dict_two[0]['x_err'], yerr=0, label=os.path.basename(file_two), fmt='bv')
     else:
-        plt.errorbar(dict_two[0]['x'], dict_two[0]['flux'],xerr=dict_two[0]['x_err'], yerr=dict_two[0]['flux_err'], label=os.path.basename(file_two), fmt='b.')
+        f1_ax1.errorbar(dict_two[0]['x'], dict_two[0]['flux'],xerr=dict_two[0]['x_err'], yerr=dict_two[0]['flux_err'], label=os.path.basename(file_two), fmt='b.')
 
     if not (file_one.endswith(".lc")):
-        plt.plot(data_array_one['x'], data_array_one['sensitivity'], color='r', marker='o', linestyle='dashed', linewidth=1.5, markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
+        f1_ax1.plot(data_array_one['x'], data_array_one['sensitivity'], color='r', marker='o',  linewidth=1.5, markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
     if not (file_two.endswith(".lc")):
-        plt.plot(data_array_two['x'], data_array_two['sensitivity'], color='b', marker='o', linestyle='dashed', linewidth=1.5, markersize=3,label=os.path.basename(file_two)+" (4 sigma sensitivity)")
+        f1_ax1.plot(data_array_two['x'], data_array_two['sensitivity'], color='b', marker='o',  linewidth=1.5, markersize=3,label=os.path.basename(file_two)+" (4 sigma sensitivity)")
 
     #plot fixed flux
 
     if(fixed_flux!=-1):
-        plt.plot([np.amin(data_array_one['x']),np.amax(data_array_one['x'])], [fixed_flux,fixed_flux], color='g', linestyle='dashed', linewidth=1.5,label="Fixed Flux")
+        f1_ax1.plot([np.amin(data_array_one['x']),np.amax(data_array_one['x'])], [fixed_flux,fixed_flux], color='g', linewidth=1.5,label="Fixed Flux")
+
+
+    f1_ax1.set(xlabel='TT time *10^8', ylabel='Flux ph/cm2 s *10^-8')
+    f1_ax1.set_ylim(ymin=0)
+    #ax[0].xlabel("TT time *10^8")
+    #ax[0].ylabel("Flux ph/cm2 s *10^-8")
+    #ax[0].ylim(ymin=0)
+    f1_ax1.grid(True)
+    f1_ax1.legend()
+
+    #LC TS
+    f1_ax2.errorbar(data_array_one['x'], data_array_one['sqrtts'],xerr=data_array_one['xerr'], label=os.path.basename(file_one), fmt='r.')
+    f1_ax2.errorbar(data_array_two['x'], data_array_two['sqrtts'],xerr=data_array_two['xerr'], label=os.path.basename(file_two), fmt='b.')
+    f1_ax2.set(xlabel="TT time *10^8", ylabel="sqrt(TS)")
+    f1_ax2.grid(True)
+
+    #LC EXP
+    f1_ax3.errorbar(data_array_one['x'], data_array_one['exp'],xerr=data_array_one['xerr'],  label=os.path.basename(file_one), fmt='r.')
+    f1_ax3.errorbar(data_array_two['x'], data_array_two['exp'],xerr=data_array_two['xerr'],  label=os.path.basename(file_two), fmt='b.')
+    f1_ax3.set(xlabel="TT time *10^8", ylabel="Exp 10^6")
+    f1_ax3.grid(True)
+
+    #LC COUNT
+    f1_ax4.errorbar(data_array_one['x'], data_array_one['count'],xerr=data_array_one['xerr'], yerr=data_array_one['count_err'], label=os.path.basename(file_one), fmt='r.')
+    f1_ax4.errorbar(data_array_two['x'], data_array_two['count'],xerr=data_array_two['xerr'], yerr=data_array_two['count_err'], label=os.path.basename(file_two), fmt='b.')
+    f1_ax4.set(xlabel="TT time *10^8", ylabel="Counts")
+    f1_ax4.grid(True)
+
+    #fig1.tight_layout()
+    fig1.subplots_adjust(wspace=0, hspace=1)
 
 
 
-    plt.xlabel("TT time *10^8")
-    plt.ylabel("Flux ph/cm2 s *10^-8")
-    plt.ylim(ymin=0)
-    plt.grid(True)
-    plt.legend()
-
-    plt.figure(1)
-    fig, ax = plt.subplots(2,5)
-    fig.suptitle('File 1 (red): '+os.path.basename(file_one)+', File 2 (blue): '+os.path.basename(file_two))
+    fig2, ax = plt.subplots(2,5)
+    fig2.suptitle('File 1 (red): '+os.path.basename(file_one)+', File 2 (blue): '+os.path.basename(file_two))
     n, bins, patches = ax[0,0].hist(data_array_one['flux'], binsize, density=True, facecolor='r', alpha=0.6,label='flux 1')
     ax[0,0].plot(bins, norm.pdf(bins, np.mean(data_array_one['flux']), np.std(data_array_one['flux'])), color="black", linestyle="--", alpha=0.9)
     n, bins, patches = ax[0,0].hist(data_array_two['flux'], binsize, density=True, facecolor='b', alpha=0.6,label='flux 2')
@@ -492,7 +556,7 @@ if(mode=="2"):
 
         n, bins, patches = ax[1,4].hist(data_array_one['exp_norm'], binsize, density=True, facecolor='r', alpha=0.6,label='exp 1')
         ax[1,4].plot(bins, norm.pdf(bins, np.mean(data_array_one['exp_norm']), np.std(data_array_one['exp_norm'])), color="black", linestyle="--", alpha=0.9)
-        ax[1,4].set_title("Exp Norm")
+        #ax[1,4].set_title("Exp Norm")
         ax[1,4].set(xlabel='Exp Norm 10^6')
 
     if(file_two.endswith(".ap3")):
@@ -503,7 +567,7 @@ if(mode=="2"):
 
         n, bins, patches = ax[1,4].hist(data_array_two['exp_norm'], binsize, density=True, facecolor='b', alpha=0.6,label='exp 1')
         ax[1,4].plot(bins, norm.pdf(bins, np.mean(data_array_two['exp_norm']), np.std(data_array_two['exp_norm'])), color="black", linestyle="--", alpha=0.9)
-        ax[1,4].set_title("Exp Norm")
+        #ax[1,4].set_title("Exp Norm")
         ax[1,4].set(xlabel='Exp Norm 10^6')
 
     mean = np.mean(data_array_one['exp'])
@@ -515,7 +579,7 @@ if(mode=="2"):
     std = np.std(data_array_two['exp'])
     n, bins, patches = ax[1,3].hist(data_array_two['exp'], binsize, density=True, facecolor='b', alpha=0.6,label="mean: "+str(round(mean,2))+",std= "+str(round(std,2)))
     ax[1,3].plot(bins, norm.pdf(bins, mean, std), color="black", linestyle="--", alpha=0.9)
-    ax[1,3].set_title("Exp")
+    #ax[1,3].set_title("Exp")
     ax[1,3].set(xlabel='Exp 10^6')
     ax[1,3].legend()
 
@@ -549,10 +613,12 @@ if(mode=="2"):
     #ax[1,2].set_title("Ts")
     ax[1,2].set(xlabel='sqrt(TS) 1',ylabel='sqrt(TS) 2')
 
+    fig2.subplots_adjust(wspace=0.4, hspace=0.2)
 
-    plt.figure(1)
-    fig, ax = plt.subplots(3,3)
-    fig.suptitle('File 1 (red): '+os.path.basename(file_one)+', File 2 (blue): '+os.path.basename(file_two))
+
+
+    fig3, ax = plt.subplots(3,3)
+    fig3.suptitle('File 1 (red): '+os.path.basename(file_one)+', File 2 (blue): '+os.path.basename(file_two))
 
     bins = 40
 
@@ -612,7 +678,7 @@ if(mode=="2"):
     std = np.std(data_array_one['count'])
     n, bins, patches = ax[2,2].hist(data_array_one['count'], binsize, density=True, facecolor='r', alpha=0.6,label="mean: "+str(round(mean,2))+",std= "+str(round(std,2)))
     ax[2,2].plot(bins, norm.pdf(bins, mean, std), color="black", linestyle="--", alpha=0.9)
-    ax[2,2].set_title("Count")
+    #ax[2,2].set_title("Count")
     ax[2,2].set(xlabel='Count')
     ax[2,2].legend()
 
@@ -621,7 +687,7 @@ if(mode=="2"):
     std = np.std(data_array_two['count'])
     n, bins, patches = ax[2,2].hist(data_array_two['count'], binsize, density=True, facecolor='b', alpha=0.6,label="mean: "+str(round(mean,2))+",std= "+str(round(std,2)))
     ax[2,2].plot(bins, norm.pdf(bins, mean, std), color="black", linestyle="--", alpha=0.9)
-    ax[2,2].set_title("Count")
+    #ax[2,2].set_title("Count")
     ax[2,2].set(xlabel='Count')
     ax[2,2].legend()
 
@@ -631,7 +697,7 @@ if(mode=="2"):
     std = np.std(data_array_one['count_bkg'])
     n, bins, patches = ax[1,2].hist(data_array_one['count_bkg'], binsize, density=True, facecolor='r', alpha=0.6,label="mean: "+str(round(mean,2))+",std= "+str(round(std,2)))
     ax[1,2].plot(bins, norm.pdf(bins, mean, std), color="black", linestyle="--", alpha=0.9)
-    ax[1,2].set_title("Count")
+    #ax[1,2].set_title("Count")
     ax[1,2].set(xlabel='Count')
     ax[1,2].legend()
 
@@ -640,8 +706,10 @@ if(mode=="2"):
     std = np.std(data_array_two['count_bkg'])
     n, bins, patches = ax[1,2].hist(data_array_two['count_bkg'], binsize, density=True, facecolor='b', alpha=0.6,label="mean: "+str(round(mean,2))+",std= "+str(round(std,2)))
     ax[1,2].plot(bins, norm.pdf(bins, mean, std), color="black", linestyle="--", alpha=0.9)
-    ax[1,2].set_title("Count")
+    #ax[1,2].set_title("Count")
     ax[1,2].set(xlabel='Count')
     ax[1,2].legend()
+
+    fig3.subplots_adjust(wspace=0.4, hspace=0.3)
 
     plt.show()
