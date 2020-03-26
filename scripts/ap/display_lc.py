@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import norm
 from matplotlib.gridspec import GridSpec
+from matplotlib.ticker import MultipleLocator
 
 
 def find_min_max_axes(array_one,array_two):
@@ -95,9 +96,9 @@ def extract_data(file_name):
                    else:
                        sqrtts =  -1
                    count = float(components[3])
-                   count_err = float(np.sqrt(count))/2
+                   count_err = float(np.sqrt(count))
                    count_bkg = float(components[26])
-                   count_bkg_err = float(np.sqrt(count_bkg))/2
+                   count_bkg_err = float(np.sqrt(count_bkg))
 
                    flux_ul = float(components[31])*flux_notation
 
@@ -235,16 +236,26 @@ if(mode=="1"):
         f1_ax1.errorbar(dict_one[0]['x'], dict_one[0]['flux'],xerr=dict_one[0]['x_err'], yerr=dict_one[0]['flux_err'], label=os.path.basename(file_one), fmt='r.')
 
     if not (file_one.endswith(".lc")):
-        f1_ax1.plot(data_array_one['x'], data_array_one['sensitivity'], color='r', marker='o',  linewidth=1.5,linestyle='dashed', markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
+        f1_ax1.scatter(data_array_one['x'], data_array_one['sensitivity'], marker="o",s=7,color="r" )
+
+        x1 = np.subtract(data_array_one['x'],data_array_one['xerr'])
+        x2 = np.sum([data_array_one['x'],data_array_one['xerr']],axis=0)
+        y1 = data_array_one['sensitivity']
+        y2 = data_array_one['sensitivity']
+        f1_ax1.plot([x1,x2],[y1,y2],color = 'r',linestyle="dashed")
+        #f1_ax1.plot(data_array_one['x'], data_array_one['sensitivity'], color='r', marker='o',  linewidth=1.5,linestyle='dashed', markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
 
     #plot fixed flux
     if(fixed_flux!=-1):
-        f1_ax1.plot([np.amin(data_array_one['x']),np.amax(data_array_one['x'])], [fixed_flux,fixed_flux], color='g', linewidth=1.5,label="Fixed Flux")
+        f1_ax1.plot([np.amin(data_array_one['x'])-np.amax(data_array_one['xerr']),np.amax(data_array_one['x'])+np.amax(data_array_one['xerr'])], [fixed_flux,fixed_flux], color='g', linestyle='dashed' , linewidth=1.5,label="Fixed Flux")
 
     #LC sqrts
     f1_ax2.errorbar(data_array_one['x'], data_array_one['sqrtts'], xerr=data_array_one['xerr'],label=os.path.basename(file_one), fmt='r.')
     f1_ax2.set(xlabel="TT time *10^8", ylabel="sqrt(TS)")
     f1_ax2.grid(True)
+
+    sqrtts_max = np.max(data_array_one['sqrtts'])
+    f1_ax2.yaxis.set_major_locator(MultipleLocator(round(sqrtts_max/10)))
 
     #LC EXP
     f1_ax3.errorbar(data_array_one['x'], data_array_one['exp'],xerr=data_array_one['xerr'], linestyle="-" , label=os.path.basename(file_one), fmt='r.')
@@ -255,6 +266,17 @@ if(mode=="1"):
     f1_ax4.errorbar(data_array_one['x'], data_array_one['count'],xerr=data_array_one['xerr'], yerr=data_array_one['count_err'], label=os.path.basename(file_one), fmt='r.')
     f1_ax4.set(xlabel="TT time *10^8", ylabel="Counts")
     f1_ax4.grid(True)
+
+    f1_ax4.scatter(data_array_one['x'], data_array_one['count_bkg'], marker="o",s=7,color="r" )
+
+    x1 = np.subtract(data_array_one['x'],data_array_one['xerr'])
+    x2 = np.sum([data_array_one['x'],data_array_one['xerr']],axis=0)
+    y1 = data_array_one['count_bkg']
+    y2 = data_array_one['count_bkg']
+    f1_ax4.plot([x1,x2],[y1,y2],color = 'r',linestyle="-.")
+
+    max_one = np.max(data_array_one['count'])
+    f1_ax4.yaxis.set_major_locator(MultipleLocator(round(max_one/10)))
 
 
 
@@ -464,14 +486,30 @@ if(mode=="2"):
         f1_ax1.errorbar(dict_two[0]['x'], dict_two[0]['flux'],xerr=dict_two[0]['x_err'], yerr=dict_two[0]['flux_err'], label=os.path.basename(file_two), fmt='b.')
 
     if not (file_one.endswith(".lc")):
-        f1_ax1.plot(data_array_one['x'], data_array_one['sensitivity'], color='r', marker='o',  linestyle='dashed', linewidth=1.5, markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
+        f1_ax1.scatter(data_array_one['x'], data_array_one['sensitivity'], marker="o",s=7,color="r" )
+
+        x1 = np.subtract(data_array_one['x'],data_array_one['xerr'])
+        x2 = np.sum([data_array_one['x'],data_array_one['xerr']],axis=0)
+        y1 = data_array_one['sensitivity']
+        y2 = data_array_one['sensitivity']
+        f1_ax1.plot([x1,x2],[y1,y2],color = 'r',linestyle="dashed")
+
+        #f1_ax1.errorbar(data_array_one['x'], data_array_one['sensitivity'],xerr=dict_one[0]['x_err'], yerr=0 , color='r', marker='o',  linestyle='dashed', linewidth=1.5, markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
     if not (file_two.endswith(".lc")):
-        f1_ax1.plot(data_array_two['x'], data_array_two['sensitivity'], color='b', marker='o',  linestyle='dashed', linewidth=1.5, markersize=3,label=os.path.basename(file_two)+" (4 sigma sensitivity)")
+        f1_ax1.scatter(data_array_two['x'], data_array_two['sensitivity'], marker="o",s=7,color="b" )
+
+        x1 = np.subtract(data_array_two['x'],data_array_two['xerr'])
+        x2 = np.sum([data_array_two['x'],data_array_two['xerr']],axis=0)
+        y1 = data_array_two['sensitivity']
+        y2 = data_array_two['sensitivity']
+        f1_ax1.plot([x1,x2],[y1,y2],color = 'b',linestyle="dashed")
+
+        #f1_ax1.errorbar(data_array_two['x'], data_array_two['sensitivity'],xerr=dict_two[0]['x_err'], yerr=0, color='b', marker='o',  linestyle='dashed', linewidth=1.5, markersize=3,label=os.path.basename(file_two)+" (4 sigma sensitivity)")
 
     #plot fixed flux
 
     if(fixed_flux!=-1):
-        f1_ax1.plot([np.amin(data_array_one['x']),np.amax(data_array_one['x'])], [fixed_flux,fixed_flux], color='g', linewidth=1.5,label="Fixed Flux")
+        f1_ax1.plot([np.amin(data_array_one['x'])-np.amax(data_array_one['xerr']),np.amax(data_array_one['x'])+np.amax(data_array_one['xerr'])], [fixed_flux,fixed_flux], color='g',linestyle='dashed', linewidth=1.5,label="Fixed Flux")
 
 
     f1_ax1.set(xlabel='TT time *10^8', ylabel='Flux ph/cm2 s *10^-8')
@@ -488,6 +526,23 @@ if(mode=="2"):
     f1_ax2.set(xlabel="TT time *10^8", ylabel="sqrt(TS)")
     f1_ax2.grid(True)
 
+    min_one = np.amin(data_array_one['sqrtts'])
+    min_two = np.amin(data_array_two['sqrtts'])
+
+    max_one = np.max(data_array_one['sqrtts'])
+    max_two = np.max(data_array_two['sqrtts'])
+
+    sqrtts_min = np.amin([min_one,min_two])
+    sqrtts_max = np.amax([max_one,max_two])
+
+    #grid_array = np.arange(int(sqrtts_min),int(sqrtts_max),1)
+
+    #for grid_line in grid_array.tolist():
+    #    f1_ax2.axhline(grid_line, color='gray', linewidth=0.5)
+
+    f1_ax2.yaxis.set_major_locator(MultipleLocator(round(sqrtts_max/10)))
+    #f1_ax2.set_axisbelow(True)
+
     #LC EXP
     f1_ax3.errorbar(data_array_one['x'], data_array_one['exp'],xerr=data_array_one['xerr'], linestyle="-" ,  label=os.path.basename(file_one), fmt='r.')
     f1_ax3.errorbar(data_array_two['x'], data_array_two['exp'],xerr=data_array_two['xerr'], linestyle="-" ,  label=os.path.basename(file_two), fmt='b.')
@@ -497,8 +552,40 @@ if(mode=="2"):
     #LC COUNT
     f1_ax4.errorbar(data_array_one['x'], data_array_one['count'],xerr=data_array_one['xerr'], yerr=data_array_one['count_err'], label=os.path.basename(file_one), fmt='r.')
     f1_ax4.errorbar(data_array_two['x'], data_array_two['count'],xerr=data_array_two['xerr'], yerr=data_array_two['count_err'], label=os.path.basename(file_two), fmt='b.')
+
+    f1_ax4.scatter(data_array_one['x'], data_array_one['count_bkg'], marker="o",s=7,color="r" )
+    f1_ax4.scatter(data_array_two['x'], data_array_two['count_bkg'], marker="o",s=7,color="b" )
+
+    x1 = np.subtract(data_array_one['x'],data_array_one['xerr'])
+    x2 = np.sum([data_array_one['x'],data_array_one['xerr']],axis=0)
+    y1 = data_array_one['count_bkg']
+    y2 = data_array_one['count_bkg']
+    f1_ax4.plot([x1,x2],[y1,y2],color = 'r',linestyle="-.")
+
+    x1 = np.subtract(data_array_two['x'],data_array_two['xerr'])
+    x2 = np.sum([data_array_two['x'],data_array_two['xerr']],axis=0)
+    y1 = data_array_two['count_bkg']
+    y2 = data_array_two['count_bkg']
+    f1_ax4.plot([x1,x2],[y1,y2],color = 'b',linestyle="-.")
+
     f1_ax4.set(xlabel="TT time *10^8", ylabel="Counts")
     f1_ax4.grid(True)
+
+    min_one = np.amin(data_array_one['count'])
+    min_two = np.amin(data_array_two['count'])
+
+    max_one = np.max(data_array_one['count'])
+    max_two = np.max(data_array_two['count'])
+
+    cts_min = np.min([min_one,min_two])
+    cts_max = np.max([max_one,max_two])
+
+    #grid_array = np.arange(int(cts_min),int(cts_max),1)
+
+    #for grid_line in grid_array.tolist():
+    #    f1_ax4.axhline(grid_line, color='gray', linewidth=0.5)
+    step = round(cts_max/10)
+    f1_ax4.yaxis.set_major_locator(MultipleLocator())
 
     #fig1.tight_layout()
     fig1.subplots_adjust(left=0.06,bottom=0.06,right=0.97,top=0.97,wspace=0,hspace=0)
