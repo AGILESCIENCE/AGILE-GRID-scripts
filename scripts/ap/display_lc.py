@@ -585,7 +585,7 @@ if(mode=="2"):
     #for grid_line in grid_array.tolist():
     #    f1_ax4.axhline(grid_line, color='gray', linewidth=0.5)
     step = round(cts_max/10)
-    f1_ax4.yaxis.set_major_locator(MultipleLocator())
+    f1_ax4.yaxis.set_major_locator(MultipleLocator(step))
 
     #fig1.tight_layout()
     fig1.subplots_adjust(left=0.06,bottom=0.06,right=0.97,top=0.97,wspace=0,hspace=0)
