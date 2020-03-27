@@ -236,14 +236,14 @@ if(mode=="1"):
         f1_ax1.errorbar(dict_one[0]['x'], dict_one[0]['flux'],xerr=dict_one[0]['x_err'], yerr=dict_one[0]['flux_err'], label=os.path.basename(file_one), fmt='r.')
 
     if not (file_one.endswith(".lc")):
-        f1_ax1.scatter(data_array_one['x'], data_array_one['sensitivity'], marker="o",s=7,color="r" )
-
-        x1 = np.subtract(data_array_one['x'],data_array_one['xerr'])
-        x2 = np.sum([data_array_one['x'],data_array_one['xerr']],axis=0)
-        y1 = data_array_one['sensitivity']
-        y2 = data_array_one['sensitivity']
-        f1_ax1.plot([x1,x2],[y1,y2],color = 'r',linestyle="dashed")
-        #f1_ax1.plot(data_array_one['x'], data_array_one['sensitivity'], color='r', marker='o',  linewidth=1.5,linestyle='dashed', markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
+        # f1_ax1.scatter(data_array_one['x'], data_array_one['sensitivity'], marker="o",s=7,color="r" )
+        #
+        # x1 = np.subtract(data_array_one['x'],data_array_one['xerr'])
+        # x2 = np.sum([data_array_one['x'],data_array_one['xerr']],axis=0)
+        # y1 = data_array_one['sensitivity']
+        # y2 = data_array_one['sensitivity']
+        # f1_ax1.plot([x1,x2],[y1,y2],color = 'r',linestyle="dashed")
+        f1_ax1.plot(data_array_one['x'], data_array_one['sensitivity'], color='r', marker='o',  linewidth=1.5,linestyle='dashed', markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
 
     #plot fixed flux
     if(fixed_flux!=-1):
@@ -255,7 +255,11 @@ if(mode=="1"):
     f1_ax2.grid(True)
 
     sqrtts_max = np.max(data_array_one['sqrtts'])
-    f1_ax2.yaxis.set_major_locator(MultipleLocator(round(sqrtts_max/10)))
+
+    if(sqrtts_max<10):
+        f1_ax2.yaxis.set_major_locator(MultipleLocator(1))
+    else:
+        f1_ax2.yaxis.set_major_locator(MultipleLocator(round(sqrtts_max/10)))
 
     #LC EXP
     f1_ax3.errorbar(data_array_one['x'], data_array_one['exp'],xerr=data_array_one['xerr'], linestyle="-" , label=os.path.basename(file_one), fmt='r.')
@@ -276,7 +280,10 @@ if(mode=="1"):
     f1_ax4.plot([x1,x2],[y1,y2],color = 'r',linestyle="-.")
 
     max_one = np.max(data_array_one['count'])
-    f1_ax4.yaxis.set_major_locator(MultipleLocator(round(max_one/10)))
+    if(max_one<10):
+        f1_ax4.yaxis.set_major_locator(MultipleLocator(1))
+    else:
+        f1_ax4.yaxis.set_major_locator(MultipleLocator(round(max_one/10)))
 
 
 
@@ -486,25 +493,25 @@ if(mode=="2"):
         f1_ax1.errorbar(dict_two[0]['x'], dict_two[0]['flux'],xerr=dict_two[0]['x_err'], yerr=dict_two[0]['flux_err'], label=os.path.basename(file_two), fmt='b.')
 
     if not (file_one.endswith(".lc")):
-        f1_ax1.scatter(data_array_one['x'], data_array_one['sensitivity'], marker="o",s=7,color="r" )
+        # f1_ax1.scatter(data_array_one['x'], data_array_one['sensitivity'], marker="o",s=7,color="r" )
+        #
+        # x1 = np.subtract(data_array_one['x'],data_array_one['xerr'])
+        # x2 = np.sum([data_array_one['x'],data_array_one['xerr']],axis=0)
+        # y1 = data_array_one['sensitivity']
+        # y2 = data_array_one['sensitivity']
+        # f1_ax1.plot([x1,x2],[y1,y2],color = 'r',linestyle="dashed")
 
-        x1 = np.subtract(data_array_one['x'],data_array_one['xerr'])
-        x2 = np.sum([data_array_one['x'],data_array_one['xerr']],axis=0)
-        y1 = data_array_one['sensitivity']
-        y2 = data_array_one['sensitivity']
-        f1_ax1.plot([x1,x2],[y1,y2],color = 'r',linestyle="dashed")
-
-        #f1_ax1.errorbar(data_array_one['x'], data_array_one['sensitivity'],xerr=dict_one[0]['x_err'], yerr=0 , color='r', marker='o',  linestyle='dashed', linewidth=1.5, markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
+        f1_ax1.errorbar(data_array_one['x'], data_array_one['sensitivity'],xerr=dict_one[0]['x_err'], yerr=0 , color='r', marker='o',  linestyle='dashed', linewidth=1.5, markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
     if not (file_two.endswith(".lc")):
-        f1_ax1.scatter(data_array_two['x'], data_array_two['sensitivity'], marker="o",s=7,color="b" )
+        # f1_ax1.scatter(data_array_two['x'], data_array_two['sensitivity'], marker="o",s=7,color="b" )
+        #
+        # x1 = np.subtract(data_array_two['x'],data_array_two['xerr'])
+        # x2 = np.sum([data_array_two['x'],data_array_two['xerr']],axis=0)
+        # y1 = data_array_two['sensitivity']
+        # y2 = data_array_two['sensitivity']
+        # f1_ax1.plot([x1,x2],[y1,y2],color = 'b',linestyle="dashed")
 
-        x1 = np.subtract(data_array_two['x'],data_array_two['xerr'])
-        x2 = np.sum([data_array_two['x'],data_array_two['xerr']],axis=0)
-        y1 = data_array_two['sensitivity']
-        y2 = data_array_two['sensitivity']
-        f1_ax1.plot([x1,x2],[y1,y2],color = 'b',linestyle="dashed")
-
-        #f1_ax1.errorbar(data_array_two['x'], data_array_two['sensitivity'],xerr=dict_two[0]['x_err'], yerr=0, color='b', marker='o',  linestyle='dashed', linewidth=1.5, markersize=3,label=os.path.basename(file_two)+" (4 sigma sensitivity)")
+        f1_ax1.errorbar(data_array_two['x'], data_array_two['sensitivity'],xerr=dict_two[0]['x_err'], yerr=0, color='b', marker='o',  linestyle='dashed', linewidth=1.5, markersize=3,label=os.path.basename(file_two)+" (4 sigma sensitivity)")
 
     #plot fixed flux
 
@@ -539,8 +546,10 @@ if(mode=="2"):
 
     #for grid_line in grid_array.tolist():
     #    f1_ax2.axhline(grid_line, color='gray', linewidth=0.5)
-
-    f1_ax2.yaxis.set_major_locator(MultipleLocator(round(sqrtts_max/10)))
+    if(sqrtts_max<10):
+        f1_ax2.yaxis.set_major_locator(MultipleLocator(1))
+    else:
+        f1_ax2.yaxis.set_major_locator(MultipleLocator(round(sqrtts_max/10)))
     #f1_ax2.set_axisbelow(True)
 
     #LC EXP
@@ -584,8 +593,10 @@ if(mode=="2"):
 
     #for grid_line in grid_array.tolist():
     #    f1_ax4.axhline(grid_line, color='gray', linewidth=0.5)
-    step = round(cts_max/10)
-    f1_ax4.yaxis.set_major_locator(MultipleLocator(step))
+    if(cts_max<10):
+        f1_ax4.yaxis.set_major_locator(MultipleLocator(1))
+    else:
+        f1_ax4.yaxis.set_major_locator(MultipleLocator(round(cts_max/10)))
 
     #fig1.tight_layout()
     fig1.subplots_adjust(left=0.06,bottom=0.06,right=0.97,top=0.97,wspace=0,hspace=0)
