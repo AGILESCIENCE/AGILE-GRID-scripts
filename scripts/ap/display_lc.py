@@ -89,7 +89,7 @@ def extract_data(file_name):
                    #23 Sa
                    #27 Slima
                    sindex=23
-                   if(float(components[sindex])>0):
+                   if(float(components[sindex])>=0):
                        #sqrtts =  np.sqrt(float(line.split()[23]))
                        sqrtts =  float(components[sindex]) #Sa
                        #sqrtts =  float(line.split()[27]) #Slm
@@ -504,7 +504,7 @@ if(mode=="2"):
         y1 = data_array_one['sensitivity']
         y2 = data_array_one['sensitivity']
         f1_ax1.plot([x1,x2],[y1,y2],color = 'r',linestyle="dashed")
-        
+
     if not (file_two.endswith(".lc")):
         # f1_ax1.scatter(data_array_two['x'], data_array_two['sensitivity'], marker="o",s=7,color="b" )
         #
