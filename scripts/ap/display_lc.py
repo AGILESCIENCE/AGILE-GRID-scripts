@@ -250,6 +250,9 @@ if(mode=="1"):
     if(fixed_flux!=-1):
         f1_ax1.plot([np.amin(data_array_one['x'])-np.amax(data_array_one['xerr']),np.amax(data_array_one['x'])+np.amax(data_array_one['xerr'])], [fixed_flux,fixed_flux], color='g', linestyle='dashed' , linewidth=1.5,label="Fixed Flux")
 
+
+
+
     #LC sqrts
     f1_ax2.errorbar(data_array_one['x'], data_array_one['sqrtts'], xerr=data_array_one['xerr'],label=os.path.basename(file_one), fmt='r.')
     f1_ax2.set(xlabel="TT time *10^8", ylabel="sqrt(TS)")
@@ -296,7 +299,8 @@ if(mode=="1"):
     #ax[0].ylabel("Flux ph/cm2 s *10^-8")
     #ax[0].ylim(ymin=0)
     f1_ax1.grid(True)
-    f1_ax1.legend()
+    f1_ax1.legend(prop={'size':6})
+
 
     fig1.subplots_adjust(left=0.06,bottom=0.06,right=0.97,top=0.97, wspace=0, hspace=0)
     #fig1.subplots_adjust( wspace=0, hspace=1)
@@ -396,6 +400,7 @@ if(mode=="1"):
 
 
     #plt.tight_layout()
+
     plt.show()
 
 if(mode=="2"):
@@ -528,7 +533,7 @@ if(mode=="2"):
     #ax[0].ylabel("Flux ph/cm2 s *10^-8")
     #ax[0].ylim(ymin=0)
     f1_ax1.grid(True)
-    f1_ax1.legend()
+    f1_ax1.legend(prop={'size':6})
 
     #LC TS
     f1_ax2.errorbar(data_array_one['x'], data_array_one['sqrtts'],xerr=data_array_one['xerr'], label=os.path.basename(file_one), fmt='r.')
