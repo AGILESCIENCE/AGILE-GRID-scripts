@@ -41,7 +41,7 @@ def extract_data(file_name):
                    if(float(line.split()[7])>0):
                        sqrtts =  float(line.split()[7])
                    else:
-                       sqrtts =  -1
+                       sqrtts =  0
                    count = -1
                    count_bkg = -1
                    count_err = -1
@@ -88,21 +88,21 @@ def extract_data(file_name):
                    flux_err =  float(components[22])*flux_notation
                    #23 Sa
                    #27 Slima
-                   sindex=23
-                   if(float(components[sindex])>=0):
-                       #sqrtts =  np.sqrt(float(line.split()[23]))
-                       sqrtts =  float(components[sindex]) #Sa
-                       #sqrtts =  float(line.split()[27]) #Slm
+                   sindex=27
+                   if(float(components[sindex])>0):
+                       sqrtts =  float(components[sindex]) #S
                    else:
-                       sqrtts =  -1
+                       sqrtts =  0
                    count = float(components[3])
                    count_err = float(np.sqrt(count))
                    count_bkg = float(components[26])
                    count_bkg_err = float(np.sqrt(count_bkg))
 
                    flux_ul = float(components[31])*flux_notation
-
-                   sensitivity = float(components[35])*flux_notation
+                   #31 -> 2
+                   #35 -> 3
+                   #39 -> 4
+                   sensitivity = float(components[39])*flux_notation
 
 
                #FILTRO

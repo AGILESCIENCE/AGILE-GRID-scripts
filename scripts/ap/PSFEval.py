@@ -291,11 +291,11 @@ class PSFEval:
 		# king fit
 		p, cov = curve_fit(self.king_profile, radius_PSF, density_PSF_norm, maxfev=1000000*(len(radius_PSF)+1))
 					
-		print('King fit result:')
-		print(p)
+		#print('King fit result:')
+		#print(p)
 		perr = np.sqrt(np.diag(cov))
-		print('King fit result 1 standard deviation: %.3f')
-		print(perr)
+		#print('King fit result 1 standard deviation: %.3f')
+		#print(perr)
 		# Calculate degrees of freedom of fit
 		dof = len(radius_PSF) - len(p)
 						   

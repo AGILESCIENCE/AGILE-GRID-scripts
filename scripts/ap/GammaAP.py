@@ -36,7 +36,7 @@ from MathUtils import *
 #gasvalue Vela = 0.00018
 #TODO
 #1) Includere la possibilita' di avere una LC di bkg indipendente da quella da analizzare, su cui determinare rate medio
-
+#table=pd.read_csv('D01_43200s_emin100_emax10000_r0.8.ap.ap3', sep=' ', index_col=None)
 
 class NormalizeAP:
 
@@ -207,14 +207,14 @@ class NormalizeAP:
 			
 			n = n + 1
 		
-		return
+		return ratew_mean1, ratew_mean2, ratew_mean3, ratew_mean4, ratew_mean1aa
 
 
 #########################################
 class GammaAP:
 
 	def __init__(self):
-		self.ncols = 38
+		self.ncols = 46
 		self.diml = 0
 		self.tstartA = []
 		self.tstopA = []
@@ -313,7 +313,8 @@ class GammaAP:
 
 
 	#generation of AP3 file
-	def normalizeAP(self, apfile, ranal=2, gasvalue=0.00054, gal=0.7, iso=10, emin=100, emax=10000, gindex=2.1, writevonmissesfiles=0):
+	#evalULalgorithm -> selection of the significance algorithm for the evaluation of the UL and sensitivity 1 -> Slima 2 -> Sa
+	def normalizeAP(self, apfile, ranal=2, gasvalue=0.00054, gal=0.7, iso=10, emin=100, emax=10000, gindex=2.1, writevonmissesfiles=0, evalULalgorithm=1):
 				
 		#if self.diml == 0:
 		self.loadDataAPAGILE(apfile)
@@ -332,7 +333,7 @@ class GammaAP:
 		rate_bkg_ON, rate_src_ON = rate.calculateRateWithoutExp(verbose=0, ranalS=ranal, fluxsource=0e-08,  gasvalue=gasvalue, gal=gal, iso=iso, emin=emin, emax=emax, gindex=gindex, source_theta=30, instrumentID=0)
 		rateBkgExpected = rate_bkg_ON
 		
-		nap.normalizeAB3(self.expdataA, self.ctsdataA, rateBkgExpected, self.res[:,0], self.res[:,1], self.res[:,2], self.res[:,3], self.res[:,4], self.res[:,5], self.res[:,6], self.res[:,7], self.res[:,8], self.res[:,9], self.res[:,10], self.res[:,11],self.res[:,12], self.res[:,13], self.res[:,14],self.res[:,15], self.res[:,16])
+		ratew_meanR1, ratew_meanR2, ratew_meanR3, ratew_meanR4, ratew_meanR1aa = nap.normalizeAB3(self.expdataA, self.ctsdataA, rateBkgExpected, self.res[:,0], self.res[:,1], self.res[:,2], self.res[:,3], self.res[:,4], self.res[:,5], self.res[:,6], self.res[:,7], self.res[:,8], self.res[:,9], self.res[:,10], self.res[:,11],self.res[:,12], self.res[:,13], self.res[:,14],self.res[:,15], self.res[:,16])
 		
 		fluxscalefactor=rate.getFluxScaleFactor(verbose=1, gindex=gindex, ranal=ranal, emin=emin, emax=emax)
 		#/ 1.66
@@ -355,7 +356,7 @@ class GammaAP:
 				#self.res[n,19] = -2 * np.log(np.exp(self.ctsdataA[n]-ctsBKG) * np.power(ctsBKG / self.ctsdataA[n], self.ctsdataA[n]))
 				self.res[n,19] = aps.Sa(verbose=0, ctsB=ctsB, ctsTOT=self.ctsdataA[n])
 			else:
-				self.res[n,19] = -1
+				self.res[n,19] = 0
 			
 			#flux rate
 			self.res[n,20] = self.res[n,15] / float(fluxscalefactor)
@@ -366,8 +367,8 @@ class GammaAP:
 			s_i = s_irms / e_i
 			self.res[n,21] = s_i #flux error
 			
-			#calculation of expected background counts rate
-			#26:cts_expBKG4
+			#calculation of expected background counts rate from BKG model
+			#26:cts_expBKGR4
 			self.res[n,22] = rateBkgExpected * e_i
 			
 			#Slm #formula Li&Ma
@@ -378,14 +379,17 @@ class GammaAP:
 				lima = aps.lima(verbose=0, N_on = N_on, N_off = N_off, ranalS=ranal)
 				self.res[n,23] = lima
 			else:
-				self.res[n,23] = -1
+				self.res[n,23] = 0
 				
-			if self.ctsdataA[n] > 0:
-				ctsB = self.res[n,22]
+			#da espandere qui, se si cambia il modo di valutare il bkg
+			evaluatedBackground = self.res[n,22] #BKG da modello
+			
+			if evaluatedBackground > 0:
+				ctsB = evaluatedBackground
 				
 				#1:LiMa
 				#2: Sa
-				algorithm=1
+				algorithm=evalULalgorithm
 				
 				N_sourceUL, SignUL = rate.calcCountsLimit(2, ctsB, ranal, algorithm=algorithm)
 				rateUL = (N_sourceUL / e_i)
@@ -395,26 +399,39 @@ class GammaAP:
 				self.res[n,26] = rateUL
 				self.res[n,27] = fluxUL
 				
+				#sensitivity3
+				N_sourceSens3, SignSens3 = rate.calcCountsLimit(3, ctsB, ranal, algorithm=algorithm)
+				rateSens3 = (N_sourceSens3 / e_i)
+				fluxSens3 = rateSens3 / fluxscalefactor
+				self.res[n,28] = SignSens3
+				self.res[n,29] = N_sourceSens3
+				self.res[n,30] = rateSens3
+				self.res[n,31] = fluxSens3
+				
 				#sensitivity4
 				N_sourceSens4, SignSens4 = rate.calcCountsLimit(4, ctsB, ranal, algorithm=algorithm)
 				rateSens4 = (N_sourceSens4 / e_i)
 				fluxSens4 = rateSens4 / fluxscalefactor
-				self.res[n,28] = SignSens4
-				self.res[n,29] = N_sourceSens4
-				self.res[n,30] = rateSens4
-				self.res[n,31] = fluxSens4
+				self.res[n,32] = SignSens4
+				self.res[n,33] = N_sourceSens4
+				self.res[n,34] = rateSens4
+				self.res[n,35] = fluxSens4
 				
 				#sensitivity5
 				N_sourceSens5, SignSens5 = rate.calcCountsLimit(5, ctsB, ranal, algorithm=algorithm)
 				rateSens5 = (N_sourceSens5 / e_i)
 				fluxSens5 = rateSens5 / fluxscalefactor
-				self.res[n,32] = SignSens5
-				self.res[n,33] = N_sourceSens5
-				self.res[n,34] = rateSens5
-				self.res[n,35] = fluxSens5
+				self.res[n,36] = SignSens5
+				self.res[n,37] = N_sourceSens5
+				self.res[n,38] = rateSens5
+				self.res[n,39] = fluxSens5
 				
-				self.res[n, 36] = fluxscalefactor
-				self.res[n, 37] = rateBkgExpected
+				self.res[n, 40] = fluxscalefactor
+				self.res[n, 41] = ratew_meanR1
+				self.res[n, 42] = ratew_meanR2
+				self.res[n, 43] = ratew_meanR3
+				self.res[n, 44] = ratew_meanR4
+				self.res[n, 45] = ratew_meanR1aa
 			
 			n = n + 1
 			
@@ -422,10 +439,11 @@ class GammaAP:
 		fileclean = open(apfile + ".ap3","w")
 
 		
-		print("* AP3 file res column number:   tstart tstop exp[cm2s] cts 0:normAB11 1:normAB12 2:normAB13 3:normAB14 4:normAB21 5:normAB22 6:normAB23 7:normAB24 8:normAB11aa 9:normAB21aa 10:ratediffR1 11:ratediffR2 12:ratediffR3 13:ratediffR4 14:ratediffR1AA 15:rate 16:rate_error 17:flux_ratediffR4 18:flux_ratediffR4_error 19:Sa 20:flux_rate 21:flux_rate_error 22:cts_expBKG4 23:Slm 24:SignUL 25:N_sourceUL 26:rateUL 27:fluxUL 28:SignSens4 29:N_sourceSens4 30:rateSens4 31:fluxSens4 32:SignSens5 33:N_sourceSens5 34:rateSens5 35:fluxSens5 36:fluxscalefactor")
-		header = "tstart tstop exp cts normAB11 normAB12 normAB13 normAB14 normAB21 normAB22 normAB23 normAB24 normAB11aa normAB21aa ratediffR1 ratediffR2 ratediffR3 ratediffR4 ratediffR1AA rate rate_error flux_ratediffR4 flux_ratediffR4_error Sa flux_rate flux_rate_error cts_expBKG4 Slm SignUL N_sourceUL rateUL fluxUL SignSens4 N_sourceSens4 rateSens4 fluxSens4 SignSens5 N_sourceSens5 rateSens5 fluxSens5 fluxscalefactor"
+		print("* AP3 file res column number:   tstart tstop exp[cm2s] cts 0:normAB11 1:normAB12 2:normAB13 3:normAB14 4:normAB21 5:normAB22 6:normAB23 7:normAB24 8:normAB11aa 9:normAB21aa 10:ratediffR1 11:ratediffR2 12:ratediffR3 13:ratediffR4 14:ratediffR1AA 15:rate 16:rate_error 17:flux_ratediffR4 18:flux_ratediffR4_error 19:Sa 20:flux_rate 21:flux_rate_error 22:cts_expBKGR4 23:Slm 24:SignUL 25:N_sourceUL 26:rateUL 27:fluxUL 28:SignSens3 29:N_sourceSens3 30:rateSens3 31:fluxSens3 32:SignSens4 33:N_sourceSens4 34:rateSens4 35:fluxSens4 36:SignSens5 36:N_sourceSens5 38:rateSens5 39:fluxSens5 40:fluxscalefactor 41:ratew_meanR1 42:ratew_meanR2 43:ratew_meanR3 44:ratew_meanR4 45:ratew_meanR1aa")
 		
-		print("AP3 file column number: 0:tstart 1:tstop 2:exp[cm2s] 3:cts 4:normAB11 5:normAB12 6:normAB13 7:normAB14 8:normAB21 9:normAB22 10:normAB23 11:normAB24 12:normAB11aa 13:normAB21aa 14:ratediffR1 15:ratediffR2 16:ratediffR3 17:ratediffR4 18:ratediffR1AA 19:rate 20:rate_error 21:flux_ratediffR4 22:flux_ratediffR4_error 23:Sa 24:flux_rate 25:flux_rate_error 26:cts_expBKG4 27:Slm 28:SignUL 29:N_sourceUL 30:rateUL 31:fluxUL 32:SignSens4 33:N_sourceSens4 34:rateSens4 35:fluxSens4 36:SignSens5 37:N_sourceSens5 38:rateSens5 39:fluxSens5 40:fluxscalefactor")
+		header = "tstart tstop exp cts normAB11 normAB12 normAB13 normAB14 normAB21 normAB22 normAB23 normAB24 normAB11aa normAB21aa ratediffR1 ratediffR2 ratediffR3 ratediffR4 ratediffR1AA rate rate_error flux_ratediffR4 flux_ratediffR4_error Sa flux_rate flux_rate_error cts_expBKGR4 Slm SignUL N_sourceUL rateUL fluxUL SignSens3 N_sourceSens3 rateSens3 fluxSens3 SignSens4 N_sourceSens4 rateSens4 fluxSens4 SignSens5 N_sourceSens5 rateSens5 fluxSens5 fluxscalefactor ratew_meanR1 ratew_meanR2 ratew_meanR3 ratew_meanR4 ratew_meanR1aa"
+		
+		print("AP3 file column number: 0:tstart 1:tstop 2:exp[cm2s] 3:cts 4:normAB11 5:normAB12 6:normAB13 7:normAB14 8:normAB21 9:normAB22 10:normAB23 11:normAB24 12:normAB11aa 13:normAB21aa 14:ratediffR1 15:ratediffR2 16:ratediffR3 17:ratediffR4 18:ratediffR1AA 19:rate 20:rate_error 21:flux_ratediffR4 22:flux_ratediffR4_error 23:Sa 24:flux_rate 25:flux_rate_error 26:cts_expBKGR4 27:Slm 28:SignUL 29:N_sourceUL 30:rateUL 31:fluxUL 32:SignSens3 33:N_sourceSens3 34:rateSens3 35:fluxSens3 36:SignSens4 37:N_sourceSens4 38:rateSens4 39:fluxSens4 40:SignSens5 41:N_sourceSens5 42:rateSens5 43:fluxSens5 44:fluxscalefactor 45:ratew_meanR1 46:ratew_meanR2 47:ratew_meanR3 48:ratew_meanR4 49:ratew_meanR1aa")
 		
 		n = 0
 		fileclean.write(header + "\n")
@@ -438,23 +456,31 @@ class GammaAP:
 					line += ' {:.2e}'.format(self.res[n,i])
 				elif i == 19:
 					line += ' {:.2f}'.format(self.res[n,i])
-				elif i > 19 and i <= 21:
+				elif i >= 20 and i <= 21:
 					line += ' {:.2e}'.format(self.res[n,i])
-				elif i > 21 and i <= 25:
+				elif i >= 22 and i <= 25:
 					line += ' {:.2f}'.format(self.res[n,i])
-				elif i > 25 and i <= 27:
+				elif i >= 26 and i <= 27:
 					line += ' {:.2e}'.format(self.res[n,i])
-				elif i > 27 and i <= 29:
+				elif i >= 28 and i <= 29:
 					line += ' {:.2f}'.format(self.res[n,i])	
-				elif i > 29 and i <= 31:
+				elif i >= 30 and i <= 31:
 					line += ' {:.2e}'.format(self.res[n,i])
-				elif i > 31 and i <= 33:
+				elif i >= 32 and i <= 33:
 					line += ' {:.2f}'.format(self.res[n,i])	
-				elif i > 33 and i <= 35:
+				elif i >= 34 and i <= 35:
 					line += ' {:.2e}'.format(self.res[n,i])
-				elif i == 36:
+				elif i >= 36 and i <= 37:
+					line += ' {:.2f}'.format(self.res[n,i])	
+				elif i >= 38 and i <= 39:
+					line += ' {:.2e}'.format(self.res[n,i])
+				elif i >= 40 and i <= 41:
+					line += ' {:.2f}'.format(self.res[n,i])	
+				elif i >= 42 and i <= 43:
+					line += ' {:.2e}'.format(self.res[n,i])
+				elif i == 44:
 					line += ' {:.4f}'.format(self.res[n,i])
-				elif i == 37:
+				elif i >= 45 and i <= 49:
 					line += ' {:.2e}'.format(self.res[n,i])
 				else:
 					line += " " + str(self.res[n,i])
