@@ -85,9 +85,9 @@ class EvalRates:
 		#if verbose == 1:
 		#	print('Fluxscalefactor based on PSF enclosed fraction: %.4f' % fluxscalefactor)
 		
-		#fluxscalefactor2
+		#fluxscalefactor2 -> versione analitica di VF
 		psfc = PSFEval()
-		fluxscalefactor = psfc.EvalPSFScaleFactor(ranal=ranal, emin=emin, emax=emax, gindex=gindex, source_theta=source_theta, verbose=verbose)
+		fluxscalefactor = psfc.EvalPSFScaleFactor2(ranal=ranal, emin=emin, emax=emax, gindex=gindex, source_theta=source_theta, verbose=verbose)
 		if verbose == 1:
 			print('Fluxscalefactor2 based on PSF enclosed fraction: %.4f' % fluxscalefactor)
 		
@@ -306,6 +306,50 @@ class EvalRates:
 			#saa = -1
 			print('%.2f %.2f %.2f %.2f - %3d %.2e %.2e %3d %.2e - %.1f %.2f %.2e %.2e - %.1f %.2f %.2e %.2e' % (ranalS, snr, lima, Sa, ctsS, rate_src_ON, fluxSource, ctsB, rate_bkg_ON, N_sourceUL, SignUL, rateUL, fluxUL, N_sourceSens, SignSens, rateSens, fluxSens))
 		return
+		
+	##########################################################################
+	#fluxstart = flux value start
+	#fluxend = flux value end
+	#ranalB = radius of analysis of B. If the background is evaluated with AGILE MLE, ranalB=10, that is the usual radius of analysis used for the evalutation of gal and iso coefficients
+	#alpha: alpha coefficient of Li&Ma (17) equation. If -1, let tool determine alpha
+	def determineSNR(self, verbose=0, fluxstart= 10e-08, fluxend =10e-07, exposure = 40000, ranal = 10, gasvalue=0.0006, gal = 0.7, iso = 10., emin = 100., emax = 10000., gindex=2.1, source_theta=30, instrumentID = 0, alpha=-1, step=1000e-08):
+
+		aps = APSignificance()
+		
+		for fluxS in np.arange(fluxstart, fluxend, step):
+			
+			rate_bkg_ON, rate_src_ON = self.calculateRateWithoutExp(verbose=verbose, ranalS=ranal, fluxsource=fluxS, gasvalue=gasvalue, gal=gal, iso=iso, emin=emin, emax=emax, gindex=gindex, source_theta=source_theta, instrumentID=instrumentID)
+			
+			ctsS = rate_src_ON * exposure
+			ctsB = rate_bkg_ON * exposure
+			
+			snr = aps.SNR(verbose=verbose, ctsS=ctsS, ctsB=ctsB)
+			
+			N_off = ctsB
+			N_on  = ctsB + ctsS
+			
+			lima = aps.lima(verbose=verbose, N_on = N_on, N_off = N_off, ranalS=ranal, alpha=alpha)
+			
+			Sa = aps.Sa(verbose=verbose, ctsTOT=N_on, ctsB=N_off)
+			
+			#upper limit
+			fluxscalefactor = self.getFluxScaleFactor(verbose = verbose, gindex=gindex, ranal=ranal, emin = emin, emax = emax, instrumentID = instrumentID, source_theta=source_theta)
+			
+			N_sourceUL, SignUL = self.calcCountsLimit(2, ctsB, ranal, alpha=alpha)
+			rateUL = (N_sourceUL / exposure)
+			fluxUL = rateUL / fluxscalefactor
+			
+			#sensitivity
+			N_sourceSens, SignSens = self.calcCountsLimit(4, ctsB, ranal, alpha=alpha)
+			rateSens = (N_sourceSens / exposure)
+			fluxSens = rateSens / fluxscalefactor
+			
+			fluxSource = rate_src_ON / fluxscalefactor
+			
+			#saa = -1
+			print('%.2e %.2f %.2f %.2f - %.1f %.2e %.1f %.2e - %.1f %.2f %.2e %.2e - %.1f %.2f %.2e %.2e %.2f' % (fluxS, snr, lima, Sa, ctsS, rate_src_ON, ctsB, rate_bkg_ON, N_sourceUL, SignUL, rateUL, fluxUL, N_sourceSens, SignSens, rateSens, fluxSens, fluxscalefactor))
+		return
+
 
 	#ctsB
 	def calcCountsLimit(self, Sign, ctsB, ranalS, alpha=-1, algorithm=2):
