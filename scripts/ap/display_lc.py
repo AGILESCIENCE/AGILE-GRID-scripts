@@ -207,6 +207,54 @@ if(mode=="1"):
 
     data_array_one = get_value_from_array(dict_one)
 
+
+    fig0 = plt.figure(constrained_layout=False)
+
+    count = 0
+    for detection in dict_one:
+        if(count==0):
+            count=1
+            continue
+
+        if(detection['sqrtts']<3):
+            #add arrow
+            #plt.arrow(detection['x'],detection['flux'],0,-70,width=1,head_width=10,head_starts_at_zero=True)
+            plt.errorbar(detection['x'], detection['flux_ul'],xerr=detection['x_err'], yerr=0, fmt='rv')
+        else:
+            plt.errorbar(detection['x'], detection['flux'],xerr=detection['x_err'], yerr=detection['flux_err'], fmt='r.')
+
+    if(dict_one[0]['sqrtts']<3):
+        plt.errorbar(dict_one[0]['x'], dict_one[0]['flux_ul'],xerr=dict_one[0]['x_err'], yerr=0, label=os.path.basename(file_one), fmt='rv')
+    else:
+        plt.errorbar(dict_one[0]['x'], dict_one[0]['flux'],xerr=dict_one[0]['x_err'], yerr=dict_one[0]['flux_err'], label=os.path.basename(file_one), fmt='r.')
+
+    # if not (file_one.endswith(".lc")):
+    #     # f1_ax1.scatter(data_array_one['x'], data_array_one['sensitivity'], marker="o",s=7,color="r" )
+    #     #
+    #     f1_ax1.plot(data_array_one['x'], data_array_one['sensitivity'], color='r', marker='o',  linewidth=1,linestyle='dashed', markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
+    #
+    #     x1 = np.subtract(data_array_one['x'],data_array_one['xerr'])
+    #     x2 = np.sum([data_array_one['x'],data_array_one['xerr']],axis=0)
+    #     y1 = data_array_one['sensitivity']
+    #     y2 = data_array_one['sensitivity']
+    #     f1_ax1.plot([x1,x2],[y1,y2],color = 'r',linestyle="dashed",  linewidth=1)
+
+    #plot fixed flux
+    if(fixed_flux!=-1):
+        plt.plot([np.amin(data_array_one['x'])-np.amax(data_array_one['xerr']),np.amax(data_array_one['x'])+np.amax(data_array_one['xerr'])], [fixed_flux,fixed_flux], color='g', linestyle='dashed' , linewidth=1.5,label="Fixed Flux")
+
+    plt.xlabel('TT time *10^8')
+    plt.ylabel('Flux ph/cm2 s *10^-8')
+    plt.ylim(0)
+    #ax[0].xlabel("TT time *10^8")
+    #ax[0].ylabel("Flux ph/cm2 s *10^-8")
+    #ax[0].ylim(ymin=0)
+    plt.grid(True)
+    plt.legend(prop={'size':6})
+
+
+
+
     fig1 = plt.figure(constrained_layout=False)
 
     gs = GridSpec(6,1)
@@ -238,13 +286,13 @@ if(mode=="1"):
     if not (file_one.endswith(".lc")):
         # f1_ax1.scatter(data_array_one['x'], data_array_one['sensitivity'], marker="o",s=7,color="r" )
         #
-        f1_ax1.plot(data_array_one['x'], data_array_one['sensitivity'], color='r', marker='o',  linewidth=1.5,linestyle='dashed', markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
+        f1_ax1.plot(data_array_one['x'], data_array_one['sensitivity'], color='r', marker='o',  linewidth=1,linestyle='dashed', markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
 
         x1 = np.subtract(data_array_one['x'],data_array_one['xerr'])
         x2 = np.sum([data_array_one['x'],data_array_one['xerr']],axis=0)
         y1 = data_array_one['sensitivity']
         y2 = data_array_one['sensitivity']
-        f1_ax1.plot([x1,x2],[y1,y2],color = 'r',linestyle="dashed")
+        f1_ax1.plot([x1,x2],[y1,y2],color = 'r',linestyle="dashed",  linewidth=1)
 
     #plot fixed flux
     if(fixed_flux!=-1):
@@ -281,7 +329,7 @@ if(mode=="1"):
     x2 = np.sum([data_array_one['x'],data_array_one['xerr']],axis=0)
     y1 = data_array_one['count_bkg']
     y2 = data_array_one['count_bkg']
-    f1_ax4.plot([x1,x2],[y1,y2],color = 'r',linestyle="-.")
+    f1_ax4.plot([x1,x2],[y1,y2],color = 'r',linestyle="dashed", linewidth=1)
 
     max_one = np.max(data_array_one['count'])
     if(max_one<10):
@@ -445,6 +493,86 @@ if(mode=="2"):
 
     #plt.figure(1)
     #fig, ax = plt.subplots(ncols=1, nrows=4, constrained_layout=True)
+    fig0 = plt.figure(constrained_layout=False)
+
+    count = 0
+    for detection in dict_one:
+        if(count==0):
+            count=1
+            continue
+
+        if(detection['sqrtts']<3):
+            #add arrow
+            #plt.arrow(detection['x'],detection['flux'],0,-70,width=1,head_width=10,head_starts_at_zero=True)
+            plt.errorbar(detection['x'], detection['flux_ul'],xerr=detection['x_err'], yerr=0, fmt='rv')
+        else:
+            plt.errorbar(detection['x'], detection['flux'],xerr=detection['x_err'], yerr=detection['flux_err'], fmt='r.')
+
+    count = 0
+    for detection in dict_two:
+        if(count==0):
+            count=1
+            continue
+
+        if(detection['sqrtts']<3):
+            #add arrow
+            #plt.arrow(detection['x'],detection['flux'],0,-70,width=1,head_width=10,head_starts_at_zero=True)
+            plt.errorbar(detection['x'], detection['flux_ul'],xerr=detection['x_err'], yerr=0, fmt='bv')
+        else:
+            plt.errorbar(detection['x'], detection['flux'],xerr=detection['x_err'], yerr=detection['flux_err'], fmt='b.')
+
+
+    #plt.errorbar(data_array_one['x'], data_array_one['flux'],xerr=data_array_one['xerr'], yerr=data_array_one['flux_err'], label=os.path.basename(file_one), fmt='r.')
+
+    if(dict_one[0]['sqrtts']<3):
+        plt.errorbar(dict_one[0]['x'], dict_one[0]['flux_ul'],xerr=dict_one[0]['x_err'], yerr=0, label=os.path.basename(file_one), fmt='rv')
+    else:
+        plt.errorbar(dict_one[0]['x'], dict_one[0]['flux'],xerr=dict_one[0]['x_err'], yerr=dict_one[0]['flux_err'], label=os.path.basename(file_one), fmt='r.')
+
+
+    if(dict_two[0]['sqrtts']<3):
+        plt.errorbar(dict_two[0]['x'], dict_two[0]['flux_ul'],xerr=dict_two[0]['x_err'], yerr=0, label=os.path.basename(file_two), fmt='bv')
+    else:
+        plt.errorbar(dict_two[0]['x'], dict_two[0]['flux'],xerr=dict_two[0]['x_err'], yerr=dict_two[0]['flux_err'], label=os.path.basename(file_two), fmt='b.')
+
+    # if not (file_one.endswith(".lc")):
+    #     # f1_ax1.scatter(data_array_one['x'], data_array_one['sensitivity'], marker="o",s=7,color="r" )
+    #     #
+    #
+    #     #,xerr=dict_one[0]['x_err'], yerr=0
+    #     plt.errorbar(data_array_one['x'], data_array_one['sensitivity'] , color='r', marker='o',  linestyle='dashed', linewidth=1, markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
+    #     x1 = np.subtract(data_array_one['x'],data_array_one['xerr'])
+    #     x2 = np.sum([data_array_one['x'],data_array_one['xerr']],axis=0)
+    #     y1 = data_array_one['sensitivity']
+    #     y2 = data_array_one['sensitivity']
+    #     plt.plot([x1,x2],[y1,y2],color = 'r',linestyle="dashed", linewidth=1)
+    #
+    # if not (file_two.endswith(".lc")):
+    #     # f1_ax1.scatter(data_array_two['x'], data_array_two['sensitivity'], marker="o",s=7,color="b" )
+    #     #
+    #
+    #     #,xerr=dict_two[0]['x_err'], yerr=0,
+    #     plt.errorbar(data_array_two['x'], data_array_two['sensitivity'],color='b', marker='o',  linestyle='dashed', linewidth=1, markersize=3,label=os.path.basename(file_two)+" (4 sigma sensitivity)")
+    #     x1 = np.subtract(data_array_two['x'],data_array_two['xerr'])
+    #     x2 = np.sum([data_array_two['x'],data_array_two['xerr']],axis=0)
+    #     y1 = data_array_two['sensitivity']
+    #     y2 = data_array_two['sensitivity']
+    #     plt.plot([x1,x2],[y1,y2],color = 'b',linestyle="dashed", linewidth=1)
+    # #plot fixed flux
+
+    if(fixed_flux!=-1):
+        plt.plot([np.amin(data_array_one['x'])-np.amax(data_array_one['xerr']),np.amax(data_array_one['x'])+np.amax(data_array_one['xerr'])], [fixed_flux,fixed_flux], color='g',linestyle='dashed', linewidth=1.5,label="Fixed Flux")
+
+
+    plt.xlabel('TT time *10^8')
+    plt.ylabel('Flux ph/cm2 s *10^-8')
+    plt.ylim(0)
+    #ax[0].xlabel("TT time *10^8")
+    #ax[0].ylabel("Flux ph/cm2 s *10^-8")
+    #ax[0].ylim(ymin=0)
+    plt.grid(True)
+    plt.legend(prop={'size':6})
+
 
     fig1 = plt.figure(constrained_layout=False)
 
@@ -503,24 +631,24 @@ if(mode=="2"):
         #
 
         #,xerr=dict_one[0]['x_err'], yerr=0
-        f1_ax1.errorbar(data_array_one['x'], data_array_one['sensitivity'] , color='r', marker='o',  linestyle='dashed', linewidth=1.5, markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
+        f1_ax1.errorbar(data_array_one['x'], data_array_one['sensitivity'] , color='r', marker='o',  linestyle='dashed', linewidth=1, markersize=3,label=os.path.basename(file_one)+" (4 sigma sensitivity)")
         x1 = np.subtract(data_array_one['x'],data_array_one['xerr'])
         x2 = np.sum([data_array_one['x'],data_array_one['xerr']],axis=0)
         y1 = data_array_one['sensitivity']
         y2 = data_array_one['sensitivity']
-        f1_ax1.plot([x1,x2],[y1,y2],color = 'r',linestyle="dashed")
+        f1_ax1.plot([x1,x2],[y1,y2],color = 'r',linestyle="dashed", linewidth=1)
 
     if not (file_two.endswith(".lc")):
         # f1_ax1.scatter(data_array_two['x'], data_array_two['sensitivity'], marker="o",s=7,color="b" )
         #
 
         #,xerr=dict_two[0]['x_err'], yerr=0,
-        f1_ax1.errorbar(data_array_two['x'], data_array_two['sensitivity'],color='b', marker='o',  linestyle='dashed', linewidth=1.5, markersize=3,label=os.path.basename(file_two)+" (4 sigma sensitivity)")
+        f1_ax1.errorbar(data_array_two['x'], data_array_two['sensitivity'],color='b', marker='o',  linestyle='dashed', linewidth=1, markersize=3,label=os.path.basename(file_two)+" (4 sigma sensitivity)")
         x1 = np.subtract(data_array_two['x'],data_array_two['xerr'])
         x2 = np.sum([data_array_two['x'],data_array_two['xerr']],axis=0)
         y1 = data_array_two['sensitivity']
         y2 = data_array_two['sensitivity']
-        f1_ax1.plot([x1,x2],[y1,y2],color = 'b',linestyle="dashed")
+        f1_ax1.plot([x1,x2],[y1,y2],color = 'b',linestyle="dashed", linewidth=1)
     #plot fixed flux
 
     if(fixed_flux!=-1):
@@ -577,13 +705,13 @@ if(mode=="2"):
     x2 = np.sum([data_array_one['x'],data_array_one['xerr']],axis=0)
     y1 = data_array_one['count_bkg']
     y2 = data_array_one['count_bkg']
-    f1_ax4.plot([x1,x2],[y1,y2],color = 'r',linestyle="-.")
+    f1_ax4.plot([x1,x2],[y1,y2],color = 'r',linestyle="dashed",linewidth=1,)
 
     x1 = np.subtract(data_array_two['x'],data_array_two['xerr'])
     x2 = np.sum([data_array_two['x'],data_array_two['xerr']],axis=0)
     y1 = data_array_two['count_bkg']
     y2 = data_array_two['count_bkg']
-    f1_ax4.plot([x1,x2],[y1,y2],color = 'b',linestyle="-.")
+    f1_ax4.plot([x1,x2],[y1,y2],color = 'b',linestyle="dashed",linewidth=1,)
 
     f1_ax4.set(xlabel="TT time *10^8", ylabel="Counts")
     f1_ax4.grid(True)
