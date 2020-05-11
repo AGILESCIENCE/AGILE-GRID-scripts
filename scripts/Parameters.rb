@@ -31,7 +31,7 @@ class Parameters
 			@listsourceextended = ""
 			@prefix=-1
 			@timetype="TT"
-			@useEDPmatrixforEXP = 0
+			@useEDPmatrixforEXP = 1
 			@flag="F0"
 			@findermultimode = nil
 			@enablespotfinder = 0;
