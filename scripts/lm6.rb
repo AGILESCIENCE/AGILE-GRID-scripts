@@ -123,14 +123,20 @@ edpmatrix = datautils.edpmatrix;
 	datautils.execute("", cmd);
 
 	#B2
-	tmin = tstart.to_f + parameters.t2s.to_f + parameters.shiftt2b.to_f
-	tmax = tstart.to_f + parameters.t2s.to_f + parameters.shiftt2b.to_f + parameters.t2b.to_f
-	cmd = "map.rb "+filter+" " + output + "_B2 " + tmin.to_s + " " + tmax.to_s + " "+l.to_s+" "+b.to_s+" emin="+parameters.emin.to_s+" emax="+parameters.emax.to_s+" filtercode="+parameters.filtercode.to_s+" timestep=1 mapsize=25 binsize=0.5 fovradmax="+parameters.fovradmax.to_s+" albedorad="+parameters.albedorad.to_s
-	datautils.execute("", cmd);
-
+	if t2b != 0
+		tmin = tstart.to_f + parameters.t2s.to_f + parameters.shiftt2b.to_f
+		tmax = tstart.to_f + parameters.t2s.to_f + parameters.shiftt2b.to_f + parameters.t2b.to_f
+		cmd = "map.rb "+filter+" " + output + "_B2 " + tmin.to_s + " " + tmax.to_s + " "+l.to_s+" "+b.to_s+" emin="+parameters.emin.to_s+" emax="+parameters.emax.to_s+" filtercode="+parameters.filtercode.to_s+" timestep=1 mapsize=25 binsize=0.5 fovradmax="+parameters.fovradmax.to_s+" albedorad="+parameters.albedorad.to_s
+		datautils.execute("", cmd);
+		t2bmapc = output+"_B2.cts.gz"
+		t2bmape = output+"_B2.exp.gz"
+	else
+		t2bmapc = "None"
+		t2bmape = "None"
+	end
 
 	cmd = "cp " + PATH + "share/AG_lm6.par . "
 	datautils.execute("", cmd);
-	cmd = "export PFILES=.:$PFILES; "+PATH+"bin/AG_lm6 "+output+".lm "+output+"_S.cts.gz "+output+"_S.exp.gz "+output+"_B1.cts.gz "+output+"_B1.exp.gz "+output+"_B2.cts.gz "+output+"_B2.exp.gz no "+l.to_s+" "+b.to_s+" 10 no no no 0 15 10"
+	cmd = "export PFILES=.:$PFILES; "+PATH+"bin/AG_lm6 "+output+".lm "+output+"_S.cts.gz "+output+"_S.exp.gz "+output+"_B1.cts.gz "+output+"_B1.exp.gz "+ t2bmapc + " " + t2bmape + " no " +l.to_s+" "+b.to_s+" 10 no no no 0 15 10"
 	puts cmd
 	datautils.execute("", cmd);
