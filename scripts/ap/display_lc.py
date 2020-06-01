@@ -6,6 +6,9 @@ from matplotlib.gridspec import GridSpec
 from matplotlib.ticker import MultipleLocator
 
 
+def time_tt_to_mjd(tt_time):
+     return (float(tt_time) / 86400.0)+53005.0
+
 def find_min_max_axes(array_one,array_two):
 
         min_one = np.amin(array_one)
@@ -19,102 +22,154 @@ def find_min_max_axes(array_one,array_two):
         return min,max
 
 
-def extract_data(file_name):
+def extract_data(file_name,tstart_window_mjd,tstop_window_mjd):
 
         detection_array = []
 
         with open(file_name) as fp:
-           for cnt, line in enumerate(fp):
-               sqrtts = 0
-               if(file_name.endswith(".lc")):
+            for cnt, line in enumerate(fp):
+                sqrtts = 0
 
-                   tstart = float(line.split()[13])
-                   tstop =  float(line.split()[14])
-                   x = tstart+(tstop-tstart)/2
-                   x_err =  (tstop-tstart)/2
-                   flux =  float(line.split()[0])*flux_notation
-                   if(flux == -1):
+                if(file_name.endswith(".fermi.lc")):
+                    #folder sources ts npred flux flux_err flux_ul95 flux100_ul95 eflux eflux_err eflux100 eflux100_err eflux_ul95 sens3 sens35 sens4 sens5 tmin tmax tmin(MJD) tmax(MJD) phase
+                    tstart = float(line.split()[19])
+                    tstop =  float(line.split()[20])
+
+                    #check time window
+                    if(tstart_window_mjd!=-1 and tstop_window_mjd!=-1):
+                       if(tstart<tstart_window_mjd or tstart>tstop_window_mjd ):
+                           continue
+
+
+                    x = tstart+(tstop-tstart)/2
+                    x_err =  (tstop-tstart)/2
+                    flux =  float(line.split()[4])*flux_notation
+                    if(flux == -1):
                        flux=0
-                   exp = float(line.split()[8])/exp_notation
-                   exp_norm = -1
-                   flux_err =  float(line.split()[1])*flux_notation
-                   if(float(line.split()[7])>0):
-                       sqrtts =  float(line.split()[7])
-                   else:
+                    exp = 0
+                    exp_norm = -1
+                    flux_err =  float(line.split()[5])*flux_notation
+                    if(float(line.split()[2])>0):
+                       sqrtts =  float(line.split()[2])
+                    else:
                        sqrtts =  0
-                   count = -1
-                   count_bkg = -1
-                   count_err = -1
-                   count_bkg_err = -1
-                   rate = -1
-                   rate_err = -1
-                   flux_ul = -1
-                   sensitivity = -1
+                    count = -1
+                    count_bkg = -1
+                    count_err = -1
+                    count_bkg_err = -1
+                    rate = -1
+                    rate_err = -1
+                    flux_ul = float(line.split()[6])*flux_notation
+                    sensitivity = -1
 
-                   if(sqrtts<3):
+                    if(sqrtts<3):
+                       flux_ul = flux
+
+                if(file_name.endswith(".mle.lc")):
+
+                    tstart = float(line.split()[11])
+                    tstop =  float(line.split()[12])
+
+                    #check time window
+                    if(tstart_window_mjd!=-1 and tstop_window_mjd!=-1):
+                       if(tstart<tstart_window_mjd or tstart>tstop_window_mjd ):
+                           continue
+
+
+                    x = tstart+(tstop-tstart)/2
+                    x_err =  (tstop-tstart)/2
+                    flux =  float(line.split()[0])*flux_notation
+                    if(flux == -1):
+                       flux=0
+                    exp = float(line.split()[8])/exp_notation
+                    exp_norm = -1
+                    flux_err =  float(line.split()[1])*flux_notation
+                    if(float(line.split()[7])>0):
+                       sqrtts =  float(line.split()[7])
+                    else:
+                       sqrtts =  0
+                    count = -1
+                    count_bkg = -1
+                    count_err = -1
+                    count_bkg_err = -1
+                    rate = -1
+                    rate_err = -1
+                    flux_ul = -1
+                    sensitivity = -1
+
+                    if(sqrtts<3):
                        flux_ul = flux
 
 
 
 
-               if(file_name.endswith(".ap3")):
+                if(file_name.endswith(".ap3")):
 
-                   if(line.startswith("tstart")):
+                    if(line.startswith("tstart")):
                        continue
 
-                   components = line.split()
+                    components = line.split()
 
-                   tstart = float(components[0])
-                   tstop =  float(components[1])
+                    tstart = time_tt_to_mjd(float(components[0]))
+                    tstop =  time_tt_to_mjd(float(components[1]))
 
-                   x = tstart+(tstop-tstart)/2
-                   x_err =  (tstop-tstart)/2
-                   rate = float(components[19])*flux_notation
-                   #if(rate < 0.0):
-                   #    print(line)
+                    print(tstart)
+
+                    #check time window
+                    if(tstart_window_mjd!=-1 and tstop_window_mjd!=-1):
+                        if(tstart<tstart_window_mjd or tstart>tstop_window_mjd ):
+
+                            continue
+
+
+                    x = tstart+(tstop-tstart)/2
+                    x_err =  (tstop-tstart)/2
+                    rate = float(components[19])*flux_notation
+                    #if(rate < 0.0):
+                    #    print(line)
                        #continue
-                   rate_err = float(components[20])*flux_notation
-                   #if(rate_err >   2000.0):
-                   #    print(line)
+                    rate_err = float(components[20])*flux_notation
+                    #if(rate_err >   2000.0):
+                    #    print(line)
                        #continue
 
 
-                   flux =  float(components[21])*flux_notation
-                   #if(flux < 0.0):
-                   #    print(line)
+                    flux =  float(components[21])*flux_notation
+                    #if(flux < 0.0):
+                    #    print(line)
                        #continue
-                   exp = float(components[2])/exp_notation
-                   exp_norm = float(components[7])/exp_notation
-                   flux_err =  float(components[22])*flux_notation
-                   #23 Sa
-                   #27 Slima
-                   sindex=27
-                   if(float(components[sindex])>0):
+                    exp = float(components[2])/exp_notation
+                    exp_norm = float(components[7])/exp_notation
+                    flux_err =  float(components[22])*flux_notation
+                    #23 Sa
+                    #27 Slima
+                    sindex=27
+                    if(float(components[sindex])>0):
                        sqrtts =  float(components[sindex]) #S
-                   else:
+                    else:
                        sqrtts =  0
-                   count = float(components[3])
-                   count_err = float(np.sqrt(count))
-                   count_bkg = float(components[26])
-                   count_bkg_err = float(np.sqrt(count_bkg))
+                    count = float(components[3])
+                    count_err = float(np.sqrt(count))
+                    count_bkg = float(components[26])
+                    count_bkg_err = float(np.sqrt(count_bkg))
 
-                   flux_ul = float(components[31])*flux_notation
-                   #31 -> 2
-                   #35 -> 3
-                   #39 -> 4
-                   sensitivity = float(components[39])*flux_notation
+                    flux_ul = float(components[31])*flux_notation
+                    #31 -> 2
+                    #35 -> 3
+                    #39 -> 4
+                    sensitivity = float(components[39])*flux_notation
 
 
-               #FILTRO
-                   #if(sqrtts < 3):
+                    #FILTRO
+                    #if(sqrtts < 3):
                     #  flux_err = 0
                      # flux=flux_ul
-                   #  continue
-                   #else:
-                   #  print(file_name)
+                    #  continue
+                    #else:
+                    #  print(file_name)
                       #print(line)
 
-               detection_array.append({"x":x,"x_err":x_err,"rate":rate,"rate_err":rate_err,"count":count,"count_err":count_err,"count_bkg":count_bkg,"count_bkg_err":count_bkg_err,"tstart":tstart,"tstop":tstop,"flux":flux,"flux_err":flux_err,"sqrtts":sqrtts,"exp":exp,"exp_norm":exp_norm,"flux_ul":flux_ul,"sensitivity":sensitivity})
+                detection_array.append({"x":x,"x_err":x_err,"rate":rate,"rate_err":rate_err,"count":count,"count_err":count_err,"count_bkg":count_bkg,"count_bkg_err":count_bkg_err,"tstart":tstart,"tstop":tstop,"flux":flux,"flux_err":flux_err,"sqrtts":sqrtts,"exp":exp,"exp_norm":exp_norm,"flux_ul":flux_ul,"sensitivity":sensitivity})
 
 
         return detection_array
@@ -181,7 +236,7 @@ def get_value_from_array(data_array):
         fixed_array.append(sensitivity)
 
 
-    return {"x":x_array,"xerr":xerr_array,"tstart":tstart_array,"tstop":tstop_array,"flux":flux_array,"flux_err":flux_err_array,"sqrtts":sqrtts_array,'exp':exp_array,'exp_norm':exp_norm_array,"count":count_array,'count_err':count_err_array,"count_bkg":count_bkg_array,'count_bkg_err':count_bkg_err_array,'rate':rate_array,'rate_err':rate_err_array,'sensitivity':fixed_array,'flux_ul':flux_ul}
+    return {"x":x_array,"xerr":xerr_array,"tstart":tstart_array,"tstop":tstop_array,"flux":flux_array,"flux_err":flux_err_array,"sqrtts":sqrtts_array,'exp':exp_array,'exp_norm':exp_norm_array,"count":count_array,'count_err':count_err_array,"count_bkg":count_bkg_array,'count_bkg_err':count_bkg_err_array,'rate':rate_array,'rate_err':rate_err_array,'sensitivity':fixed_array,'flux_ul':flux_ul_array}
 
 
 
@@ -190,15 +245,18 @@ def get_value_from_array(data_array):
 mode = sys.argv[1]
 scatter = sys.argv[2]
 fixed_flux = float(sys.argv[3])
-file_one = sys.argv[4]
+tstart_window_mjd = float(sys.argv[4])
+tstop_window_mjd = float(sys.argv[5])
+
+file_one = sys.argv[6]
 if(mode=="2"):
-    file_two = sys.argv[5]
+    file_two = sys.argv[7]
 
 flux_notation = 100000000
 exp_notation = 1000000
 
 
-dict_one = extract_data(file_one)
+dict_one = extract_data(file_one,tstart_window_mjd,tstop_window_mjd)
 
 binsize = 15
 
@@ -243,7 +301,7 @@ if(mode=="1"):
     if(fixed_flux!=-1):
         plt.plot([np.amin(data_array_one['x'])-np.amax(data_array_one['xerr']),np.amax(data_array_one['x'])+np.amax(data_array_one['xerr'])], [fixed_flux,fixed_flux], color='g', linestyle='dashed' , linewidth=1.5,label="Fixed Flux")
 
-    plt.xlabel('TT time *10^8')
+    plt.xlabel('Time MJD')
     plt.ylabel('Flux ph/cm2 s *10^-8')
     plt.ylim(0)
     #ax[0].xlabel("TT time *10^8")
@@ -303,7 +361,7 @@ if(mode=="1"):
 
     #LC sqrts
     f1_ax2.errorbar(data_array_one['x'], data_array_one['sqrtts'], xerr=data_array_one['xerr'],label=os.path.basename(file_one), fmt='r.')
-    f1_ax2.set(xlabel="TT time *10^8", ylabel="sqrt(TS)")
+    f1_ax2.set(xlabel="Time MJD", ylabel="sqrt(TS)")
     f1_ax2.grid(True)
 
     sqrtts_max = np.max(data_array_one['sqrtts'])
@@ -315,12 +373,12 @@ if(mode=="1"):
 
     #LC EXP
     f1_ax3.errorbar(data_array_one['x'], data_array_one['exp'],xerr=data_array_one['xerr'], linestyle="-" , label=os.path.basename(file_one), fmt='r.')
-    f1_ax3.set(xlabel="TT time *10^8", ylabel="Exp 10^6")
+    f1_ax3.set(xlabel="Time MJD", ylabel="Exp 10^6")
     f1_ax3.grid(True)
 
     #LC COUNT
     f1_ax4.errorbar(data_array_one['x'], data_array_one['count'],xerr=data_array_one['xerr'], yerr=data_array_one['count_err'], label=os.path.basename(file_one), fmt='r.')
-    f1_ax4.set(xlabel="TT time *10^8", ylabel="Counts")
+    f1_ax4.set(xlabel="Time MJD", ylabel="Counts")
     f1_ax4.grid(True)
 
     f1_ax4.scatter(data_array_one['x'], data_array_one['count_bkg'], marker="o",s=7,color="r" )
@@ -341,7 +399,7 @@ if(mode=="1"):
 
 
 
-    f1_ax1.set(xlabel='TT time *10^8', ylabel='Flux ph/cm2 s *10^-8')
+    f1_ax1.set(xlabel='Time MJD', ylabel='Flux ph/cm2 s *10^-8')
     f1_ax1.set_ylim(ymin=0)
     #ax[0].xlabel("TT time *10^8")
     #ax[0].ylabel("Flux ph/cm2 s *10^-8")
@@ -399,28 +457,28 @@ if(mode=="1"):
 
     #LC COUNT
     ax[0,0].errorbar(data_array_one['x'], data_array_one['count'],xerr=data_array_one['xerr'], yerr=data_array_one['count_err'], label=os.path.basename(file_one), fmt='r.')
-    ax[0,0].set(xlabel="TT time *10^8", ylabel="Counts")
+    ax[0,0].set(xlabel="Time MJD", ylabel="Counts")
     ax[0,0].grid(True)
 
     #LC COUNT BKG
     ax[0,1].errorbar(data_array_one['x'], data_array_one['count_bkg'],xerr=data_array_one['xerr'], yerr=data_array_one['count_bkg_err'], label=os.path.basename(file_one), fmt='r.')
-    ax[0,1].set(xlabel="TT time *10^8", ylabel="Counts Bkg")
+    ax[0,1].set(xlabel="Time MJD", ylabel="Counts Bkg")
     ax[0,1].grid(True)
 
     #LC EXP
     ax[1,0].errorbar(data_array_one['x'], data_array_one['exp'],xerr=data_array_one['xerr'],  label=os.path.basename(file_one), fmt='r.')
-    ax[1,0].set(xlabel="TT time *10^8", ylabel="Exp 10^6")
+    ax[1,0].set(xlabel="Time MJD", ylabel="Exp 10^6")
     ax[1,0].grid(True)
 
     #LC EXP NORM
     ax[1,1].errorbar(data_array_one['x'], data_array_one['exp_norm'],xerr=data_array_one['xerr'] , label=os.path.basename(file_one), fmt='r.')
-    ax[1,1].set(xlabel="TT time *10^8", ylabel="Exp Norm 10^6")
+    ax[1,1].set(xlabel="Time MJD", ylabel="Exp Norm 10^6")
     ax[1,1].grid(True)
 
 
     #LC RATE
     ax[0,2].errorbar(data_array_one['x'], data_array_one['rate'],xerr=data_array_one['xerr'],yerr=data_array_one['rate_err'],  label=os.path.basename(file_one), fmt='r.')
-    ax[0,2].set(xlabel="TT time *10^8", ylabel="Rate")
+    ax[0,2].set(xlabel="Time MJD", ylabel="Rate")
     ax[0,2].grid(True)
 
     #ISTOGRAMMA COUNT
@@ -453,7 +511,7 @@ if(mode=="1"):
 
 if(mode=="2"):
 
-    dict_two = extract_data(file_two)
+    dict_two = extract_data(file_two,tstart_window_mjd,tstop_window_mjd)
 
     print(len(dict_one))
     print(len(dict_two))
@@ -564,7 +622,7 @@ if(mode=="2"):
         plt.plot([np.amin(data_array_one['x'])-np.amax(data_array_one['xerr']),np.amax(data_array_one['x'])+np.amax(data_array_one['xerr'])], [fixed_flux,fixed_flux], color='g',linestyle='dashed', linewidth=1.5,label="Fixed Flux")
 
 
-    plt.xlabel('TT time *10^8')
+    plt.xlabel('Time MJD')
     plt.ylabel('Flux ph/cm2 s *10^-8')
     plt.ylim(0)
     #ax[0].xlabel("TT time *10^8")
@@ -655,7 +713,7 @@ if(mode=="2"):
         f1_ax1.plot([np.amin(data_array_one['x'])-np.amax(data_array_one['xerr']),np.amax(data_array_one['x'])+np.amax(data_array_one['xerr'])], [fixed_flux,fixed_flux], color='g',linestyle='dashed', linewidth=1.5,label="Fixed Flux")
 
 
-    f1_ax1.set(xlabel='TT time *10^8', ylabel='Flux ph/cm2 s *10^-8')
+    f1_ax1.set(xlabel='Time MJD', ylabel='Flux ph/cm2 s *10^-8')
     f1_ax1.set_ylim(ymin=0)
     #ax[0].xlabel("TT time *10^8")
     #ax[0].ylabel("Flux ph/cm2 s *10^-8")
@@ -666,7 +724,7 @@ if(mode=="2"):
     #LC TS
     f1_ax2.errorbar(data_array_one['x'], data_array_one['sqrtts'],xerr=data_array_one['xerr'], label=os.path.basename(file_one), fmt='r.')
     f1_ax2.errorbar(data_array_two['x'], data_array_two['sqrtts'],xerr=data_array_two['xerr'], label=os.path.basename(file_two), fmt='b.')
-    f1_ax2.set(xlabel="TT time *10^8", ylabel="sqrt(TS)")
+    f1_ax2.set(xlabel="Time MJD", ylabel="sqrt(TS)")
     f1_ax2.grid(True)
 
     min_one = np.amin(data_array_one['sqrtts'])
@@ -691,7 +749,7 @@ if(mode=="2"):
     #LC EXP
     f1_ax3.errorbar(data_array_one['x'], data_array_one['exp'],xerr=data_array_one['xerr'], linestyle="-" ,  label=os.path.basename(file_one), fmt='r.')
     f1_ax3.errorbar(data_array_two['x'], data_array_two['exp'],xerr=data_array_two['xerr'], linestyle="-" ,  label=os.path.basename(file_two), fmt='b.')
-    f1_ax3.set(xlabel="TT time *10^8", ylabel="Exp 10^6")
+    f1_ax3.set(xlabel="Time MJD", ylabel="Exp 10^6")
     f1_ax3.grid(True)
 
     #LC COUNT
@@ -713,7 +771,7 @@ if(mode=="2"):
     y2 = data_array_two['count_bkg']
     f1_ax4.plot([x1,x2],[y1,y2],color = 'b',linestyle="dashed",linewidth=1,)
 
-    f1_ax4.set(xlabel="TT time *10^8", ylabel="Counts")
+    f1_ax4.set(xlabel="Time MJD", ylabel="Counts")
     f1_ax4.grid(True)
 
     min_one = np.amin(data_array_one['count'])
@@ -860,25 +918,25 @@ if(mode=="2"):
     #LC COUNT
     ax[0,0].errorbar(data_array_one['x'], data_array_one['count'],xerr=data_array_one['xerr'], yerr=data_array_one['count_err'], label=os.path.basename(file_one), fmt='r.')
     ax[0,0].errorbar(data_array_two['x'], data_array_two['count'],xerr=data_array_two['xerr'], yerr=data_array_two['count_err'], label=os.path.basename(file_two), fmt='b.')
-    ax[0,0].set(xlabel="TT time *10^8", ylabel="Counts")
+    ax[0,0].set(xlabel="Time MJD", ylabel="Counts")
     ax[0,0].grid(True)
 
     #LC COUNT BKG
     ax[0,1].errorbar(data_array_one['x'], data_array_one['count_bkg'],xerr=data_array_one['xerr'], yerr=data_array_one['count_bkg_err'], label=os.path.basename(file_one), fmt='r.')
     ax[0,1].errorbar(data_array_two['x'], data_array_two['count_bkg'],xerr=data_array_two['xerr'], yerr=data_array_two['count_bkg_err'], label=os.path.basename(file_two), fmt='b.')
-    ax[0,1].set(xlabel="TT time *10^8", ylabel="Counts Bkg")
+    ax[0,1].set(xlabel="Time MJD", ylabel="Counts Bkg")
     ax[0,1].grid(True)
 
     #LC EXP
     ax[1,0].errorbar(data_array_one['x'], data_array_one['exp'],xerr=data_array_one['xerr'],  label=os.path.basename(file_one), fmt='r.')
     ax[1,0].errorbar(data_array_two['x'], data_array_two['exp'],xerr=data_array_two['xerr'],  label=os.path.basename(file_two), fmt='b.')
-    ax[1,0].set(xlabel="TT time *10^8", ylabel="Exp 10^6")
+    ax[1,0].set(xlabel="Time MJD", ylabel="Exp 10^6")
     ax[1,0].grid(True)
 
     #LC EXP NORM
     ax[1,1].errorbar(data_array_one['x'], data_array_one['exp_norm'],xerr=data_array_one['xerr'] , label=os.path.basename(file_one), fmt='r.')
     ax[1,1].errorbar(data_array_two['x'], data_array_two['exp_norm'],xerr=data_array_two['xerr'], label=os.path.basename(file_two), fmt='b.')
-    ax[1,1].set(xlabel="TT time *10^8", ylabel="Exp Norm 10^6")
+    ax[1,1].set(xlabel="Time MJD", ylabel="Exp Norm 10^6")
     ax[1,1].grid(True)
 
     #### SCATER PLOT COUNT
@@ -904,7 +962,7 @@ if(mode=="2"):
     #LC RATE
     ax[0,2].errorbar(data_array_one['x'], data_array_one['rate'],xerr=data_array_one['xerr'],yerr=data_array_one['rate_err'],  label=os.path.basename(file_one), fmt='r.')
     ax[0,2].errorbar(data_array_two['x'], data_array_two['rate'],xerr=data_array_two['xerr'],yerr=data_array_two['rate_err'] ,  label=os.path.basename(file_two), fmt='b.')
-    ax[0,2].set(xlabel="TT time *10^8", ylabel="Rate")
+    ax[0,2].set(xlabel="Time MJD", ylabel="Rate")
     ax[0,2].grid(True)
 
     #ISTOGRAMMA COUNT
