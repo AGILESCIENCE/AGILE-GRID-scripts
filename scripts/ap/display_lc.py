@@ -5,6 +5,12 @@ from scipy.stats import norm
 from matplotlib.gridspec import GridSpec
 from matplotlib.ticker import MultipleLocator
 
+#### USAGE #####
+
+# python display_lc.py [mode 1-2] [scatter plot 0-1] [fixed flux or -1] [tstart_window_mjd] [tstart_window_mjd] filepath1 filepath2 [optional, only if mode=2]
+# mode 1 -> only one file, mode = 2 -> two file in input
+# fixed flux showed inside plot
+
 
 def time_tt_to_mjd(tt_time):
      return (float(tt_time) / 86400.0)+53005.0
