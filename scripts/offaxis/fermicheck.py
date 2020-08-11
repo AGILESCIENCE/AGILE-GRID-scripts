@@ -55,7 +55,7 @@ class fermicheck:
         WriteTimes
         PlotVisibility
     """
-    def __init__(self, SC_filename, src_ra, src_dec, zmax=75., timelimiti=-1, timelimitf=-1, step=1,out_name = "output_fermi.txt"):
+    def __init__(self, SC_filename, src_ra, src_dec, tstart, tstop, zmax=75., timelimiti=-1, timelimitf=-1, step=1,out_name = "output_fermi.txt"):
         self.SC_filename = SC_filename
         self.zmax        = zmax
         self.src_ra      = src_ra
@@ -64,6 +64,8 @@ class fermicheck:
         self.timelimitf  = timelimitf
         self.step        = step
         self.out_name = out_name
+        self.tstart = tstart
+        self.tstop = tstop
 
     def calc_separation(self):
         """ Function that computes the angular separation between the center of the
@@ -249,16 +251,24 @@ class fermicheck:
         ttotal_under_zmax = np.sum(tfMET[separation<self.zmax]-tiMET[separation<self.zmax])
         ttotal_above_zmax = np.sum(tfMET[separation>self.zmax]-tiMET[separation>self.zmax])
         print "Total integration time=", ttotal_obs*self.step, " s", 'total_obs', total_obs, len(tiMET)*self.step
+        print "Total absolute time=",(self.tstop-self.tstart )*86400 #NEW
         print "Total time spent at separation < ", self.zmax, " deg:", ttotal_under_zmax*self.step, "s"
         print "Relative time spent at separation <", self.zmax, " deg:", ttotal_under_zmax*100./ttotal_obs, "%"
         print "Relative time spent at separation >", self.zmax, " deg:", ttotal_above_zmax*100./ttotal_obs, "%"
+        print "Absolute time spent at separation <", self.zmax, " deg:", (ttotal_under_zmax*self.step)/((self.tstop-self.tstart )*86400)*100, " %" #NEW
+        print "Absolute time spent at separation >", self.zmax, " deg:", ((ttotal_obs*self.step)-(ttotal_under_zmax*self.step)) / ((self.tstop-self.tstart )*86400)*100, " %" #NEW
+        print "Duty Cycle: ", (1 - ((ttotal_obs*self.step) / ((self.tstop-self.tstart )*86400)))*100, "%" #NEW
 
         f = open(self.out_name, "a")
         print >> f, "FERMI"
         print >> f,"Total integration time=", ttotal_obs*self.step, " s", 'total_obs', total_obs, len(tiMET)*self.step
+        print >> f,"Total absolute time=",(self.tstop-self.tstart )*86400 #NEW
         print >> f,"Total time spent at separation < ", self.zmax, " deg:", ttotal_under_zmax*self.step, "s"
         print >> f,"Relative time spent at separation <", self.zmax, " deg:", ttotal_under_zmax*100./ttotal_obs, "%"
         print >> f,"Relative time spent at separation >", self.zmax, " deg:", ttotal_above_zmax*100./ttotal_obs, "%"
+        print >> f,"Absolute time spent at separation <", self.zmax, " deg:", (ttotal_under_zmax*self.step)/((self.tstop-self.tstart )*86400)*100, " %" #NEW
+        print >> f,"Absolute time spent at separation >", self.zmax, " deg:", ((ttotal_obs*self.step)-(ttotal_under_zmax*self.step)) / ((self.tstop-self.tstart )*86400) *100, " %" #NEW
+        print >> f,"Duty Cycle: ", (1 - ((ttotal_obs*self.step) / ((self.tstop-self.tstart )*86400)))*100, "%" #NEW
         f.close()
 
         filesep = open('time_vs_separation_fermi.txt', 'w')

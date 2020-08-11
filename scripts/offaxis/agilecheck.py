@@ -63,7 +63,7 @@ class agilecheck:
     """
 
 
-    def __init__(self, agile_spacecraft, src_ra, src_dec, zmax=75., timelimiti=-1, timelimitf=-1, step=0.1,out_name = "output_agile.txt"):
+    def __init__(self, agile_spacecraft, src_ra, src_dec, tstart, tstop, zmax=75., timelimiti=-1, timelimitf=-1, step=0.1,out_name = "output_agile.txt"):
         self.agile_spacecraft = agile_spacecraft
         self.zmax        = zmax
         self.src_ra      = src_ra
@@ -72,6 +72,8 @@ class agilecheck:
         self.timelimitf  = timelimitf
         self.step        = step*10.
         self.out_name = out_name
+        self.tstart = tstart
+        self.tstop = tstop
 
     def calc_separation(self):
         """ Function that computes the angular separation between the center of the
@@ -86,6 +88,7 @@ class agilecheck:
         # reading the Attitude AGILE file (the one created by merging the .log files)
         file1 = pyfits.open(self.agile_spacecraft)
         SC = file1[1].data
+
 
 #       This is to avoid problems with moments for which the AGILE pointing was set to RA=NaN, DEC=NaN
         TIME = SC['TIME'][np.logical_not(np.isnan(SC['ATTITUDE_RA_Y']))]
@@ -242,15 +245,23 @@ class agilecheck:
         ttotal_under_zmax = np.sum(tTTf[separation<self.zmax]-tTTi[separation<self.zmax])
         ttotal_above_zmax = np.sum(tTTf[separation>self.zmax]-tTTi[separation>self.zmax])
         print "Total integration time=", ttotal_obs*self.step, " s"
+        print "Total absolute time=",(self.tstop-self.tstart )*86400 #NEW
         print "Total time spent at separation < ", self.zmax, " deg:", ttotal_under_zmax*self.step, "s"
         print "Relative time spent at separation <", self.zmax, " deg:", ttotal_under_zmax*100./ttotal_obs, "%"
         print "Relative time spent at separation >", self.zmax, " deg:", ttotal_above_zmax*100./ttotal_obs, "%"
+        print "Absolute time spent at separation <", self.zmax, " deg:", (ttotal_under_zmax*self.step)/((self.tstop-self.tstart )*86400)*100, " %" #NEW
+        print "Absolute time spent at separation >", self.zmax, " deg:", ((ttotal_obs*self.step)-(ttotal_under_zmax*self.step)) / ((self.tstop-self.tstart )*86400)*100, " %" #NEW
+        print "Duty Cycle: ", (1 - ((ttotal_obs*self.step) / ((self.tstop-self.tstart )*86400)))*100, "%" #NEW
         f = open(self.out_name, "a")
         print >> f, "AGILE"
         print >> f, "Total integration time=", ttotal_obs*self.step, " s"
+        print >> f,"Total absolute time=",(self.tstop-self.tstart )*86400 #NEW
         print >> f,"Total time spent at separation < ", self.zmax, " deg:", ttotal_under_zmax*self.step, "s"
         print >> f,"Relative time spent at separation <", self.zmax, " deg:", ttotal_under_zmax*100./ttotal_obs, "%"
         print >> f,"Relative time spent at separation >", self.zmax, " deg:", ttotal_above_zmax*100./ttotal_obs, "%"
+        print >> f,"Absolute time spent at separation <", self.zmax, " deg:", (ttotal_under_zmax*self.step)/((self.tstop-self.tstart )*86400)*100, " %" #NEW
+        print >> f,"Absolute time spent at separation >", self.zmax, " deg:", ((ttotal_obs*self.step)-(ttotal_under_zmax*self.step)) / ((self.tstop-self.tstart )*86400)*100, " %" #NEW
+        print >> f,"Duty Cycle: ", (1 - ((ttotal_obs*self.step) / ((self.tstop-self.tstart )*86400)))*100, "%" #NEW
         f.close()
 
         kk = open("times_bins_vs_separation.txt", "w")

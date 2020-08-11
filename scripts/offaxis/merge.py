@@ -48,7 +48,7 @@ class merge:
         if(mode=="agile" or mode=="all"):
             ax.plot(agl_filt - self.t0, agl_sep_filt, color='gray', label='AGILE')
         if(mode=="fermi" or mode=="all"):
-            ax.plot(lat_filt - self.t0, lat_sep_filt, '+', color='red', markersize=2, label='Fermi-LAT')
+            ax.plot(lat_filt - self.t0, lat_sep_filt, color='red', label='Fermi-LAT')
 
 ##        agilecnt_mjd = self.PlotAgileCounts()
 ##        if showcnt==True:

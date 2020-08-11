@@ -110,7 +110,7 @@ with open(time_window_file) as fp:
 
            print("fermi time"+str(fermi_met_start)+" "+str(fermi_met_stop))
 
-           check = fermicheck(path_dati_fermi, ra, dec, zmax=zmax, timelimiti=fermi_met_start,step=step, timelimitf=fermi_met_stop,out_name="../output_"+str(zmax)+"_"+os.path.basename(time_window_file))
+           check = fermicheck(path_dati_fermi, ra, dec, tstart, tstop, zmax=zmax, timelimiti=fermi_met_start,step=step, timelimitf=fermi_met_stop,out_name="../output_"+str(zmax)+"_"+os.path.basename(time_window_file))
            check.PlotVisibility()
            #os.system("cp fermi_visibility*eps "+new_dir)
 
@@ -126,7 +126,7 @@ with open(time_window_file) as fp:
            MET2orbit(agile_met_start, agile_met_stop, path_log_index)
 
            merged_file = glob.glob('./merged_list_*.fits')[0]
-           check = agilecheck(merged_file, ra, dec, zmax=zmax, timelimiti=agile_met_start, timelimitf=agile_met_stop, step=step, out_name="../output_"+str(zmax)+"_"+os.path.basename(time_window_file))
+           check = agilecheck(merged_file, ra, dec, tstart, tstop, zmax=zmax, timelimiti=agile_met_start, timelimitf=agile_met_stop, step=step, out_name="../output_"+str(zmax)+"_"+os.path.basename(time_window_file))
            check.PlotVisibility()
 
        ### MERGE TWO PLOT ###
