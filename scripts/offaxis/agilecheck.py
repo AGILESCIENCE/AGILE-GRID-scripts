@@ -254,7 +254,7 @@ class agilecheck:
         print "Relative time spent at separation >", self.zmax, " deg:", "{0:.2f}".format(((ttotal_obs*self.step-idle_secs)-(ttotal_under_zmax*self.step)) / (ttotal_obs*self.step - idle_secs)*100.), "%"
         print "Absolute time spent at separation <", self.zmax, " deg:", "{0:.2f}".format((ttotal_under_zmax*self.step)/((self.tstop-self.tstart )*86400)*100.), " %" #NEW
         print "Absolute time spent at separation >", self.zmax, " deg:", "{0:.2f}".format(((ttotal_obs*self.step-idle_secs)-(ttotal_under_zmax*self.step)) / ((self.tstop-self.tstart )*86400)*100.), " %" #NEW
-        print "Duty Cycle: ", "{0:.2f}".format((1 - ((ttotal_obs*self.step-idle_secs) / ((self.tstop-self.tstart )*86400)))*100.), "%" #NEW
+        print "Duty Cycle: ", "{0:.2f}".format((((ttotal_obs*self.step-idle_secs) / ((self.tstop-self.tstart )*86400)))*100.), "%" #NEW
 
         f = open(self.out_name, "a")
         print >> f, "AGILE"
@@ -265,7 +265,7 @@ class agilecheck:
         print >> f, "Relative time spent at separation >", self.zmax, " deg:", "{0:.2f}".format(((ttotal_obs*self.step-idle_secs)-(ttotal_under_zmax*self.step)) / (ttotal_obs*self.step - idle_secs)*100.), "%"
         print >> f,"Absolute time spent at separation <", self.zmax, " deg:", "{0:.2f}".format((ttotal_under_zmax*self.step)/((self.tstop-self.tstart )*86400)*100.), " %" #NEW
         print >> f,"Absolute time spent at separation >", self.zmax, " deg:", "{0:.2f}".format(((ttotal_obs*self.step-idle_secs)-(ttotal_under_zmax*self.step)) / ((self.tstop-self.tstart )*86400)*100.), " %" #NEW
-        print >> f,"Duty Cycle: ", "{0:.2f}".format((1 - ((ttotal_obs*self.step-idle_secs) / ((self.tstop-self.tstart )*86400)))*100.), "%" #NEW
+        print >> f,"Duty Cycle: ", "{0:.2f}".format((((ttotal_obs*self.step-idle_secs) / ((self.tstop-self.tstart )*86400)))*100.), "%" #NEW
         f.close()
 
         kk = open("times_bins_vs_separation.txt", "w")

@@ -257,7 +257,7 @@ class fermicheck:
         print "Relative time spent at separation >", self.zmax, " deg:", "{0:.2f}".format(ttotal_above_zmax*100./ttotal_obs), "%"
         print "Absolute time spent at separation <", self.zmax, " deg:", "{0:.2f}".format((ttotal_under_zmax*self.step)/((self.tstop-self.tstart )*86400)*100), " %" #NEW
         print "Absolute time spent at separation >", self.zmax, " deg:", "{0:.2f}".format(((ttotal_obs*self.step)-(ttotal_under_zmax*self.step)) / ((self.tstop-self.tstart )*86400)*100), " %" #NEW
-        print "Duty Cycle: ", "{0:.2f}".format((1 - ((ttotal_obs*self.step) / ((self.tstop-self.tstart )*86400)))*100), "%" #NEW
+        print "Duty Cycle: ", "{0:.2f}".format((((ttotal_obs*self.step) / ((self.tstop-self.tstart )*86400)))*100), "%" #NEW
 
         f = open(self.out_name, "a")
         print >> f, "FERMI"
@@ -268,7 +268,7 @@ class fermicheck:
         print >> f,"Relative time spent at separation >", self.zmax, " deg:", "{0:.2f}".format(ttotal_above_zmax*100./ttotal_obs), "%"
         print >> f,"Absolute time spent at separation <", self.zmax, " deg:", "{0:.2f}".format((ttotal_under_zmax*self.step)/((self.tstop-self.tstart )*86400)*100), " %" #NEW
         print >> f,"Absolute time spent at separation >", self.zmax, " deg:", "{0:.2f}".format(((ttotal_obs*self.step)-(ttotal_under_zmax*self.step)) / ((self.tstop-self.tstart )*86400)*100), " %" #NEW
-        print >> f,"Duty Cycle: ", "{0:.2f}".format((1 - ((ttotal_obs*self.step) / ((self.tstop-self.tstart )*86400)))*100), "%" #NEW
+        print >> f,"Duty Cycle: ", "{0:.2f}".format((((ttotal_obs*self.step) / ((self.tstop-self.tstart )*86400)))*100), "%" #NEW
         f.close()
 
         filesep = open('time_vs_separation_fermi.txt', 'w')
