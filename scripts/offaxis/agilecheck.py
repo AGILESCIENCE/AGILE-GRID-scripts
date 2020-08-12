@@ -241,27 +241,31 @@ class agilecheck:
         deltat = tTTf - tTTi
         deltat1 = deltat[1]
 
+        num_obs = (self.tstop-self.tstart )*86400 / 5460
+        idle_secs = num_obs * 900
+
         ttotal_obs = np.sum(deltat)
         ttotal_under_zmax = np.sum(tTTf[separation<self.zmax]-tTTi[separation<self.zmax])
         ttotal_above_zmax = np.sum(tTTf[separation>self.zmax]-tTTi[separation>self.zmax])
-        print "Total integration time=", ttotal_obs*self.step, " s"
-        print "Total absolute time=",(self.tstop-self.tstart )*86400 #NEW
-        print "Total time spent at separation < ", self.zmax, " deg:", ttotal_under_zmax*self.step, "s"
-        print "Relative time spent at separation <", self.zmax, " deg:", ttotal_under_zmax*100./ttotal_obs, "%"
-        print "Relative time spent at separation >", self.zmax, " deg:", ttotal_above_zmax*100./ttotal_obs, "%"
-        print "Absolute time spent at separation <", self.zmax, " deg:", (ttotal_under_zmax*self.step)/((self.tstop-self.tstart )*86400)*100, " %" #NEW
-        print "Absolute time spent at separation >", self.zmax, " deg:", ((ttotal_obs*self.step)-(ttotal_under_zmax*self.step)) / ((self.tstop-self.tstart )*86400)*100, " %" #NEW
-        print "Duty Cycle: ", (1 - ((ttotal_obs*self.step) / ((self.tstop-self.tstart )*86400)))*100, "%" #NEW
+        print "Total integration time=", "{0:.2f}".format(ttotal_obs*self.step - idle_secs), " s"
+        print "Total absolute time=", "{0:.2f}".format((self.tstop-self.tstart )*86400) #NEW
+        print "Total time spent at separation < ", self.zmax, " deg:", "{0:.2f}".format(ttotal_under_zmax*self.step), "s"
+        print "Relative time spent at separation <", self.zmax, " deg:",  "{0:.2f}".format((ttotal_under_zmax*self.step)/(ttotal_obs*self.step - idle_secs)*100.), "%"
+        print "Relative time spent at separation >", self.zmax, " deg:", "{0:.2f}".format(((ttotal_obs*self.step-idle_secs)-(ttotal_under_zmax*self.step)) / (ttotal_obs*self.step - idle_secs)*100.), "%"
+        print "Absolute time spent at separation <", self.zmax, " deg:", "{0:.2f}".format((ttotal_under_zmax*self.step)/((self.tstop-self.tstart )*86400)*100.), " %" #NEW
+        print "Absolute time spent at separation >", self.zmax, " deg:", "{0:.2f}".format(((ttotal_obs*self.step-idle_secs)-(ttotal_under_zmax*self.step)) / ((self.tstop-self.tstart )*86400)*100.), " %" #NEW
+        print "Duty Cycle: ", "{0:.2f}".format((1 - ((ttotal_obs*self.step-idle_secs) / ((self.tstop-self.tstart )*86400)))*100.), "%" #NEW
+
         f = open(self.out_name, "a")
         print >> f, "AGILE"
-        print >> f, "Total integration time=", ttotal_obs*self.step, " s"
-        print >> f,"Total absolute time=",(self.tstop-self.tstart )*86400 #NEW
-        print >> f,"Total time spent at separation < ", self.zmax, " deg:", ttotal_under_zmax*self.step, "s"
-        print >> f,"Relative time spent at separation <", self.zmax, " deg:", ttotal_under_zmax*100./ttotal_obs, "%"
-        print >> f,"Relative time spent at separation >", self.zmax, " deg:", ttotal_above_zmax*100./ttotal_obs, "%"
-        print >> f,"Absolute time spent at separation <", self.zmax, " deg:", (ttotal_under_zmax*self.step)/((self.tstop-self.tstart )*86400)*100, " %" #NEW
-        print >> f,"Absolute time spent at separation >", self.zmax, " deg:", ((ttotal_obs*self.step)-(ttotal_under_zmax*self.step)) / ((self.tstop-self.tstart )*86400)*100, " %" #NEW
-        print >> f,"Duty Cycle: ", (1 - ((ttotal_obs*self.step) / ((self.tstop-self.tstart )*86400)))*100, "%" #NEW
+        print >> f, "Total integration time=", "{0:.2f}".format(ttotal_obs*self.step - idle_secs), " s"
+        print >> f,"Total absolute time=", "{0:.2f}".format((self.tstop-self.tstart )*86400) #NEW
+        print >> f,"Total time spent at separation < ", self.zmax, " deg:", "{0:.2f}".format(ttotal_under_zmax*self.step), "s"
+        print >> f, "Relative time spent at separation <", self.zmax, " deg:",  "{0:.2f}".format((ttotal_under_zmax*self.step)/(ttotal_obs*self.step - idle_secs)*100.), "%"
+        print >> f, "Relative time spent at separation >", self.zmax, " deg:", "{0:.2f}".format(((ttotal_obs*self.step-idle_secs)-(ttotal_under_zmax*self.step)) / (ttotal_obs*self.step - idle_secs)*100.), "%"
+        print >> f,"Absolute time spent at separation <", self.zmax, " deg:", "{0:.2f}".format((ttotal_under_zmax*self.step)/((self.tstop-self.tstart )*86400)*100.), " %" #NEW
+        print >> f,"Absolute time spent at separation >", self.zmax, " deg:", "{0:.2f}".format(((ttotal_obs*self.step-idle_secs)-(ttotal_under_zmax*self.step)) / ((self.tstop-self.tstart )*86400)*100.), " %" #NEW
+        print >> f,"Duty Cycle: ", "{0:.2f}".format((1 - ((ttotal_obs*self.step-idle_secs) / ((self.tstop-self.tstart )*86400)))*100.), "%" #NEW
         f.close()
 
         kk = open("times_bins_vs_separation.txt", "w")
