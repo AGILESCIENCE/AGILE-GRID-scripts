@@ -92,8 +92,11 @@ class agilecheck:
 
 #       This is to avoid problems with moments for which the AGILE pointing was set to RA=NaN, DEC=NaN
         TIME = SC['TIME'][np.logical_not(np.isnan(SC['ATTITUDE_RA_Y']))]
-        ATTITUDE_RA_Y= SC['ATTITUDE_RA_Y'][np.logical_not(np.isnan(SC['ATTITUDE_RA_Y']))]
-        ATTITUDE_DEC_Y= SC['ATTITUDE_DEC_Y'][np.logical_not(np.isnan(SC['ATTITUDE_DEC_Y']))]
+        #TIME = SC["TIME"][SC['MODE'] != 0]
+        ATTITUDE_RA_Y = SC['ATTITUDE_RA_Y'][np.logical_not(np.isnan(SC['ATTITUDE_RA_Y']))]
+        #ATTITUDE_RA_Y = SC["ATTITUDE_RA_Y"][SC['MODE'] != 0]
+        ATTITUDE_DEC_Y = SC['ATTITUDE_DEC_Y'][np.logical_not(np.isnan(SC['ATTITUDE_DEC_Y']))]
+        #ATTITUDE_DEC_Y = SC["ATTITUDE_DEC_Y"][SC['MODE'] != 0]
 
         deltatime = 0.1 # AGILE attitude is collected every 0.1 s
 
@@ -139,8 +142,11 @@ class agilecheck:
 
 #       This is to avoid problems with moments for which the AGILE pointing was set to RA=NaN, DEC=NaN
         TIME = SC['TIME'][np.logical_not(np.isnan(SC['ATTITUDE_RA_Y']))]
-        ATTITUDE_RA_Y= SC['ATTITUDE_RA_Y'][np.logical_not(np.isnan(SC['ATTITUDE_RA_Y']))]
-        ATTITUDE_DEC_Y= SC['ATTITUDE_DEC_Y'][np.logical_not(np.isnan(SC['ATTITUDE_DEC_Y']))]
+        #TIME = SC["TIME"][SC['MODE'] != 0]
+        ATTITUDE_RA_Y = SC['ATTITUDE_RA_Y'][np.logical_not(np.isnan(SC['ATTITUDE_RA_Y']))]
+        #ATTITUDE_RA_Y = SC["ATTITUDE_RA_Y"][SC['MODE'] != 0]
+        ATTITUDE_DEC_Y = SC['ATTITUDE_DEC_Y'][np.logical_not(np.isnan(SC['ATTITUDE_DEC_Y']))]
+        #ATTITUDE_DEC_Y = SC["ATTITUDE_DEC_Y"][SC['MODE'] != 0]
 
         deltatime = 0.1
         if self.timelimiti == -1 or self.timelimiti < np.min(TIME):
@@ -172,7 +178,7 @@ class agilecheck:
         t_mjd  = time2.mjd
         return t_mjd
 
-    def PlotVisibility(self, twocolumn=False, show=False, histogram=False, im_fmt='eps', plot=True):
+    def PlotVisibility(self, twocolumn=False, show=False, histogram=True, im_fmt='eps', plot=True):
         """PlotVisibility makes a plot of the zenith distance of a given source
            (src_ra and src_dec selected in the agilecheck parameters).
 
@@ -241,31 +247,32 @@ class agilecheck:
         deltat = tTTf - tTTi
         deltat1 = deltat[1]
 
-        num_obs = (self.tstop-self.tstart )*86400 / 5460
-        idle_secs = num_obs * 900
+        #num_obs = (self.tstop-self.tstart )*86400 / 5460
+        #idle_secs = num_obs * 900
 
         ttotal_obs = np.sum(deltat)
+        ttotal_abs = (self.tstop-self.tstart)*86400
         ttotal_under_zmax = np.sum(tTTf[separation<self.zmax]-tTTi[separation<self.zmax])
         ttotal_above_zmax = np.sum(tTTf[separation>self.zmax]-tTTi[separation>self.zmax])
-        print "Total integration time=", "{0:.2f}".format(ttotal_obs*self.step - idle_secs), " s"
-        print "Total absolute time=", "{0:.2f}".format((self.tstop-self.tstart )*86400) #NEW
+        print "Total integration time=", "{0:.2f}".format(ttotal_obs*self.step), " s", 'Total_bins:', total_obs, len(tTTf), 'Mean sep. < ', self.zmax, ':', str(round(np.mean(separation[separation<self.zmax]),4))
+        print "Total absolute time=", "{0:.2f}".format(ttotal_abs) #NEW
         print "Total time spent at separation < ", self.zmax, " deg:", "{0:.2f}".format(ttotal_under_zmax*self.step), "s"
-        print "Relative time spent at separation <", self.zmax, " deg:",  "{0:.2f}".format((ttotal_under_zmax*self.step)/(ttotal_obs*self.step - idle_secs)*100.), "%"
-        print "Relative time spent at separation >", self.zmax, " deg:", "{0:.2f}".format(((ttotal_obs*self.step-idle_secs)-(ttotal_under_zmax*self.step)) / (ttotal_obs*self.step - idle_secs)*100.), "%"
-        print "Absolute time spent at separation <", self.zmax, " deg:", "{0:.2f}".format((ttotal_under_zmax*self.step)/((self.tstop-self.tstart )*86400)*100.), " %" #NEW
-        print "Absolute time spent at separation >", self.zmax, " deg:", "{0:.2f}".format(((ttotal_obs*self.step-idle_secs)-(ttotal_under_zmax*self.step)) / ((self.tstop-self.tstart )*86400)*100.), " %" #NEW
-        print "Duty Cycle: ", "{0:.2f}".format((((ttotal_obs*self.step-idle_secs) / ((self.tstop-self.tstart )*86400)))*100.), "%" #NEW
+        print "Relative time spent at separation <", self.zmax, " deg:",  "{0:.2f}".format((ttotal_under_zmax*self.step)/(ttotal_obs*self.step)*100.), "%"
+        print "Relative time spent at separation >", self.zmax, " deg:", "{0:.2f}".format(((ttotal_obs*self.step)-(ttotal_under_zmax*self.step)) / (ttotal_obs*self.step)*100.), "%"
+        print "Absolute time spent at separation <", self.zmax, " deg:", "{0:.2f}".format((ttotal_under_zmax*self.step)/(ttotal_abs)*100.), " %" #NEW
+        print "Absolute time spent at separation >", self.zmax, " deg:", "{0:.2f}".format(((ttotal_obs*self.step)-(ttotal_under_zmax*self.step)) / (ttotal_abs)*100.), " %" #NEW
+        print "Duty Cycle: ", "{0:.2f}".format((((ttotal_obs*self.step) / (ttotal_abs)))*100.), "%" #NEW
 
         f = open(self.out_name, "a")
         print >> f, "AGILE"
-        print >> f, "Total integration time=", "{0:.2f}".format(ttotal_obs*self.step - idle_secs), " s"
-        print >> f,"Total absolute time=", "{0:.2f}".format((self.tstop-self.tstart )*86400) #NEW
+        print >> f, "Total integration time=", "{0:.2f}".format(ttotal_obs*self.step), " s", 'Total_bins:', total_obs, len(tTTf), 'Mean sep. < ', self.zmax, ':', str(round(np.mean(separation[separation<self.zmax]),4))
+        print >> f,"Total absolute time=", "{0:.2f}".format(ttotal_abs) #NEW
         print >> f,"Total time spent at separation < ", self.zmax, " deg:", "{0:.2f}".format(ttotal_under_zmax*self.step), "s"
-        print >> f, "Relative time spent at separation <", self.zmax, " deg:",  "{0:.2f}".format((ttotal_under_zmax*self.step)/(ttotal_obs*self.step - idle_secs)*100.), "%"
-        print >> f, "Relative time spent at separation >", self.zmax, " deg:", "{0:.2f}".format(((ttotal_obs*self.step-idle_secs)-(ttotal_under_zmax*self.step)) / (ttotal_obs*self.step - idle_secs)*100.), "%"
-        print >> f,"Absolute time spent at separation <", self.zmax, " deg:", "{0:.2f}".format((ttotal_under_zmax*self.step)/((self.tstop-self.tstart )*86400)*100.), " %" #NEW
-        print >> f,"Absolute time spent at separation >", self.zmax, " deg:", "{0:.2f}".format(((ttotal_obs*self.step-idle_secs)-(ttotal_under_zmax*self.step)) / ((self.tstop-self.tstart )*86400)*100.), " %" #NEW
-        print >> f,"Duty Cycle: ", "{0:.2f}".format((((ttotal_obs*self.step-idle_secs) / ((self.tstop-self.tstart )*86400)))*100.), "%" #NEW
+        print >> f, "Relative time spent at separation <", self.zmax, " deg:",  "{0:.2f}".format((ttotal_under_zmax*self.step)/(ttotal_obs*self.step)*100.), "%"
+        print >> f, "Relative time spent at separation >", self.zmax, " deg:", "{0:.2f}".format(((ttotal_obs*self.step)-(ttotal_under_zmax*self.step)) / (ttotal_obs*self.step)*100.), "%"
+        print >> f,"Absolute time spent at separation <", self.zmax, " deg:", "{0:.2f}".format((ttotal_under_zmax*self.step)/(ttotal_abs)*100.), " %" #NEW
+        print >> f,"Absolute time spent at separation >", self.zmax, " deg:", "{0:.2f}".format(((ttotal_obs*self.step)-(ttotal_under_zmax*self.step)) / (ttotal_abs)*100.), " %" #NEW
+        print >> f,"Duty Cycle: ", "{0:.2f}".format((((ttotal_obs*self.step) / (ttotal_abs)))*100.), "%" #NEW
         f.close()
 
         kk = open("times_bins_vs_separation.txt", "w")
@@ -323,8 +330,8 @@ class agilecheck:
 
         if histogram == True:
             print "Plotting histogram..."
-            bins  = [0, 10, 20, 30, 40, 50, 60]
-            bins2 = [60, 180]
+            bins  = [0, 10, 20, 30, 40, 50, 60, 70]
+            bins2 = [70, 180]
             hist, bins = np.histogram(separation, bins=bins, density=False)
             hist2, bins2 = np.histogram(separation, bins=bins2, density=False)
             width = 1. * (bins[1] - bins[0])
@@ -344,8 +351,8 @@ class agilecheck:
             ax2.set_ylim(0., 100.)
             ax2.set_ylabel('\\% of time spent')
             ax2.set_xlabel('off-axis angle $[^\\circ]$')
-            labels  = [0, 10, 20, 30, 40, 50, 180]
-            xlabels = [0, 10, 20, 30, 40, 50, 100]
+            labels  = [0, 10, 20, 30, 40, 50, 60, 180]
+            xlabels = [0, 10, 20, 30, 40, 50, 60, 100]
             plt.xticks(xlabels, labels)
 
             fil = open('agile_histogram_visibility'+str(self.src_ra)+'_dec'+str(self.src_dec)+'_tstart'+str(np.min(tTTi))+'_tstop'+str(np.max(tTTf))+'.txt', 'w')

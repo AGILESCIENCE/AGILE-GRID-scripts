@@ -57,8 +57,8 @@ class merge:
 
         ax.set_ylim(0., self.zmax+5.0)
         ax.set_xlim((self.timelimiti - self.t0)-0.2, (self.timelimitf-self.t0)+0.2)
-#        ax.set_xlabel('MJD')
-        ax.set_xlabel('T - T0 [days]')
+        ax.set_xlabel('MJD')
+#        ax.set_xlabel('T - T0 [days]')
         ax.set_ylabel('off-axis angle [$^{\\circ}$]')
 
         legend = plt.legend(loc='lower right', shadow=True, fontsize='large')
@@ -73,6 +73,8 @@ class merge:
             f.show()
         else:
             f.savefig('merged_plot_'+str(self.zmax)+'_'+str(self.timelimiti)+'_'+str(self.timelimitf)+'.'+str('png'))
+            f.savefig('merged_plot_'+str(self.zmax)+'_'+str(self.timelimiti)+'_'+str(self.timelimitf)+'.'+str('pdf'), format="pdf")
+
 
 
     def PlotAgileCounts(self):

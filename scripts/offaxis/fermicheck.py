@@ -176,7 +176,7 @@ class fermicheck:
             print >> gti_file, tiMET[i], tfMET[i]
 
 
-    def PlotVisibility(self, twocolumn=False, show=False, im_fmt='eps', histogram=False, plot=True):
+    def PlotVisibility(self, twocolumn=False, show=False, im_fmt='eps', histogram=True, plot=True):
         """PlotVisibility makes a plot of the zenith distance of a given source
            (src_ra and src_dec in the fermivisibility parameters). For a given
            zmax angle it plots in red the time when the source zenith distance
@@ -250,7 +250,7 @@ class fermicheck:
         ttotal_obs = np.sum(deltat)
         ttotal_under_zmax = np.sum(tfMET[separation<self.zmax]-tiMET[separation<self.zmax])
         ttotal_above_zmax = np.sum(tfMET[separation>self.zmax]-tiMET[separation>self.zmax])
-        print "Total integration time=", "{0:.2f}".format((ttotal_obs*self.step)), " s", 'total_obs', total_obs, len(tiMET)*self.step
+        print "Total integration time=", "{0:.2f}".format((ttotal_obs*self.step)), " s", 'Total_bins:', total_obs, len(tiMET), 'Mean sep. < ', self.zmax, ':', str(round(np.mean(separation[separation<self.zmax]),4))
         print "Total absolute time=","{0:.2f}".format((self.tstop-self.tstart )*86400) #NEW
         print "Total time spent at separation < ", self.zmax, " deg:", "{0:.2f}".format(ttotal_under_zmax*self.step), "s"
         print "Relative time spent at separation <", self.zmax, " deg:", "{0:.2f}".format(ttotal_under_zmax*100./ttotal_obs), "%"
@@ -261,7 +261,7 @@ class fermicheck:
 
         f = open(self.out_name, "a")
         print >> f, "FERMI"
-        print >> f,"Total integration time=", "{0:.2f}".format((ttotal_obs*self.step)), " s", 'total_obs', total_obs, len(tiMET)*self.step
+        print >> f,"Total integration time=", "{0:.2f}".format((ttotal_obs*self.step)), " s", 'Total_bins:', total_obs, len(tiMET), 'Mean sep. < ', self.zmax, ':', str(round(np.mean(separation[separation<self.zmax]),4))
         print >> f,"Total absolute time=","{0:.2f}".format((self.tstop-self.tstart )*86400) #NEW
         print >> f,"Total time spent at separation < ", self.zmax, " deg:", "{0:.2f}".format(ttotal_under_zmax*self.step), "s"
         print >> f,"Relative time spent at separation <", self.zmax, " deg:", "{0:.2f}".format(ttotal_under_zmax*100./ttotal_obs), "%"
@@ -322,8 +322,8 @@ class fermicheck:
 
         if histogram == True:
             print "Plotting histogram..."
-            bins  = [0, 10, 20, 30, 40, 50, 60]
-            bins2 = [60, 180]
+            bins  = [0, 10, 20, 30, 40, 50, 60, 70]
+            bins2 = [70, 180]
             hist, bins = np.histogram(separation, bins=bins, density=False)
             hist2, bins2 = np.histogram(separation, bins=bins2, density=False)
             width = 1. * (bins[1] - bins[0])
@@ -343,8 +343,8 @@ class fermicheck:
             ax2.set_ylim(0., 100.)
             ax2.set_ylabel('\\% of time spent')
             ax2.set_xlabel('off-axis angle $[^\\circ]$')
-            labels  = [0, 10, 20, 30, 40, 50, 180]
-            xlabels = [0, 10, 20, 30, 40, 50, 100]
+            labels  = [0, 10, 20, 30, 40, 50, 60, 180]
+            xlabels = [0, 10, 20, 30, 40, 50, 60, 100]
             plt.xticks(xlabels, labels)
 
             fil = open('fermi_histogram_visibility'+str(self.src_ra)+'_dec'+str(self.src_dec)+'_tstart'+str(np.min(tiMET))+'_tstop'+str(np.max(tfMET))+'.txt', 'w')
