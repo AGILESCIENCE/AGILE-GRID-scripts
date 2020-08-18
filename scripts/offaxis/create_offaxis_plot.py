@@ -143,5 +143,6 @@ with open(time_window_file) as fp:
        t0 = 0
        check=merge(timelimiti=tstart, timelimitf=tstop, t0=t0,zmax=zmax)
        check.Plotmerge(mode=mode)
+       check.histogram_merge(mode=mode)
 
        os.chdir("..")

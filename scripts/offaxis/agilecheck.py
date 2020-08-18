@@ -355,11 +355,12 @@ class agilecheck:
             xlabels = [0, 10, 20, 30, 40, 50, 60, 100]
             plt.xticks(xlabels, labels)
 
-            fil = open('agile_histogram_visibility'+str(self.src_ra)+'_dec'+str(self.src_dec)+'_tstart'+str(np.min(tTTi))+'_tstop'+str(np.max(tTTf))+'.txt', 'w')
+            #fil = open('agile_histogram_visibility'+str(self.src_ra)+'_dec'+str(self.src_dec)+'_tstart'+str(np.min(tTTi))+'_tstop'+str(np.max(tTTf))+'.txt', 'w')
+            fil = open('agile_histogram_visibility.txt', 'w')
             for i in np.arange(len(center)):
-                print >> fil, center[i], hist[i]
+                print >> fil, center[i], hist[i]*deltat1/ttotal_obs*100., width
             for i in np.arange(len(center2)):
-                print >> fil, center2[i], hist2[i]
+                print >> fil, center2[i], hist2[i]*deltat1/ttotal_obs*100., width2
             fil.close()
 
             print 'Saving figure...'

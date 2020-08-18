@@ -347,11 +347,12 @@ class fermicheck:
             xlabels = [0, 10, 20, 30, 40, 50, 60, 100]
             plt.xticks(xlabels, labels)
 
-            fil = open('fermi_histogram_visibility'+str(self.src_ra)+'_dec'+str(self.src_dec)+'_tstart'+str(np.min(tiMET))+'_tstop'+str(np.max(tfMET))+'.txt', 'w')
+            #fil = open('fermi_histogram_visibility'+str(self.src_ra)+'_dec'+str(self.src_dec)+'_tstart'+str(np.min(tiMET))+'_tstop'+str(np.max(tfMET))+'.txt', 'w')
+            fil = open('fermi_histogram_visibility.txt', 'w')
             for i in np.arange(len(center)):
-                print >> fil, center[i], hist[i]#*29.1058/ttotal_obs*100.
+                print >> fil, center[i], hist[i]*29.1058/ttotal_obs*100., width
             for i in np.arange(len(center2)):
-                print >> fil, center2[i], hist2[i]#*29.1058/ttotal_obs*100.
+                print >> fil, center2[i], hist2[i]*29.1058/ttotal_obs*100., width2
             fil.close()
 
             print 'Saving figure...'
