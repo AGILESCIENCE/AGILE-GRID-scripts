@@ -38,6 +38,8 @@ run_number = sys.argv[6]
 zmax = float(sys.argv[7])
 mode = sys.argv[8]
 step = int(sys.argv[9])
+line1 = float(sys.argv[10])
+line2 = float(sys.argv[11])
 
 
 def MET2orbit(tmin, tmax, path_to_LOG, source='MySource', send=True):
@@ -141,7 +143,7 @@ with open(time_window_file) as fp:
        from merge import *
        t0 = tstart+((tstop-tstart)/2)
        t0 = 0
-       check=merge(timelimiti=tstart, timelimitf=tstop, t0=t0,zmax=zmax)
+       check=merge(timelimiti=tstart, timelimitf=tstop, t0=t0,zmax=zmax, lines=[line1, line2])
        check.Plotmerge(mode=mode)
        check.histogram_merge(mode=mode)
 
