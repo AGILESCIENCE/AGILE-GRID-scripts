@@ -50,7 +50,7 @@ class NormalizeAP:
 	# [3] Kraft, Burrows, & Nousek, 1991, ApJ, 374, 344
 	# Variance weighting corrected for low count statistic - Weighted Power Spectrum	 [1] [2]
 
-	def normalizeAB3(self, expdataA, ctsdataA, rateBkgExpected, rateAB11, rateAB12, rateAB13, rateAB14, rateAB21, rateAB22, rateAB23, rateAB24, rateAB31, rateAB32, rateABR1, rateABR2, rateABR3, rateABR4, rateAAR5, rate, rate_error, exp_based_rate_error):
+	def normalizeAB3(self, expdataA, ctsdataA, rateBkgExpected, normrateAB11, normrateAB12, normrateAB13, normrateAB14, normrateAB21, normrateAB22, normrateAB23, normrateAB24, normrateAB11aa, normrateAB21aa, ratediffR1, ratediffR2, ratediffR3, ratediffR4, ratediffR1AA, rate, rate_error, exp_based_rate_error):
 		sum1 = 0.0
 		sum2 = 0.0
 		sum3 = 0.0
@@ -73,6 +73,7 @@ class NormalizeAP:
 			s_irms = np.sqrt((s_ip*s_ip + s_im*s_im) / 2.0)
 			s_i = s_irms / e_i
 			rate_error[n] = s_i
+
 			sum1 += rate_i / (s_i*s_i)
 			sum2 += 1.0 / (s_i*s_i)
 			sum3 += rate_i
@@ -110,53 +111,53 @@ class NormalizeAP:
 			s_i = rate_error[n]
 			
 			###############7.1.1
-			#res column 0
+			#res column 0 normrateAB11
 			ctspred_i = e_i * ratew_mean1 #cts
 			sp_i = np.sqrt(ctspred_i) / e_i
-			rateAB11[n] = (rate_i - ratew_mean1) / (sp_i*sp_i)
+			normrateAB11[n] = (rate_i - ratew_mean1) / (sp_i*sp_i)
 			
 			###############7.1.2
-			#res column 1
+			#res column 1 normrateAB12
 			ctspred_i = e_i * ratew_mean2 #cts
 			sp_i = np.sqrt(ctspred_i) / e_i
-			rateAB12[n] = (rate_i - ratew_mean2) / (sp_i*sp_i)
+			normrateAB12[n] = (rate_i - ratew_mean2) / (sp_i*sp_i)
 			
 			###############7.1.3
-			#res column 2
+			#res column 2 normrateAB13
 			ctspred_i = e_i * ratew_mean3 #cts
 			sp_i = np.sqrt(ctspred_i) / e_i
 			exp_based_rate_error[n] = sp_i
-			rateAB13[n] = (rate_i - ratew_mean3) / (sp_i*sp_i)
+			normrateAB13[n] = (rate_i - ratew_mean3) / (sp_i*sp_i)
 			
 			###############7.1.4
-			#res column 3
+			#res column 3 normrateAB14
 			ctspred_i = e_i * ratew_mean4 #cts
 			sp_i = np.sqrt(ctspred_i) / e_i
-			rateAB14[n] = (rate_i - ratew_mean4) / (sp_i*sp_i)
+			normrateAB14[n] = (rate_i - ratew_mean4) / (sp_i*sp_i)
 			
 			###############7.2.1
-			#res column 4
+			#res column 4 normrateAB21
 			ctspred_i = e_i * ratew_mean1 #cts
 			sp_i = np.sqrt(ctspred_i) / e_i
-			rateAB21[n] = (rate_i) / (sp_i*sp_i)
+			normrateAB21[n] = (rate_i) / (sp_i*sp_i)
 			
 			###############7.2.2
-			#res column 5
+			#res column 5 normrateAB22
 			ctspred_i = e_i * ratew_mean2 #cts
 			sp_i = np.sqrt(ctspred_i) / e_i
-			rateAB22[n] = (rate_i) / (sp_i*sp_i)
+			normrateAB22[n] = (rate_i) / (sp_i*sp_i)
 			
 			###############7.2.3
-			#res column 6
+			#res column 6 normrateAB23
 			ctspred_i = e_i * ratew_mean3 #cts
 			sp_i = np.sqrt(ctspred_i) / e_i
-			rateAB23[n] = (rate_i) / (sp_i*sp_i)
+			normrateAB23[n] = (rate_i) / (sp_i*sp_i)
 			
 			###############7.2.4
-			#res column 7
+			#res column 7 normrateAB24
 			ctspred_i = e_i * ratew_mean4 #cts
 			sp_i = np.sqrt(ctspred_i) / e_i
-			rateAB24[n] = (rate_i) / (sp_i*sp_i)
+			normrateAB24[n] = (rate_i) / (sp_i*sp_i)
 			
 			###############7.3.1
 			#rateAB31[n] = (rate_i - ratew_mean1) / (s_i*s_i)
@@ -171,38 +172,38 @@ class NormalizeAP:
 			#rateAB34[n] = (rate_i - ratew_mean4) / (s_i*s_i)
 			
 			###############7.1.1aa
-			#res column 8
+			#res column 8 normrateAB11aa
 			ctspred_i = e_i * ratew_mean1aa #cts
 			sp_i = np.sqrt(ctspred_i) / e_i
-			rateAB31[n] = (rate_i - ratew_mean1aa) / (sp_i*sp_i)
+			normrateAB11aa[n] = (rate_i - ratew_mean1aa) / (sp_i*sp_i)
 			
 			###############7.2.1aa
-			#res column 9
+			#res column 9 normrateAB21aa
 			ctspred_i = e_i * ratew_mean1aa #cts
 			sp_i = np.sqrt(ctspred_i) / e_i
-			rateAB32[n] = (rate_i) / (sp_i*sp_i)
+			normrateAB21aa[n] = (rate_i) / (sp_i*sp_i)
 			
 			###############7.4.1
 			#rateAB41[n] = (rate_i ) / (s_i*s_i)
 			
 			###############rate
 			#res column 10
-			rateABR1[n] = (rate_i - ratew_mean1) 
+			ratediffR1[n] = (rate_i - ratew_mean1) 
 			
 			###############rate
 			#res column 11
-			rateABR2[n] = (rate_i - ratew_mean2)
+			ratediffR2[n] = (rate_i - ratew_mean2)
 			
 			###############rate
 			#res column 12
-			rateABR3[n] = (rate_i - ratew_mean3)
+			ratediffR3[n] = (rate_i - ratew_mean3)
 			
 			###############rate
 			#res column 13
-			rateABR4[n] = (rate_i - ratew_mean4)
+			ratediffR4[n] = (rate_i - ratew_mean4)
 			
 			#res column 14
-			rateAAR5[n] = (rate_i - ratew_mean1aa)
+			ratediffR1AA[n] = (rate_i - ratew_mean1aa)
 			
 			n = n + 1
 		
@@ -473,13 +474,9 @@ class GammaAP:
 					line += ' {:.2f}'.format(self.res[n,i])	
 				elif i >= 38 and i <= 39:
 					line += ' {:.2e}'.format(self.res[n,i])
-				elif i >= 40 and i <= 41:
+				elif i >= 40 and i <= 40:
 					line += ' {:.2f}'.format(self.res[n,i])	
-				elif i >= 42 and i <= 43:
-					line += ' {:.2e}'.format(self.res[n,i])
-				elif i == 44:
-					line += ' {:.4f}'.format(self.res[n,i])
-				elif i >= 45 and i <= 49:
+				elif i >= 41 and i <= 49:
 					line += ' {:.2e}'.format(self.res[n,i])
 				else:
 					line += " " + str(self.res[n,i])
