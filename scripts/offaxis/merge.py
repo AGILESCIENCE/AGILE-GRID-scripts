@@ -3,6 +3,7 @@ import pylab
 import matplotlib
 from matplotlib import *
 import matplotlib.pyplot as plt
+from matplotlib.ticker import ScalarFormatter
 import numpy as np
 import astropy
 from astropy.time import Time
@@ -17,14 +18,15 @@ import bisect
 class merge:
     """ This class provides plots to check the off-axis angle of a source wrt AGILE center FoV.    """
 
-    def __init__(self, zmax=75., timelimiti=-1, timelimitf=-1, step=0.1, t0=0.):
+    def __init__(self, zmax=75., timelimiti=-1, timelimitf=-1, step=0.1, t0=0., lines=[]):
         self.zmax        = zmax
         self.timelimiti  = timelimiti
         self.timelimitf  = timelimitf
         self.step        = step*10.
         self.t0          = t0
+        self.lines       = lines
 
-    def Plotmerge(self, show=False, showcnt=False, mode="all"):
+    def Plotmerge(self, show=False, showcnt=True, mode="all"):
 
         if(mode=="agile" or mode=="all"):
             agl_meantime, agl_separation = np.loadtxt('time_vs_separation_agile.txt', unpack=True)
@@ -46,22 +48,27 @@ class merge:
 #        ax.plot(agl_filt - self.t0, agl_sep_filt, '-r', label='AGILE')
 #        ax.plot(lat_filt - self.t0, lat_sep_filt, 'gs', label='Fermi-LAT')
         if(mode=="agile" or mode=="all"):
-            ax.plot(agl_filt - self.t0, agl_sep_filt, color='gray', label='AGILE')
+            ax.plot(agl_filt - self.t0, agl_sep_filt, color='blue', label='AGILE')
         if(mode=="fermi" or mode=="all"):
-            ax.plot(lat_filt - self.t0, lat_sep_filt, '+', color='red', markersize=2, label='Fermi-LAT')
+            ax.plot(lat_filt - self.t0, lat_sep_filt, color='red', label='Fermi')
 
-##        agilecnt_mjd = self.PlotAgileCounts()
-##        if showcnt==True:
-##            [pylab.axvline(_x, linewidth=3, color='k') for _x in agilecnt_mjd]
-#            ax.axvline(agilecnt_mjd, linestyle='-', color='k', linewidth='3')
+        #agilecnt_mjd = self.PlotAgileCounts()
+        if showcnt==True:
+            for x in self.lines:
+                ax.axvline(x, linestyle='--', color='k', linewidth=0.5)
 
         ax.set_ylim(0., self.zmax+5.0)
         ax.set_xlim((self.timelimiti - self.t0)-0.2, (self.timelimitf-self.t0)+0.2)
-#        ax.set_xlabel('MJD')
-        ax.set_xlabel('T - T0 [days]')
+        ax.set_xlabel('MJD')
+        #text = ax.xaxis.get_offset_text()
+        #ax.set_xlabel('                                         MJD                     +' + str(np.min(agl_filt-self.t0)))
+        ax.ticklabel_format(axis="x", useOffset=False)
+        #ax.xaxis.get_major_formatter().set_scientific(False)
+#        ax.set_xlabel('T - T0 [days]')
+        #plt.setp(ax.get_xaxis().get_offset_text(), visible=False)
         ax.set_ylabel('off-axis angle [$^{\\circ}$]')
 
-        legend = plt.legend(loc='lower right', shadow=True, fontsize='large')
+        legend = plt.legend(loc='lower right', shadow=True, fontsize='xx-small')
 
         print 'Saving figure...'
 #        ax.set_xlim(np.min(agl_filt)-self.t0, np.max(agl_filt)-self.t0)
@@ -73,11 +80,43 @@ class merge:
             f.show()
         else:
             f.savefig('merged_plot_'+str(self.zmax)+'_'+str(self.timelimiti)+'_'+str(self.timelimitf)+'.'+str('png'))
+            f.savefig('merged_plot_'+str(self.zmax)+'_'+str(self.timelimiti)+'_'+str(self.timelimitf)+'.'+str('pdf'), format="pdf")
+
+    def histogram_merge(self, show=False, mode="all"):
+
+        if(mode=="agile" or mode=="all"):
+            agile_center, agile_hist, agile_width = np.loadtxt('agile_histogram_visibility.txt', unpack=True)
+        if(mode=="fermi" or mode=="all"):
+            fermi_center, fermi_hist, fermi_width = np.loadtxt('fermi_histogram_visibility.txt', unpack=True)
+        print 'Plotting histogram...'
+        f = plt.figure()
+        ax = f.add_subplot(111)
+
+        if(mode=="agile" or mode=="all"):
+            ax.bar(agile_center, agile_hist, align='center', color='w', edgecolor='b', width=agile_width, label='AGILE')
+        if(mode=="fermi" or mode=="all"):
+            ax.bar(fermi_center, fermi_hist, align='center', color='w', edgecolor='r',width=fermi_width, label='Fermi')
+
+        ax.set_xlim(0., 100.)
+        ax.set_ylim(0., 100.)
+        ax.set_ylabel('% of time spent')
+        ax.set_xlabel('off-axis angle $[^\\circ]$')
+        labels  = [0, 10, 20, 30, 40, 50, 60, 180]
+        xlabels = [0, 10, 20, 30, 40, 50, 60, 100]
+        plt.xticks(xlabels, labels)
+        legend = ax.legend(loc='upper right', shadow=True, fontsize='xx-small')
+
+
+        if show==True:
+            f.show()
+        else:
+            print 'Saving histogram...'
+            f.savefig('histogram_plot_'+str(self.zmax)+'_'+str(self.timelimiti)+'_'+str(self.timelimitf)+'.'+str('png'))
+            f.savefig('histogram_plot_'+str(self.zmax)+'_'+str(self.timelimiti)+'_'+str(self.timelimitf)+'.'+str('pdf'), format="pdf")
 
 
     def PlotAgileCounts(self):
 
-        agile_mjd = np.array([57597.530897,57598.274395,57598.402544,57598.597396,57598.834219,57598.849626,
-                              57598.924719,57599.030639,57599.108716]) - self.t0
-        print agile_mjd
+        agile_mjd = np.array([54732.16,54732.33]) - self.t0
+        #print agile_mjd
         return agile_mjd

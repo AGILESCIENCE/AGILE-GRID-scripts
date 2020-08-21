@@ -38,6 +38,8 @@ run_number = sys.argv[6]
 zmax = float(sys.argv[7])
 mode = sys.argv[8]
 step = int(sys.argv[9])
+line1 = float(sys.argv[10])
+line2 = float(sys.argv[11])
 
 
 def MET2orbit(tmin, tmax, path_to_LOG, source='MySource', send=True):
@@ -66,7 +68,8 @@ def MET2orbit(tmin, tmax, path_to_LOG, source='MySource', send=True):
             index_f = i
         if (i >= index_i) & (i <= index_f):
             print index_i, index_f, orbit
-            print >> file, str(orbit)+'[1][INSTR_STATUS > 0]' #add row filtering to have good instr_status
+            #print >> file, str(orbit)+'[1][MODE > 0 && INSTR_STATUS > 0]' #add row filtering to have good instr_status
+            print >> file, str(orbit)+'[1][LIVETIME > 0 && LOG_STATUS == 0 && MODE == 2 && PHASE .NE. 1 && PHASE .NE. 2]'
     print "files ", file, " created successfully"
     file.close()
     if send == True:
@@ -97,9 +100,14 @@ with open(time_window_file) as fp:
        f.close()
 
        #create dir
-       new_dir =  "dir_"+str(run_number)+"_"+str(tstart)+"_"+str(tstop)
+       new_dir =  "dir_"+str(run_number)+"_"+str(zmax)+"_"+str(tstart)+"_"+str(tstop)
        os.mkdir(new_dir)
        os.chdir(new_dir)
+
+       f = open("output_"+str(zmax)+"_"+os.path.basename(time_window_file), "a")
+       f.write("\n#####\n")
+       f.write(str(zmax)+" "+str(tstart)+" "+str(tstop)+"\n")
+       f.close()
 
        #### FERMI ####
 
@@ -110,7 +118,7 @@ with open(time_window_file) as fp:
 
            print("fermi time"+str(fermi_met_start)+" "+str(fermi_met_stop))
 
-           check = fermicheck(path_dati_fermi, ra, dec, zmax=zmax, timelimiti=fermi_met_start,step=step, timelimitf=fermi_met_stop,out_name="../output_"+str(zmax)+"_"+os.path.basename(time_window_file))
+           check = fermicheck(path_dati_fermi, ra, dec, tstart, tstop, zmax=zmax, timelimiti=fermi_met_start,step=step, timelimitf=fermi_met_stop,out_name="output_"+str(zmax)+"_"+os.path.basename(time_window_file))
            check.PlotVisibility()
            #os.system("cp fermi_visibility*eps "+new_dir)
 
@@ -126,14 +134,17 @@ with open(time_window_file) as fp:
            MET2orbit(agile_met_start, agile_met_stop, path_log_index)
 
            merged_file = glob.glob('./merged_list_*.fits')[0]
-           check = agilecheck(merged_file, ra, dec, zmax=zmax, timelimiti=agile_met_start, timelimitf=agile_met_stop, step=step, out_name="../output_"+str(zmax)+"_"+os.path.basename(time_window_file))
+           check = agilecheck(merged_file, ra, dec, tstart, tstop, zmax=zmax, timelimiti=agile_met_start, timelimitf=agile_met_stop, step=step, out_name="output_"+str(zmax)+"_"+os.path.basename(time_window_file))
            check.PlotVisibility()
 
        ### MERGE TWO PLOT ###
 
        #if(mode == "all"):
        from merge import *
-       check=merge(timelimiti=tstart, timelimitf=tstop, t0=tstart+((tstop-tstart)/2),zmax=zmax)
+       t0 = tstart+((tstop-tstart)/2)
+       t0 = 0
+       check=merge(timelimiti=tstart, timelimitf=tstop, t0=t0,zmax=zmax, lines=[line1, line2])
        check.Plotmerge(mode=mode)
+       check.histogram_merge(mode=mode)
 
        os.chdir("..")
