@@ -48,11 +48,9 @@ class NormalizeAP:
 	# [1] Robin Corbet, LAT Light Curve Analysis Aperture Photometry and Periodicity Searches, slides at COSPAR CBW 2010
 	# [2] Gehrels, 1986, ApJ, 303, 336
 	# [3] Kraft, Burrows, & Nousek, 1991, ApJ, 374, 344
-
-
 	# Variance weighting corrected for low count statistic - Weighted Power Spectrum	 [1] [2]
 
-	def normalizeAB3(self, expdataA, ctsdataA, rateBkgExpected, rateAB11, rateAB12, rateAB13, rateAB14, rateAB21, rateAB22, rateAB23, rateAB24, rateAB31, rateAB32, rateABR1, rateABR2, rateABR3, rateABR4, rateAAR5, rate, rate_error):
+	def normalizeAB3(self, expdataA, ctsdataA, rateBkgExpected, rateAB11, rateAB12, rateAB13, rateAB14, rateAB21, rateAB22, rateAB23, rateAB24, rateAB31, rateAB32, rateABR1, rateABR2, rateABR3, rateABR4, rateAAR5, rate, rate_error, exp_based_rate_error):
 		sum1 = 0.0
 		sum2 = 0.0
 		sum3 = 0.0
@@ -127,6 +125,7 @@ class NormalizeAP:
 			#res column 2
 			ctspred_i = e_i * ratew_mean3 #cts
 			sp_i = np.sqrt(ctspred_i) / e_i
+			exp_based_rate_error[n] = sp_i
 			rateAB13[n] = (rate_i - ratew_mean3) / (sp_i*sp_i)
 			
 			###############7.1.4
@@ -214,7 +213,7 @@ class NormalizeAP:
 class GammaAP:
 
 	def __init__(self):
-		self.ncols = 46
+		self.ncols = 47
 		self.diml = 0
 		self.tstartA = []
 		self.tstopA = []
@@ -277,11 +276,11 @@ class GammaAP:
 		return
 
 	
-	#load an ap3 file
-	def loadnormalizedAP3(self, ap3file):
-		self.apfile = ap3file
+	#load an ap4 file
+	def loadnormalizedAP(self, apfile):
+		self.apfile = apfile
 		n=0
-		with open(ap3file, "r") as ins:
+		with open(apfile, "r") as ins:
 			for line in ins:
 				if(line != ""):
 					val = line.split()
@@ -296,7 +295,7 @@ class GammaAP:
 		self.ctsdataA = np.zeros(self.diml)
 		
 		n=0
-		with open(ap3file, "r") as ins:
+		with open(apfile, "r") as ins:
 			for line in ins:
 				if(line != ""):
 					val = line.split()
@@ -312,7 +311,7 @@ class GammaAP:
 		print("Loaded " + str(n) + " lines")
 
 
-	#generation of AP3 file
+	#generation of AP4 file
 	#evalULalgorithm -> selection of the significance algorithm for the evaluation of the UL and sensitivity 1 -> Slima 2 -> Sa
 	def normalizeAP(self, apfile, ranal=2, gasvalue=0.00054, gal=0.7, iso=10, emin=100, emax=10000, gindex=2.1, writevonmissesfiles=0, evalULalgorithm=1):
 				
@@ -333,7 +332,7 @@ class GammaAP:
 		rate_bkg_ON, rate_src_ON = rate.calculateRateWithoutExp(verbose=0, ranalS=ranal, fluxsource=0e-08,  gasvalue=gasvalue, gal=gal, iso=iso, emin=emin, emax=emax, gindex=gindex, source_theta=30, instrumentID=0)
 		rateBkgExpected = rate_bkg_ON
 		
-		ratew_meanR1, ratew_meanR2, ratew_meanR3, ratew_meanR4, ratew_meanR1aa = nap.normalizeAB3(self.expdataA, self.ctsdataA, rateBkgExpected, self.res[:,0], self.res[:,1], self.res[:,2], self.res[:,3], self.res[:,4], self.res[:,5], self.res[:,6], self.res[:,7], self.res[:,8], self.res[:,9], self.res[:,10], self.res[:,11],self.res[:,12], self.res[:,13], self.res[:,14],self.res[:,15], self.res[:,16])
+		ratew_meanR1, ratew_meanR2, ratew_meanR3, ratew_meanR4, ratew_meanR1aa = nap.normalizeAB3(self.expdataA, self.ctsdataA, rateBkgExpected, self.res[:,0], self.res[:,1], self.res[:,2], self.res[:,3], self.res[:,4], self.res[:,5], self.res[:,6], self.res[:,7], self.res[:,8], self.res[:,9], self.res[:,10], self.res[:,11],self.res[:,12], self.res[:,13], self.res[:,14],self.res[:,15], self.res[:,16], self.res[:,46])
 		
 		fluxscalefactor=rate.getFluxScaleFactor(verbose=1, gindex=gindex, ranal=ranal, emin=emin, emax=emax)
 		#/ 1.66
@@ -436,14 +435,14 @@ class GammaAP:
 			n = n + 1
 			
 		
-		fileclean = open(apfile + ".ap3","w")
+		fileclean = open(apfile + ".ap4","w")
 
 		
-		print("* AP3 file res column number:   tstart tstop exp[cm2s] cts 0:normAB11 1:normAB12 2:normAB13 3:normAB14 4:normAB21 5:normAB22 6:normAB23 7:normAB24 8:normAB11aa 9:normAB21aa 10:ratediffR1 11:ratediffR2 12:ratediffR3 13:ratediffR4 14:ratediffR1AA 15:rate 16:rate_error 17:flux_ratediffR4 18:flux_ratediffR4_error 19:Sa 20:flux_rate 21:flux_rate_error 22:cts_expBKGR4 23:Slm 24:SignUL 25:N_sourceUL 26:rateUL 27:fluxUL 28:SignSens3 29:N_sourceSens3 30:rateSens3 31:fluxSens3 32:SignSens4 33:N_sourceSens4 34:rateSens4 35:fluxSens4 36:SignSens5 36:N_sourceSens5 38:rateSens5 39:fluxSens5 40:fluxscalefactor 41:ratew_meanR1 42:ratew_meanR2 43:ratew_meanR3 44:ratew_meanR4 45:ratew_meanR1aa")
+		print("* Res column number:  0:normrateAB11 1:normrateAB12 2:normrateAB13 3:normrateAB14 4:normrateAB21 5:normrateAB22 6:normrateAB23 7:normrateAB24 8:normrateAB11aa 9:normrateAB21aa 10:ratediffR1 11:ratediffR2 12:ratediffR3 13:ratediffR4 14:ratediffR1AA 15:rate 16:rate_error 17:flux_ratediffR4 18:flux_ratediffR4_error 19:Sa 20:flux_rate 21:flux_rate_error 22:cts_expBKGR4 23:Slm 24:SignUL 25:N_sourceUL 26:rateUL 27:fluxUL 28:SignSens3 29:N_sourceSens3 30:rateSens3 31:fluxSens3 32:SignSens4 33:N_sourceSens4 34:rateSens4 35:fluxSens4 36:SignSens5 36:N_sourceSens5 38:rateSens5 39:fluxSens5 40:fluxscalefactor 41:ratew_meanR1 42:ratew_meanR2 43:ratew_meanR3 44:ratew_meanR4 45:ratew_meanR1aa 46:exp_based_rate_error")
 		
-		header = "tstart tstop exp cts normAB11 normAB12 normAB13 normAB14 normAB21 normAB22 normAB23 normAB24 normAB11aa normAB21aa ratediffR1 ratediffR2 ratediffR3 ratediffR4 ratediffR1AA rate rate_error flux_ratediffR4 flux_ratediffR4_error Sa flux_rate flux_rate_error cts_expBKGR4 Slm SignUL N_sourceUL rateUL fluxUL SignSens3 N_sourceSens3 rateSens3 fluxSens3 SignSens4 N_sourceSens4 rateSens4 fluxSens4 SignSens5 N_sourceSens5 rateSens5 fluxSens5 fluxscalefactor ratew_meanR1 ratew_meanR2 ratew_meanR3 ratew_meanR4 ratew_meanR1aa"
+		header = "tstart tstop exp cts normrateAB11 normrateAB12 normrateAB13 normrateAB14 normrateAB21 normrateAB22 normrateAB23 normrateAB24 normrateAB11aa normrateAB21aa ratediffR1 ratediffR2 ratediffR3 ratediffR4 ratediffR1AA rate rate_error flux_ratediffR4 flux_ratediffR4_error Sa flux_rate flux_rate_error cts_expBKGR4 Slm SignUL N_sourceUL rateUL fluxUL SignSens3 N_sourceSens3 rateSens3 fluxSens3 SignSens4 N_sourceSens4 rateSens4 fluxSens4 SignSens5 N_sourceSens5 rateSens5 fluxSens5 fluxscalefactor ratew_meanR1 ratew_meanR2 ratew_meanR3 ratew_meanR4 ratew_meanR1aa exp_based_rate_error"
 		
-		print("AP3 file column number: 0:tstart 1:tstop 2:exp[cm2s] 3:cts 4:normAB11 5:normAB12 6:normAB13 7:normAB14 8:normAB21 9:normAB22 10:normAB23 11:normAB24 12:normAB11aa 13:normAB21aa 14:ratediffR1 15:ratediffR2 16:ratediffR3 17:ratediffR4 18:ratediffR1AA 19:rate 20:rate_error 21:flux_ratediffR4 22:flux_ratediffR4_error 23:Sa 24:flux_rate 25:flux_rate_error 26:cts_expBKGR4 27:Slm 28:SignUL 29:N_sourceUL 30:rateUL 31:fluxUL 32:SignSens3 33:N_sourceSens3 34:rateSens3 35:fluxSens3 36:SignSens4 37:N_sourceSens4 38:rateSens4 39:fluxSens4 40:SignSens5 41:N_sourceSens5 42:rateSens5 43:fluxSens5 44:fluxscalefactor 45:ratew_meanR1 46:ratew_meanR2 47:ratew_meanR3 48:ratew_meanR4 49:ratew_meanR1aa")
+		print("AP4 file column number: 0:tstart 1:tstop 2:exp[cm2s] 3:cts 4:normrateAB11 5:normrateAB12 6:normrateAB13 7:normrateAB14 8:normrateAB21 9:normrateAB22 10:normrateAB23 11:normrateAB24 12:normrateAB11aa 13:normrateAB21aa 14:ratediffR1 15:ratediffR2 16:ratediffR3 17:ratediffR4 18:ratediffR1AA 19:rate 20:rate_error 21:flux_ratediffR4 22:flux_ratediffR4_error 23:Sa 24:flux_rate 25:flux_rate_error 26:cts_expBKGR4 27:Slm 28:SignUL 29:N_sourceUL 30:rateUL 31:fluxUL 32:SignSens3 33:N_sourceSens3 34:rateSens3 35:fluxSens3 36:SignSens4 37:N_sourceSens4 38:rateSens4 39:fluxSens4 40:SignSens5 41:N_sourceSens5 42:rateSens5 43:fluxSens5 44:fluxscalefactor 45:ratew_meanR1 46:ratew_meanR2 47:ratew_meanR3 48:ratew_meanR4 49:ratew_meanR1aa 50:exp_based_rate_error")
 		
 		n = 0
 		fileclean.write(header + "\n")
@@ -581,9 +580,9 @@ class GammaAP:
 			#plt.plot(t_fit, y_fit)
 			plt.show()
 
-	def plotLS(self, ap3file, i):
-		self.apfile = ap3file
-		self.loadnormalizedAP3(ap3file)
+	def plotLS(self, apfile, i):
+		self.apfile = apfile
+		self.loadnormalizedAP(apfile)
 		pls, pmax, maxf = self.calculateLS(1, 2, int(i), 0.5e-6, 5e-6)
 
 
@@ -600,12 +599,12 @@ class GammaAP:
 			vm.fullAnalysis(apfilename, vonmissesthread, freqmin, freqmax, vmnumax, ngridfreq, tgridfreq)
 
 
-	def fullAnalysisLoadAP3(self, ap3filename, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800):
-		self.loadnormalizedAP3(ap3filename)
+	def fullAnalysisLoadAP(self, apfilename, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800):
+		self.loadnormalizedAP(apfilename)
 		self.freqmin=float(freqmin)
 		self.freqmax=float(freqmax)
 		self.scanLS(self.freqmin, self.freqmax, 0, 18)
 		
 		if analyzevm == 1:
 			vm = MethodVonMisses()
-			vm.fullAnalysis(ap3filename, vonmissesthread, freqmin, freqmax, vmnumax, ngridfreq, tgridfreq)
+			vm.fullAnalysis(apfilename, vonmissesthread, freqmin, freqmax, vmnumax, ngridfreq, tgridfreq)
