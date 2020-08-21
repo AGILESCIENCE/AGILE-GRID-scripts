@@ -145,7 +145,7 @@ void FermiSensitivity(const TString FileNameSens= "sens.txt", TString drawString
 }
 
 //colorMap=0 -> differnt color based on TS
-//colotMap > 0 use the same color for all
+//colorMap > 0 use the same color for all
 void AgileDrawLLightCurve(const TString FileNameLightCurve= "analysisres.resfull", TString drawString="APS", Int_t colorMap = 0, Int_t markerStyle=20, Double_t flux_ave=0, Double_t flux_ave_err=0)
 {
 	Int_t len = 0;

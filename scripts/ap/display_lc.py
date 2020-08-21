@@ -56,7 +56,7 @@ def extract_data(file_name,tstart_window_mjd,tstop_window_mjd):
                     exp_norm = -1
                     flux_err =  float(line.split()[5])*flux_notation
                     if(float(line.split()[2])>0):
-                       sqrtts =  float(line.split()[2])
+                       sqrtts =  np.sqrt(float(line.split()[2]))
                     else:
                        sqrtts =  0
                     count = -1
