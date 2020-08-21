@@ -21,8 +21,8 @@
 /* Begin PBXFileReference section */
 		DDC6630620E82D470002C1F9 /* catalogs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = catalogs; path = ../catalogs; sourceTree = "<group>"; };
 		DDC6630720F015D90002C1F9 /* spot6 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = spot6; path = ../spot6; sourceTree = "<group>"; };
-		DDCEBE3F246EC7CE0045CA0D /* AGILE-grid-scripts */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "AGILE-grid-scripts"; sourceTree = BUILT_PRODUCTS_DIR; };
-		DDCEBE40246EC7E70045CA0D /* scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = scripts; sourceTree = "<group>"; };
+		DDF2D56024CACAEF0070589B /* AGILE-grid-scripts */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "AGILE-grid-scripts"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDF2D56124CACB0A0070589B /* multi.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = multi.rb; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,10 +39,10 @@
 		DDC662F120E82CF10002C1F9 = {
 			isa = PBXGroup;
 			children = (
-				DDCEBE40246EC7E70045CA0D /* scripts */,
+				DDF2D56124CACB0A0070589B /* multi.rb */,
 				DDC6630720F015D90002C1F9 /* spot6 */,
 				DDC6630620E82D470002C1F9 /* catalogs */,
-				DDCEBE3F246EC7CE0045CA0D /* AGILE-grid-scripts */,
+				DDF2D56024CACAEF0070589B /* AGILE-grid-scripts */,
 			);
 			sourceTree = "<group>";
 		};
@@ -63,7 +63,7 @@
 			);
 			name = "AGILE-grid-scripts";
 			productName = "AGILE-grid-scripts";
-			productReference = DDCEBE3F246EC7CE0045CA0D /* AGILE-grid-scripts */;
+			productReference = DDF2D56024CACAEF0070589B /* AGILE-grid-scripts */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
