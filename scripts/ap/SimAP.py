@@ -150,6 +150,7 @@ class SimAP:
 		return light_curve_mean_period
 
 	def add_sinusoidal_signal(self, apfile,plot,period,phi,peak_size, deltaflux, fluxscalefactor):
+		print('add_sinusoidal_signal')
 		tstart = 0
 		tstop = 0
 		nlines = 0
@@ -218,7 +219,7 @@ class SimAP:
 
 
 	# RES_600_R2.ap 2 0.0006 0.7 10 100 10000
-	def calculateAPLC(self, help=1, mode='0', windowfile='', apfile='', ranal= 1, gasvalue=0.0006, gal = 0.7, iso = 10., emin = 100., emax = 10000., period = 729855.36, expdatafixed=0, peak_size = 50e-08, gindex=2.1, instrumentID=0):
+	def calculateAPLC(self, help=1, mode=0, windowfile='', apfile='', ranal= 1, gasvalue=0.0006, gal = 0.7, iso = 10., emin = 100., emax = 10000., period = 729855.36, expdatafixed=0, peak_size = 50e-08, gindex=2.1, instrumentID=0):
 		if (help == "1"):
 			print('--------------------------------------------------------------')
 			print('					  apsimlc parameters					  ')
@@ -346,10 +347,10 @@ class SimAP:
 			erate.calculateRateAndSig(verbose=1, ranalS=ranal, exposure=expsum / len(expdataA), fluxsource=peak_size,  gasvalue=gasvalue, gal=gal, iso=iso, emin=emin, emax=emax, gindex=gindex, instrumentID=0)
 
 			print("Start add signal")
-			if(mode == '0'):
+			if(mode == 0):
 				#it is necessary to multiply for fluxcorrection factor
 				lc = self.add_sinusoidal_signal(apfile, 1, period,phi,peak_size,deltaflux, fluxscalefactor)
-			elif(mode == '1'):
+			elif(mode == 1):
 				lc = self.add_lc_signal(apfile, windowfile,1, fluxscalefactor)
 			print("End add signal")
 
