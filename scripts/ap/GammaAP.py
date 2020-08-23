@@ -306,6 +306,9 @@ class GammaAP:
 		with open(apfile, "r") as ins:
 			for line in ins:
 				if(line != ""):
+					if n == 0:
+						n = 1
+						continue
 					val = line.split()
 					if len(val) > 2:
 						self.tstartA[n] = float(val[0])
@@ -562,8 +565,8 @@ class GammaAP:
 		fileclean.close()
 		return
 
-	def calculateLSexp(self, verbose=0, plot=1):
-		ls = LombScargle(self.tstartA, self.expdataA)
+	def calculateLSexp(self, verbose=0, plot=1, rescol=3):
+		ls = LombScargle(self.tstartA, self.res[:,rescol])
 		frequency, power = ls.autopower()
 		pls = ls.false_alarm_probability(power.max(), method='baluev')
 		ind = power.argmax()
@@ -584,12 +587,15 @@ class GammaAP:
 			#plt.plot(t_fit, y_fit)
 			plt.show()
 
-	def plotLS(self, apfile, i):
+	def plotLS(self, apfile, col, minfreq=0.5e-6, maxfreq=5e-6):
 		self.apfile = apfile
 		self.loadnormalizedAP4(apfile)
-		pls, pmax, maxf = self.calculateLS(1, 2, int(i), 0.5e-6, 5e-6)
+		pls, pmax, maxf = self.calculateLS(verbose=1, plot=1, rescol=col, minfreq=minfreq, maxfreq=maxfreq)
 
 	def fullAnalysis(self, apfilename, ranal=2, gasvalue=0.00054, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800, gal=0.7, iso=10, emin=100, emax=10000, gindex=2.1, writevonmissesfiles=0, evalULalgorithm=1):
+		if analyzevm == 1:
+			writevonmissesfiles = 1
+
 		self.normalizeAP(apfile=apfilename, ranal=ranal, gasvalue=gasvalue, gal=gal, iso=iso, emin=emin, emax=emax, gindex=gindex, writevonmissesfiles=writevonmissesfiles, evalULalgorithm=evalULalgorithm)
 		self.freqmin=float(freqmin)
 		self.freqmax=float(freqmax)
@@ -599,7 +605,7 @@ class GammaAP:
 
 		if analyzevm == 1:
 			vm = MethodVonMisses()
-			vm.fullAnalysis(apfilename, vonmissesthread, freqmin, freqmax, vmnumax, ngridfreq, tgridfreq)
+			vm.fullAnalysis(apfilename, vonmissesthread=vonmissesthread, freqmin=freqmin, freqmax=freqmax, vmnumax=vmnumax, ngridfreq=ngridfreq, tgridfreq=tgridfreq)
 
 
 	def fullAnalysisLoadAP4(self, apfilename, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800):
@@ -610,4 +616,4 @@ class GammaAP:
 		
 		if analyzevm == 1:
 			vm = MethodVonMisses()
-			vm.fullAnalysis(apfilename, vonmissesthread, freqmin, freqmax, vmnumax, ngridfreq, tgridfreq)
+			vm.fullAnalysis(apfilename, vonmissesthread=vonmissesthread, freqmin=freqmin, freqmax=freqmax, vmnumax=vmnumax, ngridfreq=ngridfreq, tgridfreq=tgridfreq)
