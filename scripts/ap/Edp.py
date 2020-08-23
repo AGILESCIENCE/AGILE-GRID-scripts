@@ -40,7 +40,7 @@ class Edp:
 		p = np.where(self.m_edpphi==phi)[0][0]
 		#8 19 16 16
 		#phi, theta, obs en, true en
-		return self.m_edpgrid[p,n,m,l];
+		return self.m_edpgrid[p,n,m,l]
 
 
 	def readData(self, verbose=0):
@@ -65,19 +65,19 @@ class Edp:
 		if verbose == 1:
 			print("true energy " + str(len(m_edptrueenergy)))
 			for i in range(0,len(m_edptrueenergy)):
-				print(str(i+1) + " " + str(m_edptrueenergy[i]) + " check index "+ str(np.where(m_edptrueenergy==m_edptrueenergy[i])[0][0]));
+				print(str(i+1) + " " + str(m_edptrueenergy[i]) + " check index "+ str(np.where(m_edptrueenergy==m_edptrueenergy[i])[0][0]))
 
 			print("true m_edpobsenergy " + str(len(m_edpobsenergy)))
 			for i in range(0,len(m_edpobsenergy)):
-				print(str(i+1) + " " + str(m_edpobsenergy[i]) + " check index "+ str(np.where(m_edpobsenergy==m_edpobsenergy[i])[0][0]));
+				print(str(i+1) + " " + str(m_edpobsenergy[i]) + " check index "+ str(np.where(m_edpobsenergy==m_edpobsenergy[i])[0][0]))
 
 			print("true m_edpphi " + str(len(m_edpphi)))
 			for i in range(0,len(m_edpphi)):
-				print(str(i+1) + " " + str(m_edpphi[i]) + " check index "+ str(np.where(m_edpphi==m_edpphi[i])[0][0]));
+				print(str(i+1) + " " + str(m_edpphi[i]) + " check index "+ str(np.where(m_edpphi==m_edpphi[i])[0][0]))
 
 			print("true m_edpphi " + str(len(m_edpphi)))
 			for i in range(0,len(m_edpphi)):
-				print(str(i+1) + " " + str(m_edpphi[i]) + " check index "+ str(np.where(m_edpphi==m_edpphi[i])[0][0]));
+				print(str(i+1) + " " + str(m_edpphi[i]) + " check index "+ str(np.where(m_edpphi==m_edpphi[i])[0][0]))
 
 
 
@@ -123,11 +123,11 @@ class Edp:
 			#print(i)
 			udp1 = 0
 
-			udp1 = self.UpdateNormPL(m_edptrueenergy[i], lastenergy, par1);
-			normsumple += udp1;
+			udp1 = self.UpdateNormPL(m_edptrueenergy[i], lastenergy, par1)
+			normsumple += udp1
 
-			udp1 = self.UpdateNormPL(m_edptrueenergy[i], lastenergy, expindex);
-			normsumpl += udp1;
+			udp1 = self.UpdateNormPL(m_edptrueenergy[i], lastenergy, expindex)
+			normsumpl += udp1
 
 		#print("A "+str(normsumpl)+" "+str(normsumple));
 		edpArr =np.zeros(eneChanCount)
@@ -145,7 +145,7 @@ class Edp:
 			for eobs in range(iMin,iMax+1):
 
 				#print("edp: " +str(thetaind)+ " "+str(phiind)+ " "+str(etrue)+ " "+str(eobs)+ " " + str(m_edptrueenergy[etrue]) + " " + str(m_edpobsenergy[eobs]) + " " + str(m_edptheta[thetaind]) + " " + str(m_edpphi[phiind]) + " " + str(edpGrid.getVal(m_edptrueenergy[etrue], m_edpobsenergy[eobs], m_edptheta[thetaind], m_edpphi[phiind])))
-				edpArr[etrue] += self.getVal(m_edptrueenergy[etrue], m_edpobsenergy[eobs], m_edptheta[thetaind], m_edpphi[phiind]); #CORRETTO
+				edpArr[etrue] += self.getVal(m_edptrueenergy[etrue], m_edpobsenergy[eobs], m_edptheta[thetaind], m_edpphi[phiind]) #CORRETTO
 
 
 			avgValuePL  += edpArr[etrue] * self.UpdateNormPL(m_edptrueenergy[etrue], lastenergy, expindex) * 1
@@ -166,15 +166,15 @@ class Edp:
 
 if __name__ == "__main__":
 
-	par1 = 1.7;
-	par2 = 3403; #ec
-	par3 = 0;
-	index = 2.1; #index, gamma1
-	typefun = 0;
+	par1 = 1.7
+	par2 = 3403 #ec
+	par3 = 0
+	index = 2.1 #index, gamma1
+	typefun = 0
 
 	# reading the energy dispersion file
 
-	edpGrid = EdpGrid()
+	#edpGrid = EdpGrid()
 	
 
-	detCorrectionSpectraFactorSimple(4, 12, par1)
+	#detCorrectionSpectraFactorSimple(4, 12, par1)

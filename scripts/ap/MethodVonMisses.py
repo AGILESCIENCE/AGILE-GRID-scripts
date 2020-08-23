@@ -20,6 +20,7 @@
 
 import string, os, sys
 import numpy as np
+import matplotlib.pyplot as plt
 #eval_vonmises.prg 48 1 5e-07 5e-06 0 100.0
 #grid_freq.prg 5e-07 5e-06 10000 10800
 

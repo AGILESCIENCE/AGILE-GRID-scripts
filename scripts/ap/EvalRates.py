@@ -113,7 +113,7 @@ class EvalRates:
 		#	print('omega    [sr]  : ' + str(omega_ranal))
 		#	print('omega AC [sr]  : ' + str(omega_ranalAC))
 			
-		return fluxscalefactor;
+		return fluxscalefactor
 
 	##########################################################################
 	def calculateRateWithoutExp(self, verbose = 0, ranalS= -1, fluxsource = 0e-08, gasvalue=-1, gal = 0.7, iso = 10., emin = 100., emax = 10000., gindex=2.1, source_theta=30, instrumentID = 0):
@@ -344,7 +344,7 @@ class EvalRates:
 			rateSens = (N_sourceSens / exposure)
 			fluxSens = rateSens / fluxscalefactor
 			
-			fluxSource = rate_src_ON / fluxscalefactor
+			#fluxSource = rate_src_ON / fluxscalefactor
 			
 			#saa = -1
 			print('%.2e %.2f %.2f %.2f - %.1f %.2e %.1f %.2e - %.1f %.2f %.2e %.2e - %.1f %.2f %.2e %.2e %.2f' % (fluxS, snr, lima, Sa, ctsS, rate_src_ON, ctsB, rate_bkg_ON, N_sourceUL, SignUL, rateUL, fluxUL, N_sourceSens, SignSens, rateSens, fluxSens, fluxscalefactor))
@@ -375,7 +375,7 @@ class EvalRates:
 				N_source = 0.
 				break
 
-		return N_source, Ss
+
 		#F_lim = (N_source/expo_on)/PSF_norm
 
 		#print ("# Sensitivity parameters:")
@@ -383,6 +383,7 @@ class EvalRates:
 		#print ("# - N_min = %.2f"% N_min[jmin])
 		#print ("# Sensitivity [phot/cm2/s] = %.2e"% F_lim)
 		#print ("###########################################")
-					
-		return
+
+		return N_source, Ss					
+
 
