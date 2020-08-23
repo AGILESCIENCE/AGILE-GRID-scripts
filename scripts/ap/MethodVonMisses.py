@@ -6,9 +6,6 @@
 #      private and confidential.
 #      Copyright (C) 2005-2020 AGILE Team.
 #          Bulgarelli Andrea <andrea.bulgarelli@inaf.it>
-#          Valentina Fioretti <valentina.fioretti@inaf.it>
-#          Parmiggiani Nicolò <nicolo.parmiggiani@inaf.it>
-#          Alessio Aboudan
 #      All rights reserved.
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,14 +20,17 @@
 
 import string, os, sys
 import numpy as np
+#eval_vonmises.prg 48 1 5e-07 5e-06 0 100.0
+#grid_freq.prg 5e-07 5e-06 10000 10800
 
 class MethodVonMisses:
 	
-	def __init__(self, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100):
+	def __init__(self, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, vmnoise=1):
 		self.apfile = ""
 		self.freqmin = float(freqmin)
 		self.freqmax = float(freqmax)
 		self.vmnumax = float(vmnumax)
+		self.vmnoise = float(vmnoise) #noise scalability flag (zero for NOT to scale)
 		return
 	
 	def plotVonMisses(self, filename, mu=0.0, verbose=1, plot=1):
@@ -117,25 +117,24 @@ class MethodVonMisses:
 	
 	
 	def runVomMisses(self, nthreads, ii):
-		self.vmnoise=1
 		print(self.apfile)
 		#Arguments: threads number, noise scalability flag (zero for NOT to scale), f_min, f_max, nu_min, nu_max
-		cmd = "module load icc-18.0.1; module load gcc-5.4.0; "+os.environ['AGILE']+"/bin/eval_vonmises.prg "+str(nthreads)+" "+ str(self.vmnoise) + " " + str(self.freqmin) + " " + str(self.freqmax) + " 0 " + str(self.vmnumax) + " < " + self.apfile + ".vm"+str(ii)+" > " + self.apfile + ".vm"+str(ii)+".res"
+		cmd = os.environ['AGILE']+"/bin/eval_vonmises.prg "+str(nthreads)+" "+ str(self.vmnoise) + " " + str(self.freqmin) + " " + str(self.freqmax) + " 0 " + str(self.vmnumax) + " < " + self.apfile + ".vm"+str(ii)+" > " + self.apfile + ".vm"+str(ii)+".res"
 		print(cmd)
 		os.system(cmd)
 	
 	
-	def runVomMissesGridFreq(self, ii, ngrid=1000, tspan=10800):
+	def runVomMissesGridFreq(self, ii, ngrid=10000, tspan=10800):
 		#Arguments: f_min, f_max, N, original time series span T
 		#T is used to organize an almost-logarithmic f-scale; use any T<=0 to request linear f-scale
-		cmd = "module load icc-18.0.1; module load gcc-5.4.0; "+os.environ['AGILE']+"/bin/grid_freq.prg "+ str(self.freqmin) + " " + str(self.freqmax) + " " + str(ngrid) + " " + str(tspan) + " < " + self.apfile + ".vm"+str(ii)+".res > " + self.apfile + ".vm"+str(ii)+".resgf"
+		cmd = os.environ['AGILE']+"/bin/grid_freq.prg "+ str(self.freqmin) + " " + str(self.freqmax) + " " + str(ngrid) + " " + str(tspan) + " < " + self.apfile + ".vm"+str(ii)+".res > " + self.apfile + ".vm"+str(ii)+".resgf"
 		print(cmd)
 		os.system(cmd)
 	
 	
 	def significanceVonMisses(self, nthreads, ii, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100):
 		print("significance von misses periodogram")
-		cmd = "module load icc-18.0.1; module load gcc-5.4.0; "+os.environ['AGILE']+"/bin/coeffs_XY.prg "+str(nthreads)+ " " + str(freqmin) + " " + str(freqmax) + " 0 " + str(vmnumax) + " < " + self.apfile + ".vm"+str(ii)+" > " + self.apfile + ".vm"+str(ii)+".sig"
+		cmd = os.environ['AGILE']+"/bin/coeffs_XY.prg "+str(nthreads)+ " " + str(freqmin) + " " + str(freqmax) + " 0 " + str(vmnumax) + " < " + self.apfile + ".vm"+str(ii)+" > " + self.apfile + ".vm"+str(ii)+".sig"
 		print(cmd)
 		os.system(cmd)
 	
@@ -166,17 +165,18 @@ class MethodVonMisses:
 		sig2=W * np.power(np.e, -z) * (  2 * z * Xnumax + Ynumax  * np.sqrt(z) )
 		print("sig2= " + str(sig2))
 
-	def runVomMissesStep(self, ii, vonmissesthread=48, ngridfreq=1000, tgridfreq=10800):
+	def runVomMissesStep(self, ii, vonmissesthread=48, ngridfreq=10000, tgridfreq=10800):
 		self.runVomMisses(vonmissesthread, ii)
 		self.runVomMissesGridFreq(ii, ngridfreq, tgridfreq)
 		self.scanVM(self.apfile + ".vm"+str(ii)+".resgf", ii)
 	
-	def fullAnalysis(self, apfile, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800):
+	def fullAnalysis(self, apfile, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=10000, tgridfreq=10800, vmnoise=1):
 		
 		self.apfile = apfile
 		self.freqmin = float(freqmin)
 		self.freqmax = float(freqmax)
 		self.vmnumax = float(vmnumax)
+		self.vmnoise = float(vmnoise)
 		
 		self.runVomMissesStep(0, vonmissesthread, ngridfreq, tgridfreq)
 		self.runVomMissesStep(1, vonmissesthread, ngridfreq, tgridfreq)

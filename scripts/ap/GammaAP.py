@@ -592,7 +592,7 @@ class GammaAP:
 		self.loadnormalizedAP4(apfile)
 		pls, pmax, maxf = self.calculateLS(verbose=1, plot=1, rescol=col, minfreq=minfreq, maxfreq=maxfreq)
 
-	def fullAnalysis(self, apfilename, ranal=2, gasvalue=0.00054, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800, gal=0.7, iso=10, emin=100, emax=10000, gindex=2.1, writevonmissesfiles=0, evalULalgorithm=1):
+	def fullAnalysis(self, apfilename, ranal=2, gasvalue=0.00054, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800, vmnoise=1, gal=0.7, iso=10, emin=100, emax=10000, gindex=2.1, writevonmissesfiles=0, evalULalgorithm=1):
 		if analyzevm == 1:
 			writevonmissesfiles = 1
 
@@ -605,10 +605,10 @@ class GammaAP:
 
 		if analyzevm == 1:
 			vm = MethodVonMisses()
-			vm.fullAnalysis(apfilename, vonmissesthread=vonmissesthread, freqmin=freqmin, freqmax=freqmax, vmnumax=vmnumax, ngridfreq=ngridfreq, tgridfreq=tgridfreq)
+			vm.fullAnalysis(apfilename, vonmissesthread=vonmissesthread, freqmin=freqmin, freqmax=freqmax, vmnumax=vmnumax, ngridfreq=ngridfreq, tgridfreq=tgridfreq, vmnoise=vmnoise)
 
 
-	def fullAnalysisLoadAP4(self, apfilename, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800):
+	def fullAnalysisLoadAP4(self, apfilename, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800, vmnoise=1):
 		self.loadnormalizedAP4(apfilename)
 		self.freqmin=float(freqmin)
 		self.freqmax=float(freqmax)
@@ -616,4 +616,4 @@ class GammaAP:
 		
 		if analyzevm == 1:
 			vm = MethodVonMisses()
-			vm.fullAnalysis(apfilename, vonmissesthread=vonmissesthread, freqmin=freqmin, freqmax=freqmax, vmnumax=vmnumax, ngridfreq=ngridfreq, tgridfreq=tgridfreq)
+			vm.fullAnalysis(apfilename, vonmissesthread=vonmissesthread, freqmin=freqmin, freqmax=freqmax, vmnumax=vmnumax, ngridfreq=ngridfreq, tgridfreq=tgridfreq, vmnoise=vmnoise)
