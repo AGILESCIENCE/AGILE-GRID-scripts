@@ -42,7 +42,8 @@ class APSignificance:
 	
 	#alpha of Li&Ma. If not specified, alpha = ranalS / ranalB
 	#ranalS = radius of analysis of S
-	#ranalB = radius of analysis of B. If the background is evaluated with AGILE MLE, ranalB=10, that is the usual radius of analysis used for the evalutation of gal and iso coefficients
+	#ranalB = radius of analysis of B. 
+	# If the background is evaluated with AGILE MLE, ranalB=10, that is the usual radius of analysis used for the evalutation of gal and iso coefficients
 	def lima(self, verbose=0, alpha=-1, N_on = 0, N_off = 0, ranalS=-1, ranalB=10):
 
 		if alpha == -1:
