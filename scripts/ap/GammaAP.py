@@ -217,7 +217,7 @@ class NormalizeAP:
 class GammaAP:
 
 	def __init__(self):
-		self.ncols = 47
+		self.ncols = 48
 		self.diml = 0
 		self.tstartA = []
 		self.tstopA = []
@@ -230,8 +230,6 @@ class GammaAP:
 		self.res = []
 		return
 
-		"""[summary]
-		"""
 	def loadDataAPAGILE(self, apfile):
 		print('Loading data...' + apfile)
 		self.apfile = apfile
@@ -443,6 +441,8 @@ class GammaAP:
 				self.res[n, 43] = rateWeightedMeanR3
 				self.res[n, 44] = rateWeightedMeanR4
 				self.res[n, 45] = rateWeightedMeanR1aa
+
+				self.res[n, 47] = self.tstopA[n] - self.tstartA[n]
 			
 			n = n + 1
 			
@@ -450,11 +450,11 @@ class GammaAP:
 		fileclean = open(apfile + ".ap4","w")
 
 		
-		print("* Res column number:  0:normrateAB11 1:normrateAB12 2:normrateAB13 3:normrateAB14 4:normrateAB21 5:normrateAB22 6:normrateAB23 7:normrateAB24 8:normrateAB11aa 9:normrateAB21aa 10:ratediffR1 11:ratediffR2 12:ratediffR3 13:ratediffR4 14:ratediffR1AA 15:rate 16:rateError 17:flux_ratediffR4 18:flux_ratediffR4Error 19:Sa 20:flux_rate 21:flux_rateError 22:cts_rateWeightedMeanR4 23:Slm 24:SignUL 25:ctsSourceUL 26:rateUL 27:fluxUL 28:SignSens3 29:ctsSourceSens3 30:rateSens3 31:fluxSens3 32:SignSens4 33:ctsSourceSens4 34:rateSens4 35:fluxSens4 36:SignSens5 36:ctsSourceSens5 38:rateSens5 39:fluxSens5 40:fluxscalefactor 41:rateWeightedMeanR1 42:rateWeightedMeanR2 43:rateWeightedMeanR3 44:rateWeightedMeanR4 45:rateWeightedMeanR1aa 46:expBasedRateError")
+		print("* Res column number:  0:normrateAB11 1:normrateAB12 2:normrateAB13 3:normrateAB14 4:normrateAB21 5:normrateAB22 6:normrateAB23 7:normrateAB24 8:normrateAB11aa 9:normrateAB21aa 10:ratediffR1 11:ratediffR2 12:ratediffR3 13:ratediffR4 14:ratediffR1AA 15:rate 16:rateError 17:flux_ratediffR4 18:flux_ratediffR4Error 19:Sa 20:flux_rate 21:flux_rateError 22:cts_rateWeightedMeanR4 23:Slm 24:SignUL 25:ctsSourceUL 26:rateUL 27:fluxUL 28:SignSens3 29:ctsSourceSens3 30:rateSens3 31:fluxSens3 32:SignSens4 33:ctsSourceSens4 34:rateSens4 35:fluxSens4 36:SignSens5 36:ctsSourceSens5 38:rateSens5 39:fluxSens5 40:fluxscalefactor 41:rateWeightedMeanR1 42:rateWeightedMeanR2 43:rateWeightedMeanR3 44:rateWeightedMeanR4 45:rateWeightedMeanR1aa 46:expBasedRateError 47:temporalBinSize")
 		
-		header = "tstart tstop exp cts normrateAB11 normrateAB12 normrateAB13 normrateAB14 normrateAB21 normrateAB22 normrateAB23 normrateAB24 normrateAB11aa normrateAB21aa ratediffR1 ratediffR2 ratediffR3 ratediffR4 ratediffR1AA rate rateError flux_ratediffR4 flux_ratediffR4Error Sa flux_rate flux_rateError cts_rateWeightedMeanR4 Slm SignUL ctsSourceUL rateUL fluxUL SignSens3 ctsSourceSens3 rateSens3 fluxSens3 SignSens4 ctsSourceSens4 rateSens4 fluxSens4 SignSens5 ctsSourceSens5 rateSens5 fluxSens5 fluxscalefactor rateWeightedMeanR1 rateWeightedMeanR2 rateWeightedMeanR3 rateWeightedMeanR4 rateWeightedMeanR1aa expBasedRateError"
+		header = "tstart tstop exp cts normrateAB11 normrateAB12 normrateAB13 normrateAB14 normrateAB21 normrateAB22 normrateAB23 normrateAB24 normrateAB11aa normrateAB21aa ratediffR1 ratediffR2 ratediffR3 ratediffR4 ratediffR1AA rate rateError flux_ratediffR4 flux_ratediffR4Error Sa flux_rate flux_rateError cts_rateWeightedMeanR4 Slm SignUL ctsSourceUL rateUL fluxUL SignSens3 ctsSourceSens3 rateSens3 fluxSens3 SignSens4 ctsSourceSens4 rateSens4 fluxSens4 SignSens5 ctsSourceSens5 rateSens5 fluxSens5 fluxscalefactor rateWeightedMeanR1 rateWeightedMeanR2 rateWeightedMeanR3 rateWeightedMeanR4 rateWeightedMeanR1aa expBasedRateError temporalBinSize"
 		
-		print("AP4 file column number: 0:tstart 1:tstop 2:exp[cm2s] 3:cts 4:normrateAB11 5:normrateAB12 6:normrateAB13 7:normrateAB14 8:normrateAB21 9:normrateAB22 10:normrateAB23 11:normrateAB24 12:normrateAB11aa 13:normrateAB21aa 14:ratediffR1 15:ratediffR2 16:ratediffR3 17:ratediffR4 18:ratediffR1AA 19:rate 20:rateError 21:flux_ratediffR4 22:flux_ratediffR4Error 23:Sa 24:flux_rate 25:flux_rateError 26:cts_rateWeightedMeanR4 27:Slm 28:SignUL 29:ctsSourceUL 30:rateUL 31:fluxUL 32:SignSens3 33:ctsSourceSens3 34:rateSens3 35:fluxSens3 36:SignSens4 37:ctsSourceSens4 38:rateSens4 39:fluxSens4 40:SignSens5 41:ctsSourceSens5 42:rateSens5 43:fluxSens5 44:fluxscalefactor 45:rateWeightedMeanR1 46:rateWeightedMeanR2 47:rateWeightedMeanR3 48:rateWeightedMeanR4 49:rateWeightedMeanR1aa 50:expBasedRateError")
+		print("AP4 file column number: 0:tstart 1:tstop 2:exp[cm2s] 3:cts 4:normrateAB11 5:normrateAB12 6:normrateAB13 7:normrateAB14 8:normrateAB21 9:normrateAB22 10:normrateAB23 11:normrateAB24 12:normrateAB11aa 13:normrateAB21aa 14:ratediffR1 15:ratediffR2 16:ratediffR3 17:ratediffR4 18:ratediffR1AA 19:rate 20:rateError 21:flux_ratediffR4 22:flux_ratediffR4Error 23:Sa 24:flux_rate 25:flux_rateError 26:cts_rateWeightedMeanR4 27:Slm 28:SignUL 29:ctsSourceUL 30:rateUL 31:fluxUL 32:SignSens3 33:ctsSourceSens3 34:rateSens3 35:fluxSens3 36:SignSens4 37:ctsSourceSens4 38:rateSens4 39:fluxSens4 40:SignSens5 41:ctsSourceSens5 42:rateSens5 43:fluxSens5 44:fluxscalefactor 45:rateWeightedMeanR1 46:rateWeightedMeanR2 47:rateWeightedMeanR3 48:rateWeightedMeanR4 49:rateWeightedMeanR1aa 50:expBasedRateError 51:temporalBinSize")
 		
 		n = 0
 		fileclean.write(header + "\n")
@@ -487,7 +487,7 @@ class GammaAP:
 					line += ' {:.2e}'.format(self.res[n,i])
 				elif i >= 40 and i <= 40:
 					line += ' {:.2f}'.format(self.res[n,i])	
-				elif i >= 41 and i <= 49:
+				elif i >= 41 and i <= 46:
 					line += ' {:.2e}'.format(self.res[n,i])
 				else:
 					line += " " + str(self.res[n,i])
