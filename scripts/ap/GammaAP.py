@@ -34,12 +34,7 @@ from MathUtils import *
 #gasvalue IGR = 0.00054
 #gasvalue Vela = 0.00018
 #TODO
-# - aggiungere dimensione bin temporale
-#1) Includere la possibilita' di avere una LC di bkg indipendente da quella da analizzare, su cui determinare rate medio
-#table=pd.read_csv('D01_43200s_emin100_emax10000_r0.8.ap.ap3', sep=' ', index_col=None)
-#OPPURE
-#calcolare il background rate medio e poi passarlo direttamente come parametro
-#2) fare un calcolo del ratewmean basato su una media mobile
+#1) fare un calcolo del ratewmean basato su una media mobile
 
 class NormalizeAP:
 
@@ -93,6 +88,7 @@ class NormalizeAP:
 		print("rateWeightedMean2:          %.3e"% rateWeightedMean2)
 		print("rateWeightedMean3:          %.3e"% rateWeightedMean3)
 		print("rateWeightedMean4 bkgmodel: %.3e"% rateWeightedMean4)
+		print("rateWeightedMean4 bkgmodel: %.19f"% rateWeightedMean4)
 		
 		n=0
 		sum1 = 0.0
@@ -319,10 +315,13 @@ class GammaAP:
 
 
 	#generation of AP4 file
+	#Evaluation of the background.
+	#Method 1: use gasvalue, gal and iso parameters. An analytical evaluation of the background is performed. This become the column rateWeightedMeanR4
+	#Method 2: the mean background value is passed as parameter, using the rateMeanBkgExpected parameter. This become the default value if used
 	#evalULalgorithm -> selection of the significance algorithm for the evaluation of the UL and sensitivity 
 	# 1 -> Slima 2 -> Sa
 	# if evalULalgorithm=1, ranalB=10
-	def normalizeAP(self, apfile, ranal=2, gasvalue=0.00054, gal=0.7, iso=10, emin=100, emax=10000, gindex=2.1, writevonmissesfiles=0, evalULalgorithm=1):
+	def normalizeAP(self, apfile, ranal=2, rateMeanBkgExpected=-1, gasvalue=0.00054, gal=0.7, iso=10, emin=100, emax=10000, gindex=2.1, writevonmissesfiles=0, evalULalgorithm=1):
 				
 		#if self.diml == 0:
 		self.loadDataAPAGILE(apfile)
@@ -336,10 +335,14 @@ class GammaAP:
 			n = n + 1
 		
 		nap = NormalizeAP()
-		
 		rate = EvalRates()
-		rate_bkg_ON, rate_src_ON = rate.calculateRateWithoutExp(verbose=0, ranalS=ranal, fluxsource=0e-08,  gasvalue=gasvalue, gal=gal, iso=iso, emin=emin, emax=emax, gindex=gindex, source_theta=30, instrumentID=0)
-		rateBkgExpected = rate_bkg_ON
+		
+		rateBkgExpected = 0
+		if rateMeanBkgExpected < 0:
+			rate_bkg_ON, rate_src_ON = rate.calculateRateWithoutExp(verbose=0, ranalS=ranal, fluxsource=0e-08,  gasvalue=gasvalue, gal=gal, iso=iso, emin=emin, emax=emax, gindex=gindex, source_theta=30, instrumentID=0)
+			rateBkgExpected = rate_bkg_ON
+		else:
+			rateBkgExpected = rateMeanBkgExpected
 		
 		rateWeightedMeanR1, rateWeightedMeanR2, rateWeightedMeanR3, rateWeightedMeanR4, rateWeightedMeanR1aa = nap.normalizeAB3(self.expdataA, self.ctsdataA, rateBkgExpected, self.res[:,0], self.res[:,1], self.res[:,2], self.res[:,3], self.res[:,4], self.res[:,5], self.res[:,6], self.res[:,7], self.res[:,8], self.res[:,9], self.res[:,10], self.res[:,11],self.res[:,12], self.res[:,13], self.res[:,14],self.res[:,15], self.res[:,16], self.res[:,46])
 		
@@ -558,11 +561,11 @@ class GammaAP:
 		print("* Write Von Misses file: tcenter  "+str(ii)+":rate 1:rate_var")
 
 
-	def fullAnalysis(self, apfilename, ranal=2, gasvalue=0.00054, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800, vmnoise=1, gal=0.7, iso=10, emin=100, emax=10000, gindex=2.1, writevonmissesfiles=0, evalULalgorithm=1):
+	def fullAnalysis(self, apfilename, ranal=2, gasvalue=0.00054, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800, vmnoise=1, gal=0.7, iso=10, emin=100, emax=10000, gindex=2.1, writevonmissesfiles=0, evalULalgorithm=1, rateMeanBkgExpected=-1):
 		if analyzevm == 1:
 			writevonmissesfiles = 1
 
-		self.normalizeAP(apfile=apfilename, ranal=ranal, gasvalue=gasvalue, gal=gal, iso=iso, emin=emin, emax=emax, gindex=gindex, writevonmissesfiles=writevonmissesfiles, evalULalgorithm=evalULalgorithm)
+		self.normalizeAP(apfile=apfilename, ranal=ranal, gasvalue=gasvalue, gal=gal, iso=iso, emin=emin, emax=emax, gindex=gindex, writevonmissesfiles=writevonmissesfiles, evalULalgorithm=evalULalgorithm, rateMeanBkgExpected=rateMeanBkgExpected)
 		self.freqmin=float(freqmin)
 		self.freqmax=float(freqmax)
 		ls = MethodLS(self.tstartA, self.res, apfilename=apfilename)
