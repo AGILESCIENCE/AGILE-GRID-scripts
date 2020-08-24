@@ -113,7 +113,8 @@ class MethodVonMisses:
 			daymax = 1 / maxf / 86400.
 			print(vmtype + 'mu ' + str(i) + ' -1 ' + str(maxp) + ' ' + str(maxf) + ' ' + str(daymax))
 			fileclean.write(vmtype + 'mu ' + str(i) + ' -1 ' + str(maxp) + ' ' + str(maxf) + ' ' + str(daymax)+ "\n")
-			fileclean.close()
+		
+		fileclean.close()
 		return
 	
 	
@@ -133,9 +134,10 @@ class MethodVonMisses:
 		#os.system(cmd)
 	
 	
-	def significanceVonMisses(self, nthreads, ii, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100):
+	def significanceVonMisses(self, apfile, nthreads, rescol, freqmin=1.0e-07, freqmax=5.0e-06, vmnumax=100):
 		print("significance von misses periodogram")
-		cmd = "./coeffs_XY.prg "+str(nthreads)+ " " + str(freqmin) + " " + str(freqmax) + " 0 " + str(vmnumax) + " < " + self.apfile + ".vm"+str(ii)+" > " + self.apfile + ".vm"+str(ii)+".sig"
+		self.apfile = apfile
+		cmd = "./coeffs_XY.prg "+str(nthreads)+ " " + str(freqmin) + " " + str(freqmax) + " 0 " + str(vmnumax) + " < " + self.apfile + ".vm"+str(rescol)+" > " + self.apfile + ".vm"+str(rescol)+".sig"
 		print(cmd)
 		#os.system(cmd)
 	
@@ -188,7 +190,9 @@ class MethodVonMisses:
 		self.runVomMissesStep(46, vonmissesthread, ngridfreq, tgridfreq)
 
 	def scanVMresults(self, apfile):
+		self.apfile = apfile
 		col = 0
+		print(self.apfile + ".vm"+str(col)+".resgf")
 		self.scanVM(self.apfile + ".vm"+str(col)+".resgf", col)
 		col = 1
 		self.scanVM(self.apfile + ".vm"+str(col)+".resgf", col)
@@ -202,4 +206,4 @@ class MethodVonMisses:
 		self.scanVM(self.apfile + ".vm"+str(col)+".resgf", col)
 		col = 46
 		self.scanVM(self.apfile + ".vm"+str(col)+".resgf", col)
-		
+
