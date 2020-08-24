@@ -118,26 +118,26 @@ class MethodVonMisses:
 	
 	
 	def runVomMisses(self, nthreads, ii):
-		print(self.apfile)
+		#print(self.apfile)
 		#Arguments: threads number, noise scalability flag (zero for NOT to scale), f_min, f_max, nu_min, nu_max
-		cmd = os.environ['AGILE']+"/bin/eval_vonmises.prg "+str(nthreads)+" "+ str(self.vmnoise) + " " + str(self.freqmin) + " " + str(self.freqmax) + " 0 " + str(self.vmnumax) + " < " + self.apfile + ".vm"+str(ii)+" > " + self.apfile + ".vm"+str(ii)+".res"
+		cmd = "./eval_vonmises.prg "+str(nthreads)+" "+ str(self.vmnoise) + " " + str(self.freqmin) + " " + str(self.freqmax) + " 0 " + str(self.vmnumax) + " < " + self.apfile + ".vm"+str(ii)+" > " + self.apfile + ".vm"+str(ii)+".res"
 		print(cmd)
-		os.system(cmd)
+		#os.system(cmd)
 	
 	
 	def runVomMissesGridFreq(self, ii, ngrid=10000, tspan=10800):
 		#Arguments: f_min, f_max, N, original time series span T
 		#T is used to organize an almost-logarithmic f-scale; use any T<=0 to request linear f-scale
-		cmd = os.environ['AGILE']+"/bin/grid_freq.prg "+ str(self.freqmin) + " " + str(self.freqmax) + " " + str(ngrid) + " " + str(tspan) + " < " + self.apfile + ".vm"+str(ii)+".res > " + self.apfile + ".vm"+str(ii)+".resgf"
+		cmd = "./grid_freq.prg "+ str(self.freqmin) + " " + str(self.freqmax) + " " + str(ngrid) + " " + str(tspan) + " < " + self.apfile + ".vm"+str(ii)+".res > " + self.apfile + ".vm"+str(ii)+".resgf"
 		print(cmd)
-		os.system(cmd)
+		#os.system(cmd)
 	
 	
 	def significanceVonMisses(self, nthreads, ii, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100):
 		print("significance von misses periodogram")
-		cmd = os.environ['AGILE']+"/bin/coeffs_XY.prg "+str(nthreads)+ " " + str(freqmin) + " " + str(freqmax) + " 0 " + str(vmnumax) + " < " + self.apfile + ".vm"+str(ii)+" > " + self.apfile + ".vm"+str(ii)+".sig"
+		cmd = "./coeffs_XY.prg "+str(nthreads)+ " " + str(freqmin) + " " + str(freqmax) + " 0 " + str(vmnumax) + " < " + self.apfile + ".vm"+str(ii)+" > " + self.apfile + ".vm"+str(ii)+".sig"
 		print(cmd)
-		os.system(cmd)
+		#os.system(cmd)
 	
 	
 	def evaluateSignificanceVonMisses(self, W, Xnumax, Ynumax, z, Ynu0=1):
@@ -166,10 +166,10 @@ class MethodVonMisses:
 		sig2=W * np.power(np.e, -z) * (  2 * z * Xnumax + Ynumax  * np.sqrt(z) )
 		print("sig2= " + str(sig2))
 
-	def runVomMissesStep(self, ii, vonmissesthread=48, ngridfreq=10000, tgridfreq=10800):
-		self.runVomMisses(vonmissesthread, ii)
-		self.runVomMissesGridFreq(ii, ngridfreq, tgridfreq)
-		self.scanVM(self.apfile + ".vm"+str(ii)+".resgf", ii)
+	def runVomMissesStep(self, col, vonmissesthread=48, ngridfreq=10000, tgridfreq=10800):
+		self.runVomMisses(vonmissesthread, col)
+		self.runVomMissesGridFreq(col, ngridfreq, tgridfreq)
+		
 	
 	def fullAnalysis(self, apfile, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=10000, tgridfreq=10800, vmnoise=1):
 		
@@ -184,5 +184,22 @@ class MethodVonMisses:
 		self.runVomMissesStep(2, vonmissesthread, ngridfreq, tgridfreq)
 		self.runVomMissesStep(3, vonmissesthread, ngridfreq, tgridfreq)
 		self.runVomMissesStep(8, vonmissesthread, ngridfreq, tgridfreq)
-		
+		self.runVomMissesStep(16, vonmissesthread, ngridfreq, tgridfreq)
+		self.runVomMissesStep(46, vonmissesthread, ngridfreq, tgridfreq)
 
+	def scanVMresults(self, apfile):
+		col = 0
+		self.scanVM(self.apfile + ".vm"+str(col)+".resgf", col)
+		col = 1
+		self.scanVM(self.apfile + ".vm"+str(col)+".resgf", col)
+		col=2
+		self.scanVM(self.apfile + ".vm"+str(col)+".resgf", col)
+		col = 3
+		self.scanVM(self.apfile + ".vm"+str(col)+".resgf", col)
+		col = 8
+		self.scanVM(self.apfile + ".vm"+str(col)+".resgf", col)
+		col = 16
+		self.scanVM(self.apfile + ".vm"+str(col)+".resgf", col)
+		col = 46
+		self.scanVM(self.apfile + ".vm"+str(col)+".resgf", col)
+		

@@ -499,6 +499,8 @@ class GammaAP:
 			n = n + 1
 		
 		fileclean.close()
+
+		print("* Write AP4 file: " + apfile + ".ap4")
 		
 		if(writevonmissesfiles == 1):
 			self.writeVonMissesFile(apfile, 0)
@@ -506,6 +508,8 @@ class GammaAP:
 			self.writeVonMissesFile(apfile, 2)
 			self.writeVonMissesFile(apfile, 3)
 			self.writeVonMissesFile(apfile, 8)
+			self.writeVonMissesFileRateA(apfile)
+			self.writeVonMissesFileRateB(apfile)
 
 		#write ap4r file
 		filecleanr = open(apfile + ".ap4r","w")
@@ -549,19 +553,50 @@ class GammaAP:
 		return
 		
 
-	def writeVonMissesFile(self, apfile, ii):
-		filevm = open(apfile + ".vm" + str(ii),"w")
+	def writeVonMissesFile(self, apfile, rescol):
+		filevm = open(apfile + ".vm" + str(rescol),"w")
 		n = 0
 		for x in self.expdataA:
-			line = str(self.tstartA[n] + (self.tstopA[n] - self.tstartA[n])/2.0) + " " + str(self.res[n,ii]) + " " + str(np.sqrt(np.fabs(self.res[n,ii]))) + "\n"
-			filevm.write(line)
+			if self.expdataA[n] > 0:
+				line = str(self.tstartA[n] + (self.tstopA[n] - self.tstartA[n])/2.0) + " " + str(self.res[n,rescol]) + " " + str(np.sqrt(np.fabs(self.res[n,rescol]))) + "\n"
+				filevm.write(line)
 			n = n + 1
 
 		filevm.close()
-		print("* Write Von Misses file: tcenter  "+str(ii)+":rate 1:rate_var")
+		print("* Write Von Misses file: tcenter rescol"+str(rescol)+" sqrt(abs(rescol"+str(rescol)+"))")
+
+	"""Write Von Misses file rateA: tcenter rate rateError 
+	"""
+	def writeVonMissesFileRateA(self, apfile):
+		filevm = open(apfile + ".vm16","w")
+		rescol = 15
+		n = 0
+		for x in self.expdataA:
+			if self.expdataA[n] > 0:
+				line = str(self.tstartA[n] + (self.tstopA[n] - self.tstartA[n])/2.0) + " " + str(self.res[n,15]) + " " + str(self.res[n,16]) + "\n"
+				filevm.write(line)
+			n = n + 1
+
+		filevm.close()
+		print("* Write Von Misses file rateA (16): tcenter rate rateError")
+
+	"""Write Von Misses file rateB: tcenter rate expBasedRateError
+	"""
+	def writeVonMissesFileRateB(self, apfile):
+		filevm = open(apfile + ".vm46","w")
+		rescol = 15
+		n = 0
+		for x in self.expdataA:
+			if self.expdataA[n] > 0:
+				line = str(self.tstartA[n] + (self.tstopA[n] - self.tstartA[n])/2.0) + " " + str(self.res[n,15]) + " " + str(self.res[n,46]) + "\n"
+				filevm.write(line)
+			n = n + 1
+		
+		filevm.close()
+		print("* Write Von Misses file rateB (46): tcenter rate expBasedRateError")
 
 
-	def fullAnalysis(self, apfilename, ranal=2, gasvalue=0.00054, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800, vmnoise=1, gal=0.7, iso=10, emin=100, emax=10000, gindex=2.1, writevonmissesfiles=0, evalULalgorithm=1, rateMeanBkgExpected=-1):
+	def fullAnalysis(self, apfilename, ranal=2, gasvalue=0.00054, analyzevm=-1, vonmissesthread=48, freqmin=1.0e-07, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800, vmnoise=1, gal=0.7, iso=10, emin=100, emax=10000, gindex=2.1, writevonmissesfiles=0, evalULalgorithm=1, rateMeanBkgExpected=-1):
 		if analyzevm == 1:
 			writevonmissesfiles = 1
 
