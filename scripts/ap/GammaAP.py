@@ -323,7 +323,9 @@ class GammaAP:
 
 
 	#generation of AP4 file
-	#evalULalgorithm -> selection of the significance algorithm for the evaluation of the UL and sensitivity 1 -> Slima 2 -> Sa
+	#evalULalgorithm -> selection of the significance algorithm for the evaluation of the UL and sensitivity 
+	# 1 -> Slima 2 -> Sa
+	# if evalULalgorithm=1, ranalB=10
 	def normalizeAP(self, apfile, ranal=2, gasvalue=0.00054, gal=0.7, iso=10, emin=100, emax=10000, gindex=2.1, writevonmissesfiles=0, evalULalgorithm=1):
 				
 		#if self.diml == 0:
