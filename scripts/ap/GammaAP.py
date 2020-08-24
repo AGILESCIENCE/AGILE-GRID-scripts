@@ -233,6 +233,8 @@ class GammaAP:
 		self.res = []
 		return
 
+		"""[summary]
+		"""
 	def loadDataAPAGILE(self, apfile):
 		print('Loading data...' + apfile)
 		self.apfile = apfile
@@ -385,7 +387,8 @@ class GammaAP:
 				aps = APSignificance()
 				N_off = rateBkgExpected * e_i
 				N_on  = self.ctsdataA[n]
-				lima = aps.lima(verbose=0, N_on = N_on, N_off = N_off, ranalS=ranal)
+				# We are using the analytical model of the background. ranalB=10, that is the usual radius of analysis used for the evalutation of gal and iso coefficients with the MLE.
+				lima = aps.lima(verbose=0, N_on = N_on, N_off = N_off, ranalS=ranal, ranalB=10)
 				self.res[n,23] = lima
 			else:
 				self.res[n,23] = 0
