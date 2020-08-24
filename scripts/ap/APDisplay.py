@@ -26,7 +26,7 @@ import numpy as np
 from astropy.stats import bayesian_blocks
 import matplotlib.pyplot as plt
 import pandas as pd
-import seaborn as sb
+#import seaborn as sb
 from scipy.stats import norm
 
 
@@ -51,12 +51,12 @@ class APDisplay:
 		self.axes[rown, 0].plot(binspdf, lin, alpha=0.9)
 		
 		
-		n, bins, patches = self.axes[rown,0].hist(data["cts_expBKGR4"], nbinscts, density=False, color=colorhist[1], range=[0, xmaxcts], histtype='barstacked', alpha=0.5)
+		n, bins, patches = self.axes[rown,0].hist(data["cts_rateWeightedMeanR4"], nbinscts, density=False, color=colorhist[1], range=[0, xmaxcts], histtype='barstacked', alpha=0.5)
 		binspdf = np.linspace(0, xmaxcts, xmaxcts*10.0)
-		(meanctsm, stdctsm) = norm.fit(data["cts_expBKGR4"])
+		(meanctsm, stdctsm) = norm.fit(data["cts_rateWeightedMeanR4"])
 		self.axes[rown, 0].plot(binspdf, norm.pdf(binspdf, meanctsm, stdctsm), alpha=0.5)
 		
-		self.axes[rown, 0].set_title("cts measured (cts) ("+colorhist[0]+") / cts bkg_model (cts_expBKG4) ("+colorhist[1]+")")
+		self.axes[rown, 0].set_title("cts measured (cts) ("+colorhist[0]+") / cts bkg_model (cts_rateWeightedMeanR4) ("+colorhist[1]+")")
 		self.axes[rown, 0].legend(("mean: " + str(meancts.round(5)) + " std: " + str(stdcts.round(5)), "mean: " + str(meanctsm.round(5)) + " std: " + str(stdctsm.round(5))))
 
 
@@ -69,7 +69,7 @@ class APDisplay:
 		#self.axes[rown, 1].set_xlabel(r"$10^{-8} \: ph/cm^2 s$")
 
 		
-		#col2: flux_rate
+		#col2: fluxRate
 		n, bins, patches = self.axes[rown, 1].hist(data["ratediffR4"]*1e8, nbins, density=True, label="rate", range=[-100, xmaxrate], color=colorhist[1], alpha = 1, histtype='step')
 		meanrate2, stdrate2 = norm.fit(data["ratediffR4"]*1e8)
 		bins2 = np.linspace(min(bins), max(bins), 100)
