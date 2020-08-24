@@ -363,7 +363,7 @@ class EvalRates:
 				N_on = N_source + ctsB
 				Ss = -1
 				if algorithm == 1:
-					Ss = aps.lima(verbose=0, alpha=alpha, N_on = N_on, N_off = ctsB, ranalS=ranalS)
+					Ss = aps.lima(verbose=0, alpha=alpha, N_on = N_on, N_off = ctsB, ranalS=ranalS, ranalB=10)
 				if algorithm == 2:
 					Ss = aps.Sa(verbose=0, ctsTOT=N_on, ctsB=ctsB)
 				#print(N_source)

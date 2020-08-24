@@ -34,7 +34,6 @@ from MathUtils import *
 #gasvalue IGR = 0.00054
 #gasvalue Vela = 0.00018
 #TODO
-# - Sa, Slm 
 # - UL
 # - aggiungere dimensione bin temporale
 # - scrivere file ridotto ap5
@@ -369,10 +368,10 @@ class GammaAP:
 			else:
 				self.res[n,19] = 0
 			
-			#flux rate
+			#flux_rate
 			self.res[n,20] = self.res[n,15] / float(fluxscalefactor)
 			
-			#flux rate error
+			#flux_rateError
 			n_i = self.res[n,15] / float(fluxscalefactor) * e_i
 			s_irms = mat.lowCountsError(n_i)
 			s_i = s_irms / e_i
