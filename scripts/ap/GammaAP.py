@@ -34,9 +34,7 @@ from MathUtils import *
 #gasvalue IGR = 0.00054
 #gasvalue Vela = 0.00018
 #TODO
-# - UL
 # - aggiungere dimensione bin temporale
-# - scrivere file ridotto ap5
 #1) Includere la possibilita' di avere una LC di bkg indipendente da quella da analizzare, su cui determinare rate medio
 #table=pd.read_csv('D01_43200s_emin100_emax10000_r0.8.ap.ap3', sep=' ', index_col=None)
 #OPPURE
@@ -505,6 +503,45 @@ class GammaAP:
 			self.writeVonMissesFile(apfile, 2)
 			self.writeVonMissesFile(apfile, 3)
 			self.writeVonMissesFile(apfile, 8)
+
+		#write ap4r file
+		filecleanr = open(apfile + ".ap4r","w")
+		header = "tstart tstop exp cts rate rateError expBasedRateError flux_ratediffR4 flux_ratediffR4Error Sa Slm cts_rateWeightedMeanR4 rateWeightedMeanR4 ctsSourceUL rateUL fluxUL"
+		n = 0
+		filecleanr.write(header + "\n")
+		for x in self.expdataA:
+			line = str(self.tstartA[n]) + " " + str(self.tstopA[n]) + " " + str(self.expdataA[n]) + " " + str(int(self.ctsdataA[n]))
+			#rate
+			line += ' {:.2e}'.format(self.res[n,15])
+			#rateError
+			line += ' {:.2e}'.format(self.res[n,16])
+			#expBasedRateError
+			line += ' {:.2e}'.format(self.res[n,46])
+			#flux_ratediffR4 
+			line += ' {:.2e}'.format(self.res[n,17])
+			#flux_ratediffR4Error
+			line += ' {:.2e}'.format(self.res[n,18])
+			#Sa
+			line += ' {:.2f}'.format(self.res[n,19]) 
+			#Slm 
+			line += ' {:.2f}'.format(self.res[n,23])
+			#cts_rateWeightedMeanR4 
+			line += ' {:.2f}'.format(self.res[n,22])
+			#rateWeightedMeanR4
+			line += ' {:.2e}'.format(self.res[n,44])
+			#ctsSourceUL
+			line += ' {:.2f}'.format(self.res[n,25])
+			#rateUL
+			line += ' {:.2e}'.format(self.res[n,26])
+			#fluxUL
+			line += ' {:.2e}'.format(self.res[n,27])
+
+			line += "\n"
+			filecleanr.write(line)
+			n = n + 1
+
+		filecleanr.close()
+
 		print('End normalisation')
 		return
 		
@@ -535,6 +572,8 @@ class GammaAP:
 			vm = MethodVonMisses()
 			vm.fullAnalysis(apfilename, vonmissesthread=vonmissesthread, freqmin=freqmin, freqmax=freqmax, vmnumax=vmnumax, ngridfreq=ngridfreq, tgridfreq=tgridfreq, vmnoise=vmnoise)
 
+		print("End full analysis")
+
 
 	def fullAnalysisLoadAP4(self, apfilename, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800, vmnoise=1):
 		self.loadnormalizedAP4(apfilename)
@@ -547,6 +586,7 @@ class GammaAP:
 			vm = MethodVonMisses()
 			vm.fullAnalysis(apfilename, vonmissesthread=vonmissesthread, freqmin=freqmin, freqmax=freqmax, vmnumax=vmnumax, ngridfreq=ngridfreq, tgridfreq=tgridfreq, vmnoise=vmnoise)
 
+		print("End full analysis")
 	
 	def evaluateLS(self, apfile, rescol=3, plot=1, minfreq=0.5e-6, maxfreq=5e-6):
 		self.apfile = apfile
