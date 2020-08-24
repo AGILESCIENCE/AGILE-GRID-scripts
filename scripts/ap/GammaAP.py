@@ -21,14 +21,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import scipy.signal as signal
-from astropy.stats import LombScargle
 import string, os, sys
 import numpy as np
 import math
 import matplotlib.pyplot as plt
 from EvalRates import *
 from MethodVonMisses import *
+from MethodLS import *
 from APSignificance import *
 from MathUtils import *
 
@@ -518,80 +517,6 @@ class GammaAP:
 		print("* Write Von Misses file: tcenter  "+str(ii)+":rate 1:rate_var")
 
 
-	def calculateLS(self, verbose=0, plot=1, rescol=0, minfreq=-1, maxfreq=-1):
-		#normalization standard model log psd
-		#, normalization='standard'
-		ls = LombScargle(self.tstartA, self.res[:,rescol])
-		if minfreq != -1:
-			#10e-6, 10e-4 , samples_per_peak=10
-			frequency, power = ls.autopower(minimum_frequency=minfreq, maximum_frequency=maxfreq)
-		else:
-			frequency, power = ls.autopower()
-		pls = ls.false_alarm_probability(power.max(), method='baluev')
-		ind = power.argmax()
-		maxf = frequency[ind]
-		daymax = 1 / maxf / 86400.
-
-		if verbose == 1:
-			print('Max value col %2d: FAR %.5e / power %.4f / frequency %.5e Hz (%.5f days)' %(rescol, pls, power.max(), maxf, daymax) )
-
-		if plot > 0:
-			plt.subplot(1, 1, 1)
-			plt.plot(frequency, power)
-			plt.gca().set_xscale("log")
-			plt.gca().set_yscale("log")
-			#plt.subplot(3, 1, 2)
-			#best_frequency = frequency[np.argmax(power)]
-			#t_fit = np.linspace(0, 1)
-			#y_fit = LombScargle(tstartA, ctsdataA).model(t_fit, best_frequency)
-			#plt.plot(t_fit, y_fit)
-		if plot == 1:
-			plt.show()
-		if plot == 2:
-			plt.savefig(self.apfile + ".apres.ls."+str(rescol)+".png", format='png', dpi=1200)
-
-		return pls, power.max(), maxf
-
-	def scanLS(self, minfreq=-1, maxfreq=-1, rangemin=0, rangemax=23):
-		print("freqmin %.5e"%minfreq)
-		print("freqmax %.5e"%maxfreq)
-		fileclean = open(self.apfile + ".apres","w")
-		for i in range(rangemin,rangemax):
-			pls, pmax, maxf = self.calculateLS(0 ,0, i, minfreq, maxfreq)
-			daymax = 1 / maxf / 86400.
-			#print("LS " + str(i) + ' ' + str(pls) + ' ' + str(pmax) + ' ' + str(maxf) + ' ' + str(daymax))
-			print('Max value %2d: FAR %.5e / power %.4f / frequency %.5e Hz (%.5f days)' %(i, pls, pmax, maxf, daymax) )
-			fileclean.write("LS " + str(i) + ' ' + str(pls) + ' ' + str(pmax) + ' ' + str(maxf) + ' ' + str(daymax) + "\n")
-		fileclean.close()
-		return
-
-	def calculateLSexp(self, verbose=0, plot=1, rescol=3):
-		ls = LombScargle(self.tstartA, self.res[:,rescol])
-		frequency, power = ls.autopower()
-		pls = ls.false_alarm_probability(power.max(), method='baluev')
-		ind = power.argmax()
-		maxf = frequency[ind]
-		daymax = 1 / maxf / 86400.
-		if verbose == 1:
-			print('pls ' + str(pls) + ' with power of ' + str(power.max()) + ' at frequency ' + str(maxf) + ' Hz (' + str(daymax) + ') days' )
-
-		if plot == 1:
-			plt.subplot(1, 1, 1)
-			plt.plot(frequency, power)
-			plt.gca().set_xscale("log")
-			plt.gca().set_yscale("log")
-			#plt.subplot(3, 1, 2)
-			#best_frequency = frequency[np.argmax(power)]
-			#t_fit = np.linspace(0, 1)
-			#y_fit = LombScargle(tstartA, ctsdataA).model(t_fit, best_frequency)
-			#plt.plot(t_fit, y_fit)
-			plt.show()
-
-	def plotLS(self, apfile, col, minfreq=0.5e-6, maxfreq=5e-6):
-		self.apfile = apfile
-		self.loadnormalizedAP4(apfile)
-		pls, pmax, maxf = self.calculateLS(verbose=1, plot=1, rescol=col, minfreq=minfreq, maxfreq=maxfreq)
-
 	def fullAnalysis(self, apfilename, ranal=2, gasvalue=0.00054, analyzevm=-1, vonmissesthread=48, freqmin=0.5e-06, freqmax=5.0e-06, vmnumax=100, ngridfreq=1000, tgridfreq=10800, vmnoise=1, gal=0.7, iso=10, emin=100, emax=10000, gindex=2.1, writevonmissesfiles=0, evalULalgorithm=1):
 		if analyzevm == 1:
 			writevonmissesfiles = 1
@@ -599,9 +524,8 @@ class GammaAP:
 		self.normalizeAP(apfile=apfilename, ranal=ranal, gasvalue=gasvalue, gal=gal, iso=iso, emin=emin, emax=emax, gindex=gindex, writevonmissesfiles=writevonmissesfiles, evalULalgorithm=evalULalgorithm)
 		self.freqmin=float(freqmin)
 		self.freqmax=float(freqmax)
-		
-		self.scanLS(self.freqmin, self.freqmax, 0, 18)
-		#self.scanLS(-1, -1, 0, 19)
+		ls = MethodLS(self.tstartA, self.res, apfilename=apfilename)
+		ls.scanLS(self.freqmin, self.freqmax, 0, 18)		
 
 		if analyzevm == 1:
 			vm = MethodVonMisses()
@@ -612,8 +536,36 @@ class GammaAP:
 		self.loadnormalizedAP4(apfilename)
 		self.freqmin=float(freqmin)
 		self.freqmax=float(freqmax)
-		self.scanLS(self.freqmin, self.freqmax, 0, 18)
+		ls = MethodLS(self.tstartA, self.res, apfilename=apfilename)
+		ls.scanLS(self.freqmin, self.freqmax, 0, 18)
 		
 		if analyzevm == 1:
 			vm = MethodVonMisses()
 			vm.fullAnalysis(apfilename, vonmissesthread=vonmissesthread, freqmin=freqmin, freqmax=freqmax, vmnumax=vmnumax, ngridfreq=ngridfreq, tgridfreq=tgridfreq, vmnoise=vmnoise)
+
+	
+	def evaluateLS(self, apfile, rescol=3, plot=1, minfreq=0.5e-6, maxfreq=5e-6):
+		self.apfile = apfile
+		self.loadnormalizedAP4(apfile)
+		ls = MethodLS(self.tstartA, self.res, apfilename=apfile)
+		pls, pmax, maxf = ls.calculateLS(verbose=1, plot=plot, rescol=rescol, minfreq=minfreq, maxfreq=maxfreq)
+
+
+	def evaluateLSexp(self, apfile, verbose=1, rescol=3, plot=1):
+		self.apfile = apfile
+		self.loadnormalizedAP4(apfile)
+		ls = MethodLS(self.tstartA, self.res, apfilename=apfile)
+		ls.calculateLSexp(verbose=verbose, plot=plot, rescol=rescol)
+
+	def scanLS(self, apfile, verbose=1, plot=0):
+		self.apfile = apfile
+		self.loadnormalizedAP4(apfile)
+		ls = MethodLS(self.tstartA, self.res, apfilename=apfile)
+		ls.scanLS(self.freqmin, self.freqmax, 0, 18)
+	
+	def scanLSexp(self, apfile, verbose=1, plot=0):
+		self.apfile = apfile
+		self.loadnormalizedAP4(apfile)
+		ls = MethodLS(self.tstartA, self.res, apfilename=apfile)
+		for i in range(0, 18):
+			ls.calculateLSexp(verbose=verbose, plot=plot, rescol=i)
