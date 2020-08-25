@@ -92,30 +92,34 @@ class MethodVonMisses:
 		return maxf, maxp
 
 	def scanVM(self, vmfilename, coltype):
-		vmtype = "vm" + str(coltype)
-		fileclean = open(self.apfile + ".apres", "a")
-		muA = []
-		mu = 0.0
-		muA.append(mu)
-		with open(vmfilename, "r") as ins:
-			for line in ins:
-				if(line != ""):
-					val = line.split()
-					#print(len(val))
-					if len(val) > 2:
-						muv = float(val[0])
-						if(muv != mu):
-							muA.append(muv)
-							mu = muv
+		try:
+			vmtype = "vm" + str(coltype)
+			fileclean = open(self.apfile + ".apres", "a")
+			muA = []
+			mu = 0.0
+			muA.append(mu)
+			with open(vmfilename, "r") as ins:
+				for line in ins:
+					if(line != ""):
+						val = line.split()
+						#print(len(val))
+						if len(val) > 2:
+							muv = float(val[0])
+							if(muv != mu):
+								muA.append(muv)
+								mu = muv
+			
+			for i in muA:
+				maxf, maxp = self.plotVonMisses(vmfilename, i, 0, 0)
+				daymax = 1 / maxf / 86400.
+				print(vmtype + 'mu ' + str(i) + ' -1 ' + str(maxp) + ' ' + str(maxf) + ' ' + str(daymax))
+				fileclean.write(vmtype + 'mu ' + str(i) + ' -1 ' + str(maxp) + ' ' + str(maxf) + ' ' + str(daymax)+ "\n")
+			
+			fileclean.close()
+			return
+		except OSError:
+			return
 		
-		for i in muA:
-			maxf, maxp = self.plotVonMisses(vmfilename, i, 0, 0)
-			daymax = 1 / maxf / 86400.
-			print(vmtype + 'mu ' + str(i) + ' -1 ' + str(maxp) + ' ' + str(maxf) + ' ' + str(daymax))
-			fileclean.write(vmtype + 'mu ' + str(i) + ' -1 ' + str(maxp) + ' ' + str(maxf) + ' ' + str(daymax)+ "\n")
-		
-		fileclean.close()
-		return
 	
 	
 	def runVomMisses(self, nthreads, ii):
