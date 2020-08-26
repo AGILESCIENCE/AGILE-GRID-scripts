@@ -113,7 +113,12 @@ class Edp:
 				iMin = etrue
 			if eMax == m_edptrueenergy[etrue]:
 				iMax = etrue
-			
+		if iMax == 0:
+			iMax = 	eneChanCount
+		
+		#get the first energy as low boundary
+		iMax = iMax - 1
+		
 		if verbose == 1:
 			print('EDP Energy min = %.2f'% m_edptrueenergy[iMin])
 			print('EDP Energy max = %.2f'% m_edptrueenergy[iMax])

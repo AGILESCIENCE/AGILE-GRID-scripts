@@ -58,7 +58,7 @@ class EvalRates:
 	
 	##########################################################################
 	def getFluxScaleFactor(self, verbose=0,  gindex=2.1, ranal= 2, emin = 100., emax = 10000., instrumentID = 0, source_theta=30):
-	
+		print('S@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
 		if instrumentID > 0:
 			return 0
 	
@@ -75,21 +75,21 @@ class EvalRates:
 			print('input selected ranal: ' + str(ranal))
 		
 		#Integral PSF evaluation
-
-		psf = self.getInstrumentPSF(instrumentID=instrumentID, gindex=gindex, emin=emin, emax=emax, source_theta=source_theta, verbose=verbose)
-		if verbose == 1:
-			print('selected psf  : %.4f' % psf)
+		#psf = self.getInstrumentPSF(instrumentID=instrumentID, gindex=gindex, emin=emin, emax=emax, source_theta=source_theta, verbose=verbose)
+		#if verbose == 1:
+		#	print('selected psf  : %.4f' % psf)
 		
 		#fluxscalefactor to take into account the extension of the PSF and the fraction enclosed into the ranal
-		#fluxscalefactor = math.fabs(1-2*norm(0,  psf).cdf(ranal))
+		#psfc = PSFEval()
+		#fluxscalefactor = psfc.EvalPSFScaleFactor(ranal=ranal, emin=emin, emax=emax, gindex=gindex, source_theta=source_theta, verbose=verbose)
 		#if verbose == 1:
-		#	print('Fluxscalefactor based on PSF enclosed fraction: %.4f' % fluxscalefactor)
+		#	print('Fluxscalefactor1 (gauss) based on PSF enclosed fraction: %.4f' % fluxscalefactor)
 		
 		#fluxscalefactor2 -> versione analitica di VF
 		psfc = PSFEval()
 		fluxscalefactor = psfc.EvalPSFScaleFactor2(ranal=ranal, emin=emin, emax=emax, gindex=gindex, source_theta=source_theta, verbose=verbose)
 		if verbose == 1:
-			print('Fluxscalefactor2 based on PSF enclosed fraction: %.4f' % fluxscalefactor)
+			print('Fluxscalefactor2 (king)  based on PSF enclosed fraction: %.4f' % fluxscalefactor)
 		
 		#fluxscalefactor to take into account the spectral shape of the source (deviation from spectral index=2.1 of calculated exposure)
 		edp = Edp()
@@ -112,7 +112,7 @@ class EvalRates:
 		#if verbose == 1:
 		#	print('omega    [sr]  : ' + str(omega_ranal))
 		#	print('omega AC [sr]  : ' + str(omega_ranalAC))
-			
+		print('E@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
 		return fluxscalefactor
 
 	##########################################################################
