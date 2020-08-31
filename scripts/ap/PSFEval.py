@@ -9,7 +9,6 @@
 #          Bulgarelli Andrea <andrea.bulgarelli@inaf.it>
 #          Valentina Fioretti <valentina.fioretti@inaf.it>
 #          Parmiggiani Nicolò <nicolo.parmiggiani@inaf.it>
-#          Alessio Aboudan
 #      All rights reserved.
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -140,7 +139,7 @@ class PSFEval:
 		
 		if verbose == 1:
 			print('###########################################')
-			print('#              SOURCE PSF                 #')
+			print('#              SOURCE PSF1                #')
 			print('###########################################')
 			print('# - Energy min [MeV] = %d'% emin)
 			print('# - Energy max [MeV] = %d'% emax)
@@ -161,6 +160,7 @@ class PSFEval:
 		
 		if verbose == 1:
 			print('# - PSF scale factor [deg.] = %.4f'% fluxscalefactor)
+			print('###########################################')
 		
 		return fluxscalefactor
 	
@@ -290,6 +290,7 @@ class PSFEval:
 				
 		# king fit
 		p, cov = curve_fit(self.king_profile, radius_PSF, density_PSF_norm, maxfev=1000000*(len(radius_PSF)+1))
+		print(p)
 					
 		#print('King fit result:')
 		#print(p)

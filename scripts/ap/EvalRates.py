@@ -58,7 +58,7 @@ class EvalRates:
 	
 	##########################################################################
 	def getFluxScaleFactor(self, verbose=0,  gindex=2.1, ranal= 2, emin = 100., emax = 10000., instrumentID = 0, source_theta=30):
-	
+		print('S@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
 		if instrumentID > 0:
 			return 0
 	
@@ -75,21 +75,21 @@ class EvalRates:
 			print('input selected ranal: ' + str(ranal))
 		
 		#Integral PSF evaluation
-
-		psf = self.getInstrumentPSF(instrumentID=instrumentID, gindex=gindex, emin=emin, emax=emax, source_theta=source_theta, verbose=verbose)
-		if verbose == 1:
-			print('selected psf  : %.4f' % psf)
+		#psf = self.getInstrumentPSF(instrumentID=instrumentID, gindex=gindex, emin=emin, emax=emax, source_theta=source_theta, verbose=verbose)
+		#if verbose == 1:
+		#	print('selected psf  : %.4f' % psf)
 		
 		#fluxscalefactor to take into account the extension of the PSF and the fraction enclosed into the ranal
-		#fluxscalefactor = math.fabs(1-2*norm(0,  psf).cdf(ranal))
+		#psfc = PSFEval()
+		#fluxscalefactor = psfc.EvalPSFScaleFactor(ranal=ranal, emin=emin, emax=emax, gindex=gindex, source_theta=source_theta, verbose=verbose)
 		#if verbose == 1:
-		#	print('Fluxscalefactor based on PSF enclosed fraction: %.4f' % fluxscalefactor)
+		#	print('Fluxscalefactor1 (gauss) based on PSF enclosed fraction: %.4f' % fluxscalefactor)
 		
 		#fluxscalefactor2 -> versione analitica di VF
 		psfc = PSFEval()
 		fluxscalefactor = psfc.EvalPSFScaleFactor2(ranal=ranal, emin=emin, emax=emax, gindex=gindex, source_theta=source_theta, verbose=verbose)
 		if verbose == 1:
-			print('Fluxscalefactor2 based on PSF enclosed fraction: %.4f' % fluxscalefactor)
+			print('Fluxscalefactor2 (king)  based on PSF enclosed fraction: %.4f' % fluxscalefactor)
 		
 		#fluxscalefactor to take into account the spectral shape of the source (deviation from spectral index=2.1 of calculated exposure)
 		edp = Edp()
@@ -112,8 +112,8 @@ class EvalRates:
 		#if verbose == 1:
 		#	print('omega    [sr]  : ' + str(omega_ranal))
 		#	print('omega AC [sr]  : ' + str(omega_ranalAC))
-			
-		return fluxscalefactor;
+		print('E@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+		return fluxscalefactor
 
 	##########################################################################
 	def calculateRateWithoutExp(self, verbose = 0, ranalS= -1, fluxsource = 0e-08, gasvalue=-1, gal = 0.7, iso = 10., emin = 100., emax = 10000., gindex=2.1, source_theta=30, instrumentID = 0):
@@ -344,7 +344,7 @@ class EvalRates:
 			rateSens = (N_sourceSens / exposure)
 			fluxSens = rateSens / fluxscalefactor
 			
-			fluxSource = rate_src_ON / fluxscalefactor
+			#fluxSource = rate_src_ON / fluxscalefactor
 			
 			#saa = -1
 			print('%.2e %.2f %.2f %.2f - %.1f %.2e %.1f %.2e - %.1f %.2f %.2e %.2e - %.1f %.2f %.2e %.2e %.2f' % (fluxS, snr, lima, Sa, ctsS, rate_src_ON, ctsB, rate_bkg_ON, N_sourceUL, SignUL, rateUL, fluxUL, N_sourceSens, SignSens, rateSens, fluxSens, fluxscalefactor))
@@ -363,7 +363,7 @@ class EvalRates:
 				N_on = N_source + ctsB
 				Ss = -1
 				if algorithm == 1:
-					Ss = aps.lima(verbose=0, alpha=alpha, N_on = N_on, N_off = ctsB, ranalS=ranalS)
+					Ss = aps.lima(verbose=0, alpha=alpha, N_on = N_on, N_off = ctsB, ranalS=ranalS, ranalB=10)
 				if algorithm == 2:
 					Ss = aps.Sa(verbose=0, ctsTOT=N_on, ctsB=ctsB)
 				#print(N_source)
@@ -375,7 +375,7 @@ class EvalRates:
 				N_source = 0.
 				break
 
-		return N_source, Ss
+
 		#F_lim = (N_source/expo_on)/PSF_norm
 
 		#print ("# Sensitivity parameters:")
@@ -383,6 +383,7 @@ class EvalRates:
 		#print ("# - N_min = %.2f"% N_min[jmin])
 		#print ("# Sensitivity [phot/cm2/s] = %.2e"% F_lim)
 		#print ("###########################################")
-					
-		return
+
+		return N_source, Ss					
+
 

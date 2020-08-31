@@ -2,4 +2,4 @@ from GammaAP import *
 
 if __name__ == '__main__':
 	ap = GammaAP()
-	ap.plotLS(sys.argv[1], float(sys.argv[2]))
+	ap.evaluateLS(sys.argv[1], rescol=int(sys.argv[2]), plot=1)
