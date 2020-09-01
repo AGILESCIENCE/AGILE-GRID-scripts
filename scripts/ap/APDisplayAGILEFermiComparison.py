@@ -299,3 +299,4 @@ class APDisplayAGILEFermiComparison:
 
         plt.show()
         f.savefig('merged_plot_'+str(tstart)+'_'+str(tstop)+'.'+str('pdf'), format="pdf")
+        
