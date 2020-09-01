@@ -28,8 +28,6 @@ import numpy as np
 
 class APDisplayAGILEFermiComparison:
 
-    fermi_binsize = 0.0208333335001091
-
     def __init__(self, agile, fermi):
         #---- Loading data -----
         self.agile_data = pd.read_csv(agile, header=0, sep=" ")
