@@ -458,7 +458,6 @@ class GammaAP:
 		header = "tstart tstop exp cts normrateAB11 normrateAB12 normrateAB13 normrateAB14 normrateAB21 normrateAB22 normrateAB23 normrateAB24 normrateAB11aa normrateAB21aa ratediffR1 ratediffR2 ratediffR3 ratediffR4 ratediffR1AA rate rateError flux_ratediffR4 flux_ratediffR4Error Sa flux_rate flux_rateError cts_rateWeightedMeanR4 Slm SignUL ctsSourceUL rateUL fluxUL SignSens3 ctsSourceSens3 rateSens3 fluxSens3 SignSens4 ctsSourceSens4 rateSens4 fluxSens4 SignSens5 ctsSourceSens5 rateSens5 fluxSens5 fluxscalefactor rateWeightedMeanR1 rateWeightedMeanR2 rateWeightedMeanR3 rateWeightedMeanR4 rateWeightedMeanR1aa expBasedRateError temporalBinSize"
 		
 		print("AP4 file column number: 0:tstart 1:tstop 2:exp[cm2s] 3:cts 4:normrateAB11 5:normrateAB12 6:normrateAB13 7:normrateAB14 8:normrateAB21 9:normrateAB22 10:normrateAB23 11:normrateAB24 12:normrateAB11aa 13:normrateAB21aa 14:ratediffR1 15:ratediffR2 16:ratediffR3 17:ratediffR4 18:ratediffR1AA 19:rate 20:rateError 21:flux_ratediffR4 22:flux_ratediffR4Error 23:Sa 24:flux_rate 25:flux_rateError 26:cts_rateWeightedMeanR4 27:Slm 28:SignUL 29:ctsSourceUL 30:rateUL 31:fluxUL 32:SignSens3 33:ctsSourceSens3 34:rateSens3 35:fluxSens3 36:SignSens4 37:ctsSourceSens4 38:rateSens4 39:fluxSens4 40:SignSens5 41:ctsSourceSens5 42:rateSens5 43:fluxSens5 44:fluxscalefactor 45:rateWeightedMeanR1 46:rateWeightedMeanR2 47:rateWeightedMeanR3 48:rateWeightedMeanR4 49:rateWeightedMeanR1aa 50:expBasedRateError 51:temporalBinSize")
-		
 		n = 0
 		fileclean.write(header + "\n")
 		for x in self.expdataA:
