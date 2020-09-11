@@ -28,11 +28,6 @@ import numpy as np
 
 class APDisplayAGILEFermiComparison:
 
-    def __init__(self, agile, fermi):
-        #---- Loading data -----
-        self.agile_data = pd.read_csv(agile, header=0, sep=" ")
-        self.fermi_data = pd.read_csv(fermi, header=0, sep=" ")
-
     @staticmethod
     def time_tt_to_mjd(timett):
             return (timett / 86400.0) + 53005.0
@@ -278,22 +273,26 @@ class APDisplayAGILEFermiComparison:
         print("ntrials ", ntrials)
         print("nsig ", nsig)
 
-    def load_and_plot(self, tstart, tstop, path, lines=[], plotrate=False):
+    def load_and_plot(self, agile, fermi, tstart, tstop, path, lines=[], plotrate=False):
+
+        #---- Loading data -----
+        agile_data = pd.read_csv(agile, header=0, sep=" ")
+        fermi_data = pd.read_csv(fermi, header=0, sep=" ")
 
         #---Converting times
         tstart_tt = self.time_mjd_to_tt(tstart)
         tstop_tt = self.time_mjd_to_tt(tstop)
 
         #---- Selecting data
-        self.agile_data = self.agile_data[self.agile_data.tstart >= tstart_tt]
-        self.agile_data = self.agile_data[self.agile_data.tstop <= tstop_tt]
-        self.fermi_data = self.fermi_data[self.fermi_data.tstart >= tstart_tt]
-        self.fermi_data = self.fermi_data[self.fermi_data.tstop <= tstop_tt]
+        agile_data = agile_data[agile_data.tstart >= tstart_tt]
+        agile_data = agile_data[agile_data.tstop <= tstop_tt]
+        fermi_data = fermi_data[fermi_data.tstart >= tstart_tt]
+        fermi_data = fermi_data[fermi_data.tstop <= tstop_tt]
 
         #------Plotting data
         f, (ax1, ax2) = plt.subplots(2, figsize=(12.18,10))
         self.plot_offaxis(ax1, ax2, path, tstart, tstop, 60, 1, 0, lines)
-        self.plot(ax2, self.agile_data, self.fermi_data, lines, plotrate)
+        self.plot(ax2, agile_data, fermi_data, lines, plotrate)
 
         plt.show()
         f.savefig('merged_plot_'+str(tstart)+'_'+str(tstop)+'.'+str('pdf'), format="pdf")
