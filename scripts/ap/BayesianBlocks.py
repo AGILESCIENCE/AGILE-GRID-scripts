@@ -29,7 +29,7 @@ import pandas as pd
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 import copy
-from astropy.io import fits 
+from astropy.io import fits
 from decimal import Decimal 
 
 class BayesianBlocks:
@@ -144,13 +144,14 @@ class BayesianBlocks:
             prop_upper_err_block.append(mean_block[i]+prop_err_block[i])
             prop_lower_err_block.append(mean_block[i]-prop_err_block[i])
         # Bayesian blocks exept the edges (first and last)
+        #ax0.plot(t, data[:,4], "o")
         ax0.plot(((edges[1:]+edges[:-1])/2-(edges[1:]-edges[:-1])/2, (edges[1:]+edges[:-1]
                                                                     )/2+(edges[1:]-edges[:-1])/2), (mean_block, mean_block), 'g', linewidth=1)
         # First Bayesian block
-        ax0.plot((edges[0], edges[0]-21600/2),
+        ax0.plot((edges[0], edges[0]),
                 (mean_block[0], mean_block[0]), 'g', linewidth=1)
         # Last bayesian block
-        ax0.plot((edges[len(edges)-1], edges[len(edges)-1]+21600/2),
+        ax0.plot((edges[len(edges)-1], edges[len(edges)-1]),
                 (mean_block[len(mean_block)-1], mean_block[len(mean_block)-1]), 'g', linewidth=1)
         # Bayesian blocks' error
         ax0.plot(((edges[1:]+edges[:-1])/2, (edges[1:]+edges[:-1])/2),
@@ -163,29 +164,29 @@ class BayesianBlocks:
         #Connection between the block in order to create a type of bars
         ax0.plot((edges[1:-1], edges[1:-1]),
                 (mean_block[:-1], mean_block[1:]), 'g', linewidth=1)
-        ax0.plot((edges[0]-21600/2, edges[0]-21600/2),
+        ax0.plot((edges[0], edges[0]),
                 (mean_block[0], 0), 'g', linewidth=1)
-        ax0.plot((edges[len(edges)-1]+21600/2, edges[len(edges)-1] +
-                21600/2), (mean_block[-1], 0), 'g', linewidth=1)
+        ax0.plot((edges[len(edges)-1], edges[len(edges)-1]), (mean_block[-1], 0), 'g', linewidth=1)
         ax0.set_xlabel('TT time *10$^8$')
         ax0.set_ylabel('Flux ph/cm2*s *10$^-5$')
         ax0.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
+        ax01 = ax0.twinx()
+        ax01.errorbar(t, data[:,4], fmt="r.", yerr=np.sqrt(data[:,4]))
         #plt.show()
         #SNR
         # Bayesian blocks of SNR (depends on the numbers of N_s and N_b inside the block)
         ax1.plot(((edges[1:]+edges[:-1])/2-(edges[1:]-edges[:-1])/2, (edges[1:]+edges[:-1]
                                                                     )/2+(edges[1:]-edges[:-1])/2), (SNR_block, SNR_block), 'g', linewidth=1)
-        ax1.plot((edges[0], edges[0]-21600/2),
+        ax1.plot((edges[0], edges[0]),
                 (SNR_block[0], SNR_block[0]), 'g', linewidth=1)
-        ax1.plot((edges[len(edges)-1], edges[len(edges)-1]+21600/2),
+        ax1.plot((edges[len(edges)-1], edges[len(edges)-1]),
                 (SNR_block[len(SNR_block)-1], SNR_block[len(SNR_block)-1]), 'g', linewidth=1)
         # Connection between the block in order to create a type of bars
         ax1.plot((edges[1:-1], edges[1:-1]),
                 (SNR_block[:-1], SNR_block[1:]), 'g', linewidth=1)
-        ax1.plot((edges[0]-21600/2, edges[0]-21600/2),
+        ax1.plot((edges[0], edges[0]),
                 (SNR_block[0], 0), 'g', linewidth=1)
-        ax1.plot((edges[len(edges)-1]+21600/2, edges[len(edges)-1] +
-                21600/2), (SNR_block[len(SNR_block)-1], 0), 'g', linewidth=1)
+        ax1.plot((edges[len(edges)-1], edges[len(edges)-1]), (SNR_block[len(SNR_block)-1], 0), 'g', linewidth=1)
         # Threshold
         ax1.plot(data[:, 0], (np.mean(N_s)/np.mean(N_s+2*N_b)) /
                 np.mean(data[:, 3])*5*np.ones(len(data)), 'r:', linewidth=1)
@@ -205,18 +206,17 @@ class BayesianBlocks:
         # Bayesian blocks of S (depends on the numbers of N_s and N_b inside the block)
         ax2.plot(((edges[1:]+edges[:-1])/2-(edges[1:]-edges[:-1])/2, (edges[1:] +
                                                                     edges[:-1])/2+(edges[1:]-edges[:-1])/2), (S_block, S_block), 'g', linewidth=1)
-        ax2.plot((edges[0], edges[0]-21600/2),
+        ax2.plot((edges[0], edges[0]),
                 (S_block[0], S_block[0]), 'g', linewidth=1)
-        ax2.plot((edges[len(edges)-1], edges[len(edges)-1]+21600/2),
+        ax2.plot((edges[len(edges)-1], edges[len(edges)-1]),
                 (S_block[len(S_block)-1], S_block[len(S_block)-1]), 'g', linewidth=1)
         # Bayesian blocks' error
         # Connection between the block in order to create a type of bars
         ax2.plot((edges[1:-1], edges[1:-1]),
                 (S_block[:-1], S_block[1:]), 'g', linewidth=1)
-        ax2.plot((edges[0]-21600/2, edges[0]-21600/2),
+        ax2.plot((edges[0], edges[0]),
                 (S_block[0], 0), 'g', linewidth=1)
-        ax2.plot((edges[len(edges)-1]+21600/2, edges[len(edges)-1] +
-                21600/2), (S_block[len(S_block)-1], 0), 'g', linewidth=1)
+        ax2.plot((edges[len(edges)-1], edges[len(edges)-1]), (S_block[len(S_block)-1], 0), 'g', linewidth=1)
         # Threshold
         ax2.plot(data[:, 0], (np.mean(N_s)/np.mean(N_s+2*N_b)) /
                 np.mean(data[:, 3])*5*np.ones(len(data)), 'r:', linewidth=1)
@@ -439,7 +439,7 @@ class BayesianBlocks:
             N_s = dataset["ratediffR4"] * dataset["exp"]
             N_s.loc[N_s < 0] = 0
             col1 = (N_s + N_b)/dataset["exp"]
-            m = dataset[["tstart", "rateError", "exp"]]
+            m = dataset[["tstart", "rateError", "exp", "cts"]]
             m.insert(1, "col1", col1, True)
             m = m.to_numpy()
             m = m[:values, :]
