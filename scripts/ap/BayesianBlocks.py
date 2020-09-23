@@ -154,16 +154,14 @@ class BayesianBlocks:
         ax0.plot((edges[len(edges)-1], edges[len(edges)-1]),
                 (mean_block[len(mean_block)-1], mean_block[len(mean_block)-1]), 'g', linewidth=1)
         # Bayesian blocks' error
-        ax0.plot(((edges[1:]+edges[:-1])/2, (edges[1:]+edges[:-1])/2),
-                (prop_upper_err_block, prop_lower_err_block), 'g', linewidth=.5, alpha=0.5)
+        ax0.plot(((edges[1:]+edges[:-1])/2, (edges[1:]+edges[:-1])/2), (prop_upper_err_block, prop_lower_err_block), 'g', linewidth=.5, alpha=0.5)
         # Data
-        ax0.plot(data[:, 0], data[:, 1], 'b_', markersize=3)
+        #ax0.plot(data[:, 0], data[:, 1], 'b_', markersize=3)
+        ax0.errorbar(data[:,0], data[:, 1], fmt="none", xerr=(data[:, 0] - data[:, 5])/2)
         # Error of data (col.20)
-        ax0.plot((data[:, 0], data[:, 0]), (data[:, 1]-data[:, 2],
-                                            data[:, 1]+data[:, 2]), 'b', linewidth=.5, alpha=0.5)
+        ax0.plot((data[:, 0], data[:, 0]), (data[:, 1]-data[:, 2], data[:, 1]+data[:, 2]), 'b', linewidth=.5, alpha=0.5)
         #Connection between the block in order to create a type of bars
-        ax0.plot((edges[1:-1], edges[1:-1]),
-                (mean_block[:-1], mean_block[1:]), 'g', linewidth=1)
+        ax0.plot((edges[1:-1], edges[1:-1]),(mean_block[:-1], mean_block[1:]), 'g', linewidth=1)
         ax0.plot((edges[0], edges[0]),
                 (mean_block[0], 0), 'g', linewidth=1)
         ax0.plot((edges[len(edges)-1], edges[len(edges)-1]), (mean_block[-1], 0), 'g', linewidth=1)
@@ -171,31 +169,24 @@ class BayesianBlocks:
         ax0.set_ylabel('Flux ph/cm2*s *10$^-5$')
         ax0.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
         ax01 = ax0.twinx()
-        ax01.errorbar(t, data[:,4], fmt="r.", yerr=np.sqrt(data[:,4]))
+        ax01.errorbar(t, data[:,4], fmt="r.", xerr=(data[:,0] - data[:,5])/2, yerr=np.sqrt(data[:,4]))
         #plt.show()
         #SNR
         # Bayesian blocks of SNR (depends on the numbers of N_s and N_b inside the block)
-        ax1.plot(((edges[1:]+edges[:-1])/2-(edges[1:]-edges[:-1])/2, (edges[1:]+edges[:-1]
-                                                                    )/2+(edges[1:]-edges[:-1])/2), (SNR_block, SNR_block), 'g', linewidth=1)
-        ax1.plot((edges[0], edges[0]),
-                (SNR_block[0], SNR_block[0]), 'g', linewidth=1)
-        ax1.plot((edges[len(edges)-1], edges[len(edges)-1]),
-                (SNR_block[len(SNR_block)-1], SNR_block[len(SNR_block)-1]), 'g', linewidth=1)
+        ax1.plot(((edges[1:]+edges[:-1])/2-(edges[1:]-edges[:-1])/2, (edges[1:]+edges[:-1])/2+(edges[1:]-edges[:-1])/2), (SNR_block, SNR_block), 'g', linewidth=1)
+        ax1.plot((edges[0], edges[0]),(SNR_block[0], SNR_block[0]), 'g', linewidth=1)
+        ax1.plot((edges[len(edges)-1], edges[len(edges)-1]), (SNR_block[len(SNR_block)-1], SNR_block[len(SNR_block)-1]), 'g', linewidth=1)
         # Connection between the block in order to create a type of bars
-        ax1.plot((edges[1:-1], edges[1:-1]),
-                (SNR_block[:-1], SNR_block[1:]), 'g', linewidth=1)
-        ax1.plot((edges[0], edges[0]),
-                (SNR_block[0], 0), 'g', linewidth=1)
+        ax1.plot((edges[1:-1], edges[1:-1]), (SNR_block[:-1], SNR_block[1:]), 'g', linewidth=1)
+        ax1.plot((edges[0], edges[0]), (SNR_block[0], 0), 'g', linewidth=1)
         ax1.plot((edges[len(edges)-1], edges[len(edges)-1]), (SNR_block[len(SNR_block)-1], 0), 'g', linewidth=1)
         # Threshold
-        ax1.plot(data[:, 0], (np.mean(N_s)/np.mean(N_s+2*N_b)) /
-                np.mean(data[:, 3])*5*np.ones(len(data)), 'r:', linewidth=1)
+        ax1.plot(data[:, 0], (np.mean(N_s)/np.mean(N_s+2*N_b)) / np.mean(data[:, 3])*5*np.ones(len(data)), 'r:', linewidth=1)
         # Condition that gives us which values are over the  threshold = 3
         count = 0
         for i in range(len(SNR_block)):
             if SNR_block[i] > (np.mean(N_s)/np.mean(N_s+2*N_b))/np.mean(data[:, 3])*5:
-                ax1.plot(((edges[i+1]+edges[i])/2-(edges[i+1]-edges[i])/2, (edges[i+1]+edges[i])/2+(
-                    edges[i+1]-edges[i])/2), (SNR_block[i], SNR_block[i]), 'k', linewidth=1)
+                ax1.plot(((edges[i+1]+edges[i])/2-(edges[i+1]-edges[i])/2, (edges[i+1]+edges[i])/2+(edges[i+1]-edges[i])/2), (SNR_block[i], SNR_block[i]), 'k', linewidth=1)
                 count += 1
         ax1.set_title('Signal Noise Ratio (SNR)')
         ax1.set_xlabel('TT time *10$^8$')
@@ -204,10 +195,8 @@ class BayesianBlocks:
         #plt.show()
         #### PLOT Significance S ####
         # Bayesian blocks of S (depends on the numbers of N_s and N_b inside the block)
-        ax2.plot(((edges[1:]+edges[:-1])/2-(edges[1:]-edges[:-1])/2, (edges[1:] +
-                                                                    edges[:-1])/2+(edges[1:]-edges[:-1])/2), (S_block, S_block), 'g', linewidth=1)
-        ax2.plot((edges[0], edges[0]),
-                (S_block[0], S_block[0]), 'g', linewidth=1)
+        ax2.plot(((edges[1:]+edges[:-1])/2-(edges[1:]-edges[:-1])/2, (edges[1:] + edges[:-1])/2+(edges[1:]-edges[:-1])/2), (S_block, S_block), 'g', linewidth=1)
+        ax2.plot((edges[0], edges[0]), (S_block[0], S_block[0]), 'g', linewidth=1)
         ax2.plot((edges[len(edges)-1], edges[len(edges)-1]),
                 (S_block[len(S_block)-1], S_block[len(S_block)-1]), 'g', linewidth=1)
         # Bayesian blocks' error
@@ -439,7 +428,7 @@ class BayesianBlocks:
             N_s = dataset["ratediffR4"] * dataset["exp"]
             N_s.loc[N_s < 0] = 0
             col1 = (N_s + N_b)/dataset["exp"]
-            m = dataset[["tstart", "rateError", "exp", "cts"]]
+            m = dataset[["tstart", "rateError", "exp", "cts", "tstop"]]
             m.insert(1, "col1", col1, True)
             m = m.to_numpy()
             m = m[:values, :]
