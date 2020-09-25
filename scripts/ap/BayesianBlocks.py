@@ -89,6 +89,40 @@ class BayesianBlocks:
         d.to_csv('BBdataset2.csv', index=True, sep=';')
         return(m)
 
+    def compute_SNR(self, b2, b3, b4, b5):
+        # b3: N_s grouped by blocks
+        # b4: N_b grouped by blocks
+        # b5: exp grouped by blocks
+
+        # SNR is a measure that compares the level of a desired signal to the level of background noise.
+        # SNR = N_s/np.sqrt(N_s+2*N_b)
+
+        SNR_block = list()  # SNR inside the block
+
+        for i in range(len(b2)):
+            SNR_block.append((np.sum(b3[i])/np.sqrt(np.sum(b3[i])+2*np.sum(b4[i])))/sum(b5[i]))
+        
+        return SNR_block
+
+    def compute_significance(self, b2, b3, b4, b5):
+        # b2: vector of flux of energies grouped by blocks
+        # b3: N_s grouped by blocks
+        # b4: N_b grouped by blocks
+        # b5: exp grouped by blocks
+
+        # S is for significance and it is an other way to evaluate relation between N_s and N:b
+        # Formula of S = np.sqrt(2*((N_s+N_b)*np.log(2*(N_s+N_b)/(N_s+2*N_b))+N_b*np.log(2*(N_b)/(N_s+2*N_b))))
+
+        S_block = list()
+
+        for i in range(len(b2)):
+            S_block.append((np.sqrt(2)*np.sqrt((np.sum(b3[i])+np.sum(b4[i]))*np.log(2*(np.sum(b3[i])+np.sum(b4[i]))/(np.sum(
+                b3[i])+2*np.sum(b4[i])))+np.sum(b4[i])*np.log(2*np.sum(b4[i])/(np.sum(b3[i])+2*np.sum(b4[i])))))/sum(b5[i]))
+        
+        return S_block
+
+
+
     def AllData(self, data, N_b, N_s, fitness, gamma, time_format):
         # SNR is a measure that compares the level of a desired signal to the level of background noise.
         # Formula of SNR = N_s/np.sqrt(N_s+2*N_b)
@@ -129,14 +163,13 @@ class BayesianBlocks:
         prop_lower_err_block = list()  # mean-1sigma error
         sum_N_b_block = list()  # sum of N_b inside the block
         sum_N_s_block = list()  # sum of N_s inside the block
-        SNR_block = list()  # SNR inside the block
-        S_block = list()  # Significance inside the block
+
+        SNR_block = self.compute_SNR(b2, b3, b4, b5) # SNR inside the block
+        
+        S_block = self.compute_significance(b2, b3, b4, b5)  # Significance inside the block
+        
         fig, (ax0, ax1, ax2) = plt.subplots(3, 1, figsize=(12, 16))
         for i in range(len(b2)):
-            S_block.append((np.sqrt(2)*np.sqrt((np.sum(b3[i])+np.sum(b4[i]))*np.log(2*(np.sum(b3[i])+np.sum(b4[i]))/(np.sum(
-                b3[i])+2*np.sum(b4[i])))+np.sum(b4[i])*np.log(2*np.sum(b4[i])/(np.sum(b3[i])+2*np.sum(b4[i])))))/sum(b5[i]))
-            SNR_block.append(
-                (np.sum(b3[i])/np.sqrt(np.sum(b3[i])+2*np.sum(b4[i])))/sum(b5[i]))
             sum_N_s_block.append(sum(b3[i]))
             sum_N_b_block.append(sum(b4[i]))
             mean_block.append(np.mean(b2[i]))
@@ -222,6 +255,7 @@ class BayesianBlocks:
         ax2.set_ylabel('S')
         print(count)
         plt.show()
+
 
     def RealTime(self, data, N_b, N_s, fitness, gamma, time_format):
         # SNR is a measure that compares the level of a desired signal to the level of background noise.
