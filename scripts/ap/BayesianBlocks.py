@@ -89,7 +89,7 @@ class BayesianBlocks:
         d.to_csv('BBdataset2.csv', index=True, sep=';')
         return(m)
 
-    def AllData(self, data, N_b, N_s):
+    def AllData(self, data, N_b, N_s, fitness, gamma, time_format):
         # SNR is a measure that compares the level of a desired signal to the level of background noise.
         # Formula of SNR = N_s/np.sqrt(N_s+2*N_b)
         # S is for significance and it is an other way to evaluate relation between N_s and N:b
@@ -100,7 +100,7 @@ class BayesianBlocks:
         # frequenza eventi per ogni intervallo di tempo
         x = np.round(data[:, 1]*1e+07)
     #Function of Bayesian block
-        edges = bayesian_blocks(t, x, fitness='events', gamma=3*1e-07)
+        edges = bayesian_blocks(t, x, fitness=fitness, gamma=gamma)
         # It is important to work with the density inside the block
         # a2[0] = Density in each block
         # a2_cum is the cumulative density
@@ -165,12 +165,12 @@ class BayesianBlocks:
         ax0.plot((edges[0], edges[0]),
                 (mean_block[0], 0), 'g', linewidth=1)
         ax0.plot((edges[len(edges)-1], edges[len(edges)-1]), (mean_block[-1], 0), 'g', linewidth=1)
-        ax0.set_xlabel('TT time *10$^8$')
+        ax0.set_xlabel(time_format )
         ax0.set_ylabel('Flux ph/cm2*s *10$^-5$')
         ax0.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
         ax01 = ax0.twinx()
         ax01.errorbar(t, data[:,4], fmt="r.", xerr=(data[:,0] - data[:,5])/2, yerr=np.sqrt(data[:,4]))
-        #plt.show()
+
         #SNR
         # Bayesian blocks of SNR (depends on the numbers of N_s and N_b inside the block)
         ax1.plot(((edges[1:]+edges[:-1])/2-(edges[1:]-edges[:-1])/2, (edges[1:]+edges[:-1])/2+(edges[1:]-edges[:-1])/2), (SNR_block, SNR_block), 'g', linewidth=1)
@@ -189,10 +189,10 @@ class BayesianBlocks:
                 ax1.plot(((edges[i+1]+edges[i])/2-(edges[i+1]-edges[i])/2, (edges[i+1]+edges[i])/2+(edges[i+1]-edges[i])/2), (SNR_block[i], SNR_block[i]), 'k', linewidth=1)
                 count += 1
         ax1.set_title('Signal Noise Ratio (SNR)')
-        ax1.set_xlabel('TT time *10$^8$')
+        ax1.set_xlabel(time_format)
         ax1.set_ylabel('SNR')
         print(count)
-        #plt.show()
+        
         #### PLOT Significance S ####
         # Bayesian blocks of S (depends on the numbers of N_s and N_b inside the block)
         ax2.plot(((edges[1:]+edges[:-1])/2-(edges[1:]-edges[:-1])/2, (edges[1:] + edges[:-1])/2+(edges[1:]-edges[:-1])/2), (S_block, S_block), 'g', linewidth=1)
@@ -216,13 +216,14 @@ class BayesianBlocks:
                 count += 1
                 ax2.plot(((edges[i+1]+edges[i])/2-(edges[i+1]-edges[i])/2, (edges[i+1]+edges[i])/2+(
                     edges[i+1]-edges[i])/2), (S_block[i], S_block[i]), 'k', linewidth=1)
+        
         ax2.set_title('Significance (S)')
-        ax2.set_xlabel('TT time *10$^8$')
+        ax2.set_xlabel(time_format)
         ax2.set_ylabel('S')
         print(count)
         plt.show()
 
-    def RealTime(self, data, N_b, N_s):
+    def RealTime(self, data, N_b, N_s, fitness, gamma, time_format):
         # SNR is a measure that compares the level of a desired signal to the level of background noise.
         # SNR = N_s/np.sqrt(N_s+2*N_b)
         # S is for significance and it is an other way to evaluate relation between N_s and N:b
@@ -244,7 +245,7 @@ class BayesianBlocks:
                 x = np.round(data[:i+1, 1]*1e+07)  # event
                 # Bayesian block function that gives as output edges of blocks
                 # bayesian blocks function
-                edges = bayesian_blocks(t, x, fitness='events', gamma=3*1e-07)
+                edges = bayesian_blocks(t, x, fitness, gamma)
                 # a2[0] gives us the density in each block
                 # a2[1] is also the edges of blocks
                 a2 = np.histogram(t, bins=edges)
@@ -269,7 +270,7 @@ class BayesianBlocks:
                     prop_upper_err_block.append(mean_block[j]+prop_err_block[j])
                     prop_lower_err_block.append(mean_block[j]-prop_err_block[j])
                     # Bayesian block using as height the mean_block
-                    plt.plot((t[c]-21600/2, t[a2_cum[j]-1]+21600/2),
+                    plt.plot((t[c], t[a2_cum[j]-1]),
                             (mean_block[-1], mean_block[-1]), 'g', linewidth=1)  # value
                     # Bayesian blocks' error
                     plt.plot(((t[c]+t[a2_cum[j]-1])/2, (t[c]+t[a2_cum[j]-1])/2),
@@ -279,10 +280,9 @@ class BayesianBlocks:
                     # Connection between the block in order to create a type of bars
                     plt.plot((edges[1:-1], edges[1:-1]),
                             (mean_block[:-1], mean_block[1:]), 'g', linewidth=1)
-                    plt.plot((t[0]-21600/2, t[0]-21600/2),
+                    plt.plot((t[0], t[0]),
                             (0, mean_block[0]), 'g', linewidth=1)
-                    plt.plot((t[a2_cum[-1]-1]+21600/2, t[a2_cum[-1]-1] +
-                            21600/2), (0, mean_block[-1]), 'g', linewidth=1)
+                    plt.plot((t[a2_cum[-1]-1], t[a2_cum[-1]-1]), (0, mean_block[-1]), 'g', linewidth=1)
             plt.xlabel('TT time *10$^8$')
             plt.ylabel('Flux ph/cm2*s *10$^-5$')
             plt.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
@@ -303,16 +303,16 @@ class BayesianBlocks:
                     # Plot of SNR
                     plt.plot(((edges[1:]+edges[:-1])/2-(edges[1:]-edges[:-1])/2, (edges[1:]+edges[:-1])/2+(
                         edges[1:]-edges[:-1])/2), (SNR_block, SNR_block), 'g', linewidth=1)
-                    plt.plot((edges[0], edges[0]-21600/2),
+                    plt.plot((edges[0], edges[0]),
                             (SNR_block[0], SNR_block[0]), 'g', linewidth=1)
                     plt.plot((edges[len(edges)-1], edges[len(edges)-1]+21600/2),
                             (SNR_block[len(SNR_block)-1], SNR_block[len(SNR_block)-1]), 'g', linewidth=1)
                     # Connection between the block in order to create a type of bars
                     plt.plot((edges[1:-1], edges[1:-1]),
                             (SNR_block[:-1], SNR_block[1:]), 'g', linewidth=1)
-                    plt.plot((edges[0]-21600/2, edges[0]-21600/2),
+                    plt.plot((edges[0], edges[0]),
                             (SNR_block[0], 0), 'g', linewidth=1)
-                    plt.plot((edges[-1]+21600/2, edges[-1]+21600/2),
+                    plt.plot((edges[-1], edges[-1]),
                             (0, SNR_block[-1]), 'g', linewidth=1)
                     # Threshold
                     plt.plot(data[:i+1, 0], (np.mean(N_s[:i+1])/np.mean(N_s[:i+1]+2*N_b[:i+1])) /
@@ -338,16 +338,16 @@ class BayesianBlocks:
                     # Value of S
                     plt.plot(((edges[1:]+edges[:-1])/2-(edges[1:]-edges[:-1])/2, (edges[1:]+edges[:-1])/2+(
                         edges[1:]-edges[:-1])/2), (S_block, S_block), 'g', linewidth=1)
-                    plt.plot((edges[0], edges[0]-21600/2),
+                    plt.plot((edges[0], edges[0]),
                             (S_block[0], S_block[0]), 'g', linewidth=1)
-                    plt.plot((edges[len(edges)-1], edges[len(edges)-1]+21600/2),
+                    plt.plot((edges[len(edges)-1], edges[len(edges)-1]),
                             (S_block[len(S_block)-1], S_block[len(S_block)-1]), 'g', linewidth=1)
                     # Connection between the block in order to create a type of bars
                     plt.plot((edges[1:-1], edges[1:-1]),
                             (S_block[:-1], S_block[1:]), 'g', linewidth=1)
-                    plt.plot((edges[0]-21600/2, edges[0]-21600/2),
+                    plt.plot((edges[0], edges[0]),
                             (S_block[0], 0), 'g', linewidth=1)
-                    plt.plot((edges[-1]+21600/2, edges[-1]+21600/2),
+                    plt.plot((edges[-1], edges[-1]),
                             (0, S_block[-1]), 'g', linewidth=1)
                     # Threshold
                     plt.plot(data[:i+1, 0], (np.mean(N_s[:i+1])/np.mean(N_s[:i+1]+2*N_b[:i+1])) /
@@ -367,8 +367,7 @@ class BayesianBlocks:
                 if stop == 'y' or stop == 'Y':
                     break
     
-    
-    def main(self, filepath, sel=2, values=100):
+    def main(self, filepath, sel=2, values=100, fitness="events", gamma=3*1e-07, time_format="MJD"):
         a = filepath
 
         ###---AP3
@@ -436,6 +435,6 @@ class BayesianBlocks:
         if sel == 1:
             self.BBdataset(m)
         elif sel == 2:
-            self.AllData(m, N_b, N_s)
+            self.AllData(m, N_b, N_s, fitness, gamma, time_format)
         elif sel == 3:
-            self.RealTime(m, N_b, N_s)
+            self.RealTime(m, N_b, N_s, fitness, gamma, time_format)
