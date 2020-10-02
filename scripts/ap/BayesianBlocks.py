@@ -201,8 +201,8 @@ class BayesianBlocks:
         ax0.set_xlabel(time_format )
         ax0.set_ylabel('Flux ph/cm2*s *10$^-5$')
         ax0.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
-        ax01 = ax0.twinx()
-        ax01.errorbar(t, data[:,4], fmt="r.", xerr=(data[:,0] - data[:,5])/2, yerr=np.sqrt(data[:,4]))
+        #ax01 = ax0.twinx()
+        #ax01.errorbar(t, data[:,4], fmt="r.", xerr=(data[:,0] - data[:,5])/2, yerr=np.sqrt(data[:,4]))
 
         #SNR
         # Bayesian blocks of SNR (depends on the numbers of N_s and N_b inside the block)
@@ -263,15 +263,16 @@ class BayesianBlocks:
         # S is for significance and it is an other way to evaluate relation between N_s and N:b
         # S = np.sqrt(2*((N_s+N_b)*np.log(2*(N_s+N_b)/(N_s+2*N_b))+N_b*np.log(2*(N_b)/(N_s+2*N_b))))
         # cumilative density within blocks
+        fig, (ax0, ax1, ax2) = plt.subplots(3, 1, figsize=(12, 16))
         for i in range(len(data[:, 0])):
             # Fix data in a scatter plot
-            plt.plot(data[:i+1, 0], data[:i+1, 1], 'b_')
+            ax0.plot(data[:i+1, 0], data[:i+1, 1], 'b_')
             y_03 = data[:i+1, 1]-data[:i+1, 2]
             y_04 = data[:i+1, 1]+data[:i+1, 2]
-            plt.plot((data[:i+1, 0][:i+1], data[:i+1, 0][:i+1]),
+            ax0.plot((data[:i+1, 0][:i+1], data[:i+1, 0][:i+1]),
                     (y_03[:i+1], y_04[:i+1]), 'b', linewidth=1, alpha=0.3)
-            plt.xlabel('TT time *10^8')
-            plt.ylabel('Flux ph/cm2*s *10^-8')
+            ax0.set_xlabel('TT time *10^8')
+            ax0.set_ylabel('Flux ph/cm2*s *10^-8')
             if i > 1:
                 # Bayesian block parameters
                 t = data[:i+1, 0]  # time
@@ -279,7 +280,8 @@ class BayesianBlocks:
                 x = np.round(data[:i+1, 1]*1e+07)  # event
                 # Bayesian block function that gives as output edges of blocks
                 # bayesian blocks function
-                edges = bayesian_blocks(t, x, fitness, gamma)
+                print(i)
+                edges = bayesian_blocks(t, x, fitness=fitness, gamma=gamma)
                 # a2[0] gives us the density in each block
                 # a2[1] is also the edges of blocks
                 a2 = np.histogram(t, bins=edges)
@@ -304,23 +306,23 @@ class BayesianBlocks:
                     prop_upper_err_block.append(mean_block[j]+prop_err_block[j])
                     prop_lower_err_block.append(mean_block[j]-prop_err_block[j])
                     # Bayesian block using as height the mean_block
-                    plt.plot((t[c], t[a2_cum[j]-1]),
+                    ax0.plot((t[c], t[a2_cum[j]-1]),
                             (mean_block[-1], mean_block[-1]), 'g', linewidth=1)  # value
                     # Bayesian blocks' error
-                    plt.plot(((t[c]+t[a2_cum[j]-1])/2, (t[c]+t[a2_cum[j]-1])/2),
+                    ax0.plot(((t[c]+t[a2_cum[j]-1])/2, (t[c]+t[a2_cum[j]-1])/2),
                             (prop_upper_err_block[j], prop_lower_err_block[j]), 'g', linewidth=1, alpha=0.3)
                     c = a2_cum[j]
                 if len(mean_block) > 1:
                     # Connection between the block in order to create a type of bars
-                    plt.plot((edges[1:-1], edges[1:-1]),
+                    ax0.plot((edges[1:-1], edges[1:-1]),
                             (mean_block[:-1], mean_block[1:]), 'g', linewidth=1)
-                    plt.plot((t[0], t[0]),
+                    ax0.plot((t[0], t[0]),
                             (0, mean_block[0]), 'g', linewidth=1)
-                    plt.plot((t[a2_cum[-1]-1], t[a2_cum[-1]-1]), (0, mean_block[-1]), 'g', linewidth=1)
-            plt.xlabel('TT time *10$^8$')
-            plt.ylabel('Flux ph/cm2*s *10$^-5$')
-            plt.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
-            plt.show()
+                    ax0.plot((t[a2_cum[-1]-1], t[a2_cum[-1]-1]), (0, mean_block[-1]), 'g', linewidth=1)
+            ax0.set_xlabel('TT time *10$^8$')
+            ax0.set_ylabel('Flux ph/cm2*s *10$^-5$')
+            ax0.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
+            #plt.show()
             if i > 1:
                 (c, b3, b4, b5, SNR_block) = (0, list(), list(), list(), list())
                 # b3: N_s grouped by blocks
@@ -335,31 +337,31 @@ class BayesianBlocks:
                     c = a2_cum[j]
                 if len(SNR_block) > 1:
                     # Plot of SNR
-                    plt.plot(((edges[1:]+edges[:-1])/2-(edges[1:]-edges[:-1])/2, (edges[1:]+edges[:-1])/2+(
+                    ax1.plot(((edges[1:]+edges[:-1])/2-(edges[1:]-edges[:-1])/2, (edges[1:]+edges[:-1])/2+(
                         edges[1:]-edges[:-1])/2), (SNR_block, SNR_block), 'g', linewidth=1)
-                    plt.plot((edges[0], edges[0]),
+                    ax1.plot((edges[0], edges[0]),
                             (SNR_block[0], SNR_block[0]), 'g', linewidth=1)
-                    plt.plot((edges[len(edges)-1], edges[len(edges)-1]+21600/2),
+                    ax1.plot((edges[len(edges)-1], edges[len(edges)-1]),
                             (SNR_block[len(SNR_block)-1], SNR_block[len(SNR_block)-1]), 'g', linewidth=1)
                     # Connection between the block in order to create a type of bars
-                    plt.plot((edges[1:-1], edges[1:-1]),
+                    ax1.plot((edges[1:-1], edges[1:-1]),
                             (SNR_block[:-1], SNR_block[1:]), 'g', linewidth=1)
-                    plt.plot((edges[0], edges[0]),
+                    ax1.plot((edges[0], edges[0]),
                             (SNR_block[0], 0), 'g', linewidth=1)
-                    plt.plot((edges[-1], edges[-1]),
+                    ax1.plot((edges[-1], edges[-1]),
                             (0, SNR_block[-1]), 'g', linewidth=1)
                     # Threshold
-                    plt.plot(data[:i+1, 0], (np.mean(N_s[:i+1])/np.mean(N_s[:i+1]+2*N_b[:i+1])) /
+                    ax1.plot(data[:i+1, 0], (np.mean(N_s[:i+1])/np.mean(N_s[:i+1]+2*N_b[:i+1])) /
                             np.mean(data[:i+1, 3])*5*np.ones(len(data[:i+1, 0])), 'r:', linewidth=1)
                     # Condition that gives us which values are over the  threshold = 3
                     for ij in range(len(SNR_block)):
                         if SNR_block[ij] > (np.mean(N_s[:i+1])/np.mean(N_s[:i+1]+2*N_b[:i+1]))/np.mean(data[:i+1, 3])*5:
-                            plt.plot(((edges[ij+1]+edges[ij])/2-(edges[ij+1]-edges[ij])/2, (edges[ij+1]+edges[ij])/2+(
+                            ax1.plot(((edges[ij+1]+edges[ij])/2-(edges[ij+1]-edges[ij])/2, (edges[ij+1]+edges[ij])/2+(
                                 edges[ij+1]-edges[ij])/2), (SNR_block[ij], SNR_block[ij]), 'k', linewidth=1)
-                    plt.title('Signal Noise Ratio')
-                    plt.xlabel('TT time *10$^8$')
-                    plt.ylabel('SNR')
-                    plt.show()
+                    ax1.set_title('Signal Noise Ratio')
+                    ax1.set_xlabel('TT time *10$^8$')
+                    ax1.set_ylabel('SNR')
+                    #plt.show()
                 (c, b3, b4, b5, S_block) = (0, list(), list(), list(), list())
                 for j in range(len(a2_cum)):
                     b4.append(N_b[c:a2_cum[j]])
@@ -370,57 +372,59 @@ class BayesianBlocks:
                     c = a2_cum[j]
                 if len(S_block) > 1:
                     # Value of S
-                    plt.plot(((edges[1:]+edges[:-1])/2-(edges[1:]-edges[:-1])/2, (edges[1:]+edges[:-1])/2+(
+                    ax2.plot(((edges[1:]+edges[:-1])/2-(edges[1:]-edges[:-1])/2, (edges[1:]+edges[:-1])/2+(
                         edges[1:]-edges[:-1])/2), (S_block, S_block), 'g', linewidth=1)
-                    plt.plot((edges[0], edges[0]),
+                    ax2.plot((edges[0], edges[0]),
                             (S_block[0], S_block[0]), 'g', linewidth=1)
-                    plt.plot((edges[len(edges)-1], edges[len(edges)-1]),
+                    ax2.plot((edges[len(edges)-1], edges[len(edges)-1]),
                             (S_block[len(S_block)-1], S_block[len(S_block)-1]), 'g', linewidth=1)
                     # Connection between the block in order to create a type of bars
-                    plt.plot((edges[1:-1], edges[1:-1]),
+                    ax2.plot((edges[1:-1], edges[1:-1]),
                             (S_block[:-1], S_block[1:]), 'g', linewidth=1)
-                    plt.plot((edges[0], edges[0]),
+                    ax2.plot((edges[0], edges[0]),
                             (S_block[0], 0), 'g', linewidth=1)
-                    plt.plot((edges[-1], edges[-1]),
+                    ax2.plot((edges[-1], edges[-1]),
                             (0, S_block[-1]), 'g', linewidth=1)
                     # Threshold
-                    plt.plot(data[:i+1, 0], (np.mean(N_s[:i+1])/np.mean(N_s[:i+1]+2*N_b[:i+1])) /
+                    ax2.plot(data[:i+1, 0], (np.mean(N_s[:i+1])/np.mean(N_s[:i+1]+2*N_b[:i+1])) /
                             np.mean(data[:i+1, 3])*5*np.ones(len(data[:i+1, 0])), 'r:', linewidth=1)
                     # Condition that gives us which values are over the  threshold = 3
                     for ij in range(len(S_block)):
                         if S_block[ij] > (np.mean(N_s[:i+1])/np.mean(N_s[:i+1]+2*N_b[:i+1]))/np.mean(data[:i+1, 3])*5:
-                            plt.plot(((edges[ij+1]+edges[ij])/2-(edges[ij+1]-edges[ij])/2, (edges[ij+1]+edges[ij])/2+(
+                            ax2.plot(((edges[ij+1]+edges[ij])/2-(edges[ij+1]-edges[ij])/2, (edges[ij+1]+edges[ij])/2+(
                                 edges[ij+1]-edges[ij])/2), (S_block[ij], S_block[ij]), 'k', linewidth=1)
-                    plt.title('S')
-                    plt.xlabel('TT time *10$^8$')
-                    plt.ylabel('S')
+                    ax2.set_title('S')
+                    ax2.set_xlabel(time_format + ' time')
+                    ax2.set_ylabel('S')
                     plt.show()
-            if i < 116:
-                print('Do you want to stop the program? Press y to quit')
-                stop = input()
-                if stop == 'y' or stop == 'Y':
-                    break
+            if i == 50:
+                print('fine')
+                break
+                #stop = input()
+                #if stop == 'y' or stop == 'Y':
+                #    break
     
     def main(self, filepath, sel=2, values=100, fitness="events", gamma=3*1e-07, time_format="MJD"):
         a = filepath
 
         ###---AP3
         if a[len(a)-4:len(a)] == '.ap3':
-            dataset = np.fromfile(a, sep=' ')
-            dataset = dataset.reshape(len(dataset)//27, 27)
-            dataset = dataset[2:, ]
+            header = ["tstart", "tstop", "exp", "cts", "normAB11", "normAB12", "normAB13", "normAB14", "normAB21", "normAB22", "normAB23", "normAB24", "normAB11aa", "normAB21aa", "ratediffR1", "ratediffR2", "ratediffR3", "ratediffR4", "ratediffR1AA", "rate", "rate_error", "flux_ratediffR4", "flux_ratediffR4_error", "Sa", "flux_rate", "flux_rate_error", "cts_expBKGR4", "Slm", "SignUL", "N_sourceUL", "rateUL", "fluxUL", "SignSens3", "N_sourceSens3", "rateSens3", "fluxSens3", "SignSens4", "N_sourceSens4", "rateSens4", "fluxSens4", "SignSens5", "N_sourceSens5", "rateSens5", "fluxSens5", "fluxscalefactor", "ratew_meanR1", "ratew_meanR2", "ratew_meanR3", "ratew_meanR4", "ratew_meanR1aa"]
+            dataset = pd.read_csv(a, sep=" ", names=header)
+           
             data = copy.copy(dataset)
-            N_b = data[:, 26]
-            N_s = data[:, 17] * data[:, 2]
-            for i in range(len(N_s)):
-                if N_s[i] < 0:
-                    N_s[i] = 0
-            m = data[:, 0]
-            m = np.append(m, (N_s+N_b)/data[:, 2])
-            m = np.append(m, data[:, 20])
-            m = np.append(m, data[:, 2])
-            m = np.transpose(m.reshape(4, 117))
-        
+            N_b = dataset["cts_expBKGR4"]
+            N_s = dataset["ratediffR4"] * dataset["exp"]
+            N_s.loc[N_s < 0] = 0
+            col1 = (N_s + N_b)/dataset["exp"]
+            m = dataset[["tstart", "rate_error", "exp", "cts", "tstop"]]
+            m.insert(1, "col1", col1, True)
+            print(m["cts"])
+            print(N_b + N_s)
+
+            m = m.to_numpy()
+            m = m[:values, :]
+            
         ###----CSV
         elif a[len(a)-4:len(a)] == '.csv':  # da correggere
             data_input = pd.read_csv(a, sep=';')
