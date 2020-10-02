@@ -95,8 +95,8 @@ class APDisplayAGILEFermiComparison:
         #fermi_data.loc[fermi_data['cts'] == 0, 'rateError'] = 0
         if plotrate:
             fermi_data.loc[fermi_data['rateError'] > 1000e-08, 'rateError'] = 0
-            fermi_data.loc[fermi_data['rateError'] > 1000e-08, 'rate'] = 0
-            fermi_data.loc[fermi_data['rate'] > 4000e-08, 'rate'] = 0
+            #fermi_data.loc[fermi_data['rateError'] > 1000e-08, 'rate'] = 0
+            fermi_data.loc[fermi_data['rate'] > 10000e-08, 'rate'] = 0
             yerrFermi = fermi_data["rateError"]*1e8
             #print(fermi_data["tstart"], fermi_data["tstop"], fermi_data["rateError"], fermi_data["rate"])
             twFermi = tmFermi -  self.time_tt_to_mjd(fermi_data["tstart"])
