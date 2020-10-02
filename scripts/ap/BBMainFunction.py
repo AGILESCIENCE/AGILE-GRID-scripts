@@ -40,7 +40,7 @@ def main():
         if i == '1':
             BBdataset(m)
         elif i == '2':
-           AllData(m,N_b,N_s)
+            AllData(m,N_b,N_s)
         elif i == '3':
             RealTime(m,N_b,N_s)
         elif i == 'q' or i == 'Q':
@@ -72,7 +72,7 @@ def main():
             if i == '1':
                 BBdataset(m)
             elif i == '2':
-               AllData(m,N_b,N_s)
+                AllData(m,N_b,N_s)
             elif i == '3':
                 RealTime(m,N_b,N_s)
             elif i == 'q' or i == 'Q':
@@ -116,7 +116,7 @@ def main():
         if i == '1':
             BBdataset(m)
         elif i == '2':
-           AllData(m,N_b,N_s)
+            AllData(m,N_b,N_s)
         elif i == '3':
             RealTime(m,N_b,N_s)
         elif i == 'q' or i == 'Q':
