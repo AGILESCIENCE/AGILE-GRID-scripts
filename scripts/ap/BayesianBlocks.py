@@ -419,8 +419,8 @@ class BayesianBlocks:
             col1 = (N_s + N_b)/dataset["exp"]
             m = dataset[["tstart", "rate_error", "exp", "cts", "tstop"]]
             m.insert(1, "col1", col1, True)
-            print(m["cts"])
-            print(N_b + N_s)
+            #print(m["cts"])
+            #print(N_b + N_s)
 
             m = m.to_numpy()
             m = m[:values, :]
