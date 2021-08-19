@@ -106,10 +106,7 @@ def extract_data(file_name,tstart_window_mjd,tstop_window_mjd):
                     if(sqrtts<3):
                        flux_ul = flux
 
-
-
-
-                if(file_name.endswith(".ap3")):
+                if(file_name.endswith(".ap3") or file_name.endswith(".ap4")):
 
                     if(line.startswith("tstart")):
                        continue
@@ -124,7 +121,7 @@ def extract_data(file_name,tstart_window_mjd,tstop_window_mjd):
                     #check time window
                     if(tstart_window_mjd!=-1 and tstop_window_mjd!=-1):
                         if(tstart<tstart_window_mjd or tstart>tstop_window_mjd ):
-
+                            print("continue")
                             continue
 
 
@@ -279,7 +276,7 @@ if(mode=="1"):
         if(count==0):
             count=1
             continue
-
+        
         if(detection['sqrtts']<3):
             #add arrow
             #plt.arrow(detection['x'],detection['flux'],0,-70,width=1,head_width=10,head_starts_at_zero=True)
