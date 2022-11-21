@@ -1,4 +1,1 @@
-AGILE-grid-scripts.xcodeproj/project.xcworkspace/xcuserdata/bulgarelli.xcuserdatad/UserInterfaceState.xcuserstate
-*.xcuserstate
-*.pyc
-.DS_Store
+__pycache__
