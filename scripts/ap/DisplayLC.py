@@ -1016,6 +1016,7 @@ if __name__ == "__main__":
     tstop_window_mjd = float(sys.argv[5])
 
     file_one = sys.argv[6]
+    file_two = ""
     if(mode=="2"):
         file_two = sys.argv[7]
 
