@@ -7,4 +7,5 @@ def specwt(ei, ei1, emin, emax, index):
 	return weight
 if __name__ == "__main__":
 	import sys
-	print specwt(float(sys.argv[1]), float(sys.argv[2]), float(sys.argv[3]), float(sys.argv[4]), float(sys.argv[5]))
+	res=specwt(float(sys.argv[1]), float(sys.argv[2]), float(sys.argv[3]), float(sys.argv[4]), float(sys.argv[5]))
+	print(res)
