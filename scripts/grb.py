@@ -29,7 +29,7 @@ def fromGaltoRaDec(l_coord, b_coord):
 
 def grb_pipe(ofd, sigmafd, evt_file='', log_file='', GRB_time = 0., GRB_l = 0., GRB_b = 0., GRB_ra=0., GRB_dec=0., t1s=0., t2s=0., t1b=0., t2b=0., raggio=0., fov=0., ea_th=0.):
     if (evt_file=='' or log_file==''):
-        print 'FATAL ERROR: Wrong input parameters!!!!'
+        print('FATAL ERROR: Wrong input parameters!!!!')
         return
 
     print >> ofd, ''

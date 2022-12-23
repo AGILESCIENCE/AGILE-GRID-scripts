@@ -128,7 +128,7 @@ def main(argv):
     parser.add_argument("-b", "-bcolumn", help="b column number inside the list of points file (default 1)", type=int, default=1)
     args = parser.parse_args()
 
-    print "Parsing contour file.."
+    print("Parsing contour file..")
     fc = numpy.loadtxt(args.polygon)
     c_gal_l = fc[:,0].astype(numpy.float)
     c_gal_b = fc[:,1].astype(numpy.float)
@@ -144,7 +144,7 @@ def main(argv):
     nv = c_gal_l.shape[0]
 #    numpy.savetxt(args.polygon+'.ait', numpy.c_[c_x, c_y], delimiter=' ', fmt="%f")
 
-    print "Parsing points file.."
+    print("Parsing points file..")
     lines=[]
     with open(args.points, 'r') as fl:
         for line in fl.readlines():
@@ -162,7 +162,7 @@ def main(argv):
 
     fo = open(args.output, 'w')
 
-    print "Filtering.."
+    print("Filtering..")
     for p in xrange(p_x.shape[0]):
         testx = p_x[p];
         testy = p_y[p];
@@ -182,7 +182,7 @@ def main(argv):
 #            print "outside!"
 
     fo.close()
-    print "Done."
+    print("Done.")
 
 if __name__ == "__main__":
    main(sys.argv[1:])

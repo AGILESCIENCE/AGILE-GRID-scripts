@@ -33,26 +33,26 @@ def computeUL(help=1, sens_type = 'DIFF', expmap='', gasmap='', gal = 0.7, iso =
     
     if (help == 1):
     
-        print '--------------------------------------------------------------'
-        print '                      xphs_vf parameters                      '
-        print '--------------------------------------------------------------'
+        print('--------------------------------------------------------------')
+        print('                      xphs_vf parameters                      ')
+        print('--------------------------------------------------------------')
     
-        print '- help: set to 1 to get usage instructions'
-        print '- sens_type:'
-        print '     - DIFF = differential sensitivity'
-        print '     - INT = integral sensitivity'
-        print '- expmap = file name for the EXP map'
-        print '- gasmap = file name for the GAS map'
-        print '- gal = background gal value'
-        print '- iso = background iso value (the value is implicitly multiplied by e-05)'
-        print '- cont = minimum number of signal photons'
-        print '- sign = minimum significance'
-        print '- emin = minimum energy [MeV]'
-        print '- emax = maximum energy [MeV]'
-        print '- model = source spectral model (0 = power-law in the form E^-index)'
-        print '- index = power-law index'
-        print '- par2 = model parameter 2'
-        print '- par3 = model parameter 3'
+        print('- help: set to 1 to get usage instructions')
+        print('- sens_type:')
+        print('     - DIFF = differential sensitivity')
+        print('     - INT = integral sensitivity')
+        print('- expmap = file name for the EXP map')
+        print('- gasmap = file name for the GAS map')
+        print('- gal = background gal value')
+        print('- iso = background iso value (the value is implicitly multiplied by e-05)')
+        print('- cont = minimum number of signal photons')
+        print('- sign = minimum significance')
+        print('- emin = minimum energy [MeV]')
+        print('- emax = maximum energy [MeV]')
+        print('- model = source spectral model (0 = power-law in the form E^-index)')
+        print('- index = power-law index')
+        print('- par2 = model parameter 2')
+        print('- par3 = model parameter 3')
     
     else:
 
