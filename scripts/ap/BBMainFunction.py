@@ -409,5 +409,5 @@ def RealTime(data,N_b,N_s):
             if stop == 'y' or stop == 'Y':
                 break
     
-
-main()
+if __name__=='__main__':
+    main()

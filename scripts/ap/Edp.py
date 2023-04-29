@@ -169,8 +169,8 @@ class Edp:
 
 
 
-if __name__ == "__main__":
 
+def main():
 	par1 = 1.7
 	par2 = 3403 #ec
 	par3 = 0
@@ -183,3 +183,5 @@ if __name__ == "__main__":
 	
 
 	#detCorrectionSpectraFactorSimple(4, 12, par1)
+if __name__ == "__main__":
+	main()

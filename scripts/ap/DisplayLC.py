@@ -1008,7 +1008,7 @@ class DisplayLC:
             plt.show()
 
 
-if __name__ == "__main__":
+def main():
     mode = sys.argv[1]
     scatter = sys.argv[2]
     fixed_flux = float(sys.argv[3])
@@ -1023,3 +1023,7 @@ if __name__ == "__main__":
     apdisplay = DisplayLC()
 
     apdisplay.display(mode, scatter, fixed_flux, tstart_window_mjd, tstop_window_mjd, file_one, file_two)
+
+
+if __name__ == "__main__":
+    main()
