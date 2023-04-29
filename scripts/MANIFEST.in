@@ -1,0 +1,14 @@
+include README.md
+
+recursive-include * *.py
+recursive-include * *.ipynb
+recursive-include * *.ap
+recursive-include * *.ph
+recursive-include * *.lc
+recursive-include * *.compare
+
+recursive-exclude * __pycache__
+recursive-exclude * *.egg-info
+recursive-exclude * *.pyc
+recursive-exclude * *.out
+prune out*

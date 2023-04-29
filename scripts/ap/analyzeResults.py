@@ -1,6 +1,7 @@
 import os
 import sys
-if __name__ == '__main__':
+
+def main():
 	filename = sys.argv[1]
 	period = 8.4474
 	fractionofday = 2/24.0
@@ -27,3 +28,5 @@ if __name__ == '__main__':
 
 			#	if time >= period/2 - fractionofday and time <= period/2 + fractionofday:
                          #               print(filename + " - " + line)
+if __name__ == '__main__':
+	main()

@@ -438,10 +438,9 @@ class SimAP:
 			print('mean rate sim  [cts / cm2 s]: %.3e +/- %.3e ' % (meanratesim/len(tstartA), math.sqrt(meanratesimerr) / expsum))
 
 
-if __name__ == "__main__":
+def main():
 
 	#execute this class from command nline
-
 	apfile = sys.argv[1]
 	windowfile = sys.argv[2]
 	mode = sys.argv[3]
@@ -453,3 +452,5 @@ if __name__ == "__main__":
 
 
 	#test
+if __name__ == "__main__":
+	main()
