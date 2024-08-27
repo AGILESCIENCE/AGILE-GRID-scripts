@@ -4,13 +4,19 @@ import matplotlib.pyplot as plt
 from scipy.stats import norm
 from matplotlib.gridspec import GridSpec
 from matplotlib.ticker import MultipleLocator
+from datetime import datetime, timedelta
 
-#### USAGE #####
+"""Display LC in MLE or AP
 
-# python display_lc.py [mode 1-2] [scatter plot 0-1] [fixed flux or -1] [tstart_window_mjd] [tstart_window_mjd] filepath1 filepath2 [optional, only if mode=2]
+Display LC in MLE or AP
+========================================
+
+Usage:
+python display_lc.py [mode 1-2] [scatter plot 0-1] [fixed flux or -1] [tstart_window_mjd] [tstart_window_mjd] filepath1 filepath2 [optional, only if mode=2]
 # mode 1 -> only one file, mode = 2 -> two file in input
 # fixed flux showed inside plot
 
+"""
 class DisplayLC:
 
     def __init__(self):
@@ -18,64 +24,189 @@ class DisplayLC:
 
     def time_tt_to_mjd(self, tt_time):
         return (float(tt_time) / 86400.0)+53005.0
+    
+    
+    def met_to_mjd(time):
+        """Convert mean julian date to mission elapse time."""
+        correction = 0.0006962818548948615
+        return time / (86400. + correction) + 51910
+
+
+    def fermi_seconds_to_mjd(self, fermi_seconds):
+        """
+        Converti i secondi Fermi dal 2001.0 UTC in Modified Julian Date (MJD), tenendo conto dei leap seconds.
+
+        Parametri:
+        - fermi_seconds (float): Numero di secondi trascorsi dal 1 gennaio 2001 00:00:00 UTC.
+
+        Ritorna:
+        - mjd (float): La Modified Julian Date (MJD) risultante.
+        """
+
+        # Definire le date dei leap seconds dal 2001
+        leap_seconds_dates = [
+            datetime(2006, 1, 1),
+            datetime(2009, 1, 1),
+            datetime(2012, 7, 1),
+            datetime(2015, 7, 1),
+            datetime(2017, 1, 1)
+        ]
+
+        # Data di riferimento: 1 gennaio 2001
+        reference_date = datetime(2001, 1, 1)
+
+        # MJD di riferimento per il 1 gennaio 2001
+        reference_mjd = 51910
+
+        # Calcola la data corrispondente ai secondi Fermi dal 2001
+        target_date = reference_date + timedelta(seconds=fermi_seconds)
+
+        # Conta il numero di leap seconds fino alla data target
+        leap_seconds_count = sum(1 for leap_date in leap_seconds_dates if target_date >= leap_date)
+
+        # Secondi di Fermi meno i leap seconds
+        adjusted_fermi_seconds = fermi_seconds - leap_seconds_count
+
+        # Converti i secondi Fermi in giorni
+        days_since_2001 = adjusted_fermi_seconds / 86400  # 86400 secondi in un giorno
+
+        # Calcola il MJD
+        mjd = reference_mjd + days_since_2001
+
+        return mjd
 
     def find_min_max_axes(self, array_one,array_two):
 
-            min_one = np.amin(array_one)
-            min_two = np.amin(array_two)
-            min = np.amin([min_two,min_one])
+        min_one = np.amin(array_one)
+        min_two = np.amin(array_two)
+        min = np.amin([min_two,min_one])
 
-            max_one = np.amax(array_one)
-            max_two = np.amax(array_two)
-            max = np.amax([max_one,max_two])
+        max_one = np.amax(array_one)
+        max_two = np.amax(array_two)
+        max = np.amax([max_one,max_two])
 
-            return min,max
+        return min,max
 
 
     def extract_data(self, file_name,tstart_window_mjd,tstop_window_mjd):
-        flux_notation = 100000000
+        flux_notation = 10e7
         exp_notation = 1000000
 
         detection_array = []
 
+        nline = 0
         with open(file_name) as fp:
             for cnt, line in enumerate(fp):
                 sqrtts = 0
 
                 if(file_name.endswith(".fermi.lc")):
                     #folder sources ts npred flux flux_err flux_ul95 flux100_ul95 eflux eflux_err eflux100 eflux100_err eflux_ul95 sens3 sens35 sens4 sens5 tmin tmax tmin(MJD) tmax(MJD) phase
+                    #Note tmin and tmax are in MET
                     tstart = float(line.split()[19])
                     tstop =  float(line.split()[20])
 
                     #check time window
                     if(tstart_window_mjd!=-1 and tstop_window_mjd!=-1):
-                       if(tstart<tstart_window_mjd or tstart>tstop_window_mjd ):
-                           continue
+                        if(tstart<tstart_window_mjd or tstart>tstop_window_mjd ):
+                            continue
 
 
                     x = tstart+(tstop-tstart)/2
                     x_err =  (tstop-tstart)/2
                     flux =  float(line.split()[4])*flux_notation
                     if(flux == -1):
-                       flux=0
+                        flux=0
                     exp = 0
                     exp_norm = -1
                     flux_err =  float(line.split()[5])*flux_notation
                     if(float(line.split()[2])>0):
-                       sqrtts =  np.sqrt(float(line.split()[2]))
+                        sqrtts =  np.sqrt(float(line.split()[2]))
                     else:
-                       sqrtts =  0
-                    count = -1
-                    count_bkg = -1
-                    count_err = -1
-                    count_bkg_err = -1
-                    rate = -1
-                    rate_err = -1
+                        sqrtts =  0
+                    count = 0
+                    count_bkg = 0
+                    count_err = 0
+                    count_bkg_err = 0
+                    rate = 0
+                    rate_err = 0
                     flux_ul = float(line.split()[6])*flux_notation
                     sensitivity = -1
 
                     if(sqrtts<3):
-                       flux_ul = flux
+                        flux_ul = flux
+                    
+                if(file_name.endswith(".fermi2.lc")):
+                    #Ambra's tools
+                    #tmin tmax time_start_mjd time_end_mjd phase ts npred flux flux_err flux_ul95 flux100_ul95 eflux eflux_err eflux100 eflux100_err eflux_ul95 sens3 sens35 sens4 sens5 gal_Prefactor_value gal_Prefactor_error gal_Index_value gal_Index_error iso_Normalization_value iso_Normalization_error source_Prefactor_value source_Prefactor_error source_Index_value source_Index_error source_RA_value source_RA_error source_DEC_value source_DEC_error
+                    #Note tmin and tmax are in MET
+                    if(line.startswith("tmin")):
+                        continue
+                    tstart = float(line.split()[2])
+                    tstop =  float(line.split()[3])
+
+                    #check time window
+                    if(tstart_window_mjd!=-1 and tstop_window_mjd!=-1):
+                        if(tstart<tstart_window_mjd or tstart>tstop_window_mjd ):
+                            continue
+
+
+                    x = tstart+(tstop-tstart)/2
+                    x_err =  (tstop-tstart)/2
+                    flux =  float(line.split()[7])*flux_notation
+                    if(flux == -1):
+                        flux=0
+                    exp = 0
+                    exp_norm = -1
+                    flux_err =  float(line.split()[8])*flux_notation
+                    if(float(line.split()[5])>0):
+                        sqrtts =  np.sqrt(float(line.split()[2]))
+                    else:
+                        sqrtts =  0
+                    count = float(line.split()[6])
+                    count_bkg = 0
+                    count_err = np.sqrt(count)
+                    count_bkg_err = 0
+                    rate = 0
+                    rate_err = 0
+                    flux_ul = float(line.split()[9])*flux_notation
+                    sensitivity = float(line.split()[16])*flux_notation
+
+                    if(sqrtts<3):
+                        flux_ul = flux
+ 
+                if(file_name.endswith(".fermi.ap")):
+                    #aperture.pl modified with additional counts column
+                    #$time $rate $rerr $timedel $prerr $exposure $counts
+                    #Note time is in MET
+
+                    tstart = self.fermi_seconds_to_mjd(float(line.split()[0]) - float(line.split()[3]))
+                    tstop =  self.fermi_seconds_to_mjd(float(line.split()[0]) + float(line.split()[3]))
+
+                    #check time window
+                    if(tstart_window_mjd!=-1 and tstop_window_mjd!=-1):
+                        if(tstart<tstart_window_mjd or tstart>tstop_window_mjd ):
+                            continue
+
+                    x = tstart+(tstop-tstart)/2
+                    x_err =  (tstop-tstart)/2
+                    flux =  float(line.split()[1])*flux_notation
+                    #print(x, flux)
+                    if(flux == -1):
+                        flux=0
+                    exp = float(line.split()[5])
+                    exp_norm = -1
+                    flux_err =  float(line.split()[2])*flux_notation
+
+                    sqrtts =  4
+                    count = float(line.split()[6])
+                    count_bkg = 0
+                    count_err = np.sqrt(count)
+                    count_bkg_err = 0
+                    rate = flux #be carefull
+                    rate_err = flux_err #be carefull
+                    flux_ul = 0
+                    sensitivity = 0
+                
 
                 if(file_name.endswith(".mle.lc")):
 
@@ -84,38 +215,38 @@ class DisplayLC:
 
                     #check time window
                     if(tstart_window_mjd!=-1 and tstop_window_mjd!=-1):
-                       if(tstart<tstart_window_mjd or tstart>tstop_window_mjd ):
-                           continue
+                        if(tstart<tstart_window_mjd or tstart>tstop_window_mjd ):
+                            continue
 
 
                     x = tstart+(tstop-tstart)/2
                     x_err =  (tstop-tstart)/2
                     flux =  float(line.split()[0])*flux_notation
                     if(flux == -1):
-                       flux=0
+                        flux=0
                     exp = float(line.split()[8])/exp_notation
                     exp_norm = -1
                     flux_err =  float(line.split()[1])*flux_notation
                     if(float(line.split()[7])>0):
-                       sqrtts =  float(line.split()[7])
+                        sqrtts =  float(line.split()[7])
                     else:
-                       sqrtts =  0
-                    count = -1
-                    count_bkg = -1
-                    count_err = -1
-                    count_bkg_err = -1
-                    rate = -1
-                    rate_err = -1
+                        sqrtts =  0
+                    count = 0
+                    count_bkg = 0
+                    count_err = 0
+                    count_bkg_err = 0
+                    rate = 0
+                    rate_err = 0
                     flux_ul = -1
                     sensitivity = -1
 
                     if(sqrtts<3):
-                       flux_ul = flux
+                        flux_ul = flux
 
                 if(file_name.endswith(".ap3") or file_name.endswith(".ap4")):
-
+                    flux_notation = 1.3*10e7
                     if(line.startswith("tstart")):
-                       continue
+                        continue
 
                     components = line.split()
 
@@ -154,9 +285,9 @@ class DisplayLC:
                     #27 Slima
                     sindex=27
                     if(float(components[sindex])>0):
-                       sqrtts =  float(components[sindex]) #S
+                        sqrtts =  float(components[sindex]) #S
                     else:
-                       sqrtts =  0
+                        sqrtts =  0
                     count = float(components[3])
                     count_err = float(np.sqrt(count))
                     count_bkg = float(components[26])
@@ -177,10 +308,12 @@ class DisplayLC:
                     #else:
                     #  print(file_name)
                       #print(line)
+                        
+                nline = nline + 1
 
                 detection_array.append({"x":x,"x_err":x_err,"rate":rate,"rate_err":rate_err,"count":count,"count_err":count_err,"count_bkg":count_bkg,"count_bkg_err":count_bkg_err,"tstart":tstart,"tstop":tstop,"flux":flux,"flux_err":flux_err,"sqrtts":sqrtts,"exp":exp,"exp_norm":exp_norm,"flux_ul":flux_ul,"sensitivity":sensitivity})
 
-
+        #print(detection_array)
         return detection_array
 
 
