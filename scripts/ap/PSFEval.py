@@ -165,7 +165,7 @@ class PSFEval:
 		return fluxscalefactor
 	
 	
-	def EvalPSFScaleFactor2(self, ranal=4, emin=100, emax=10000, gindex=2.1, source_theta=30, source_phi=0, verbose=0, plot_flag=False):
+	def EvalPSFScaleFactor2(self, ranal=4, emin=100, emax=10000, gindex=2.1, source_theta=30, source_phi=0, verbose=0, plot_flag=True):
 	
 		irf_path = os.environ['AGILE'] + '/model/scientific_analysis/data/'
 

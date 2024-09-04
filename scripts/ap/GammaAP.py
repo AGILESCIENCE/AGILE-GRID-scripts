@@ -240,8 +240,8 @@ class GammaAP:
 
 		self.tstartA = np.zeros(self.diml)
 		self.tstopA = np.zeros(self.diml)
-		self.expdataA = np.zeros(self.diml) #[cm2 s}
-		self.ctsdataA = np.zeros(self.diml) #cts 
+		self.expdataA = np.zeros(self.diml) #[cm2 s]
+		self.ctsdataA = np.zeros(self.diml) #[cts] 
 
 		nline = 0
 		with open(apfile, "r") as ins:
@@ -352,6 +352,8 @@ class GammaAP:
 		for e_i in self.expdataA:
 			
 			#flux -> flux_ratediffR4
+			#fluxscalefactor = fluxscalefactorpsf / fluxscalefactorspectra
+			#flux_ratediffR4 = rate * fluxscalefactorspectra  / fluxscalefactorpsf
 			self.res[n,17] = self.res[n,13] / float(fluxscalefactor)
 			
 			#flux error -> flux_ratediffR4Error

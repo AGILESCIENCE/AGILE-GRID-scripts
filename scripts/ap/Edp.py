@@ -25,6 +25,7 @@ from math import pow
 import numpy as np
 import os
 from astropy.io import fits
+from scipy.integrate import quad
 
 class Edp:
 
@@ -84,10 +85,79 @@ class Edp:
 
 	def UpdateNormPL(self, eMin, eMax, index):
 
-		index = 1.0-index
-		m_normFactor = (pow(eMin, index)-pow(eMax, index))
+		#index = 1.0-index
+		#m_normFactor = (pow(eMin, index)-pow(eMax, index))
 
-		return m_normFactor
+		if index == 1:
+			return np.log(eMax) - np.log(eMin)
+		else:
+			return (eMax ** (1.0 - index) - eMin ** (1.0 - index)) / (1.0 - index)
+
+		#return m_normFactor
+
+	def update_integrator(self, eMin, eMax, index, integrator_type=3, function_type='powerlaw', Ec=None, gamma2=None, E_break=None, index1=None, index2=None, beta=None, x0=None):
+		"""
+		Integrate a given function over specified ranges using scipy's quad integrator.
+
+		Parameters:
+		- eMin: The lower bound of the integration range.
+		- eMax: The upper bound of the integration range.
+		- index: The exponent parameter for the power law to integrate.
+		- integrator_type: An integer indicating the precision of the integration.
+		- function_type: The type of function to integrate ('powerlaw', 'superexp', 'brokenpowerlaw', 'expcutoff', 'logparabola').
+		- Ec: Cutoff energy for the super exponential cutoff and exponential cutoff.
+		- gamma2: Super exponential factor for the super exponential cutoff.
+		- E_break: Break energy for the broken power law.
+		- index1: Exponent for the power law before the break.
+		- index2: Exponent for the power law after the break.
+		- beta: Curvature parameter for the log-parabola.
+		- x0: Reference energy for the log-parabola.
+
+		Returns:
+		- The integral of the selected function over the range [eMin, eMax].
+		"""
+
+		# Define the function to integrate based on the function type
+		if function_type == 'powerlaw':
+			def integrand(x):
+				return x ** (-index)
+		elif function_type == 'superexp':
+			if Ec is None or gamma2 is None:
+				raise ValueError("Parameters 'Ec' and 'gamma2' must be specified for the super exponential cutoff function.")
+			def integrand(x):
+				return x ** (-index) * np.exp(- (x / Ec) ** gamma2)
+		elif function_type == 'brokenpowerlaw':
+			if E_break is None or index1 is None or index2 is None:
+				raise ValueError("Parameters 'E_break', 'index1', and 'index2' must be specified for the broken power law function.")
+			def integrand(x):
+				return x ** (-index1) if x < E_break else x ** (-index2)
+		elif function_type == 'expcutoff':
+			if Ec is None:
+				raise ValueError("Parameter 'Ec' must be specified for the exponential cutoff function.")
+			def integrand(x):
+				return x ** (-index) * np.exp(-x / Ec)
+		elif function_type == 'logparabola':
+			if beta is None or x0 is None:
+				raise ValueError("Parameters 'beta' and 'x0' must be specified for the log-parabola function.")
+			def integrand(x):
+				return x ** (-index) * 10 ** (-beta * np.log10(x / x0) ** 2)
+		else:
+			raise ValueError("Invalid function type. Choose 'powerlaw', 'superexp', 'brokenpowerlaw', 'expcutoff', or 'logparabola'.")
+
+		# Set relative tolerance based on integrator type
+		if integrator_type == 1:
+			rel_tol = 0.001
+		elif integrator_type == 2:
+			rel_tol = 0.000001
+		elif integrator_type == 3:
+			rel_tol = 0.00000001
+		else:
+			rel_tol = 0.000001  # Default tolerance if not specified
+
+		# Perform the integration using scipy's quad
+		integral_eMin_eMax, _ = quad(integrand, eMin, eMax, epsrel=rel_tol)
+
+		return integral_eMin_eMax
 
 	def detCorrectionSpectraFactorSimple(self, eMin, eMax, par1, verbose=0):
 	
@@ -128,13 +198,15 @@ class Edp:
 			#print(i)
 			udp1 = 0
 
-			udp1 = self.UpdateNormPL(m_edptrueenergy[i], lastenergy, par1)
+			udp1 = self.update_integrator(m_edptrueenergy[i], lastenergy, par1)
+			#udp1 = self.update_integrator(m_edptrueenergy[i], lastenergy, par1, function_type='superexp', Ec=2000, gamma2=1.57)
 			normsumple += udp1
 
-			udp1 = self.UpdateNormPL(m_edptrueenergy[i], lastenergy, expindex)
+			udp1 = self.update_integrator(m_edptrueenergy[i], lastenergy, expindex)
 			normsumpl += udp1
 
-		#print("A "+str(normsumpl)+" "+str(normsumple));
+		print(f"SOURCE CORR  {lastenergy} {normsumpl} {normsumple}")
+
 		edpArr =np.zeros(eneChanCount)
 
 		thetaind=0
@@ -151,10 +223,15 @@ class Edp:
 
 				#print("edp: " +str(thetaind)+ " "+str(phiind)+ " "+str(etrue)+ " "+str(eobs)+ " " + str(m_edptrueenergy[etrue]) + " " + str(m_edpobsenergy[eobs]) + " " + str(m_edptheta[thetaind]) + " " + str(m_edpphi[phiind]) + " " + str(edpGrid.getVal(m_edptrueenergy[etrue], m_edpobsenergy[eobs], m_edptheta[thetaind], m_edpphi[phiind])))
 				edpArr[etrue] += self.getVal(m_edptrueenergy[etrue], m_edpobsenergy[eobs], m_edptheta[thetaind], m_edpphi[phiind]) #CORRETTO
+				#print(m_edptrueenergy[etrue], m_edpobsenergy[eobs], self.getVal(m_edptrueenergy[etrue], m_edpobsenergy[eobs], m_edptheta[thetaind], m_edpphi[phiind]))
 
+			
 
-			avgValuePL  += edpArr[etrue] * self.UpdateNormPL(m_edptrueenergy[etrue], lastenergy, expindex) * 1
-			avgValuePLE += edpArr[etrue] * self.UpdateNormPL(m_edptrueenergy[etrue], lastenergy, par1) * 1
+			avgValuePL  += edpArr[etrue] * self.update_integrator(m_edptrueenergy[etrue], lastenergy, expindex) * 1
+			avgValuePLE += edpArr[etrue] * self.update_integrator(m_edptrueenergy[etrue], lastenergy, par1) * 1
+			#avgValuePLE += edpArr[etrue] * self.update_integrator(m_edptrueenergy[etrue], lastenergy, par1, function_type='superexp', Ec=2000, gamma2=1.57) * 1
+
+		print(m_edptrueenergy[iMin], m_edptrueenergy[iMax], edpArr)
 
 		avgpl = 0.0
 		avgple = 0.0
@@ -164,7 +241,8 @@ class Edp:
 		avgple = avgValuePLE/normsumple
 
 		corr = avgpl/avgple
-		#print("A " + str(m_edptheta[thetaind]) + " " + str(m_edpphi[phiind]) + " " + str(avgpl) + " " + str(avgple) + " " + str(avgpl - avgple) + " PL/" + str(avgpl / avgple))
+		print(corr)
+		print("SOURCE CORR " + str(m_edptheta[thetaind]) + " " + str(m_edpphi[phiind]) + " " + str(avgpl) + " " + str(avgple) + " " + str(avgpl - avgple) + " PL/" + str(avgpl / avgple))
 		return corr
 
 

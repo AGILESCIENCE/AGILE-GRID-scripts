@@ -87,17 +87,21 @@ class EvalRates:
 		
 		#fluxscalefactor2 -> versione analitica di VF
 		psfc = PSFEval()
-		fluxscalefactor = psfc.EvalPSFScaleFactor2(ranal=ranal, emin=emin, emax=emax, gindex=gindex, source_theta=source_theta, verbose=verbose)
+		fluxscalefactorpsf = psfc.EvalPSFScaleFactor2(ranal=ranal, emin=emin, emax=emax, gindex=gindex, source_theta=source_theta, verbose=verbose)
 		if verbose == 1:
-			print('Fluxscalefactor2 (king)  based on PSF enclosed fraction: %.4f' % fluxscalefactor)
+			print('Fluxscalefactorpsf2 (king)  based on PSF enclosed fraction: %.4f' % fluxscalefactorpsf)
 		
 		#fluxscalefactor to take into account the spectral shape of the source (deviation from spectral index=2.1 of calculated exposure)
 		edp = Edp()
-		corrsi = edp.detCorrectionSpectraFactorSimple(emin, emax, gindex)
+		fluxscalefactorspectra = edp.detCorrectionSpectraFactorSimple(emin, emax, gindex)
 		if verbose == 1:
-			print('Fluxscalefactor based on expfluxcorrection (correction for expsoure spectra factor): %.2f'%corrsi)
+			print('Fluxscalefactor based on expfluxcorrection (correction for expsoure spectra factor): %.2f'%fluxscalefactorspectra)
 		
-		fluxscalefactor = fluxscalefactor / corrsi
+		#il fattore correttivo fluxscalefactorspectra deve moltiplciare il flusso, verificato nel codice AGILE Science Tools in C++
+		#il fattore correttivo fluxscalefactorpsf deve dividere il flusso
+		#quindi questo numero deve dividere il flusso o rate per avere lo scaling corretto
+		fluxscalefactor = fluxscalefactorpsf / fluxscalefactorspectra
+
 		if verbose == 1:
 			print('Total fluxscalefactor: %.4f' % fluxscalefactor)
 		

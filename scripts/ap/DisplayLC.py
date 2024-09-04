@@ -206,6 +206,8 @@ class DisplayLC:
                     rate_err = flux_err #be carefull
                     flux_ul = 0
                     sensitivity = 0
+
+                    #print(f"{tstart} {sqrtts} {flux}")
                 
 
                 if(file_name.endswith(".mle.lc")):
@@ -243,8 +245,43 @@ class DisplayLC:
                     if(sqrtts<3):
                         flux_ul = flux
 
+                if(file_name.endswith(".mle2.lc")):
+                    if(line.startswith("time_start_mjd")):
+                        continue
+                    tstart = float(line.split()[0])
+                    tstop =  float(line.split()[1])
+
+                    #check time window
+                    if(tstart_window_mjd!=-1 and tstop_window_mjd!=-1):
+                        if(tstart<tstart_window_mjd or tstart>tstop_window_mjd ):
+                            continue
+
+
+                    x = tstart+(tstop-tstart)/2
+                    x_err =  (tstop-tstart)/2
+                    flux =  float(line.split()[3])*flux_notation
+                    if(flux == -1):
+                        flux=0
+                    exp = float(line.split()[21])/exp_notation
+                    exp_norm = -1
+                    flux_err =  float(line.split()[4])*flux_notation
+                    if(float(line.split()[2])>0):
+                        sqrtts =  float(line.split()[2])
+                    else:
+                        sqrtts =  0
+                    count = float(line.split()[23])
+                    count_bkg = float(line.split()[24])
+                    count_err = 0
+                    count_bkg_err = 0
+                    rate = 0
+                    rate_err = 0
+                    flux_ul = float(line.split()[5])*flux_notation/2
+                    sensitivity = -1
+                    #print(f"{tstart} {sqrtts} {flux}")
+
+
+
                 if(file_name.endswith(".ap3") or file_name.endswith(".ap4")):
-                    flux_notation = 1.3*10e7
                     if(line.startswith("tstart")):
                         continue
 
@@ -253,12 +290,12 @@ class DisplayLC:
                     tstart = self.time_tt_to_mjd(float(components[0]))
                     tstop =  self.time_tt_to_mjd(float(components[1]))
 
-                    print(tstart)
+                    #print(tstart)
 
                     #check time window
                     if(tstart_window_mjd!=-1 and tstop_window_mjd!=-1):
                         if(tstart<tstart_window_mjd or tstart>tstop_window_mjd ):
-                            print("continue")
+                            #print("continue")
                             continue
 
 
